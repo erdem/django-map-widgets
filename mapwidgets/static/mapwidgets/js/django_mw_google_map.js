@@ -30,7 +30,10 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
             if (this.getZoom() > 16) this.setZoom(16);
             google.maps.event.removeListener(listener);
         });
-    }
+    },
 
+    removeMarker: function(e){
+        this.marker.setMap(null);
+    }
 
 });

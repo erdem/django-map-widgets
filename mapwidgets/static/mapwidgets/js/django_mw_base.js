@@ -65,6 +65,10 @@ DjangoMapWidgetBase = $.Class.extend({
         console.warn("Implement this method for your map js library.")
     },
 
+    removeMarker: function(){
+        console.warn("Implement this method for your map js library.")
+    },
+
     handleMapClick: function(e){
 
     },
@@ -139,6 +143,7 @@ DjangoMapWidgetBase = $.Class.extend({
     resetMap: function(){
         this.hideOverlay();
         this.locationInput.val("");
+        this.removeMarker()
     },
 
     showOverlay: function(){
