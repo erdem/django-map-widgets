@@ -15,7 +15,7 @@ setup(
     license="MIT",
     zip_safe=False,
     platforms=["any"],
-    packages=find_packages(),
+    packages=find_packages(exclude=("example", "static")),
     package_data={
         'mapwidgets': [
             u'static/mapwidgets/*',
