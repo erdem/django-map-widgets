@@ -19,10 +19,13 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
     },
 
     addMarkerToMap: function(lat, lng){
+        this.removeMarker();
         this.marker = new google.maps.Marker({
             position: {lat: lat, lng: lng},
-            map: this.map
+            map: this.map,
+            draggable: true
         });
+        this.marker.addListener("dragend", this.dragMarker.bind(this));
         var bounds = new google.maps.LatLngBounds();
         bounds.extend(this.marker.getPosition());
         this.map.fitBounds(bounds);
@@ -33,7 +36,13 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
     },
 
     removeMarker: function(e){
-        this.marker.setMap(null);
+        if (this.marker){
+            this.marker.setMap(null);
+        }
+    },
+
+    dragMarker: function(e){
+        this.updateLocationInput(e.latLng.lat(), e.latLng.lng())
     }
 
 });

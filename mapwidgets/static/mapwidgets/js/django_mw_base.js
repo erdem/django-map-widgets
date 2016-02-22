@@ -69,11 +69,11 @@ DjangoMapWidgetBase = $.Class.extend({
         console.warn("Implement this method for your map js library.")
     },
 
-    handleMapClick: function(e){
-
+    dragMarker: function(e){
+        
     },
 
-    handleMarkerDrag: function(e){
+    handleMapClick: function(e){
 
     },
 
