@@ -31,7 +31,9 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
         bounds.extend(this.marker.getPosition());
         this.map.fitBounds(bounds);
         var listener = google.maps.event.addListener(this.map, "bounds_changed", function() {
-            if (this.getZoom() > 16) this.setZoom(16);
+            if (this.getZoom() > 16) {
+                this.setZoom(16)
+            }
             google.maps.event.removeListener(listener);
         });
     },
@@ -47,14 +49,13 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
     },
 
     handleAddMarkerBtnClick: function(e){
-        var elem = this.addMarkerBtn;
-        if (!elem.hasClass("active")){
+        if (!this.addMarkerBtn.hasClass("active")){
             this.map.addListener("click", this.handleMapClick.bind(this));
             $(".mw-map").addClass("click");
-            elem.addClass("active");
+            this.addMarkerBtn.addClass("active");
         }else{
             $(".mw-map").removeClass("click");
-            elem.removeClass("active");
+            this.addMarkerBtn.removeClass("active");
         }
 
     },
