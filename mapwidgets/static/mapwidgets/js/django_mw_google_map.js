@@ -47,10 +47,11 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
     },
 
     handleAddMarkerBtnClick: function(e){
-        var elem = $(e.target);
+        var elem = this.addMarkerBtn;
         if (!elem.hasClass("active")){
             this.map.addListener("click", this.handleMapClick.bind(this));
             $(".mw-map").addClass("click");
+            elem.addClass("active");
         }else{
             $(".mw-map").removeClass("click");
             elem.removeClass("active");
