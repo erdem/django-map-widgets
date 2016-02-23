@@ -20,6 +20,7 @@ DjangoMapWidgetBase = $.Class.extend({
     coordinatesOverlay: $("#mw-coordinates-overlay"),
     addressAutoCompleteInput: document.getElementById("mw-google-address-input"),
     resetBtn: $("#mw-btn-reset"),
+    addMarkerBtn: $("#dw-add-marker"),
     loaderOverlayElem: $("#mw-loader-overlay"),
     zoom: 5,
 
@@ -28,6 +29,7 @@ DjangoMapWidgetBase = $.Class.extend({
         this.coordinatesOverlayToggleBtn.on("click", this.toggleCoordinatesOverlay.bind(this));
         this.coordinatesOverlayDoneBtn.on("click", this.handleCoordinatesOverlayDoneBtnClick.bind(this));
         this.resetBtn.on("click", this.resetMap.bind(this));
+        this.addMarkerBtn.on("click", this.handleAddMarkerBtnClick.bind(this));
         this.myLocationBtn.on("click", this.handleMyLocationBtnClick.bind(this));
 
         var geocoder = new google.maps.Geocoder();
@@ -74,6 +76,10 @@ DjangoMapWidgetBase = $.Class.extend({
     },
 
     handleMapClick: function(e){
+
+    },
+
+    handleAddMarkerBtnClick: function(e){
 
     },
 

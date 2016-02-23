@@ -15,13 +15,14 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
             },
             zoom: this.zoom
         });
-
+        this.addMarkerBtn.on("click", this.handleAddMarkerBtnClick.bind(this));
     },
 
     addMarkerToMap: function(lat, lng){
         this.removeMarker();
+        var marker_position = {lat: lat, lng: lng};
         this.marker = new google.maps.Marker({
-            position: {lat: lat, lng: lng},
+            position: marker_position,
             map: this.map,
             draggable: true
         });
@@ -43,6 +44,21 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
 
     dragMarker: function(e){
         this.updateLocationInput(e.latLng.lat(), e.latLng.lng())
-    }
+    },
 
+    handleAddMarkerBtnClick: function(e){
+        var elem = $(e.target);
+        if (!elem.hasClass("active")){
+            this.map.addListener("click", this.handleMapClick.bind(this));
+            $(".mw-map").addClass("click");
+        }else{
+            $(".mw-map").removeClass("click");
+            elem.removeClass("active");
+        }
+
+    },
+
+    handleMapClick: function(e){
+        this.updateLocationInput(e.latLng.lat(), e.latLng.lng())
+    }
 });
