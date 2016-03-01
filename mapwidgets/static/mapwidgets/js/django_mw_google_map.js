@@ -64,3 +64,10 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
         this.updateLocationInput(e.latLng.lat(), e.latLng.lng())
     }
 });
+
+$(function(){
+    new DjangoGoogleMapWidget({
+        locationInput: $("#test"),
+        landingLocationName: "Turkey"
+    });
+});
