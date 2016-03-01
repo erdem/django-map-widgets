@@ -18,7 +18,10 @@ setup(
     packages=find_packages(exclude=("example", "static")),
     package_data={
         'mapwidgets': [
-            u'static/mapwidgets/*',
+            'static/mapwidgets/css/*',
+            'static/mapwidgets/js/*',
+            'static/mapwidgets/fonts/*',
+            'templates/mapwidgets/*',
         ],
     },
     classifiers=[
