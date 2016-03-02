@@ -2,27 +2,6 @@ $.namespace("DjangoMapWidgetBase");
 
 
 DjangoMapWidgetBase = $.Class.extend({
-    mapApiKey: null,
-    mapCenterCoordinates: [],
-    mapElement: null,
-    landingLocationName: null,
-    landingLocation: null,
-    defaultLandingLocation: {
-        lat: 37.0625,
-        lng: -95.677068
-    }, // google default landing location
-    locationInput: null,
-    googleAddressInput: null,
-    coordinatesInputs: null,
-    coordinatesOverlayToggleBtn: $("#mw-btn-coordinates"),
-    coordinatesOverlayDoneBtn: $("#mw-btn-coordinates-done"),
-    myLocationBtn: $("#mw-btn-my-location"),
-    coordinatesOverlay: $("#mw-coordinates-overlay"),
-    addressAutoCompleteInput: document.getElementById("mw-google-address-input"),
-    resetBtn: $("#mw-btn-reset"),
-    addMarkerBtn: $("#dw-add-marker"),
-    loaderOverlayElem: $("#mw-loader-overlay"),
-    zoom: 5,
 
     init: function(options){
         console.log(options);
