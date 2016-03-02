@@ -65,9 +65,10 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
     }
 });
 
-$(function(){
+$(document).ready(function(){
     new DjangoGoogleMapWidget({
         locationInput: $("#test"),
-        landingLocationName: "Turkey"
+        landingLocationName: "Turkey",
+        //addressAutoCompleteInput: document.getElementById("mw-google-address-input")
     });
 });
