@@ -65,3 +65,6 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
     }
 });
 
+$(document).ready(function(){
+
+});
