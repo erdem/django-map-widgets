@@ -64,7 +64,3 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
         this.updateLocationInput(e.latLng.lat(), e.latLng.lng())
     }
 });
-
-$(document).ready(function(){
-
-});

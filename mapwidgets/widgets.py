@@ -10,8 +10,6 @@ class GoogleMapWidget(forms.Textarea):
     class Media:
         css = {
             "all": (
-                "mapwidgets/css/bootstrap.css",
-                "mapwidgets/css/bootstrap-theme.css",
                 "mapwidgets/css/map_widgets.css",
                 )
         }

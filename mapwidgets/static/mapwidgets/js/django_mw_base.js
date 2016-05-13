@@ -4,7 +4,6 @@ $.namespace("DjangoMapWidgetBase");
 DjangoMapWidgetBase = $.Class.extend({
 
     init: function(options){
-        console.log(options);
         $.extend(this, options);
         this.coordinatesOverlayToggleBtn.on("click", this.toggleCoordinatesOverlay.bind(this));
         this.coordinatesOverlayDoneBtn.on("click", this.handleCoordinatesOverlayDoneBtnClick.bind(this));
@@ -29,7 +28,7 @@ DjangoMapWidgetBase = $.Class.extend({
         }else{
             this.initializeMap();
         }
-        console.log(this.addressAutoCompleteInput);
+
         var autocomplete = new google.maps.places.Autocomplete(this.addressAutoCompleteInput);
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
             var place = autocomplete.getPlace();
