@@ -11,21 +11,6 @@ DjangoMapWidgetBase = $.Class.extend({
         this.addMarkerBtn.on("click", this.handleAddMarkerBtnClick.bind(this));
         this.myLocationBtn.on("click", this.handleMyLocationBtnClick.bind(this));
 
-        var geocoder = new google.maps.Geocoder();
-        if (this.defaultLocationName && geocoder){
-            geocoder.geocode({'address' : this.defaultLocationName}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    var location = results[0].geometry.location;
-                    this.initializeMap();
-                    this.addMarkerToMap(location.lat(), location.lng());
-                }else{
-                    this.initializeMap()
-                }
-            }.bind(this));
-        }else{
-            this.initializeMap();
-        }
-
         var autocomplete = new google.maps.places.Autocomplete(this.addressAutoCompleteInput);
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
             var place = autocomplete.getPlace();
@@ -33,6 +18,8 @@ DjangoMapWidgetBase = $.Class.extend({
             var lng = place.geometry.location.lng();
             this.updateLocationInput(lat, lng);
         }.bind(this));
+
+        this.initializeMap();
     },
 
     initializeMap: function(){

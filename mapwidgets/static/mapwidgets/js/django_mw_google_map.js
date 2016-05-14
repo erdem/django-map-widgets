@@ -7,16 +7,37 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
 
         if (this.defaultLocationName){
             geocoder = new google.maps.Geocoder();
-        }
+            geocoder.geocode({'address' : this.defaultLocationName}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    var geo_location = results[0].geometry.location;
+                    location = {
+                        "lat": geo_location.lat(),
+                        "lng": geo_location.lng()
+                    };
+                }else{
+                    console.warn("Cannot find " + this.defaultLocationName + " on google geo service.")
+                }
 
-        this.map = new google.maps.Map(document.getElementById('mw-map'), {
-            center: new google.maps.LatLng(location.lat, location.lng),
-            scrollwheel: false,
-            zoomControlOptions: {
-                position: google.maps.ControlPosition.RIGHT
-            },
-            zoom: this.zoom
-        });
+                this.map = new google.maps.Map(document.getElementById('mw-map'), {
+                center: new google.maps.LatLng(location.lat, location.lng),
+                scrollwheel: false,
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.RIGHT
+                },
+                zoom: this.zoom
+            });
+            }.bind(this));
+        }else{
+            this.map = new google.maps.Map(document.getElementById('mw-map'), {
+                center: new google.maps.LatLng(location.lat, location.lng),
+                scrollwheel: false,
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.RIGHT
+                },
+                zoom: this.zoom
+            });
+
+        }
         this.addMarkerBtn.on("click", this.handleAddMarkerBtnClick.bind(this));
     },
 
