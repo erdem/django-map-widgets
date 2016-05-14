@@ -41,15 +41,13 @@
 </div>
 
 <script type="application/javascript">
+    var mapOptions = JSON.parse("{{ options|escapejs }}");
     new DjangoGoogleMapWidget({
         locationInput: $("#{{ id }}"),
         mapApiKey: null,
         mapElement: null,
-        defaultLocationName: "Turkey",
-        defaultLocation: {
-            lat: 37.0625,
-            lng: -95.677068
-        },
+        defaultLocationName: mapOptions.defaultLocationName,
+        defaultLocation: mapOptions.defaultLocation,
         googleAddressInput: null,
         coordinatesInputs: null,
         coordinatesOverlayToggleBtn: $("#mw-btn-coordinates"),
@@ -60,6 +58,6 @@
         resetBtn: $("#mw-btn-reset"),
         addMarkerBtn: $("#dw-add-marker"),
         loaderOverlayElem: $("#mw-loader-overlay"),
-        zoom: {{ options.zoom }}
+        zoom: mapOptions.zoom
     });
 </script>

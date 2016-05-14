@@ -141,8 +141,6 @@ MEDIA_URL = '/uploads/'
 
 
 MAP_WIDGET_OPTIONS = {
-    "landingLocation": {
-        "lat": 37.0625,
-        "lng": -95.677068
-    },
+    "defaultLocationName": "Chiswick",
+    "zoom": 12
 }
