@@ -12,12 +12,12 @@ DjangoMapWidgetBase = $.Class.extend({
         this.myLocationBtn.on("click", this.handleMyLocationBtnClick.bind(this));
 
         var geocoder = new google.maps.Geocoder();
-        if (this.landingLocationName && geocoder){
-            geocoder.geocode({'address' : this.landingLocationName}, function(results, status) {
+        if (this.defaultLocationName && geocoder){
+            geocoder.geocode({'address' : this.defaultLocationName}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     var location = results[0].geometry.location;
-                    
                     this.initializeMap();
+                    this.addMarkerToMap(location.lat(), location.lng());
                 }else{
                     this.initializeMap()
                 }
@@ -37,6 +37,10 @@ DjangoMapWidgetBase = $.Class.extend({
 
     initializeMap: function(){
         console.warn("Implement initializeMap method.");
+    },
+
+    updateMap: function(lat, lng){
+        console.warn("Implement updateMap method.");
     },
 
     addMarkerToMap: function(lat, lng){

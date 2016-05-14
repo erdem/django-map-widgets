@@ -3,9 +3,9 @@ $.namespace("DjangoGoogleMapWidget");
 DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
 
     initializeMap: function(){
-        var location = this.defaultLandingLocation;
+        var location = this.defaultLocation;
 
-        if (this.landingLocationName){
+        if (this.defaultLocationName){
             geocoder = new google.maps.Geocoder();
         }
 
