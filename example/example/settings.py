@@ -138,3 +138,11 @@ STATIC_ROOT = os.path.join(os.path.realpath(os.path.dirname(__file__)), 'media/'
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(os.path.realpath(os.path.dirname(__file__)), 'media/files/')
 MEDIA_URL = '/uploads/'
+
+
+MAP_WIDGET_OPTIONS = {
+    "landingLocation": {
+        "lat": 37.0625,
+        "lng": -95.677068
+    },
+}

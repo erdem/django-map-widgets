@@ -1,11 +1,11 @@
-from django import forms
 from django.conf import settings
 from django.contrib.gis.forms import BaseGeometryWidget
-from django.template.loader import render_to_string
+
+from mapwidgets.utils import get_map_options
 
 
-class GoogleMapWidget(forms.Textarea):
-    template = "mapwidgets/google-map-widget.html"
+class GoogleMapWidget(BaseGeometryWidget):
+    template_name = "mapwidgets/google-map-widget.html"
 
     class Media:
         css = {
@@ -23,14 +23,12 @@ class GoogleMapWidget(forms.Textarea):
         )
 
     def render(self, name, value, attrs=None):
-        textarea = super(GoogleMapWidget, self).render(name, value, attrs)
-        data = {
-            "textarea": textarea,
+        attrs = {
             "name": name,
             "value": value,
             "widget": self,
-            "options": "{}",
+            "options": get_map_options(),
             "STATIC_URL": settings.STATIC_URL,
             "textarea_attrs": attrs
         }
-        return render_to_string(self.template, data)
+        return super(GoogleMapWidget, self).render(name, value, attrs)
