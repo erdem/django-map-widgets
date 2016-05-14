@@ -4,9 +4,11 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
 
     initializeMap: function(){
         var location = this.defaultLandingLocation;
-        if (this.landingLocation && this.landingLocationName){
-            location = this.landingLocation
+
+        if (this.landingLocationName){
+            geocoder = new google.maps.Geocoder();
         }
+
         this.map = new google.maps.Map(document.getElementById('mw-map'), {
             center: new google.maps.LatLng(location.lat, location.lng),
             scrollwheel: false,

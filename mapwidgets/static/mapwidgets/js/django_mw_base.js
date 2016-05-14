@@ -16,10 +16,7 @@ DjangoMapWidgetBase = $.Class.extend({
             geocoder.geocode({'address' : this.landingLocationName}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     var location = results[0].geometry.location;
-                    this.landingLocation = {
-                        lat: location.lat(),
-                        lng: location.lng()
-                    };
+                    
                     this.initializeMap();
                 }else{
                     this.initializeMap()

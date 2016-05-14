@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.gis.forms import BaseGeometryWidget
 
 from mapwidgets.utils import get_map_options
@@ -24,11 +23,6 @@ class GoogleMapWidget(BaseGeometryWidget):
 
     def render(self, name, value, attrs=None):
         attrs = {
-            "name": name,
-            "value": value,
-            "widget": self,
             "options": get_map_options(),
-            "STATIC_URL": settings.STATIC_URL,
-            "textarea_attrs": attrs
         }
         return super(GoogleMapWidget, self).render(name, value, attrs)
