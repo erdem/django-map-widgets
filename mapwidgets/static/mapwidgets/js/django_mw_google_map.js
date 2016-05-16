@@ -43,14 +43,16 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
 
     addMarkerToMap: function(lat, lng){
         this.removeMarker();
-        var marker_position = {lat: lat, lng: lng};
+        var marker_position = {lat: parseFloat(lat), lng: parseFloat(lng)};
         this.marker = new google.maps.Marker({
             position: marker_position,
             map: this.map,
             draggable: true
         });
         this.marker.addListener("dragend", this.dragMarker.bind(this));
+
         var bounds = new google.maps.LatLngBounds();
+        debugger;
         bounds.extend(this.marker.getPosition());
         this.map.fitBounds(bounds);
         var listener = google.maps.event.addListener(this.map, "bounds_changed", function() {
@@ -59,6 +61,7 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
             }
             google.maps.event.removeListener(listener);
         });
+        console.log(listener);
     },
 
     removeMarker: function(e){

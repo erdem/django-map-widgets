@@ -67,8 +67,12 @@ DjangoMapWidgetBase = $.Class.extend({
 
     updateLocationInput: function(lat, lng){
         this.showOverlay();
+        console.log(lat);
+        console.log(lng);
         var location_input_val = "POINT (" + lng + " " + lat + ")";
+        console.log(location_input_val);
         this.locationInput.val(location_input_val);
+        console.log(this.locationInput);
         this.updateCoordinatesOverlayInputs(lat, lng);
         this.addMarkerToMap(lat, lng);
         this.hideOverlay();
@@ -85,6 +89,8 @@ DjangoMapWidgetBase = $.Class.extend({
         var lng_input = $("#mw-overlay-longitude");
         var lat = lat_input.val();
         var lng = lng_input.val();
+        console.log(lat);
+        console.log(lng);
         if (lat && lng){
             this.updateLocationInput(lat, lng);
         }
