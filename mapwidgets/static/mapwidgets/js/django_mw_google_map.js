@@ -18,7 +18,7 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
                     console.warn("Cannot find " + this.defaultLocationName + " on google geo service.")
                 }
 
-                this.map = new google.maps.Map(document.getElementById('mw-map'), {
+            this.map = new google.maps.Map(document.getElementById('mw-map'), {
                 center: new google.maps.LatLng(location.lat, location.lng),
                 scrollwheel: false,
                 zoomControlOptions: {
@@ -52,7 +52,6 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
         this.marker.addListener("dragend", this.dragMarker.bind(this));
 
         var bounds = new google.maps.LatLngBounds();
-        debugger;
         bounds.extend(this.marker.getPosition());
         this.map.fitBounds(bounds);
         var listener = google.maps.event.addListener(this.map, "bounds_changed", function() {
@@ -61,7 +60,6 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
             }
             google.maps.event.removeListener(listener);
         });
-        console.log(listener);
     },
 
     removeMarker: function(e){

@@ -7,6 +7,7 @@ DjangoMapWidgetBase = $.Class.extend({
         $.extend(this, options);
         this.coordinatesOverlayToggleBtn.on("click", this.toggleCoordinatesOverlay.bind(this));
         this.coordinatesOverlayDoneBtn.on("click", this.handleCoordinatesOverlayDoneBtnClick.bind(this));
+        this.coordinatesOverlayInputs.on("change", this.handleCoordinatesInputsChange.bind(this));
         this.resetBtn.on("click", this.resetMap.bind(this));
         this.addMarkerBtn.on("click", this.handleAddMarkerBtnClick.bind(this));
         this.myLocationBtn.on("click", this.handleMyLocationBtnClick.bind(this));
@@ -31,26 +32,26 @@ DjangoMapWidgetBase = $.Class.extend({
     },
 
     addMarkerToMap: function(lat, lng){
-        console.warn("Implement this method for your map js library.")
+        console.warn("Implement this method for your map js library.");
     },
 
     removeMarker: function(){
-        console.warn("Implement this method for your map js library.")
+        console.warn("Implement this method for your map js library.");
     },
 
     dragMarker: function(e){
-        
+        console.warn("Implement dragMarker method.");
     },
 
     handleMapClick: function(e){
-
+        console.warn("Implement handleMapClick method.");
     },
 
     handleAddMarkerBtnClick: function(e){
-
+        console.warn("Implement handleAddMarkerBtnClick method.");
     },
 
-    getLocation: function(){
+    getLocationValues: function(){
         var latlng = this.locationInput.val().split(' ');
         var lat = latlng[2].replace(/[\(\)]/g, '');
         var lng = latlng[1].replace(/[\(\)]/g, '');
@@ -60,20 +61,11 @@ DjangoMapWidgetBase = $.Class.extend({
         }
     },
 
-    updateCoordinatesOverlayInputs: function(lat, lng){
-        $("#mw-overlay-latitude").val(lat || "");
-        $("#mw-overlay-longitude").val(lng || "");
-    },
-
     updateLocationInput: function(lat, lng){
         this.showOverlay();
-        console.log(lat);
-        console.log(lng);
         var location_input_val = "POINT (" + lng + " " + lat + ")";
-        console.log(location_input_val);
         this.locationInput.val(location_input_val);
-        console.log(this.locationInput);
-        this.updateCoordinatesOverlayInputs(lat, lng);
+        this.updateCoordinatesInputs(lat, lng);
         this.addMarkerToMap(lat, lng);
         this.hideOverlay();
     },
@@ -83,14 +75,22 @@ DjangoMapWidgetBase = $.Class.extend({
         $("#mw-coordinates-overlay").toggleClass("hide");
     },
 
+    updateCoordinatesInputs: function(lat, lng){
+        $("#mw-overlay-latitude").val(lat || "");
+        $("#mw-overlay-longitude").val(lng || "");
+    },
+
+    handleCoordinatesInputsChange: function (e) {
+        var lat = $("#mw-overlay-latitude").val()
+        var lng = $("#mw-overlay-longitude").val()
+    },
+
     handleCoordinatesOverlayDoneBtnClick: function(){
         $("input", ".mw-coordinates-overlay").removeClass("error");
         var lat_input = $("#mw-overlay-latitude");
         var lng_input = $("#mw-overlay-longitude");
         var lat = lat_input.val();
         var lng = lng_input.val();
-        console.log(lat);
-        console.log(lng);
         if (lat && lng){
             this.updateLocationInput(lat, lng);
         }
@@ -116,7 +116,7 @@ DjangoMapWidgetBase = $.Class.extend({
 
     handlecurrentPositionError: function(){
         this.hideOverlay();
-        alert("Your location could not be found.")
+        alert("Your location could not be found.");
     },
 
     resetMap: function(){

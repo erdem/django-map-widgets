@@ -6,11 +6,11 @@
             <div class="mw-coordinates-overlay hide" id="mw-coordinates-overlay">
                 <label for="mw-overlay-latitude">
                     Latitude:
-                    <input type="text" id="mw-overlay-latitude" class="form-control" placeholder="Ex: 41.015137"/>
+                    <input type="text" id="mw-overlay-latitude" class="form-control mw-overlay-input" placeholder="Ex: 41.015137"/>
                 </label>
                 <label for="mw-overlay-longitude">
                     Longitude:
-                    <input type="text" id="mw-overlay-longitude" class="form-control" placeholder="Ex: 28.979530"/>
+                    <input type="text" id="mw-overlay-longitude" class="form-control mw-overlay-input" placeholder="Ex: 28.979530"/>
                 </label>
                 <a class="btn btn-success mw-btn-coordinates-done pull-right" id="mw-btn-coordinates-done">Done</a>
             </div>
@@ -52,6 +52,7 @@
         coordinatesInputs: null,
         coordinatesOverlayToggleBtn: $("#mw-btn-coordinates"),
         coordinatesOverlayDoneBtn: $("#mw-btn-coordinates-done"),
+        coordinatesOverlayInputs: $(".mw-overlay-input"),
         myLocationBtn: $("#mw-btn-my-location"),
         coordinatesOverlay: $("#mw-coordinates-overlay"),
         addressAutoCompleteInput: document.getElementById("mw-google-address-input"),
