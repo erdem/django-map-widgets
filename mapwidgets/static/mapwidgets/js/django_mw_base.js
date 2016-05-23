@@ -81,8 +81,11 @@ DjangoMapWidgetBase = $.Class.extend({
     },
 
     handleCoordinatesInputsChange: function (e) {
-        var lat = $("#mw-overlay-latitude").val()
-        var lng = $("#mw-overlay-longitude").val()
+        var lat = $("#mw-overlay-latitude").val();
+        var lng = $("#mw-overlay-longitude").val();
+        if (lat && lng){
+            this.updateLocationInput(lat, lng);
+        }
     },
 
     handleCoordinatesOverlayDoneBtnClick: function(){
@@ -91,9 +94,7 @@ DjangoMapWidgetBase = $.Class.extend({
         var lng_input = $("#mw-overlay-longitude");
         var lat = lat_input.val();
         var lng = lng_input.val();
-        if (lat && lng){
-            this.updateLocationInput(lat, lng);
-        }
+        // todo check
         $("#mw-coordinates-overlay").addClass("hide");
     },
 

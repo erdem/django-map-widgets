@@ -54,9 +54,10 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
         var bounds = new google.maps.LatLngBounds();
         bounds.extend(this.marker.getPosition());
         this.map.fitBounds(bounds);
+        // todo optional
         var listener = google.maps.event.addListener(this.map, "bounds_changed", function() {
-            if (this.getZoom() > 16) {
-                this.setZoom(16)
+            if (this.getZoom() > 15) {
+                this.setZoom(15)
             }
             google.maps.event.removeListener(listener);
         });
