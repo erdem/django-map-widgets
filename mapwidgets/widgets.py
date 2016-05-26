@@ -1,6 +1,7 @@
 import json
 
 from django.contrib.gis.forms import BaseGeometryWidget
+from django.contrib.gis.geos import Point
 
 from mapwidgets.utils import get_map_options
 
@@ -26,11 +27,16 @@ class GoogleMapWidget(BaseGeometryWidget):
     def render(self, name, value, attrs=None):
         if not attrs:
             attrs = dict()
-
         field_value = {}
-        if value:
+        if isinstance(value,  Point):
             field_value["lng"] = value.x
             field_value["lat"] = value.y
+
+        if isinstance(value, basestring):
+            coordinates = self.deserialize(value)
+            field_value["lng"] = coordinates.x
+            field_value["lat"] = coordinates.y
+
         extra_attrs = {
             "options": get_map_options(),
             "field_value": json.dumps(field_value)
