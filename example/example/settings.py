@@ -142,5 +142,9 @@ MEDIA_URL = '/uploads/'
 
 MAP_WIDGET_OPTIONS = {
     "defaultLocationName": "Chiswick",
+    "defaultLocation": {
+        "lat": 57.7177013,
+        "lng": -16.6300491
+    },
     "zoom": 12
 }

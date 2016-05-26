@@ -4,7 +4,6 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
 
     initializeMap: function(){
         var location = this.defaultLocation;
-
         if (this.defaultLocationName){
             geocoder = new google.maps.Geocoder();
             geocoder.geocode({'address' : this.defaultLocationName}, function(results, status) {

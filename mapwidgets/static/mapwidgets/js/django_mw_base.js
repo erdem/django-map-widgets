@@ -8,17 +8,14 @@ DjangoMapWidgetBase = $.Class.extend({
         this.coordinatesOverlayToggleBtn.on("click", this.toggleCoordinatesOverlay.bind(this));
         this.coordinatesOverlayDoneBtn.on("click", this.handleCoordinatesOverlayDoneBtnClick.bind(this));
         this.coordinatesOverlayInputs.on("change", this.handleCoordinatesInputsChange.bind(this));
-        this.resetBtn.on("click", this.resetMap.bind(this));
         this.addMarkerBtn.on("click", this.handleAddMarkerBtnClick.bind(this));
         this.myLocationBtn.on("click", this.handleMyLocationBtnClick.bind(this));
+        this.resetBtn.on("click", this.resetMap.bind(this));
 
         var autocomplete = new google.maps.places.Autocomplete(this.addressAutoCompleteInput);
-        google.maps.event.addListener(autocomplete, 'place_changed', function() {
-            var place = autocomplete.getPlace();
-            var lat = place.geometry.location.lat();
-            var lng = place.geometry.location.lng();
-            this.updateLocationInput(lat, lng);
-        }.bind(this));
+        google.maps.event.addListener(autocomplete, 'place_changed', this.handleAutoCompletePlaceChange.bind(this, autocomplete));
+        google.maps.event.addDomListener(this.addressAutoCompleteInput, 'keydown', this.handleAutoCompleteInputKeyDown.bind(this));
+        // $(this.addressAutoCompleteInput).on("keydown", this.handleAutoCompleteInputKeyDown.bind(this));
 
         this.initializeMap();
     },
@@ -120,9 +117,23 @@ DjangoMapWidgetBase = $.Class.extend({
         alert("Your location could not be found.");
     },
 
+    handleAutoCompleteInputKeyDown: function (e) {
+        if (e.keyCode == 13){  // pressed enter key
+            e.preventDefault();
+        }
+    },
+    
+    handleAutoCompletePlaceChange: function (autocomplete) {
+        var place = autocomplete.getPlace();
+        var lat = place.geometry.location.lat();
+        var lng = place.geometry.location.lng();
+        this.updateLocationInput(lat, lng);
+    },
+    
     resetMap: function(){
         this.hideOverlay();
         this.locationInput.val("");
+        this.coordinatesOverlayInputs.val("");
         this.removeMarker()
     },
 
