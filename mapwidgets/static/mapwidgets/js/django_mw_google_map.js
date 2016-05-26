@@ -5,7 +5,6 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
     initializeMap: function(){
         var mapCenter = this.mapCenterLocation;
 
-
         //todo simplify this method
         if (this.mapCenterLocationName){
             var geocoder = new google.maps.Geocoder();

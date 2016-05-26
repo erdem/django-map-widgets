@@ -10,6 +10,7 @@ DEFAULT_MAP_OPTIONS = {
     "zoom": 6,
 }
 
+
 # todo use signleton pattern
 def get_map_options():
     default_options = DEFAULT_MAP_OPTIONS.copy()
