@@ -15,7 +15,7 @@ class City(models.Model):
 class District(models.Model):
     city = models.ForeignKey(City)
     name = models.CharField(max_length=255)
-    location = models.PointField()
+    location = models.PointField(help_text="To generate the map for your location")
 
     def __unicode__(self):
         return self.name
