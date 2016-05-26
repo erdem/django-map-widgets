@@ -3,10 +3,11 @@ $.namespace("DjangoGoogleMapWidget");
 DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
 
     initializeMap: function(){
-        var location = this.defaultLocation;
-        if (this.defaultLocationName){
+        var location = this.mapCenterLocation;
+
+        if (this.mapCenterLocationName){
             geocoder = new google.maps.Geocoder();
-            geocoder.geocode({'address' : this.defaultLocationName}, function(results, status) {
+            geocoder.geocode({'address' : this.mapCenterLocationName}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     var geo_location = results[0].geometry.location;
                     location = {
@@ -14,7 +15,7 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
                         "lng": geo_location.lng()
                     };
                 }else{
-                    console.warn("Cannot find " + this.defaultLocationName + " on google geo service.")
+                    console.warn("Cannot find " + this.mapCenterLocationName + " on google geo service.")
                 }
 
             this.map = new google.maps.Map(document.getElementById('mw-map'), {

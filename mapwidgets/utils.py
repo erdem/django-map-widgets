@@ -5,8 +5,8 @@ from django.conf import settings
 
 DEFAULT_MAP_OPTIONS = {
     "mapApiKey": None,
-    "defaultLocationName": None, # todo is empty find from django timezone
-    "defaultLocation": None,  # todo is empty find from django timezone
+    "mapCenterLocationName": None, # todo is empty find from django timezone
+    "mapCenterLocation": None,  # todo is empty find from django timezone
     "zoom": 6,
 }
 

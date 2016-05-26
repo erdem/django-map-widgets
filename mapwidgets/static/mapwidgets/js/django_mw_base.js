@@ -86,12 +86,6 @@ DjangoMapWidgetBase = $.Class.extend({
     },
 
     handleCoordinatesOverlayDoneBtnClick: function(){
-        $("input", ".mw-coordinates-overlay").removeClass("error");
-        var lat_input = $("#mw-overlay-latitude");
-        var lng_input = $("#mw-overlay-longitude");
-        var lat = lat_input.val();
-        var lng = lng_input.val();
-        // todo check
         $("#mw-coordinates-overlay").addClass("hide");
     },
 
