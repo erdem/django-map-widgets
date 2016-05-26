@@ -146,5 +146,6 @@ MAP_WIDGET_OPTIONS = {
         "lat": 57.7177013,
         "lng": -16.6300491
     },
-    "zoom": 12
+    "zoom": 12,
+    # "mapApiKey": "AIzaSyDOMclDM4JUIfUbLZ_5Y-pi9h7_0S9DIpE"
 }

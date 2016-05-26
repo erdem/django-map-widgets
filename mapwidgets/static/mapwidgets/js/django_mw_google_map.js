@@ -30,8 +30,6 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
                 });
 
                 if (!$.isEmptyObject(this.locationFieldValue)){
-
-                    console.log(this.locationFieldValue);
                     this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng)
                 }
             }.bind(this));

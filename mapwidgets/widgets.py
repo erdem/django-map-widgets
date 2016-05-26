@@ -3,7 +3,7 @@ import json
 from django.contrib.gis.forms import BaseGeometryWidget
 from django.contrib.gis.geos import Point
 
-from mapwidgets.utils import get_map_options
+from mapwidgets.utils import get_map_options, get_google_api_key
 
 
 class GoogleMapWidget(BaseGeometryWidget):
@@ -17,7 +17,7 @@ class GoogleMapWidget(BaseGeometryWidget):
         }
 
         js = (
-            "https://maps.googleapis.com/maps/api/js?libraries=places",
+            "https://maps.googleapis.com/maps/api/js?libraries=places&key=%s" % get_google_api_key(),
             "https://code.jquery.com/jquery-1.11.3.min.js",
             "mapwidgets/js/jquery_class.min.js",
             "mapwidgets/js/django_mw_base.js",
