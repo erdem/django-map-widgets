@@ -45,6 +45,7 @@
     new DjangoGoogleMapWidget({
         locationInput: $("#{{ id }}"),
         mapApiKey: null,
+        mapElement: document.getElementById('mw-map'),
         mapCenterLocationName: mapOptions.mapCenterLocationName,
         mapCenterLocation: mapOptions.mapCenterLocation,
         googleAddressInput: null,
@@ -56,7 +57,7 @@
         coordinatesOverlay: $("#mw-coordinates-overlay"),
         addressAutoCompleteInput: document.getElementById("mw-google-address-input"),
         resetBtn: $("#mw-btn-reset"),
-        addMarkerBtn: $("#dw-add-marker"),
+        addMarkerBtn: $("#mw-btn-add-marker"),
         loaderOverlayElem: $("#mw-loader-overlay"),
         zoom: mapOptions.zoom
     });

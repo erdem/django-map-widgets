@@ -3,14 +3,16 @@ $.namespace("DjangoGoogleMapWidget");
 DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
 
     initializeMap: function(){
-        var location = this.mapCenterLocation;
+        var mapCenter = this.mapCenterLocation;
 
+
+        //todo simplify this method
         if (this.mapCenterLocationName){
             geocoder = new google.maps.Geocoder();
             geocoder.geocode({'address' : this.mapCenterLocationName}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     var geo_location = results[0].geometry.location;
-                    location = {
+                    mapCenter = {
                         "lat": geo_location.lat(),
                         "lng": geo_location.lng()
                     };
@@ -18,27 +20,27 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
                     console.warn("Cannot find " + this.mapCenterLocationName + " on google geo service.")
                 }
 
-            this.map = new google.maps.Map(document.getElementById('mw-map'), {
-                center: new google.maps.LatLng(location.lat, location.lng),
-                scrollwheel: false,
-                zoomControlOptions: {
-                    position: google.maps.ControlPosition.RIGHT
-                },
-                zoom: this.zoom
-            });
+                this.map = new google.maps.Map(this.mapElement, {
+                    center: new google.maps.LatLng(mapCenter.lat, mapCenter.lng),
+                    scrollwheel: false,
+                    zoomControlOptions: {
+                        position: google.maps.ControlPosition.RIGHT
+                    },
+                    zoom: this.zoom
+                });
+
             }.bind(this));
         }else{
-            this.map = new google.maps.Map(document.getElementById('mw-map'), {
-                center: new google.maps.LatLng(location.lat, location.lng),
+            this.map = new google.maps.Map(this.mapElement, {
+                center: new google.maps.LatLng(mapCenter.lat, mapCenter.lng),
                 scrollwheel: false,
                 zoomControlOptions: {
                     position: google.maps.ControlPosition.RIGHT
                 },
                 zoom: this.zoom
             });
-
         }
-        this.addMarkerBtn.on("click", this.handleAddMarkerBtnClick.bind(this));
+
     },
 
     addMarkerToMap: function(lat, lng){
@@ -74,18 +76,19 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
     },
 
     handleAddMarkerBtnClick: function(e){
-        if (!this.addMarkerBtn.hasClass("active")){
+        $(this.mapElement).toggleClass("click");
+        this.addMarkerBtn.toggleClass("active");
+        if ($(this.addMarkerBtn).hasClass("active")){
             this.map.addListener("click", this.handleMapClick.bind(this));
-            $(".mw-map").addClass("click");
-            this.addMarkerBtn.addClass("active");
         }else{
-            $(".mw-map").removeClass("click");
-            this.addMarkerBtn.removeClass("active");
+            google.maps.event.clearListeners(this.map, 'click');
         }
-
     },
 
     handleMapClick: function(e){
+        google.maps.event.clearListeners(this.map, 'click');
+        $(this.mapElement).removeClass("click");
+        this.addMarkerBtn.removeClass("active");
         this.updateLocationInput(e.latLng.lat(), e.latLng.lng())
     }
 });

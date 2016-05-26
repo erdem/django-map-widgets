@@ -190,7 +190,11 @@
 }
 
 .mw-map.click div{
-    cursor: crosshair !important;
+    cursor: crosshair;
+}
+
+.mw-map.click div.gmnoprint div{
+    cursor: pointer;
 }
 
 
