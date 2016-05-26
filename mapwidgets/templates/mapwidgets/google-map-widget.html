@@ -44,6 +44,7 @@
     var mapOptions = JSON.parse("{{ options|escapejs }}");
     new DjangoGoogleMapWidget({
         locationInput: $("#{{ id }}"),
+        locationFieldValue: JSON.parse("{{ field_value|escapejs }}"),
         mapApiKey: null,
         mapElement: document.getElementById('mw-map'),
         mapCenterLocationName: mapOptions.mapCenterLocationName,

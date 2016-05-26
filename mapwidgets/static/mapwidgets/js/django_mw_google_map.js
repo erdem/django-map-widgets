@@ -8,7 +8,7 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
 
         //todo simplify this method
         if (this.mapCenterLocationName){
-            geocoder = new google.maps.Geocoder();
+            var geocoder = new google.maps.Geocoder();
             geocoder.geocode({'address' : this.mapCenterLocationName}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     var geo_location = results[0].geometry.location;
@@ -29,6 +29,10 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
                     zoom: this.zoom
                 });
 
+                if (this.locationFieldValue){
+                    console.log(this.locationFieldValue);
+                    this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng)
+                }
             }.bind(this));
         }else{
             this.map = new google.maps.Map(this.mapElement, {
@@ -39,6 +43,9 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
                 },
                 zoom: this.zoom
             });
+            if (this.locationFieldValue){
+                this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng)
+            }
         }
 
     },

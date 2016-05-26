@@ -141,7 +141,7 @@ MEDIA_URL = '/uploads/'
 
 
 MAP_WIDGET_OPTIONS = {
-    "mapCenterLocationName": "Chiswick",
+    "mapCenterLocationName": "richmond",
     "mapCenterLocation": {
         "lat": 57.7177013,
         "lng": -16.6300491
