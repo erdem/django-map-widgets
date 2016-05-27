@@ -35,7 +35,7 @@
 
     <div class="mw-footer">
         <span class="help-text">this is a help text</span>
-        <a class="btn btn-danger mw-btn-reset pull-right" ><i class="icon-trash-empty"></i></a>
+        <a class="btn  mw-btn-delete pull-right {{ serialized|yesno:"btn-danger, btn-default disabled" }}" ><i class="icon-trash-empty"></i></a>
     </div>
     <div class="animated-loader"></div>
 </div>
@@ -63,7 +63,7 @@
             myLocationBtn: $(".mw-btn-my-location", wrapElemSelector),
             coordinatesOverlay: $(".mw-coordinates-overlay", wrapElemSelector),
             addressAutoCompleteInput: document.getElementById(googleAutoInputID),
-            resetBtn: $(".mw-btn-reset", wrapElemSelector),
+            deleteBtn: $(".mw-btn-delete", wrapElemSelector),
             addMarkerBtn: $("#mw-btn-add-marker", wrapElemSelector),
             loaderOverlayElem: $("#mw-loader-overlay", wrapElemSelector),
             zoom: mapOptions.zoom

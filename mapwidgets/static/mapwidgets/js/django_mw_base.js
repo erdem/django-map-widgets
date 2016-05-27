@@ -10,7 +10,7 @@ DjangoMapWidgetBase = $.Class.extend({
         this.coordinatesOverlayInputs.on("change", this.handleCoordinatesInputsChange.bind(this));
         this.addMarkerBtn.on("click", this.handleAddMarkerBtnClick.bind(this));
         this.myLocationBtn.on("click", this.handleMyLocationBtnClick.bind(this));
-        this.resetBtn.on("click", this.resetMap.bind(this));
+        this.deleteBtn.on("click", this.deleteMarker.bind(this));
 
         var autocomplete = new google.maps.places.Autocomplete(this.addressAutoCompleteInput);
         google.maps.event.addListener(autocomplete, 'place_changed', this.handleAutoCompletePlaceChange.bind(this, autocomplete));
@@ -66,7 +66,13 @@ DjangoMapWidgetBase = $.Class.extend({
         this.locationInput.val(location_input_val);
         this.updateCoordinatesInputs(lat, lng);
         this.addMarkerToMap(lat, lng);
+        this.locationFieldValue = {
+            "lng": lng,
+            "lat": lat
+        };
+        this.deleteBtn.removeClass("btn-default disabled").addClass("btn-danger");
         this.hideOverlay();
+
     },
 
     toggleCoordinatesOverlay: function(){
@@ -101,9 +107,7 @@ DjangoMapWidgetBase = $.Class.extend({
         }else{
             this.handlecurrentPositionError();
         }
-
     },
-
 
     handleCurrentPosition: function(location){
         this.updateLocationInput(location.coords.latitude, location.coords.longitude)
@@ -129,11 +133,15 @@ DjangoMapWidgetBase = $.Class.extend({
         this.fitBoundMarker()
     },
     
-    resetMap: function(){
-        this.hideOverlay();
-        this.locationInput.val("");
-        this.coordinatesOverlayInputs.val("");
-        this.removeMarker()
+    deleteMarker: function(){
+        if (!$.isEmptyObject(this.locationFieldValue)) {
+            this.hideOverlay();
+            this.locationInput.val("");
+            this.coordinatesOverlayInputs.val("");
+            this.removeMarker();
+            this.deleteBtn.removeClass("btn-danger").addClass("btn-default disabled");
+            this.locationFieldValue = null
+        }
     },
 
     showOverlay: function(){
