@@ -47,7 +47,6 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
                 this.fitBoundMarker();
             }
         }
-
     },
 
     addMarkerToMap: function(lat, lng){

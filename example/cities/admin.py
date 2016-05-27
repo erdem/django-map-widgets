@@ -8,7 +8,9 @@ from mapwidgets.widgets import GoogleMapWidget
 class DistrictAdminInline(admin.TabularInline):
     model = District
     extra = 3
-
+    formfield_overrides = {
+        models.PointField: {"widget": GoogleMapWidget}
+    }
 
 class CityAdminForm(forms.ModelForm):
     class Meta:
@@ -16,7 +18,9 @@ class CityAdminForm(forms.ModelForm):
         fields = "__all__"
         widgets = {
             'coordinates': GoogleMapWidget,
+            'city_hall': GoogleMapWidget,
         }
+
 
 class CityAdmin(admin.ModelAdmin):
     inlines = (DistrictAdminInline,)
