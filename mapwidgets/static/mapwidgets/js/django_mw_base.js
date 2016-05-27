@@ -15,8 +15,7 @@ DjangoMapWidgetBase = $.Class.extend({
         var autocomplete = new google.maps.places.Autocomplete(this.addressAutoCompleteInput);
         google.maps.event.addListener(autocomplete, 'place_changed', this.handleAutoCompletePlaceChange.bind(this, autocomplete));
         google.maps.event.addDomListener(this.addressAutoCompleteInput, 'keydown', this.handleAutoCompleteInputKeyDown.bind(this));
-        // $(this.addressAutoCompleteInput).on("keydown", this.handleAutoCompleteInputKeyDown.bind(this));
-
+        console.log(this.wrapElemSelector);
         this.initializeMap();
     },
 
@@ -69,24 +68,24 @@ DjangoMapWidgetBase = $.Class.extend({
 
     toggleCoordinatesOverlay: function(){
         this.coordinatesOverlayToggleBtn.toggleClass("active");
-        $("#mw-coordinates-overlay").toggleClass("hide");
+        $(".mw-coordinates-overlay", this.wrapElemSelector).toggleClass("hide");
     },
 
     updateCoordinatesInputs: function(lat, lng){
-        $("#mw-overlay-latitude").val(lat || "");
-        $("#mw-overlay-longitude").val(lng || "");
+        $(".mw-overlay-latitude", this.wrapElemSelector).val(lat || "");
+        $(".mw-overlay-longitude", this.wrapElemSelector).val(lng || "");
     },
 
     handleCoordinatesInputsChange: function (e) {
-        var lat = $("#mw-overlay-latitude").val();
-        var lng = $("#mw-overlay-longitude").val();
+        var lat = $(".mw-overlay-latitude", this.wrapElemSelector).val();
+        var lng = $(".mw-overlay-longitude", this.wrapElemSelector).val();
         if (lat && lng){
             this.updateLocationInput(lat, lng);
         }
     },
 
     handleCoordinatesOverlayDoneBtnClick: function(){
-        $("#mw-coordinates-overlay").addClass("hide");
+        $(".mw-coordinates-overlay", this.wrapElemSelector).addClass("hide");
     },
 
     handleMyLocationBtnClick: function(){

@@ -1,16 +1,16 @@
-<div class="mw-wrap">
+<div class="mw-wrap" id="{{ name }}-mw-wrap">
     <div class="mw-header">
 
         <div class="mw-coordinates-wrap">
             <a  class="btn btn-primary mw-btn-coordinates">Coordinates <i class="icon-down-dir" ></i></a>
-            <div class="mw-coordinates-overlay hide" id="mw-coordinates-overlay">
-                <label for="mw-overlay-latitude">
+            <div class="mw-coordinates-overlay hide">
+                <label for="{{ name }}-mw-overlay-latitude">
                     Latitude:
-                    <input type="text" id="mw-overlay-latitude" class="form-control mw-overlay-input" placeholder="Ex: 41.015137"/>
+                    <input type="text" id="{{ name }}-mw-overlay-latitude" class="form-control mw-overlay-input mw-overlay-latitude" placeholder="Ex: 41.015137"/>
                 </label>
-                <label for="mw-overlay-longitude">
+                <label for="{{ name }}-mw-overlay-longitude">
                     Longitude:
-                    <input type="text" id="mw-overlay-longitude" class="form-control mw-overlay-input" placeholder="Ex: 28.979530"/>
+                    <input type="text" id="{{ name }}-mw-overlay-longitude" class="form-control mw-overlay-input mw-overlay-longitude" placeholder="Ex: 28.979530"/>
                 </label>
                 <a class="btn btn-success mw-btn-coordinates-done pull-right">Done</a>
             </div>
@@ -19,7 +19,7 @@
         <a class="btn btn-info mw-btn-my-location" >Get My Location</a>
         <a class="btn btn-warning btn-add-marker" id="mw-btn-add-marker"><i class="icon-location"></i></a>
         <div class="mw-adress-input-wrap pull-right">
-            <input type="text" class="form-control pull-right" id="mw-google-address-input" placeholder="Enter or update the address here"/>
+            <input type="text" class="form-control pull-right" id="{{ name }}-mw-google-address-input" placeholder="Enter or update the address here"/>
         </div>
     </div>
 
@@ -27,7 +27,7 @@
         <div class="mw-loader-overlay hide" id="mw-loader-overlay">
             <div class="mw-loader"></div>
         </div>
-        <div id="mw-map" class="mw-map"></div>
+        <div id="{{ name }}-map-elem" class="mw-map"></div>
         <div class="hide" id="mw-form-inputs">
             <textarea id="{{ id }}" class="hide" name="{{ name }}">{{ serialized }}</textarea>
         </div>
@@ -35,32 +35,38 @@
 
     <div class="mw-footer">
         <span class="help-text">this is a help text</span>
-        <a class="btn btn-default pull-right" id="mw-btn-reset"><i class="icon-arrows-cw"></i> Reset</a>
-        <a class="btn btn-default pull-right" id="mw-btn-reset"><i class="icon-trash-empty"></i>Full screen</a>
+        <a class="btn btn-default mw-btn-reset pull-right"><i class="icon-arrows-cw"></i> Reset</a>
     </div>
     <div class="animated-loader"></div>
 </div>
 
 <script type="application/javascript">
-    var mapOptions = JSON.parse("{{ options|escapejs }}");
-    new DjangoGoogleMapWidget({
-        locationInput: $("#{{ id }}"),
-        locationFieldValue: JSON.parse("{{ field_value|escapejs }}"),
-        mapApiKey: null,
-        mapElement: document.getElementById('mw-map'),
-        mapCenterLocationName: mapOptions.mapCenterLocationName,
-        mapCenterLocation: mapOptions.mapCenterLocation,
-        googleAddressInput: null,
-        coordinatesInputs: null,
-        coordinatesOverlayToggleBtn: $(".mw-btn-coordinates"),
-        coordinatesOverlayDoneBtn: $(".mw-btn-coordinates-done"),
-        coordinatesOverlayInputs: $(".mw-overlay-input"),
-        myLocationBtn: $(".mw-btn-my-location"),
-        coordinatesOverlay: $("#mw-coordinates-overlay"),
-        addressAutoCompleteInput: document.getElementById("mw-google-address-input"),
-        resetBtn: $("#mw-btn-reset"),
-        addMarkerBtn: $("#mw-btn-add-marker"),
-        loaderOverlayElem: $("#mw-loader-overlay"),
-        zoom: mapOptions.zoom
-    });
+    (function() {
+        var mapOptions = JSON.parse("{{ options|escapejs }}");
+        var wrapElemSelector = "#{{ name }}-mw-wrap";
+        var mapElemID = "{{ name }}-map-elem";
+        var googleAutoInputID = "{{ name }}-mw-google-address-input";
+
+        new DjangoGoogleMapWidget({
+            locationInput: $("#{{ id }}"),
+            wrapElemSelector: wrapElemSelector,
+            locationFieldValue: JSON.parse("{{ field_value|escapejs }}"),
+            mapApiKey: null,
+            mapElement: document.getElementById(mapElemID),
+            mapCenterLocationName: mapOptions.mapCenterLocationName,
+            mapCenterLocation: mapOptions.mapCenterLocation,
+            googleAddressInput: null,
+            coordinatesInputs: null,
+            coordinatesOverlayToggleBtn: $(".mw-btn-coordinates", wrapElemSelector),
+            coordinatesOverlayDoneBtn: $(".mw-btn-coordinates-done", wrapElemSelector),
+            coordinatesOverlayInputs: $(".mw-overlay-input", wrapElemSelector),
+            myLocationBtn: $(".mw-btn-my-location", wrapElemSelector),
+            coordinatesOverlay: $(".mw-coordinates-overlay", wrapElemSelector),
+            addressAutoCompleteInput: document.getElementById(googleAutoInputID),
+            resetBtn: $(".mw-btn-reset", wrapElemSelector),
+            addMarkerBtn: $("#mw-btn-add-marker", wrapElemSelector),
+            loaderOverlayElem: $("#mw-loader-overlay", wrapElemSelector),
+            zoom: mapOptions.zoom
+        });
+    })();
 </script>
