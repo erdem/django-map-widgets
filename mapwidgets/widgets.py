@@ -32,7 +32,7 @@ class GoogleMapWidget(BaseGeometryWidget):
             field_value["lng"] = value.x
             field_value["lat"] = value.y
 
-        if isinstance(value, basestring):
+        if value and isinstance(value, basestring):
             coordinates = self.deserialize(value)
             field_value["lng"] = coordinates.x
             field_value["lat"] = coordinates.y

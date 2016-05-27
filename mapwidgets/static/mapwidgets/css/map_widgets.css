@@ -9,16 +9,6 @@
   font-weight: normal;
   font-style: normal;
 }
-/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
-/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
-/*
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-  @font-face {
-    font-family: 'fontello';
-    src: url('../font/fontello.svg?7191511#fontello') format('svg');
-  }
-}
-*/
 
 [class^="icon-"]:before, [class*=" icon-"]:before {
     font-family: "fontello";
@@ -86,12 +76,10 @@
 }
 
 .mw-wrap {
-    width: 60%;
-    height: 480px;
+    width: 80%;
+    margin-bottom: 10px;
     display: block;
-    margin: 80px auto;
-    border: 1px solid #000000;
-    padding: 10px;
+    overflow: hidden;
 }
 
 .mw-wrap *{
@@ -195,6 +183,11 @@
     cursor: pointer;
 }
 
+
+.mw-help-text.help-text{
+    font-size: 11px;
+    color: #999;
+}
 
 .btn {
     display: inline-block;
