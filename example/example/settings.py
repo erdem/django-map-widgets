@@ -147,5 +147,5 @@ MAP_WIDGET_OPTIONS = {
         "lng": -16.6300491
     },
     "zoom": 12,
-    # "mapApiKey": "AIzaSyDOMclDM4JUIfUbLZ_5Y-pi9h7_0S9DIpE"
+    "mapApiKey": "AIzaSyDRIvN9brpxIm_xgyTnhUR9a_VTCcTN2bE"
 }

@@ -2,7 +2,7 @@
     <div class="mw-header">
 
         <div class="mw-coordinates-wrap">
-            <a  class="btn btn-primary" id="mw-btn-coordinates">Coordinates <i class="icon-down-dir" ></i></a>
+            <a  class="btn btn-primary mw-btn-coordinates">Coordinates <i class="icon-down-dir" ></i></a>
             <div class="mw-coordinates-overlay hide" id="mw-coordinates-overlay">
                 <label for="mw-overlay-latitude">
                     Latitude:
@@ -12,11 +12,11 @@
                     Longitude:
                     <input type="text" id="mw-overlay-longitude" class="form-control mw-overlay-input" placeholder="Ex: 28.979530"/>
                 </label>
-                <a class="btn btn-success mw-btn-coordinates-done pull-right" id="mw-btn-coordinates-done">Done</a>
+                <a class="btn btn-success mw-btn-coordinates-done pull-right">Done</a>
             </div>
         </div>
 
-        <a class="btn btn-info" id="mw-btn-my-location">Get My Location</a>
+        <a class="btn btn-info mw-btn-my-location" >Get My Location</a>
         <a class="btn btn-warning btn-add-marker" id="mw-btn-add-marker"><i class="icon-location"></i></a>
         <div class="mw-adress-input-wrap pull-right">
             <input type="text" class="form-control pull-right" id="mw-google-address-input" placeholder="Enter or update the address here"/>
@@ -36,7 +36,7 @@
     <div class="mw-footer">
         <span class="help-text">this is a help text</span>
         <a class="btn btn-default pull-right" id="mw-btn-reset"><i class="icon-arrows-cw"></i> Reset</a>
-        <a class="btn btn-default pull-right" id="mw-btn-reset"><i class="icon-arrows-cw"></i>Full screen</a>
+        <a class="btn btn-default pull-right" id="mw-btn-reset"><i class="icon-trash-empty"></i>Full screen</a>
     </div>
     <div class="animated-loader"></div>
 </div>
@@ -52,10 +52,10 @@
         mapCenterLocation: mapOptions.mapCenterLocation,
         googleAddressInput: null,
         coordinatesInputs: null,
-        coordinatesOverlayToggleBtn: $("#mw-btn-coordinates"),
-        coordinatesOverlayDoneBtn: $("#mw-btn-coordinates-done"),
+        coordinatesOverlayToggleBtn: $(".mw-btn-coordinates"),
+        coordinatesOverlayDoneBtn: $(".mw-btn-coordinates-done"),
         coordinatesOverlayInputs: $(".mw-overlay-input"),
-        myLocationBtn: $("#mw-btn-my-location"),
+        myLocationBtn: $(".mw-btn-my-location"),
         coordinatesOverlay: $("#mw-coordinates-overlay"),
         addressAutoCompleteInput: document.getElementById("mw-google-address-input"),
         resetBtn: $("#mw-btn-reset"),
