@@ -30,6 +30,7 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
 
                 if (!$.isEmptyObject(this.locationFieldValue)){
                     this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng)
+                    this.fitBoundMarker();
                 }
             }.bind(this));
         }else{
@@ -41,8 +42,9 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
                 },
                 zoom: this.zoom
             });
-            if (this.locationFieldValue){
+            if (!$.isEmptyObject(this.locationFieldValue)){
                 this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng)
+                this.fitBoundMarker();
             }
         }
 
@@ -57,7 +59,9 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
             draggable: true
         });
         this.marker.addListener("dragend", this.dragMarker.bind(this));
+    },
 
+    fitBoundMarker: function () {
         var bounds = new google.maps.LatLngBounds();
         bounds.extend(this.marker.getPosition());
         this.map.fitBounds(bounds);

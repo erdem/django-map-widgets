@@ -15,7 +15,6 @@ DjangoMapWidgetBase = $.Class.extend({
         var autocomplete = new google.maps.places.Autocomplete(this.addressAutoCompleteInput);
         google.maps.event.addListener(autocomplete, 'place_changed', this.handleAutoCompletePlaceChange.bind(this, autocomplete));
         google.maps.event.addDomListener(this.addressAutoCompleteInput, 'keydown', this.handleAutoCompleteInputKeyDown.bind(this));
-        console.log(this.wrapElemSelector);
         this.initializeMap();
     },
 
@@ -28,6 +27,10 @@ DjangoMapWidgetBase = $.Class.extend({
     },
 
     addMarkerToMap: function(lat, lng){
+        console.warn("Implement this method for your map js library.");
+    },
+
+    fitBoundMarker: function(){
         console.warn("Implement this method for your map js library.");
     },
 
@@ -98,11 +101,13 @@ DjangoMapWidgetBase = $.Class.extend({
         }else{
             this.handlecurrentPositionError();
         }
+
     },
 
 
     handleCurrentPosition: function(location){
         this.updateLocationInput(location.coords.latitude, location.coords.longitude)
+        this.fitBoundMarker();
     },
 
     handlecurrentPositionError: function(){
@@ -121,6 +126,7 @@ DjangoMapWidgetBase = $.Class.extend({
         var lat = place.geometry.location.lat();
         var lng = place.geometry.location.lng();
         this.updateLocationInput(lat, lng);
+        this.fitBoundMarker()
     },
     
     resetMap: function(){
