@@ -90,6 +90,7 @@ DjangoMapWidgetBase = $.Class.extend({
         var lng = $(".mw-overlay-longitude", this.wrapElemSelector).val();
         if (lat && lng){
             this.updateLocationInput(lat, lng);
+            this.fitBoundMarker();
         }
     },
 

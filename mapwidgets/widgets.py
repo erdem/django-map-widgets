@@ -27,6 +27,7 @@ class GoogleMapWidget(BaseGeometryWidget):
     def render(self, name, value, attrs=None):
         if not attrs:
             attrs = dict()
+
         field_value = {}
         if isinstance(value,  Point):
             field_value["lng"] = value.x

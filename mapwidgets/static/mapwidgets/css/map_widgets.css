@@ -95,7 +95,7 @@
 }
 
 .mw-header {
-    margin-bottom: 10px;
+    margin-bottom: 6px;
 }
 
 .mw-header .mw-adress-input-wrap{
@@ -109,13 +109,23 @@
 
 .mw-coordinates-overlay{
     width: 180px;
-    background: #ffffff;
-    margin-top: 5px;
+    background: #e7e7e7;
+    margin-top: 3px;
     position: absolute;
     z-index: 100;
     padding: 10px;
     -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
     box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+
+.mw-coordinates-overlay label {
+    float: none;
+    width: 155px;
+    height: 60px;
+}
+
+.mw-coordinates-overlay input {
+    margin: 5px 0 0 0;
 }
 
 .mw-coordinates-overlay input.form-control{
