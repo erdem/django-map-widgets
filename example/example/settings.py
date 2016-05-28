@@ -140,12 +140,12 @@ MEDIA_ROOT = os.path.join(os.path.realpath(os.path.dirname(__file__)), 'media/fi
 MEDIA_URL = '/uploads/'
 
 
-MAP_WIDGET_OPTIONS = {
+MAP_WIDGETS = {
     "mapCenterLocationName": "richmond",
     "mapCenterLocation": {
         "lat": 57.7177013,
         "lng": -16.6300491
     },
     "zoom": 12,
-    "mapApiKey": "AIzaSyDRIvN9brpxIm_xgyTnhUR9a_VTCcTN2bE"
+    "GOOGLE_MAP_API_KEY": "AIzaSyDRIvN9brpxIm_xgyTnhUR9a_VTCcTN2bE"
 }
