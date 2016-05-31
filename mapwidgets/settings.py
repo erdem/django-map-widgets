@@ -27,6 +27,4 @@ class MapWidgetSettings(object):
 
         return self._map_settings.get(attr)
 
-
-
 mw_settings = MapWidgetSettings()
