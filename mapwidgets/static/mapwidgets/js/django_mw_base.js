@@ -1,6 +1,3 @@
-$.namespace("DjangoMapWidgetBase");
-
-
 DjangoMapWidgetBase = $.Class.extend({
 
     init: function(options){
