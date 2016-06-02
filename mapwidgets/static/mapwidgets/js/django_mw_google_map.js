@@ -11,38 +11,42 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
             geocoder.geocode({'address' : this.mapCenterLocationName}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     var geo_location = results[0].geometry.location;
-                    mapCenter = {
-                        "lat": geo_location.lat(),
-                        "lng": geo_location.lng()
-                    };
+                    mapCenter = [geo_location.lat(), geo_location.lng()];
                 }else{
                     console.warn("Cannot find " + this.mapCenterLocationName + " on google geo service.")
                 }
 
                 this.map = new google.maps.Map(this.mapElement, {
-                    center: new google.maps.LatLng(mapCenter.lat, mapCenter.lng),
+                    center: new google.maps.LatLng(mapCenter[0], mapCenter[1]),
                     scrollwheel: false,
                     zoomControlOptions: {
                         position: google.maps.ControlPosition.RIGHT
                     },
                     zoom: this.zoom
                 });
+
+                if (!$.isEmptyObject(this.locationFieldValue)){
+                    this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
+                    this.fitBoundMarker();
+                }
+
             }.bind(this));
         }else{
             this.map = new google.maps.Map(this.mapElement, {
-                center: new google.maps.LatLng(mapCenter.lat, mapCenter.lng),
+                center: new google.maps.LatLng(mapCenter[0], mapCenter[1]),
                 scrollwheel: false,
                 zoomControlOptions: {
                     position: google.maps.ControlPosition.RIGHT
                 },
                 zoom: this.zoom
             });
+
+            if (!$.isEmptyObject(this.locationFieldValue)){
+                this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
+                this.fitBoundMarker();
+            }
         }
 
-        if (!$.isEmptyObject(this.locationFieldValue)){
-            this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
-            this.fitBoundMarker();
-        }
     },
 
     addMarkerToMap: function(lat, lng){
