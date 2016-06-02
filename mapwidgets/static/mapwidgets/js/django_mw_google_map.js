@@ -1,3 +1,6 @@
+$.namespace("DjangoGoogleMapWidget");
+
+
 DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
 
     initializeMap: function(){
