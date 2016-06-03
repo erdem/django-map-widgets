@@ -29,6 +29,8 @@ class GoogleMapWidget(BaseGeometryWidget):
     def map_options():
         return json.dumps(mw_settings.map_conf)
 
+
+
     def render(self, name, value, attrs=None):
         if not attrs:
             attrs = dict()
@@ -67,7 +69,26 @@ class InlineMapWidgetMixin(object):
 
 
 class GoogleInlineMapWidget(InlineMapWidgetMixin, GoogleMapWidget):
-    inline_add_row_jquery_selector = "as"
+    inline_add_row_jquery_selector = None
     template_name = "mapwidgets/google-inline-map-widget.html"
 
 
+    class Media:
+        css = {
+            "all": (
+                "mapwidgets/css/map_widgets.css",
+            )
+        }
+
+        js = (
+            "https://maps.googleapis.com/maps/api/js?libraries=places&key=%s" % mw_settings.GOOGLE_MAP_API_KEY,
+            "https://code.jquery.com/jquery-1.11.3.min.js",
+            "mapwidgets/js/jquery_class.min.js",
+            "mapwidgets/js/django_mw_base.js",
+            "mapwidgets/js/django_mw_google_map.js",
+            "mapwidgets/js/django_mw_inline_google_map.js",
+        )
+
+
+class DjangoAdminInlineGoogleMapWidget(GoogleInlineMapWidget):
+    inline_add_row_jquery_selector = ".inline-group .add-row a"
