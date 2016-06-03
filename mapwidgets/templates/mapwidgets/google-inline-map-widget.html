@@ -1,0 +1,33 @@
+{% extends "mapwidgets/google-map-widget.html" %}
+{% block javascript %}
+    <script type="application/javascript">
+        (function() {
+            var mapOptions = JSON.parse("{{ options|escapejs }}");
+            var wrapElemSelector = "#{{ name }}-mw-wrap";
+            var mapElemID = "{{ name }}-map-elem";
+            var googleAutoInputID = "{{ name }}-mw-google-address-input";
+
+            new DjangoGoogleMapWidget({
+                locationInput: $("#{{ id }}"),
+                wrapElemSelector: wrapElemSelector,
+                locationFieldValue: JSON.parse("{{ field_value|escapejs }}"),
+                mapApiKey: null,
+                mapElement: document.getElementById(mapElemID),
+                mapCenterLocationName: mapOptions.mapCenterLocationName,
+                mapCenterLocation: mapOptions.mapCenterLocation,
+                googleAddressInput: null,
+                coordinatesInputs: null,
+                coordinatesOverlayToggleBtn: $(".mw-btn-coordinates", wrapElemSelector),
+                coordinatesOverlayDoneBtn: $(".mw-btn-coordinates-done", wrapElemSelector),
+                coordinatesOverlayInputs: $(".mw-overlay-input", wrapElemSelector),
+                myLocationBtn: $(".mw-btn-my-location", wrapElemSelector),
+                coordinatesOverlay: $(".mw-coordinates-overlay", wrapElemSelector),
+                addressAutoCompleteInput: document.getElementById(googleAutoInputID),
+                deleteBtn: $(".mw-btn-delete", wrapElemSelector),
+                addMarkerBtn: $("#mw-btn-add-marker", wrapElemSelector),
+                loaderOverlayElem: $("#mw-loader-overlay", wrapElemSelector),
+                zoom: mapOptions.zoom
+            });
+        })();
+    </script>
+{% endblock javascript %}

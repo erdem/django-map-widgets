@@ -1,12 +1,10 @@
 $.namespace("DjangoGoogleMapWidget");
 
-
 DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
 
     initializeMap: function(){
         var mapCenter = this.mapCenterLocation;
 
-        // todo simplify
         if (this.mapCenterLocationName){
             var geocoder = new google.maps.Geocoder();
             geocoder.geocode({'address' : this.mapCenterLocationName}, function(results, status) {
@@ -32,6 +30,7 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
                 }
 
             }.bind(this));
+
         }else{
             this.map = new google.maps.Map(this.mapElement, {
                 center: new google.maps.LatLng(mapCenter[0], mapCenter[1]),
@@ -65,7 +64,6 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
         var bounds = new google.maps.LatLngBounds();
         bounds.extend(this.marker.getPosition());
         this.map.fitBounds(bounds);
-        // todo optional
         var listener = google.maps.event.addListener(this.map, "bounds_changed", function() {
             if (this.getZoom() > 15) {
                 this.setZoom(15)

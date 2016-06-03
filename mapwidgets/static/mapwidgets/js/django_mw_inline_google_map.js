@@ -1,0 +1,10 @@
+$.namespace("DjangoInlineGoogleMapWidget");
+
+
+DjangoInlineGoogleMapWidget = DjangoGoogleMapWidget.extend({
+
+    init: function (options) {
+        $.extend(this, options);
+        console.log("inline");
+    }
+});
