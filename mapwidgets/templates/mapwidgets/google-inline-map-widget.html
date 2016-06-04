@@ -6,9 +6,9 @@
             var wrapElemSelector = "#{{ name }}-mw-wrap";
             var mapElemID = "{{ name }}-map-elem";
             var googleAutoInputID = "{{ name }}-mw-google-address-input";
-            console.log(mapOptions.inline_add_row_jquery_selector);
+
             new DjangoInlineGoogleMapWidget({
-                addInlineRowBtn: $(mapOptions.inline_add_row_jquery_selector, "body"),
+                addInlineRowBtn: mapOptions.inline_add_row_jquery_selector,
                 locationInput: $("#{{ id }}"),
                 wrapElemSelector: wrapElemSelector,
                 locationFieldValue: JSON.parse("{{ field_value|escapejs }}"),

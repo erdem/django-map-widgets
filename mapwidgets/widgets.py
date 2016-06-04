@@ -82,9 +82,10 @@ class GoogleInlineMapWidget(InlineMapWidgetMixin, GoogleMapWidget):
 
         js = (
             "https://maps.googleapis.com/maps/api/js?libraries=places&key=%s" % mw_settings.GOOGLE_MAP_API_KEY,
-            "https://code.jquery.com/jquery-1.11.3.min.js",
+            "https://code.jquery.com/jquery-1.11.3.min.js",  # todo optional
             "mapwidgets/js/jquery_class.min.js",
             "mapwidgets/js/django_mw_base.js",
+            "mapwidgets/js/django-mw-generater.js",
             "mapwidgets/js/django_mw_google_map.js",
             "mapwidgets/js/django_mw_inline_google_map.js",
         )
