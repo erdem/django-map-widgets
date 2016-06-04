@@ -4,7 +4,8 @@ DjangoMapWidgetGenerater = $.Class.extend({
 
     init: function (options) {
         $.extend(this, options);
-        $(document).on("click", ".add-row a", this.handleInlineAddRowBtn.bind(this));
+        console.log("initialize");
+        $(document).on("click", this.inline_add_row_jquery_selector, this.handleInlineAddRowBtn.bind(this));
     },
 
     handleInlineAddRowBtn: function (e) {
@@ -12,6 +13,4 @@ DjangoMapWidgetGenerater = $.Class.extend({
     }
 });
 
-(function() {
-    var django_mw_generate = new DjangoMapWidgetGenerater()
-})();
+
