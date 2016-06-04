@@ -87,7 +87,6 @@ class GoogleInlineMapWidget(InlineMapWidgetMixin, GoogleMapWidget):
             "mapwidgets/js/django_mw_base.js",
             "mapwidgets/js/django-mw-generater.js",
             "mapwidgets/js/django_mw_google_map.js",
-            "mapwidgets/js/django_mw_inline_google_map.js",
         )
 
 
