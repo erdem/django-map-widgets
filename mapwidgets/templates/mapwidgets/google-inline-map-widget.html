@@ -1,4 +1,8 @@
 {% extends "mapwidgets/google-map-widget.html" %}
+{% block extra_input %}
+    <input type="hidden"  class="js-class-options" value="{{ js_class_options }}">
+{% endblock extra_input %}
+
 {% block extra_javascript %}
     var inline_add_row_jquery_selector = mapOptions.inline_add_row_jquery_selector
     if (typeof django_mw_generate === 'undefined'){

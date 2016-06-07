@@ -31,7 +31,10 @@
             </div>
             <div id="{{ name }}-map-elem" class="mw-map"></div>
             <div id="mw-form-inputs" style="display: none" class="hide">
-                <textarea id="{{ id }}" class="hide" name="{{ name }}">{{ serialized }}</textarea>
+                <textarea id="{{ id }}" name="{{ name }}">{{ serialized }}</textarea>
+                {% block extra_input %}
+                {% endblock extra_input %}
+
             </div>
         </div>
 
@@ -50,8 +53,7 @@
             var wrapElemSelector = "#{{ name }}-mw-wrap";
             var mapElemID = "{{ name }}-map-elem";
             var googleAutoInputID = "{{ name }}-mw-google-address-input";
-
-            new DjangoGoogleMapWidget({
+            var mapWidgetOptions = {
                 locationInput: $("#{{ id }}"),
                 wrapElemSelector: wrapElemSelector,
                 locationFieldValue: JSON.parse("{{ field_value|escapejs }}"),
@@ -71,7 +73,8 @@
                 addMarkerBtn: $("#mw-btn-add-marker", wrapElemSelector),
                 loaderOverlayElem: $("#mw-loader-overlay", wrapElemSelector),
                 zoom: mapOptions.zoom
-            });
+            };
+            new DjangoGoogleMapWidget(mapWidgetOptions);
             {% block extra_javascript %}
 
             {% endblock %}
