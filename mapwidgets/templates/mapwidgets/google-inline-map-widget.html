@@ -6,7 +6,6 @@
 {% block javascript %}
     <script type="application/javascript">
         (function() {
-
             var mapOptions = JSON.parse("{{ options|escapejs }}");
             var widgetData = JSON.parse("{{ js_widget_data|escapejs }}")
             var wrapElemSelector = widgetData.wrapElemSelector;
@@ -22,13 +21,11 @@
                 mapElement: document.getElementById(mapElemID),
                 mapCenterLocationName: mapOptions.mapCenterLocationName,
                 mapCenterLocation: mapOptions.mapCenterLocation,
-                googleAddressInput: null,
-                coordinatesInputs: null,
                 coordinatesOverlayToggleBtn: $(".mw-btn-coordinates", wrapElemSelector),
                 coordinatesOverlayDoneBtn: $(".mw-btn-coordinates-done", wrapElemSelector),
                 coordinatesOverlayInputs: $(".mw-overlay-input", wrapElemSelector),
-                myLocationBtn: $(".mw-btn-my-location", wrapElemSelector),
                 coordinatesOverlay: $(".mw-coordinates-overlay", wrapElemSelector),
+                myLocationBtn: $(".mw-btn-my-location", wrapElemSelector),
                 addressAutoCompleteInput: document.getElementById(googleAutoInputID),
                 deleteBtn: $(".mw-btn-delete", wrapElemSelector),
                 addMarkerBtn: $(".mw-btn-add-marker", wrapElemSelector),
@@ -38,12 +35,13 @@
 
             new DjangoGoogleMapWidget(mapWidgetOptions);
 
-{#            var inline_add_row_jquery_selector = mapOptions.inline_add_row_jquery_selector;#}
-{#            if (typeof django_mw_generate === 'undefined'){#}
-{#                django_mw_generate = new DjangoMapWidgetGenerater({#}
-{#                    "inline_add_row_jquery_selector" : inline_add_row_jquery_selector#}
-{#                });#}
-{#            }#}
+            var inline_add_row_jquery_selector = widgetData.inline_add_row_jquery_selector;
+            console.log(inline_add_row_jquery_selector);
+            if (typeof django_mw_generate === 'undefined'){
+                django_mw_generate = new DjangoMapWidgetGenerater({
+                    "inline_add_row_jquery_selector" : inline_add_row_jquery_selector
+                });
+            }
         })();
     </script>
 {% endblock javascript %}
