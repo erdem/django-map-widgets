@@ -18,7 +18,7 @@
                 </div>
 
                 <a class="btn btn-info mw-btn-my-location" >Set My Location</a>
-                <a class="btn btn-warning btn-add-marker" id="mw-btn-add-marker"><i class="icon-location"></i></a>
+                <a class="btn btn-warning btn-add-marker" ><i class="icon-location"></i></a>
                 <div class="mw-adress-input-wrap pull-right">
                     <input type="text" class="form-control pull-right" id="{{ name }}-mw-google-address-input" placeholder="Enter or update the address here"/>
                 </div>
@@ -26,11 +26,11 @@
         </div>
 
         <div class="mw-map-wrapper">
-            <div class="mw-loader-overlay hide" id="mw-loader-overlay">
+            <div class="mw-loader-overlay hide" >
                 <div class="mw-loader"></div>
             </div>
             <div id="{{ name }}-map-elem" class="mw-map"></div>
-            <div id="mw-form-inputs" style="display: none" class="hide">
+            <div style="display: none" class="hide">
                 <textarea id="{{ id }}" name="{{ name }}">{{ serialized }}</textarea>
                 {% block extra_input %}
                 {% endblock extra_input %}
@@ -53,8 +53,10 @@
             var wrapElemSelector = "#{{ name }}-mw-wrap";
             var mapElemID = "{{ name }}-map-elem";
             var googleAutoInputID = "{{ name }}-mw-google-address-input";
+            var locationInputID = "#{{ id }}";
+
             var mapWidgetOptions = {
-                locationInput: $("#{{ id }}"),
+                locationInput: $(locationInputID),
                 wrapElemSelector: wrapElemSelector,
                 locationFieldValue: JSON.parse("{{ field_value|escapejs }}"),
                 mapApiKey: null,
@@ -70,8 +72,8 @@
                 coordinatesOverlay: $(".mw-coordinates-overlay", wrapElemSelector),
                 addressAutoCompleteInput: document.getElementById(googleAutoInputID),
                 deleteBtn: $(".mw-btn-delete", wrapElemSelector),
-                addMarkerBtn: $("#mw-btn-add-marker", wrapElemSelector),
-                loaderOverlayElem: $("#mw-loader-overlay", wrapElemSelector),
+                addMarkerBtn: $(".mw-btn-add-marker", wrapElemSelector),
+                loaderOverlayElem: $(".mw-loader-overlay", wrapElemSelector),
                 zoom: mapOptions.zoom
             };
             new DjangoGoogleMapWidget(mapWidgetOptions);

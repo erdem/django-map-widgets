@@ -86,6 +86,30 @@ class GoogleInlineMapWidget(InlineMapWidgetMixin, GoogleMapWidget):
             "mapwidgets/js/django_mw_google_map.js",
         )
 
+    def get_js_widget_data(self, name, element_id):
+        map_elem_selector = "#%s-mw-wrap" % name
+        map_elem_id = "%s-map-elem" % name
+        google_auto_input_id = "%s-mw-google-address-input" % name
+        location_input_id = "#%s" % element_id
+
+        js_widget_params = {
+            "wrapElemSelector": map_elem_selector,
+            "mapElemID": map_elem_id,
+            "googleAutoInputID": google_auto_input_id,
+            "locationInputID": location_input_id
+        }
+        return json.dumps(js_widget_params)
+
+    def render(self, name, value, attrs=None):
+        if not attrs:
+            attrs = dict()
+
+        element_id = attrs.get("id")
+        attrs.update({
+            "js_widget_data": self.get_js_widget_data(name, element_id)
+        })
+        return super(GoogleInlineMapWidget, self).render(name, value, attrs)
+
 
 class DjangoAdminInlineGoogleMapWidget(GoogleInlineMapWidget):
     inline_add_row_jquery_selector = ".inline-group .add-row a"
