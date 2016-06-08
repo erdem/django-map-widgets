@@ -48,7 +48,7 @@
 
 {% block javascript %}
     <script type="application/javascript">
-        (function() {
+        (function($) {
             var mapOptions = JSON.parse("{{ options|escapejs }}");
             var wrapElemSelector = "#{{ name }}-mw-wrap";
             var mapElemID = "{{ name }}-map-elem";
@@ -78,6 +78,6 @@
             {% block extra_javascript %}
 
             {% endblock %}
-        })();
+        })(django.jQuery);
     </script>
 {% endblock javascript %}

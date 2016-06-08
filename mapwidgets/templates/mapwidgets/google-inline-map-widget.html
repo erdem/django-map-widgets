@@ -5,43 +5,51 @@
 
 {% block javascript %}
     <script type="application/javascript">
-        (function() {
+
+        (function($) {
             var mapOptions = JSON.parse("{{ options|escapejs }}");
-            var widgetData = JSON.parse("{{ js_widget_data|escapejs }}")
-            var wrapElemSelector = widgetData.wrapElemSelector;
-            var mapElemID = widgetData.mapElemID;
-            var googleAutoInputID = widgetData.googleAutoInputID;
-            var locationInputID = widgetData.locationInputID;
+            {% if not is_formset_empty_from_template %}
 
-            var mapWidgetOptions = {
-                locationInput: $(locationInputID),
-                wrapElemSelector: wrapElemSelector,
-                locationFieldValue: JSON.parse("{{ field_value|escapejs }}"),
-                mapApiKey: null,
-                mapElement: document.getElementById(mapElemID),
-                mapCenterLocationName: mapOptions.mapCenterLocationName,
-                mapCenterLocation: mapOptions.mapCenterLocation,
-                coordinatesOverlayToggleBtn: $(".mw-btn-coordinates", wrapElemSelector),
-                coordinatesOverlayDoneBtn: $(".mw-btn-coordinates-done", wrapElemSelector),
-                coordinatesOverlayInputs: $(".mw-overlay-input", wrapElemSelector),
-                coordinatesOverlay: $(".mw-coordinates-overlay", wrapElemSelector),
-                myLocationBtn: $(".mw-btn-my-location", wrapElemSelector),
-                addressAutoCompleteInput: document.getElementById(googleAutoInputID),
-                deleteBtn: $(".mw-btn-delete", wrapElemSelector),
-                addMarkerBtn: $(".mw-btn-add-marker", wrapElemSelector),
-                loaderOverlayElem: $(".mw-loader-overlay", wrapElemSelector),
-                zoom: mapOptions.zoom
-            };
+                var widgetData = JSON.parse("{{ js_widget_data|escapejs }}");
+                var wrapElemSelector = widgetData.wrapElemSelector;
+                var mapElemID = widgetData.mapElemID;
+                var googleAutoInputID = widgetData.googleAutoInputID;
+                var locationInputID = widgetData.locationInputID;
 
-            new DjangoGoogleMapWidget(mapWidgetOptions);
+                var mapWidgetOptions = {
+                    locationInput: $(locationInputID),
+                    wrapElemSelector: wrapElemSelector,
+                    locationFieldValue: JSON.parse("{{ field_value|escapejs }}"),
+                    mapApiKey: null,
+                    mapElement: document.getElementById(mapElemID),
+                    mapCenterLocationName: mapOptions.mapCenterLocationName,
+                    mapCenterLocation: mapOptions.mapCenterLocation,
+                    coordinatesOverlayToggleBtn: $(".mw-btn-coordinates", wrapElemSelector),
+                    coordinatesOverlayDoneBtn: $(".mw-btn-coordinates-done", wrapElemSelector),
+                    coordinatesOverlayInputs: $(".mw-overlay-input", wrapElemSelector),
+                    coordinatesOverlay: $(".mw-coordinates-overlay", wrapElemSelector),
+                    myLocationBtn: $(".mw-btn-my-location", wrapElemSelector),
+                    addressAutoCompleteInput: document.getElementById(googleAutoInputID),
+                    deleteBtn: $(".mw-btn-delete", wrapElemSelector),
+                    addMarkerBtn: $(".mw-btn-add-marker", wrapElemSelector),
+                    loaderOverlayElem: $(".mw-loader-overlay", wrapElemSelector),
+                    zoom: mapOptions.zoom
+                };
+                new DjangoGoogleMapWidget(mapWidgetOptions);
 
-            var inline_add_row_jquery_selector = widgetData.inline_add_row_jquery_selector;
-            console.log(inline_add_row_jquery_selector);
-            if (typeof django_mw_generate === 'undefined'){
-                django_mw_generate = new DjangoMapWidgetGenerater({
-                    "inline_add_row_jquery_selector" : inline_add_row_jquery_selector
+            {% else %}
+
+                var widgetDataTemplate = JSON.parse("{{ js_widget_data|escapejs }}");
+                var inline_add_row_jquery_selector = widgetDataTemplate.inline_add_row_jquery_selector;
+                new DjangoMapWidgetGenerater({
+                    "inline_add_row_jquery_selector" : inline_add_row_jquery_selector,
+                    "widgetDataTemplate": widgetDataTemplate,
+                    "mapOptions": mapOptions
                 });
-            }
-        })();
+                $(document).on('formset:added', function(e) {
+                    alert("run!")
+                });
+            {% endif %}
+        })(django.jQuery);
     </script>
 {% endblock javascript %}
