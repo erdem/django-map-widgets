@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+    {{ form.media }}
+{% endblock extrahead %}
+
+{% block content %}
+    {{ form.as_p }}
+{% endblock content %}
