@@ -8,19 +8,18 @@ Pluggable map widgets for Django Postgis fields.
 
 * **GOOGLE_MAP_API_KEY**: Put your Google API key
 
-* **mapCenterLocationName**: You can give specific location name for map center. Map widget will be found this location coordinates by Google <a href="https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete" target="_blank">Places Autocomplete</a>. (Optional)
+* **mapCenterLocationName**: You can give specific location name for center of map. Map widget will found this location coordinates using <a href="https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete" target="_blank"> Google Places Autocomplete</a>. (Optional)
 
-* **mapCenterLocation**: You can give specific coordinates for map center. Coordinates  must be list data type. ([latitude, longitude]) (Optional)
+* **mapCenterLocation**: You can give specific coordinates for center of map. Coordinates must be list type. ([latitude, longitude]) (Optional)
 
 * **zoom** : Default zoom value.
 
-Note: If there is no any configuration for map center. (mapCenterLocationName, mapCenterLocation) Map widget put a default center location by project timezone. 
+Note: If there is no setted value for the map center, (mapCenterLocationName, mapCenterLocation) the widget will be centered by the timezone setting of project.
 
-Check this links.
+Check out this links.
 
-- [Timezone Center Locations](https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/constants.py)
-- [countries.json](https://gist.github.com/erdem/8c7d26765831d0f9a8c62f02782ae00d)
-
+- <a href="https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/constants.py">Timezone Center Locations</a>
+- <a href="https://gist.github.com/erdem/8c7d26765831d0f9a8c62f02782ae00d">countries.json</a>
 
 
 
