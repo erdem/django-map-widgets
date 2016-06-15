@@ -1,20 +1,38 @@
-$.namespace("DjangoGoogleMapWidget");
+(function($) {
+    $.namespace("DjangoGoogleMapWidget");
 
-DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
+    DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
 
-    initializeMap: function(){
-        var mapCenter = this.mapCenterLocation;
+        initializeMap: function(){
+            var mapCenter = this.mapCenterLocation;
 
-        if (this.mapCenterLocationName){
-            var geocoder = new google.maps.Geocoder();
-            geocoder.geocode({'address' : this.mapCenterLocationName}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    var geo_location = results[0].geometry.location;
-                    mapCenter = [geo_location.lat(), geo_location.lng()];
-                }else{
-                    console.warn("Cannot find " + this.mapCenterLocationName + " on google geo service.")
-                }
+            if (this.mapCenterLocationName){
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({'address' : this.mapCenterLocationName}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        var geo_location = results[0].geometry.location;
+                        mapCenter = [geo_location.lat(), geo_location.lng()];
+                    }else{
+                        console.warn("Cannot find " + this.mapCenterLocationName + " on google geo service.")
+                    }
 
+                    this.map = new google.maps.Map(this.mapElement, {
+                        center: new google.maps.LatLng(mapCenter[0], mapCenter[1]),
+                        scrollwheel: false,
+                        zoomControlOptions: {
+                            position: google.maps.ControlPosition.RIGHT
+                        },
+                        zoom: this.zoom
+                    });
+
+                    if (!$.isEmptyObject(this.locationFieldValue)){
+                        this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
+                        this.fitBoundMarker();
+                    }
+
+                }.bind(this));
+
+            }else{
                 this.map = new google.maps.Map(this.mapElement, {
                     center: new google.maps.LatLng(mapCenter[0], mapCenter[1]),
                     scrollwheel: false,
@@ -28,74 +46,59 @@ DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
                     this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
                     this.fitBoundMarker();
                 }
+            }
 
-            }.bind(this));
+        },
 
-        }else{
-            this.map = new google.maps.Map(this.mapElement, {
-                center: new google.maps.LatLng(mapCenter[0], mapCenter[1]),
-                scrollwheel: false,
-                zoomControlOptions: {
-                    position: google.maps.ControlPosition.RIGHT
-                },
-                zoom: this.zoom
+        addMarkerToMap: function(lat, lng){
+            this.removeMarker();
+            var marker_position = {lat: parseFloat(lat), lng: parseFloat(lng)};
+            this.marker = new google.maps.Marker({
+                position: marker_position,
+                map: this.map,
+                draggable: true
             });
+            this.marker.addListener("dragend", this.dragMarker.bind(this));
+        },
 
-            if (!$.isEmptyObject(this.locationFieldValue)){
-                this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
-                this.fitBoundMarker();
+        fitBoundMarker: function () {
+            var bounds = new google.maps.LatLngBounds();
+            bounds.extend(this.marker.getPosition());
+            this.map.fitBounds(bounds);
+            var listener = google.maps.event.addListener(this.map, "bounds_changed", function() {
+                if (this.getZoom() > 15) {
+                    this.setZoom(15)
+                }
+                google.maps.event.removeListener(listener);
+            });
+        },
+
+        removeMarker: function(e){
+            if (this.marker){
+                this.marker.setMap(null);
             }
-        }
+        },
 
-    },
+        dragMarker: function(e){
+            this.updateLocationInput(e.latLng.lat(), e.latLng.lng())
+        },
 
-    addMarkerToMap: function(lat, lng){
-        this.removeMarker();
-        var marker_position = {lat: parseFloat(lat), lng: parseFloat(lng)};
-        this.marker = new google.maps.Marker({
-            position: marker_position,
-            map: this.map,
-            draggable: true
-        });
-        this.marker.addListener("dragend", this.dragMarker.bind(this));
-    },
-
-    fitBoundMarker: function () {
-        var bounds = new google.maps.LatLngBounds();
-        bounds.extend(this.marker.getPosition());
-        this.map.fitBounds(bounds);
-        var listener = google.maps.event.addListener(this.map, "bounds_changed", function() {
-            if (this.getZoom() > 15) {
-                this.setZoom(15)
+        handleAddMarkerBtnClick: function(e){
+            $(this.mapElement).toggleClass("click");
+            this.addMarkerBtn.toggleClass("active");
+            if ($(this.addMarkerBtn).hasClass("active")){
+                this.map.addListener("click", this.handleMapClick.bind(this));
+            }else{
+                google.maps.event.clearListeners(this.map, 'click');
             }
-            google.maps.event.removeListener(listener);
-        });
-    },
+        },
 
-    removeMarker: function(e){
-        if (this.marker){
-            this.marker.setMap(null);
-        }
-    },
-
-    dragMarker: function(e){
-        this.updateLocationInput(e.latLng.lat(), e.latLng.lng())
-    },
-
-    handleAddMarkerBtnClick: function(e){
-        $(this.mapElement).toggleClass("click");
-        this.addMarkerBtn.toggleClass("active");
-        if ($(this.addMarkerBtn).hasClass("active")){
-            this.map.addListener("click", this.handleMapClick.bind(this));
-        }else{
+        handleMapClick: function(e){
             google.maps.event.clearListeners(this.map, 'click');
+            $(this.mapElement).removeClass("click");
+            this.addMarkerBtn.removeClass("active");
+            this.updateLocationInput(e.latLng.lat(), e.latLng.lng())
         }
-    },
+    });
 
-    handleMapClick: function(e){
-        google.maps.event.clearListeners(this.map, 'click');
-        $(this.mapElement).removeClass("click");
-        this.addMarkerBtn.removeClass("active");
-        this.updateLocationInput(e.latLng.lat(), e.latLng.lng())
-    }
-});
+})(django.jQuery);

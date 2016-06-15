@@ -19,7 +19,6 @@ class GoogleMapWidget(BaseGeometryWidget):
 
         js = (
             "https://maps.googleapis.com/maps/api/js?libraries=places&key=%s" % mw_settings.GOOGLE_MAP_API_KEY,
-            "https://code.jquery.com/jquery-2.1.4.min.js",
             "mapwidgets/js/jquery_class.min.js",
             "mapwidgets/js/django_mw_base.js",
             "mapwidgets/js/django_mw_google_map.js",
@@ -88,7 +87,6 @@ class GoogleInlineMapWidget(InlineMapWidgetMixin, GoogleMapWidget):
 
         js = (
             "https://maps.googleapis.com/maps/api/js?libraries=places&key=%s" % mw_settings.GOOGLE_MAP_API_KEY,
-            "https://code.jquery.com/jquery-2.1.4.min.js",
             "mapwidgets/js/jquery_class.min.js",
             "mapwidgets/js/django_mw_base.js",
             "mapwidgets/js/django-mw-generater.js",
