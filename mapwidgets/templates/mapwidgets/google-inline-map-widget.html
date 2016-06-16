@@ -8,9 +8,12 @@
 
         (function($) {
             var mapOptions = JSON.parse("{{ options|escapejs }}");
+            var fieldValue = JSON.parse("{{ field_value|escapejs }}");
             {% if not is_formset_empty_from_template %}
 
                 var widgetData = JSON.parse("{{ js_widget_data|escapejs }}");
+
+
                 var wrapElemSelector = widgetData.wrapElemSelector;
                 var mapElemID = widgetData.mapElemID;
                 var googleAutoInputID = widgetData.googleAutoInputID;
@@ -19,7 +22,7 @@
                 var mapWidgetOptions = {
                     locationInput: $(locationInputID),
                     wrapElemSelector: wrapElemSelector,
-                    locationFieldValue: JSON.parse("{{ field_value|escapejs }}"),
+                    locationFieldValue: fieldValue,
                     mapElement: document.getElementById(mapElemID),
                     mapCenterLocationName: mapOptions.mapCenterLocationName,
                     mapCenterLocation: mapOptions.mapCenterLocation,
@@ -37,14 +40,12 @@
                 new DjangoGoogleMapWidget(mapWidgetOptions);
 
             {% else %}
-
                 var widgetDataTemplate = JSON.parse("{{ js_widget_data|escapejs }}");
+                console.log(widgetDataTemplate);
                 new DjangoMapWidgetGenerater({
                     "widgetDataTemplate": widgetDataTemplate,
-                    "mapOptions": mapOptions
-                });
-                $(document).on('formset:added', function(e) {
-                    alert("run!")
+                    "mapOptions": mapOptions,
+                    "fieldValue": fieldValue
                 });
             {% endif %}
         })(django.jQuery);
