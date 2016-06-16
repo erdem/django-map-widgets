@@ -39,9 +39,7 @@
             {% else %}
 
                 var widgetDataTemplate = JSON.parse("{{ js_widget_data|escapejs }}");
-                var inline_add_row_jquery_selector = widgetDataTemplate.inline_add_row_jquery_selector;
                 new DjangoMapWidgetGenerater({
-                    "inline_add_row_jquery_selector" : inline_add_row_jquery_selector,
                     "widgetDataTemplate": widgetDataTemplate,
                     "mapOptions": mapOptions
                 });
