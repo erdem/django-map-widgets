@@ -52,20 +52,13 @@ class GoogleMapWidget(BaseGeometryWidget):
 
 
 class InlineMapWidgetMixin(object):
-    inline_add_row_jquery_selector = None
 
     def get_js_widget_data(self, name, element_id):
-        if not self.inline_add_row_jquery_selector:
-            raise ImproperlyConfigured(
-                "The '%s' does not specify "
-                "a 'inline_add_row_jquery_selector'." % self.__class__.__name__)
-
         map_elem_selector = "#%s-mw-wrap" % name
         map_elem_id = "%s-map-elem" % name
         google_auto_input_id = "%s-mw-google-address-input" % name
         location_input_id = "#%s" % element_id
         js_widget_params = {
-            "inline_add_row_jquery_selector": self.inline_add_row_jquery_selector,
             "wrapElemSelector": map_elem_selector,
             "mapElemID": map_elem_id,
             "googleAutoInputID": google_auto_input_id,
@@ -75,7 +68,6 @@ class InlineMapWidgetMixin(object):
 
 
 class GoogleInlineMapWidget(InlineMapWidgetMixin, GoogleMapWidget):
-    inline_add_row_jquery_selector = None
     template_name = "mapwidgets/google-inline-map-widget.html"
 
     class Media:
@@ -108,5 +100,5 @@ class GoogleInlineMapWidget(InlineMapWidgetMixin, GoogleMapWidget):
 
 
 class DjangoAdminInlineGoogleMapWidget(GoogleInlineMapWidget):
-    inline_add_row_jquery_selector = ".inline-group .add-row a"
+    pass
 
