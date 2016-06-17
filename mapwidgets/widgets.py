@@ -2,7 +2,6 @@ import json
 
 from django.contrib.gis.forms import BaseGeometryWidget
 from django.contrib.gis.geos import Point
-from django.core.exceptions import ImproperlyConfigured
 
 from mapwidgets.settings import mw_settings
 
@@ -81,8 +80,8 @@ class GoogleInlineMapWidget(InlineMapWidgetMixin, GoogleMapWidget):
             "https://maps.googleapis.com/maps/api/js?libraries=places&key=%s" % mw_settings.GOOGLE_MAP_API_KEY,
             "mapwidgets/js/jquery_class.min.js",
             "mapwidgets/js/django_mw_base.js",
-            "mapwidgets/js/django-mw-generater.js",
             "mapwidgets/js/django_mw_google_map.js",
+            "mapwidgets/js/django-mw-generater.js",
         )
 
     def render(self, name, value, attrs=None):
@@ -97,8 +96,3 @@ class GoogleInlineMapWidget(InlineMapWidgetMixin, GoogleMapWidget):
             "is_formset_empty_from_template": is_formset_empty_from_template
         })
         return super(GoogleInlineMapWidget, self).render(name, value, attrs)
-
-
-class DjangoAdminInlineGoogleMapWidget(GoogleInlineMapWidget):
-    pass
-
