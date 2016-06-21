@@ -1,10 +1,13 @@
 ### Django Map Widgets (Beta)
-Pluggable map widgets for Django Postgis fields.
+Configurable, pluggable and more user friendly map widgets for Django Postgis fields.
 
 ### Achievement
+The aim of the django map widgets is to make all the django widgets more user friendly and configurable. Map widgets support major map services (GoogleMaps, OpenStreetMap) for your geodjango fields.
 
+## PointField Map Widgets
 
-### Settings
+### GoogleMap Widget
+#### Settings
 
 * **GOOGLE_MAP_API_KEY**: Put your Google API key
 
@@ -36,7 +39,7 @@ Check out this links.
 
 ### Usage 
 
-##### Django Admin
+#### Django Admin
     
     from mapwidgets.widgets import GoogleMapWidget
     
@@ -46,7 +49,7 @@ Check out this links.
     }
 
 
-##### Django Forms
+#### Django Forms
 
     from mapwidgets.widgets import GoogleMapWidget
     
@@ -63,6 +66,6 @@ Check out this links.
 
 
 
-## Screenshot
+#### Screenshot
 
 ![](http://i.imgur.com/QpBycQu.png)
