@@ -50,7 +50,7 @@ class GooglePointFieldWidget(BaseGeometryWidget):
         return super(GooglePointFieldWidget, self).render(name, value, attrs)
 
 
-class InlineMapWidgetMixin(object):
+class PointFieldInlineWidgetMixin(object):
 
     def get_js_widget_data(self, name, element_id):
         map_elem_selector = "#%s-mw-wrap" % name
@@ -66,7 +66,7 @@ class InlineMapWidgetMixin(object):
         return js_widget_params
 
 
-class GoogleInlineMapWidget(InlineMapWidgetMixin, GooglePointFieldWidget):
+class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointFieldWidget):
     template_name = "mapwidgets/google-inline-map-widget.html"
 
     class Media:
@@ -95,4 +95,4 @@ class GoogleInlineMapWidget(InlineMapWidgetMixin, GooglePointFieldWidget):
             "js_widget_data": json.dumps(widget_data),
             "is_formset_empty_from_template": is_formset_empty_from_template
         })
-        return super(GoogleInlineMapWidget, self).render(name, value, attrs)
+        return super(GooglePointFieldInlineWidget, self).render(name, value, attrs)

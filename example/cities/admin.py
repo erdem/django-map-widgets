@@ -2,14 +2,14 @@ from django import forms
 from django.contrib.gis import admin
 from cities.models import City, District
 from django.contrib.gis.db import models
-from mapwidgets.widgets import GooglePointFieldWidget, GoogleInlineMapWidget
+from mapwidgets.widgets import GooglePointFieldWidget, GooglePointFieldInlineWidget
 
 
 class DistrictAdminInline(admin.TabularInline):
     model = District
     extra = 3
     formfield_overrides = {
-        models.PointField: {"widget": GoogleInlineMapWidget}
+        models.PointField: {"widget": GooglePointFieldInlineWidget}
     }
 
 class CityAdminForm(forms.ModelForm):
