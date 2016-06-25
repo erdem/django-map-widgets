@@ -103,12 +103,41 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
 class ReadOnlyWidgetBase(forms.Widget):
     template_name = "mapwidgets/read-only-widget.html"
 
-    def get_map_image_url(self, value):
+    def __init__(self, attrs=None, *args, **kwargs):
+        self.marker_label = kwargs.get("marker_label", "")
+        super(ReadOnlyWidgetBase, self).__init__(attrs)
+
+    @property
+    def static_map_defult_settings(self):
+        # todo put this in mw_settings
+        return {
+            "zoom": 12,
+            "maptype": "roadmap",
+            "size": "640x640",
+            "scale": "1",
+            "format": "png",
+            "language": None,
+            "region": None,
+            "key": mw_settings.GOOGLE_MAP_API_KEY,
+            "signature": mw_settings.GOOGLE_MAP_API_SIGNATURE,
+            "visible": None,
+        }
+
+    @property
+    def static_map_defult_marker_settings(self):
+        return {
+            "size": "normal",
+            "color": None,
+            "icon": None,
+            "label": self.marker_label
+        }
+
+    def static_map_image_url(self, value):
         raise NotImplementedError('subclasses of ReadOnlyWidgetBase must provide a get_map_image_url method')
 
     def render(self, name, value, attrs=None):
         context = {
-            "map_image_url": self.get_map_image_url(value),
+            "static_map_image_url": self.static_map_image_url(value),
             "name": name,
             "value": value,
             "attrs": attrs
@@ -118,7 +147,11 @@ class ReadOnlyWidgetBase(forms.Widget):
 
 class GooglePointFieldReadOnlyWidget(ReadOnlyWidgetBase):
 
-    def get_map_image_url(self, value):
-        return
+    def static_map_image_url(self, value):
+        if isinstance(value, Point):
+            longitude, latitude = value.x, value.y
+
+
+        return None
 
 

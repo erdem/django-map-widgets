@@ -4,6 +4,7 @@ from mapwidgets.constants import TIMEZONE_COORDINATES
 
 DEFAULT_MAP_SETTINGS = {
     "GOOGLE_MAP_API_KEY": "",
+    "GOOGLE_MAP_API_SIGNATURE": "",
     "mapCenterLocationName": None,
     "mapCenterLocation": TIMEZONE_COORDINATES.get(getattr(settings, "TIME_ZONE", "UTC")),
     "zoom": 6,
