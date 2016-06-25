@@ -7,7 +7,7 @@ from mapwidgets.settings import mw_settings
 
 
 class GooglePointFieldWidget(BaseGeometryWidget):
-    template_name = "mapwidgets/google-map-widget.html"
+    template_name = "mapwidgets/google-point-field-widget.html"
 
     class Media:
         css = {
@@ -20,7 +20,7 @@ class GooglePointFieldWidget(BaseGeometryWidget):
             "https://maps.googleapis.com/maps/api/js?libraries=places&key=%s" % mw_settings.GOOGLE_MAP_API_KEY,
             "mapwidgets/js/jquery_class.min.js",
             "mapwidgets/js/django_mw_base.js",
-            "mapwidgets/js/django_mw_google_map.js",
+            "mapwidgets/js/mw_google_point_field.js",
         )
 
     @staticmethod
@@ -67,7 +67,7 @@ class PointFieldInlineWidgetMixin(object):
 
 
 class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointFieldWidget):
-    template_name = "mapwidgets/google-inline-map-widget.html"
+    template_name = "mapwidgets/google-point-field-inline-widget.html"
 
     class Media:
         css = {
@@ -80,8 +80,8 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
             "https://maps.googleapis.com/maps/api/js?libraries=places&key=%s" % mw_settings.GOOGLE_MAP_API_KEY,
             "mapwidgets/js/jquery_class.min.js",
             "mapwidgets/js/django_mw_base.js",
-            "mapwidgets/js/django_mw_google_map.js",
-            "mapwidgets/js/django-mw-generater.js",
+            "mapwidgets/js/mw_google_point_field.js",
+            "mapwidgets/js/mw_google_point_field_generater.js",
         )
 
     def render(self, name, value, attrs=None):
