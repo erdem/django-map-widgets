@@ -1,7 +1,9 @@
 import json
 
+from django import forms
 from django.contrib.gis.forms import BaseGeometryWidget
 from django.contrib.gis.geos import Point
+from django.template.loader import render_to_string
 
 from mapwidgets.settings import mw_settings
 
@@ -96,3 +98,27 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
             "is_formset_empty_from_template": is_formset_empty_from_template
         })
         return super(GooglePointFieldInlineWidget, self).render(name, value, attrs)
+
+
+class ReadOnlyWidgetBase(forms.Widget):
+    template_name = "mapwidgets/read-only-widget.html"
+
+    def get_map_image_url(self, value):
+        raise NotImplementedError('subclasses of ReadOnlyWidgetBase must provide a get_map_image_url method')
+
+    def render(self, name, value, attrs=None):
+        context = {
+            "map_image_url": self.get_map_image_url(value),
+            "name": name,
+            "value": value,
+            "attrs": attrs
+        }
+        return render_to_string(self.template_name, context)
+
+
+class GooglePointFieldReadOnlyWidget(ReadOnlyWidgetBase):
+
+    def get_map_image_url(self, value):
+        return
+
+
