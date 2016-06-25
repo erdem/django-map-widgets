@@ -41,25 +41,25 @@ Check out this links.
 
 #### Django Admin
     
-    from mapwidgets.widgets import GoogleMapWidget
+    from mapwidgets.widgets import GooglePointFieldWidget
     
     class CityAdmin(admin.ModelAdmin):
     formfield_overrides = {
-        models.PointField: {"widget": GoogleMapWidget}
+        models.PointField: {"widget": GooglePointFieldWidget}
     }
 
 
 #### Django Forms
 
-    from mapwidgets.widgets import GoogleMapWidget
+    from mapwidgets.widgets import GooglePointFieldWidget
     
     class CityAdminForm(forms.ModelForm):
         class Meta:
             model = City
             fields = ("coordinates", "city_hall")
             widgets = {
-                'coordinates': GoogleMapWidget,
-                'city_hall': GoogleMapWidget,
+                'coordinates': GooglePointFieldWidget,
+                'city_hall': GooglePointFieldWidget,
             }
 
 

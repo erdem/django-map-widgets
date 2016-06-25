@@ -1,7 +1,4 @@
 (function($) {
-
-    $.namespace("DjangoMapWidgetBase");
-
     DjangoMapWidgetBase = $.Class.extend({
 
         init: function(options){
@@ -155,4 +152,4 @@
         }
     });
 
-})(django.jQuery);
+})(jQuery || django.jQuery);

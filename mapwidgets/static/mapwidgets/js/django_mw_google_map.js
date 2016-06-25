@@ -1,7 +1,5 @@
 (function($) {
-    $.namespace("DjangoGoogleMapWidget");
-
-    DjangoGoogleMapWidget = DjangoMapWidgetBase.extend({
+    DjangoGooglePointFieldWidget = DjangoMapWidgetBase.extend({
 
         initializeMap: function(){
             var mapCenter = this.mapCenterLocation;
@@ -101,4 +99,4 @@
         }
     });
 
-})(django.jQuery);
+})(jQuery || django.jQuery);

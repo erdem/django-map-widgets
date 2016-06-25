@@ -12,8 +12,6 @@
             {% if not is_formset_empty_from_template %}
 
                 var widgetData = JSON.parse("{{ js_widget_data|escapejs }}");
-
-
                 var wrapElemSelector = widgetData.wrapElemSelector;
                 var mapElemID = widgetData.mapElemID;
                 var googleAutoInputID = widgetData.googleAutoInputID;
@@ -37,11 +35,10 @@
                     loaderOverlayElem: $(".mw-loader-overlay", wrapElemSelector),
                     zoom: mapOptions.zoom
                 };
-                new DjangoGoogleMapWidget(mapWidgetOptions);
+                new DjangoGooglePointFieldWidget(mapWidgetOptions);
 
             {% else %}
                 var widgetDataTemplate = JSON.parse("{{ js_widget_data|escapejs }}");
-                console.log(widgetDataTemplate);
                 new DjangoMapWidgetGenerater({
                     "widgetDataTemplate": widgetDataTemplate,
                     "mapOptions": mapOptions,

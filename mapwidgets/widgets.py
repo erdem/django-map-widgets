@@ -6,7 +6,7 @@ from django.contrib.gis.geos import Point
 from mapwidgets.settings import mw_settings
 
 
-class GoogleMapWidget(BaseGeometryWidget):
+class GooglePointFieldWidget(BaseGeometryWidget):
     template_name = "mapwidgets/google-map-widget.html"
 
     class Media:
@@ -47,7 +47,7 @@ class GoogleMapWidget(BaseGeometryWidget):
         }
 
         attrs.update(extra_attrs)
-        return super(GoogleMapWidget, self).render(name, value, attrs)
+        return super(GooglePointFieldWidget, self).render(name, value, attrs)
 
 
 class InlineMapWidgetMixin(object):
@@ -66,7 +66,7 @@ class InlineMapWidgetMixin(object):
         return js_widget_params
 
 
-class GoogleInlineMapWidget(InlineMapWidgetMixin, GoogleMapWidget):
+class GoogleInlineMapWidget(InlineMapWidgetMixin, GooglePointFieldWidget):
     template_name = "mapwidgets/google-inline-map-widget.html"
 
     class Media:

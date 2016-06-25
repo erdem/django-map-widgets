@@ -1,7 +1,7 @@
 from django import forms
 
 from cities.models import City
-from mapwidgets.widgets import GoogleMapWidget
+from mapwidgets.widgets import GooglePointFieldWidget
 
 
 class CityForm(forms.ModelForm):
@@ -10,6 +10,6 @@ class CityForm(forms.ModelForm):
         model = City
         fields = ("name", "coordinates", "city_hall")
         widgets = {
-            'coordinates': GoogleMapWidget,
-            'city_hall': GoogleMapWidget,
+            'coordinates': GooglePointFieldWidget,
+            'city_hall': GooglePointFieldWidget,
         }
