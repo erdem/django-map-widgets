@@ -27,7 +27,7 @@ class GooglePointFieldWidget(BaseGeometryWidget):
 
     @staticmethod
     def map_options():
-        return json.dumps(mw_settings.map_conf)
+        return json.dumps(mw_settings.GooglePointFieldWidget)
 
     def render(self, name, value, attrs=None):
         if not attrs:

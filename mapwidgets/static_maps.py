@@ -29,7 +29,7 @@ class GoogleStaticMapGenerater(object):
         self.check_parameters()
 
     def check_parameters(self):
-        if self.points is not list:
+        if not isinstance(self.points, list):
             raise TypeError('"points" parameter must be a list.')
 
         settings = self.settings

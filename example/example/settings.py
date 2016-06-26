@@ -146,8 +146,8 @@ STATICFILES_DIRS = [
 
 
 MAP_WIDGETS = {
-    # "mapCenterLocationName": "richmond",
-    # "mapCenterLocation": [57.7177013, -16.6300491],
-    # "zoom": 12,
+    "GooglePointFieldWidget": (
+        ("zoom", 12),
+    ),
     "GOOGLE_MAP_API_KEY": "AIzaSyDRIvN9brpxIm_xgyTnhUR9a_VTCcTN2bE"
 }

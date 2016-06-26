@@ -1,32 +1,68 @@
-from django.conf import settings
+from collections import OrderedDict
+
+from django.conf import settings as django_settings
 
 from mapwidgets.constants import TIMEZONE_COORDINATES
 
-DEFAULT_MAP_SETTINGS = {
-    "GOOGLE_MAP_API_KEY": "",
+DEFAULTS = {
+    "GooglePointFieldWidget": (
+        ("mapCenterLocationName", None),
+        ("mapCenterLocation", TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC"))),
+        ("zoom", 6),
+    ),
+
+    "GoogleStaticMap": (
+        ("zoom", 6)
+    ),
     "GOOGLE_MAP_API_SIGNATURE": "",
-    "mapCenterLocationName": None,
-    "mapCenterLocation": TIMEZONE_COORDINATES.get(getattr(settings, "TIME_ZONE", "UTC")),
-    "zoom": 6,
+    "GOOGLE_MAP_API_KEY": "",
 }
 
 
 class MapWidgetSettings(object):
 
-    def __init__(self):
-        user_settings = getattr(settings, "MAP_WIDGETS", {})
-        default_settings = DEFAULT_MAP_SETTINGS.copy()
-        default_settings.update(user_settings)
-        self._map_settings = default_settings
+    def __init__(self, user_settings=None, defaults=None):
+        if user_settings:
+            self._user_settings = user_settings
+
+        self.defaults = defaults or DEFAULTS
 
     @property
-    def map_conf(self):
-        return self._map_settings
+    def user_settings(self):
+        if not hasattr(self, '_user_settings'):
+            self._user_settings = getattr(django_settings, 'MAP_WIDGETS', {})
+        return self._user_settings
 
     def __getattr__(self, attr):
-        if attr not in self._map_settings.keys():
+        if attr not in self.defaults.keys():
             raise AttributeError("Invalid Django Map Widgets setting: '%s'" % attr)
 
-        return self._map_settings.get(attr)
+        try:
+            # Check if present in user settings
+            val = self.user_settings[attr]
+
+            # Merge user multi value settings with defaults
+            if isinstance(val, tuple):
+                try:
+                    user_bundle = OrderedDict(val)
+                    default_bundle = OrderedDict(self.defaults[attr])
+                    default_bundle.update(user_bundle)
+                    val = default_bundle
+                except TypeError:
+                    pass
+
+        except KeyError:
+            # Fall back to defaults
+            val = self.defaults[attr]
+            if isinstance(val, tuple):
+                try:
+                    val = OrderedDict(val)
+                except TypeError:
+                    pass
+
+
+        # Cache the result
+        setattr(self, attr, val)
+        return val
 
 mw_settings = MapWidgetSettings()
