@@ -112,15 +112,19 @@ class ReadOnlyWidgetBase(forms.Widget):
         # todo put this in mw_settings
         return {
             "zoom": 12,
-            "maptype": "roadmap",
+            "center": "",
             "size": "640x640",
             "scale": "1",
             "format": "png",
+            "maptype": "roadmap",
+            "markers": "",
+            "path": "",
+            "visible": None,
+            "style": None,
             "language": None,
             "region": None,
             "key": mw_settings.GOOGLE_MAP_API_KEY,
             "signature": mw_settings.GOOGLE_MAP_API_SIGNATURE,
-            "visible": None,
         }
 
     @property
@@ -150,7 +154,6 @@ class GooglePointFieldReadOnlyWidget(ReadOnlyWidgetBase):
     def static_map_image_url(self, value):
         if isinstance(value, Point):
             longitude, latitude = value.x, value.y
-
 
         return None
 

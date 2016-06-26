@@ -1,5 +1,3 @@
-GOOGLE_STATIC_MAP_API_URL = ""
-
 TIMEZONE_COORDINATES = {
     'UTC': [40.2044358, -101.9953523],
     'Africa/Abidjan': [8, -5],
