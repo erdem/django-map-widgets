@@ -14,14 +14,14 @@ DEFAULTS = {
     "GoogleStaticMapWidget": (
         ("zoom", 12),
         ("size", "640x640"),
-        ("scale", "1"),
-        ("format", "png"),
-        ("maptype", "roadmap"),
-        ("path", ""),
-        ("visible", ""),
-        ("style", ""),
-        ("language", ""),
-        ("region", "")
+        ("scale", None),
+        ("format", None),
+        ("maptype", None),
+        ("path", None),
+        ("visible", None),
+        ("style", None),
+        ("language", None),
+        ("region", None)
     ),
 
     "GoogleStaticMapMarkerSettings": (

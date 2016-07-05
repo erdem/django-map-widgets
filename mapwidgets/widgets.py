@@ -144,6 +144,7 @@ class BaseStaticMapWidget(forms.Widget):
 
 class GoogleStaticMapWidget(BaseStaticMapWidget):
     template_name = "mapwidgets/google-static-map-widget.html"
+    base_url = "https://maps.googleapis.com/maps/api/staticmap"
 
     @property
     def map_settings(self):
@@ -156,8 +157,19 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
     def marker_settings(self):
         return mw_settings.GoogleStaticMapMarkerSettings
 
+    def get_point_field_params(self, latitude, longitude):
+        print self.map_settings.get("zoom")
+        params = {
+            "center": "%s,%s" % (latitude, longitude),
+            "markers": [],
+            "zoom": self.map_settings
+        }
+        return params
+
     def get_image_url(self, value):
         if isinstance(value, Point):
             longitude, latitude = value.x, value.y
+            params = self.get_point_field_params(latitude, longitude)
+            template = "%(base_url)s?%(params)s"
 
         return None

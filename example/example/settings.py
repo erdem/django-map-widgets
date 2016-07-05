@@ -147,7 +147,7 @@ STATICFILES_DIRS = [
 
 MAP_WIDGETS = {
     "GooglePointFieldWidget": (
-        ("zoom", 12),
+        ("zoom", 15),
     ),
     "GOOGLE_MAP_API_KEY": "AIzaSyDRIvN9brpxIm_xgyTnhUR9a_VTCcTN2bE"
 }
