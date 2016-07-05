@@ -108,40 +108,19 @@ class ReadOnlyWidgetBase(forms.Widget):
         super(ReadOnlyWidgetBase, self).__init__(attrs)
 
     @property
-    def static_map_defult_settings(self):
-        # todo put this in mw_settings
-        return {
-            "zoom": 12,
-            "center": "",
-            "size": "640x640",
-            "scale": "1",
-            "format": "png",
-            "maptype": "roadmap",
-            "markers": "",
-            "path": "",
-            "visible": None,
-            "style": None,
-            "language": None,
-            "region": None,
-            "key": mw_settings.GOOGLE_MAP_API_KEY,
-            "signature": mw_settings.GOOGLE_MAP_API_SIGNATURE,
-        }
+    def map_settings(self):
+        return mw_settings.GoogleStaticMapWidget
 
     @property
-    def static_map_defult_marker_settings(self):
-        return {
-            "size": "normal",
-            "color": None,
-            "icon": None,
-            "label": self.marker_label
-        }
+    def marker_settings(self):
+        return mw_settings.GoogleStaticMapMarkerSettings
 
-    def static_map_image_url(self, value):
+    def get_image_url(self, value):
         raise NotImplementedError('subclasses of ReadOnlyWidgetBase must provide a get_map_image_url method')
 
     def render(self, name, value, attrs=None):
         context = {
-            "static_map_image_url": self.static_map_image_url(value),
+            "image_url": self.get_static_map_image_url(value),
             "name": name,
             "value": value,
             "attrs": attrs
@@ -151,7 +130,7 @@ class ReadOnlyWidgetBase(forms.Widget):
 
 class GooglePointFieldReadOnlyWidget(ReadOnlyWidgetBase):
 
-    def static_map_image_url(self, value):
+    def get_image_url(self, value):
         if isinstance(value, Point):
             longitude, latitude = value.x, value.y
 

@@ -11,9 +11,24 @@ DEFAULTS = {
         ("zoom", 6),
     ),
 
-    "GoogleStaticMap": (
-        ("zoom", 6)
+    "GoogleStaticMapWidget": (
+        ("zoom", 12),
+        ("size", "640x640"),
+        ("scale", "1"),
+        ("format", "png"),
+        ("maptype", "roadmap"),
+        ("path", ""),
+        ("visible", ""),
+        ("style", ""),
+        ("language", ""),
+        ("region", "")
     ),
+    "GoogleStaticMapMarkerSettings": (
+        ("size", "normal"),
+        ("color", None),
+        ("icon", None),
+    ),
+
     "GOOGLE_MAP_API_SIGNATURE": "",
     "GOOGLE_MAP_API_KEY": "",
 }
