@@ -23,6 +23,7 @@ DEFAULTS = {
         ("language", ""),
         ("region", "")
     ),
+
     "GoogleStaticMapMarkerSettings": (
         ("size", "normal"),
         ("color", None),

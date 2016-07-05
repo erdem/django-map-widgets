@@ -3,6 +3,7 @@ import json
 from django import forms
 from django.contrib.gis.forms import BaseGeometryWidget
 from django.contrib.gis.geos import Point
+from django.core.exceptions import ImproperlyConfigured
 from django.template.loader import render_to_string
 
 from mapwidgets.settings import mw_settings
@@ -100,40 +101,63 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
         return super(GooglePointFieldInlineWidget, self).render(name, value, attrs)
 
 
-class ReadOnlyWidgetBase(forms.Widget):
-    template_name = "mapwidgets/read-only-widget.html"
+class BaseStaticMapWidget(forms.Widget):
+    template_name = None
 
     def __init__(self, attrs=None, *args, **kwargs):
         self.marker_label = kwargs.get("marker_label", "")
-        super(ReadOnlyWidgetBase, self).__init__(attrs)
+        super(BaseStaticMapWidget, self).__init__(attrs)
 
     @property
     def map_settings(self):
-        return mw_settings.GoogleStaticMapWidget
+        raise NotImplementedError('subclasses of ReadOnlyWidgetBase must provide a map_settings method')
+
+    @property
+    def marker_settings(self):
+        raise NotImplementedError('subclasses of ReadOnlyWidgetBase must provide a marker_settings method')
+
+    def get_template_name(self):
+        if not self.template_name:
+            raise ImproperlyConfigured(
+                '%(cls)s "template_name" attribute is missing . Define '
+                '%(cls)s.template_name or override '
+                '%(cls)s class "get_template_name" method.' % {
+                    'cls': self.__class__.__name__
+                })
+        return self.template_name
+
+    def get_image_url(self, value):
+        raise NotImplementedError('subclasses of ReadOnlyWidgetBase must provide a get_map_image_url method')
+
+    def get_context_data(self, name, value, attrs):
+        return {
+            "image_url": self.get_image_url(value),
+            "name": name,
+            "value": value,
+            "attrs": attrs
+        }
+
+    def render(self, name, value, attrs=None):
+        context = self.get_context_data(name, value, attrs)
+        return render_to_string(self.get_template_name(), context)
+
+
+class GoogleStaticMapWidget(BaseStaticMapWidget):
+    template_name = "mapwidgets/google-static-map-widget.html"
+
+    @property
+    def map_settings(self):
+        settings = mw_settings.GoogleStaticMapWidget
+        settings["api_key"] = mw_settings.GOOGLE_MAP_API_KEY
+        settings["api_signature"] = mw_settings.GOOGLE_MAP_API_SIGNATURE
+        return settings
 
     @property
     def marker_settings(self):
         return mw_settings.GoogleStaticMapMarkerSettings
 
     def get_image_url(self, value):
-        raise NotImplementedError('subclasses of ReadOnlyWidgetBase must provide a get_map_image_url method')
-
-    def render(self, name, value, attrs=None):
-        context = {
-            "image_url": self.get_static_map_image_url(value),
-            "name": name,
-            "value": value,
-            "attrs": attrs
-        }
-        return render_to_string(self.template_name, context)
-
-
-class GooglePointFieldReadOnlyWidget(ReadOnlyWidgetBase):
-
-    def get_image_url(self, value):
         if isinstance(value, Point):
             longitude, latitude = value.x, value.y
 
         return None
-
-
