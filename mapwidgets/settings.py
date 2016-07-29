@@ -30,7 +30,7 @@ DEFAULTS = {
         ("icon", ""),
     ),
 
-    "GoogleStaticOverlatMapWidget": (
+    "GoogleStaticOverlayMapWidget": (
         ("zoom", 15),
         ("size", "480x480"),
         ("thumbnail_size", "160x160"),

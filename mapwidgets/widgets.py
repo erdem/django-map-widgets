@@ -190,8 +190,8 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
         return static(STATIC_MAP_PLACEHOLDER_IMAGE)
 
 
-class GoogleStaticOverlatMapWidget(GoogleStaticMapWidget):
-    settings = mw_settings.GoogleStaticOverlatMapWidget
+class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
+    settings = mw_settings.GoogleStaticOverlayMapWidget
     template_name = "mapwidgets/google-static-overlay-map-widget.html"
 
     class Media:
@@ -220,6 +220,6 @@ class GoogleStaticOverlatMapWidget(GoogleStaticMapWidget):
         return static(STATIC_MAP_PLACEHOLDER_IMAGE)
 
     def get_context_data(self, name, value, attrs):
-        context = super(GoogleStaticOverlatMapWidget, self).get_context_data(name, value, attrs)
+        context = super(GoogleStaticOverlayMapWidget, self).get_context_data(name, value, attrs)
         context["thumbnail_url"] = self.thumbnail_url(value)
         return context

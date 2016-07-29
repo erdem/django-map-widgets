@@ -3,7 +3,7 @@ from django.contrib.gis import admin
 from cities.models import City, District
 from django.contrib.gis.db import models
 from mapwidgets.widgets import GooglePointFieldWidget, GooglePointFieldInlineWidget, GoogleStaticMapWidget, \
-    GoogleStaticOverlatMapWidget
+    GoogleStaticOverlayMapWidget
 
 
 class DistrictAdminInline(admin.TabularInline):
@@ -20,7 +20,7 @@ class CityAdminForm(forms.ModelForm):
         fields = "__all__"
         widgets = {
             'coordinates': GooglePointFieldWidget,
-            'city_hall': GoogleStaticOverlatMapWidget,
+            'city_hall': GoogleStaticOverlayMapWidget,
         }
 
 
