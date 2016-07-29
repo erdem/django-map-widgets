@@ -13,7 +13,7 @@ DEFAULTS = {
 
     "GoogleStaticMapWidget": (
         ("zoom", 15),
-        ("size", "640x640"),
+        ("size", "480x480"),
         ("scale", ""),
         ("format", ""),
         ("maptype", ""),
@@ -28,6 +28,20 @@ DEFAULTS = {
         ("size", "normal"),
         ("color", ""),
         ("icon", ""),
+    ),
+
+    "GoogleStaticOverlatMapWidget": (
+        ("zoom", 15),
+        ("size", "480x480"),
+        ("thumbnail_size", "160x160"),
+        ("scale", ""),
+        ("format", ""),
+        ("maptype", ""),
+        ("path", ""),
+        ("visible", ""),
+        ("style", ""),
+        ("language", ""),
+        ("region", "")
     ),
 
     "GOOGLE_MAP_API_SIGNATURE": "",

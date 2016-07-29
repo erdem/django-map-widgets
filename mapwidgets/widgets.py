@@ -148,13 +148,13 @@ class BaseStaticMapWidget(forms.Widget):
 class GoogleStaticMapWidget(BaseStaticMapWidget):
     template_name = "mapwidgets/google-static-map-widget.html"
     base_url = "https://maps.googleapis.com/maps/api/staticmap"
+    settings = mw_settings.GoogleStaticMapWidget
 
     @property
     def map_settings(self):
-        settings = mw_settings.GoogleStaticMapWidget
-        settings["api_key"] = mw_settings.GOOGLE_MAP_API_KEY
-        settings["api_signature"] = mw_settings.GOOGLE_MAP_API_SIGNATURE
-        return settings
+        self.settings["api_key"] = mw_settings.GOOGLE_MAP_API_KEY
+        self.settings["api_signature"] = mw_settings.GOOGLE_MAP_API_SIGNATURE
+        return self.settings
 
     @property
     def marker_settings(self):
@@ -173,7 +173,7 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
             "markers": marker_url_params,
         }
         params.update(self.map_settings)
-        return urlencode(params)
+        return params
 
     def get_image_url(self, value):
         if isinstance(value, Point):
@@ -183,8 +183,43 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
             image_url_template = "%(base_url)s?%(params)s"
             image_url_data = {
                 "base_url": self.base_url,
-                "params": params
+                "params": urlencode(params)
             }
             return image_url_template % image_url_data
 
         return static(STATIC_MAP_PLACEHOLDER_IMAGE)
+
+
+class GoogleStaticOverlatMapWidget(GoogleStaticMapWidget):
+    settings = mw_settings.GoogleStaticOverlatMapWidget
+    template_name = "mapwidgets/google-static-overlay-map-widget.html"
+
+    class Media:
+        css = {
+            "all": (
+                "mapwidgets/css/magnific-popup.css",
+            )
+        }
+
+        js = (
+            "mapwidgets/js/jquery.magnific-popup.min.js",
+        )
+
+    def thumbnail_url(self, value):
+        if isinstance(value, Point):
+            longitude, latitude = value.x, value.y
+            params = self.get_point_field_params(latitude, longitude)
+            params["size"] = params["thumbnail_size"]
+            image_url_template = "%(base_url)s?%(params)s"
+            image_url_data = {
+                "base_url": self.base_url,
+                "params": urlencode(params)
+            }
+            return image_url_template % image_url_data
+
+        return static(STATIC_MAP_PLACEHOLDER_IMAGE)
+
+    def get_context_data(self, name, value, attrs):
+        context = super(GoogleStaticOverlatMapWidget, self).get_context_data(name, value, attrs)
+        context["thumbnail_url"] = self.thumbnail_url(value)
+        return context
