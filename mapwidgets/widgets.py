@@ -5,7 +5,10 @@ from django.contrib.gis.forms import BaseGeometryWidget
 from django.contrib.gis.geos import Point
 from django.core.exceptions import ImproperlyConfigured
 from django.template.loader import render_to_string
+from django.templatetags.static import static
+from django.utils.http import urlencode
 
+from mapwidgets.constants import STATIC_MAP_PLACEHOLDER_IMAGE
 from mapwidgets.settings import mw_settings
 
 
@@ -155,21 +158,33 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
 
     @property
     def marker_settings(self):
+        if not isinstance(mw_settings.GoogleStaticMapMarkerSettings, dict):
+            raise TypeError('"GoogleStaticMapMarkerSettings" must be a dictionary.')
         return mw_settings.GoogleStaticMapMarkerSettings
 
     def get_point_field_params(self, latitude, longitude):
-        print self.map_settings.get("zoom")
+        marker_point = "%s,%s" % (latitude, longitude)
+
+        marker_params = ["%s:%s" % (key, value) for key, value in self.marker_settings.items()]
+        marker_params.append(marker_point)
+        marker_url_params = "|".join(marker_params)
         params = {
-            "center": "%s,%s" % (latitude, longitude),
-            "markers": [],
-            "zoom": self.map_settings
+            "center": marker_point,
+            "markers": marker_url_params,
         }
-        return params
+        params.update(self.map_settings)
+        return urlencode(params)
 
     def get_image_url(self, value):
         if isinstance(value, Point):
             longitude, latitude = value.x, value.y
             params = self.get_point_field_params(latitude, longitude)
-            template = "%(base_url)s?%(params)s"
 
-        return None
+            image_url_template = "%(base_url)s?%(params)s"
+            image_url_data = {
+                "base_url": self.base_url,
+                "params": params
+            }
+            return image_url_template % image_url_data
+
+        return static(STATIC_MAP_PLACEHOLDER_IMAGE)

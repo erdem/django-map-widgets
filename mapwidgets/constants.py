@@ -420,3 +420,5 @@ TIMEZONE_COORDINATES = {
     'Pacific/Wake': [19.2911437, 166.618332],
     'Pacific/Wallis': [-13.3, -176.2]
 }
+
+STATIC_MAP_PLACEHOLDER_IMAGE = "mapwidgets/images/static-map-placeholder.png"

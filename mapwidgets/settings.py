@@ -12,22 +12,22 @@ DEFAULTS = {
     ),
 
     "GoogleStaticMapWidget": (
-        ("zoom", 12),
+        ("zoom", 15),
         ("size", "640x640"),
-        ("scale", None),
-        ("format", None),
-        ("maptype", None),
-        ("path", None),
-        ("visible", None),
-        ("style", None),
-        ("language", None),
-        ("region", None)
+        ("scale", ""),
+        ("format", ""),
+        ("maptype", ""),
+        ("path", ""),
+        ("visible", ""),
+        ("style", ""),
+        ("language", ""),
+        ("region", "")
     ),
 
     "GoogleStaticMapMarkerSettings": (
         ("size", "normal"),
-        ("color", None),
-        ("icon", None),
+        ("color", ""),
+        ("icon", ""),
     ),
 
     "GOOGLE_MAP_API_SIGNATURE": "",
