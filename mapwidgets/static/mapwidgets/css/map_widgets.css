@@ -676,6 +676,14 @@ fieldset[disabled] .btn-link:focus {
     background: #ec971f none;
 }
 
+.map-widget-overlay-link{
+    cursor: -webkit-zoom-in;
+    cursor: -moz-zoom-in;
+    cursor: zoom-in;
+    border-bottom: 0;
+    display: block;
+}
+
 .clearfix:after {
     clear: both;
 }
