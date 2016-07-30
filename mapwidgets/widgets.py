@@ -202,7 +202,7 @@ class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
         }
 
         js = (
-            "mapwidgets/js/overlay_map_widget.js",
+            "mapwidgets/js/custom.jquery.magnific-popup.min.js",
         )
 
     def thumbnail_url(self, value):
