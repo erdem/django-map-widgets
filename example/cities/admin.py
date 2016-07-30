@@ -25,7 +25,7 @@ class CityAdminForm(forms.ModelForm):
 
 
 class CityAdmin(admin.ModelAdmin):
-    inlines = (DistrictAdminInline,)
+    # inlines = (DistrictAdminInline,)
     form = CityAdminForm
 
 

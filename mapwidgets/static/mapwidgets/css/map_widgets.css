@@ -681,7 +681,7 @@ fieldset[disabled] .btn-link:focus {
     cursor: -moz-zoom-in;
     cursor: zoom-in;
     border-bottom: 0;
-    display: block;
+    display: inline-block;
 }
 
 .clearfix:after {
