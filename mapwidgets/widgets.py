@@ -6,6 +6,7 @@ from django.contrib.gis.geos import Point
 from django.core.exceptions import ImproperlyConfigured
 from django.template.loader import render_to_string
 from django.templatetags.static import static
+from django.utils.html import format_html
 from django.utils.http import urlencode
 
 from mapwidgets.constants import STATIC_MAP_PLACEHOLDER_IMAGE
@@ -105,32 +106,20 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
 
 
 class BaseStaticMapWidget(forms.Widget):
-    template_name = None
-
-    def __init__(self, attrs=None, *args, **kwargs):
-        self.marker_label = kwargs.get("marker_label", "")
-        super(BaseStaticMapWidget, self).__init__(attrs)
 
     @property
     def map_settings(self):
-        raise NotImplementedError('subclasses of ReadOnlyWidgetBase must provide a map_settings method')
+        raise NotImplementedError('subclasses of BaseStaticMapWidget must provide a map_settings method')
 
     @property
     def marker_settings(self):
-        raise NotImplementedError('subclasses of ReadOnlyWidgetBase must provide a marker_settings method')
+        raise NotImplementedError('subclasses of BaseStaticMapWidget must provide a marker_settings method')
 
-    def get_template_name(self):
-        if not self.template_name:
-            raise ImproperlyConfigured(
-                '%(cls)s "template_name" attribute is missing . Define '
-                '%(cls)s.template_name or override '
-                '%(cls)s class "get_template_name" method.' % {
-                    'cls': self.__class__.__name__
-                })
-        return self.template_name
+    def get_template(self):
+        raise NotImplementedError('subclasses of BaseStaticMapWidget must provide a get_template_name method')
 
     def get_image_url(self, value):
-        raise NotImplementedError('subclasses of ReadOnlyWidgetBase must provide a get_map_image_url method')
+        raise NotImplementedError('subclasses of BaseStaticMapWidget must provide a get_map_image_url method')
 
     def get_context_data(self, name, value, attrs):
         return {
@@ -142,11 +131,11 @@ class BaseStaticMapWidget(forms.Widget):
 
     def render(self, name, value, attrs=None):
         context = self.get_context_data(name, value, attrs)
-        return render_to_string(self.get_template_name(), context)
+        template = self.get_template()
+        return format_html(template, **context)
 
 
 class GoogleStaticMapWidget(BaseStaticMapWidget):
-    template_name = "mapwidgets/google-static-map-widget.html"
     base_url = "https://maps.googleapis.com/maps/api/staticmap"
     settings = mw_settings.GoogleStaticMapWidget
 
@@ -159,8 +148,11 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
     @property
     def marker_settings(self):
         if not isinstance(mw_settings.GoogleStaticMapMarkerSettings, dict):
-            raise TypeError('"GoogleStaticMapMarkerSettings" must be a dictionary.')
+            raise TypeError('GoogleStaticMapMarkerSettings must be a dictionary.')
         return mw_settings.GoogleStaticMapMarkerSettings
+
+    def get_template(self):
+        return '<a href="{image_url}" target="_blank" class="static-map-link"><img src="{image_url}"></a>'
 
     def get_point_field_params(self, latitude, longitude):
         marker_point = "%s,%s" % (latitude, longitude)
@@ -192,7 +184,6 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
 
 class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
     settings = mw_settings.GoogleStaticOverlayMapWidget
-    template_name = "mapwidgets/google-static-overlay-map-widget.html"
 
     class Media:
         css = {
@@ -204,6 +195,9 @@ class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
         js = (
             "mapwidgets/js/custom.jquery.magnific-popup.min.js",
         )
+
+    def get_template(self):
+        return '<a href="{image_url}" class="map-widget-overlay-link"><img src="{thumbnail_url}"></a>'
 
     def thumbnail_url(self, value):
         if isinstance(value, Point):

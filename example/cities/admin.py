@@ -25,8 +25,11 @@ class CityAdminForm(forms.ModelForm):
 
 
 class CityAdmin(admin.ModelAdmin):
+    list_display = ("name", "coordinates")
+    list_editable = ("name",)
     inlines = (DistrictAdminInline,)
     form = CityAdminForm
+
 
 
 class DistrictAdmin(admin.ModelAdmin):
