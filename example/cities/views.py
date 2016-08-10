@@ -1,4 +1,4 @@
-from django.views.generic import FormView, ListView
+from django.views.generic import FormView, ListView, UpdateView
 
 from cities.forms import CityForm
 from cities.models import City
@@ -8,6 +8,12 @@ class CityListView(ListView):
     queryset = City.objects.all()
     template_name = "cities/list.html"
     context_object_name = "cities"
+
+
+class CityDetailView(UpdateView):
+    form_class = CityForm
+    model = City
+    template_name = "cities/detail.html"
 
 
 class CityCreateView(FormView):

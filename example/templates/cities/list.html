@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% for city in cities %}
-        {{ city }}
-    {% endfor %}
+    <ul>
+        {% for city in cities %}
+            <li><a href="{% url "cities:detail" city.id %}">{{ city.name }}</a></li>
+        {% endfor %}
+    </ul>
 {% endblock content %}
