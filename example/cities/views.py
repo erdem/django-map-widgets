@@ -1,6 +1,6 @@
 from django.views.generic import FormView, ListView, UpdateView
 
-from cities.forms import CityForm
+from cities.forms import CityCreateForm, CityDetailForm
 from cities.models import City
 
 
@@ -11,13 +11,14 @@ class CityListView(ListView):
 
 
 class CityDetailView(UpdateView):
-    form_class = CityForm
+    form_class = CityDetailForm
     model = City
     template_name = "cities/detail.html"
 
 
 class CityCreateView(FormView):
     template_name = "cities/form.html"
-    form_class = CityForm
+    form_class = CityCreateForm
+
 
 
