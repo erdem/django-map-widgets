@@ -21,6 +21,6 @@ class CityDetailForm(forms.ModelForm):
         model = City
         fields = ("name", "coordinates", "city_hall")
         widgets = {
-            'coordinates': GoogleStaticMapWidget,
-            'city_hall': GoogleStaticOverlayMapWidget,
+            'coordinates': GoogleStaticMapWidget(zoom=12, size="240x240"),
+            'city_hall': GoogleStaticOverlayMapWidget(zoom=12, thumbnail_size="50x50", size="640x640"),
         }

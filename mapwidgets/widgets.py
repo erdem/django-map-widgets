@@ -137,10 +137,18 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
     base_url = "https://maps.googleapis.com/maps/api/staticmap"
     settings = mw_settings.GoogleStaticMapWidget
 
+    def __init__(self, zoom=None, size=None, *args, **kwargs):
+        self.zoom = zoom
+        self.size = size
+        super(GoogleStaticMapWidget, self).__init__(*args, **kwargs)
+
     @property
     def map_settings(self):
         self.settings["api_key"] = mw_settings.GOOGLE_MAP_API_KEY
         self.settings["api_signature"] = mw_settings.GOOGLE_MAP_API_SIGNATURE
+        if self.size:
+            self.settings["size"] = self.size
+            self.settings["zoom"] = self.zoom
         return self.settings
 
     @property
@@ -193,6 +201,17 @@ class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
         js = (
             "mapwidgets/js/custom.jquery.magnific-popup.min.js",
         )
+
+    def __init__(self, zoom=None, size=None, thumbnail_size=None, *args, **kwargs):
+        self.thumbnail_size = thumbnail_size
+        super(GoogleStaticOverlayMapWidget, self).__init__(zoom, size, *args, **kwargs)
+
+    @property
+    def map_settings(self):
+        settings = super(GoogleStaticOverlayMapWidget, self).map_settings
+        if self.thumbnail_size:
+            settings["thumbnail_size"] = self.thumbnail_size
+        return settings
 
     def get_template(self):
         return '<a href="{image_url}" class="map-widget-overlay-link"><img src="{thumbnail_url}"></a>'
