@@ -5,5 +5,9 @@
 {% endblock extrahead %}
 
 {% block content %}
-    {{ form.as_p }}
+    <form action="{% url "cities:create" %}" method="post" >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
 {% endblock content %}
