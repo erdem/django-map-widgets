@@ -1,6 +1,7 @@
 from collections import OrderedDict
 
 from django.conf import settings as django_settings
+from django.utils.functional import cached_property
 
 from mapwidgets.constants import TIMEZONE_COORDINATES
 
@@ -57,7 +58,7 @@ class MapWidgetSettings(object):
 
         self.defaults = defaults or DEFAULTS
 
-    @property
+    @cached_property
     def user_settings(self):
         if not hasattr(self, '_user_settings'):
             self._user_settings = getattr(django_settings, 'MAP_WIDGETS', {})
