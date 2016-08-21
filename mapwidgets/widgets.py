@@ -200,7 +200,7 @@ class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
         }
 
         js = (
-            "mapwidgets/js/custom.jquery.magnific-popup%s.js" % "" if settings.DEBUG else ".min",
+            "mapwidgets/js/jquery.custom.magnific-popup%s.js" % "" if settings.DEBUG else ".min",
         )
 
     def __init__(self, zoom=None, size=None, thumbnail_size=None, *args, **kwargs):
