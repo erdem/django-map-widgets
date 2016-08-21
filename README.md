@@ -139,6 +139,21 @@ If you are not using specific features on Google Static Map API, you just need t
 
 ##### Example
 
+**settings.py**
+
+    MAP_WIDGETS = {
+        "GoogleStaticMapWidget": (
+            ("zoom", 15),
+            ("size", "320x320"),
+        ),
+        "GoogleStaticMapMarkerSettings": (
+            ("color", "green"),
+        )
+        "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
+    }
+
+**forms.py**
+
     from mapwidgets.widgets import GoogleStaticMapWidget
     
     class CityDetailForm(forms.ModelForm):
@@ -202,3 +217,5 @@ Here is the all default settings attribute for google static overlay map widget.
                 'coordinates': GoogleStaticOverlayMapWidget,
                 'city_hall': GoogleStaticOverlayMapWidget(zoom=12, thumbnail_size="50x50", size="640x640"),
             }
+            
+
