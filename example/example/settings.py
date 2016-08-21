@@ -30,9 +30,11 @@ if PROJECT_PATH not in sys.path:
 SECRET_KEY = '&_jtu$h-3ux!)@!)h32onfzxnx(j9ha4%3p9wdnt6=7r$9k94w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "*"
+]
 
 
 # Application definition

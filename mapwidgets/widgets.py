@@ -1,6 +1,7 @@
 import json
 
 from django import forms
+from django.conf import settings
 from django.contrib.gis.forms import BaseGeometryWidget
 from django.contrib.gis.geos import Point
 from django.templatetags.static import static
@@ -17,15 +18,15 @@ class GooglePointFieldWidget(BaseGeometryWidget):
     class Media:
         css = {
             "all": (
-                "mapwidgets/css/map_widgets.css",
+                "mapwidgets/css/map_widgets%s.css" % "" if settings.DEBUG else ".min",
                 )
         }
 
         js = (
             "https://maps.googleapis.com/maps/api/js?libraries=places&key=%s" % mw_settings.GOOGLE_MAP_API_KEY,
-            "mapwidgets/js/jquery_class.min.js",
-            "mapwidgets/js/django_mw_base.js",
-            "mapwidgets/js/mw_google_point_field.js",
+            "mapwidgets/js/jquery_class%s.js" % "" if settings.DEBUG else ".min",
+            "mapwidgets/js/django_mw_base%s.js" % "" if settings.DEBUG else ".min",
+            "mapwidgets/js/mw_google_point_field%s.js " % "" if settings.DEBUG else ".min",
         )
 
     @staticmethod
@@ -77,16 +78,16 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
     class Media:
         css = {
             "all": (
-                "mapwidgets/css/map_widgets.css",
+                "mapwidgets/css/map_widgets%s.css" % "" if settings.DEBUG else ".min",
             )
         }
 
         js = (
             "https://maps.googleapis.com/maps/api/js?libraries=places&key=%s" % mw_settings.GOOGLE_MAP_API_KEY,
-            "mapwidgets/js/jquery_class.min.js",
-            "mapwidgets/js/django_mw_base.js",
-            "mapwidgets/js/mw_google_point_field.js",
-            "mapwidgets/js/mw_google_point_field_generater.js",
+            "mapwidgets/js/jquery_class%s.js" % "" if settings.DEBUG else ".min",
+            "mapwidgets/js/django_mw_base%s.js" % "" if settings.DEBUG else ".min",
+            "mapwidgets/js/mw_google_point_field%s.js" % "" if settings.DEBUG else ".min",
+            "mapwidgets/js/mw_google_point_field_generater%s.js" % "" if settings.DEBUG else ".min",
         )
 
     def render(self, name, value, attrs=None):
@@ -194,12 +195,12 @@ class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
     class Media:
         css = {
             "all": (
-                "mapwidgets/css/magnific-popup.css",
+                "mapwidgets/css/magnific-popup%s.css" % "" if settings.DEBUG else ".min",
             )
         }
 
         js = (
-            "mapwidgets/js/custom.jquery.magnific-popup.min.js",
+            "mapwidgets/js/custom.jquery.magnific-popup%s.js" % "" if settings.DEBUG else ".min",
         )
 
     def __init__(self, zoom=None, size=None, thumbnail_size=None, *args, **kwargs):

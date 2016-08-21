@@ -166,7 +166,7 @@
 }
 
 .mw-loader{
-    background: url("ripple.gif") no-repeat center center;
+    background: url("../images/ripple.gif") no-repeat center center;
     background-size: cover;
     width: 64px;
     height: 64px;
