@@ -215,7 +215,6 @@ Here is the all default settings attribute for google static overlay map widget.
             fields = ("name", "coordinates", "city_hall")
             widgets = {
                 'coordinates': GoogleStaticOverlayMapWidget,
-                'city_hall': GoogleStaticOverlayMapWidget(zoom=12, thumbnail_size="50x50", size="640x640"),
+                'city_hall': GoogleStaticOverlayMapWidget(zoom=12, size="640x640", thumbnail_size="50x50"),
             }
-            
-
+    

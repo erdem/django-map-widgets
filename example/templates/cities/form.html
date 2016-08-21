@@ -2,6 +2,18 @@
 
 {% block extrahead %}
     {{ form.media }}
+
+    <script type="text/javascript">
+        $(document).on("point_map_widget:marker_create", function (e, locationInputElem, lat, lng) {
+            console.log(locationInputElem);
+            console.log(lat, lng); // created marker coordinates
+        });
+
+        $(document).on("point_map_widget:marker_delete", function (e, locationInputElem, lat, lng) {
+            console.log(locationInputElem);
+            console.log(lat, lng);  // deleted marker coordinates
+        })
+    </script>
 {% endblock extrahead %}
 
 {% block content %}

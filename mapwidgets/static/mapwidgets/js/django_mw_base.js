@@ -70,7 +70,7 @@
             };
             this.deleteBtn.removeClass("btn-default disabled").addClass("btn-danger");
             this.hideOverlay();
-
+            $(document).trigger('point_map_widget:marker_create', [this.locationInput, lat, lng]);
         },
 
         toggleCoordinatesOverlay: function(){
@@ -109,7 +109,7 @@
         },
 
         handleCurrentPosition: function(location){
-            this.updateLocationInput(location.coords.latitude, location.coords.longitude)
+            this.updateLocationInput(location.coords.latitude, location.coords.longitude);
             this.fitBoundMarker();
         },
 
@@ -134,12 +134,14 @@
 
         deleteMarker: function(){
             if (!$.isEmptyObject(this.locationFieldValue)) {
+                console.log(this.locationFieldValue);
                 this.hideOverlay();
                 this.locationInput.val("");
                 this.coordinatesOverlayInputs.val("");
                 this.removeMarker();
                 this.deleteBtn.removeClass("btn-danger").addClass("btn-default disabled");
-                this.locationFieldValue = null
+                $(document).trigger('point_map_widget:marker_delete', [this.locationInput, this.locationFieldValue.lat, this.locationFieldValue.lng]);
+                this.locationFieldValue = null;
             }
         },
 
