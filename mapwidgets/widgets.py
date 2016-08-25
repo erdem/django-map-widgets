@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.gis.forms import BaseGeometryWidget
 from django.contrib.gis.geos import Point
 from django.templatetags.static import static
+from django.utils import six
 from django.utils.html import format_html
 from django.utils.http import urlencode
 
@@ -42,7 +43,7 @@ class GooglePointFieldWidget(BaseGeometryWidget):
             field_value["lng"] = value.x
             field_value["lat"] = value.y
 
-        if value and isinstance(value, basestring):
+        if value and isinstance(value, six.string_types):
             coordinates = self.deserialize(value)
             field_value["lng"] = coordinates.x
             field_value["lat"] = coordinates.y
