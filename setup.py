@@ -7,13 +7,12 @@ __version__ = '.'.join(map(str, VERSION))
 setup(
     name='django-map-widgets',
     version=__version__,
-    description="Map widgets for Django",
-    long_description="This module provides a few map widgets for Django applications.",
+    description="Map widgets for Django PostGIS fields",
+    long_description="Configurable, pluggable and more user friendly map widgets for Django PostGIS fields.",
     author="Erdem Ozkol",
     author_email="erdemozkol@gmail.com",
     url="https://github.com/erdem/django-map-widgets",
     license="MIT",
-    zip_safe=False,
     platforms=["any"],
     packages=find_packages(exclude=("example", "static")),
     package_data={
@@ -25,7 +24,6 @@ setup(
         ],
     },
     classifiers=[
-        "Development Status :: 1 - Planning",
         "Environment :: Web Environment",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
