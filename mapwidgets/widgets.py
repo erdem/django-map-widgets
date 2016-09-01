@@ -5,11 +5,18 @@ from django.conf import settings
 from django.contrib.gis.forms import BaseGeometryWidget
 from django.contrib.gis.geos import Point
 from django.templatetags.static import static
+from django.utils import six
 from django.utils.html import format_html
 from django.utils.http import urlencode
 
 from mapwidgets.constants import STATIC_MAP_PLACEHOLDER_IMAGE
 from mapwidgets.settings import mw_settings
+
+
+def minify_if_not_debug(asset):
+    """Transform template string `asset` by inserting '.min' if DEBUG=False
+    """
+    return asset.format("" if settings.DEBUG else ".min")
 
 
 class GooglePointFieldWidget(BaseGeometryWidget):
@@ -18,15 +25,15 @@ class GooglePointFieldWidget(BaseGeometryWidget):
     class Media:
         css = {
             "all": (
-                "mapwidgets/css/map_widgets%s.css" % "" if settings.DEBUG else ".min",
+                minify_if_not_debug("mapwidgets/css/map_widgets{}.css"),
                 )
         }
 
         js = (
-            "https://maps.googleapis.com/maps/api/js?libraries=places&key=%s" % mw_settings.GOOGLE_MAP_API_KEY,
-            "mapwidgets/js/jquery_class%s.js" % "" if settings.DEBUG else ".min",
-            "mapwidgets/js/django_mw_base%s.js" % "" if settings.DEBUG else ".min",
-            "mapwidgets/js/mw_google_point_field%s.js " % "" if settings.DEBUG else ".min",
+            "https://maps.googleapis.com/maps/api/js?libraries=places&key={}".format(mw_settings.GOOGLE_MAP_API_KEY),
+            minify_if_not_debug("mapwidgets/js/jquery_class{}.js"),
+            minify_if_not_debug("mapwidgets/js/django_mw_base{}.js"),
+            minify_if_not_debug("mapwidgets/js/mw_google_point_field{}.js")
         )
 
     @staticmethod
@@ -42,7 +49,7 @@ class GooglePointFieldWidget(BaseGeometryWidget):
             field_value["lng"] = value.x
             field_value["lat"] = value.y
 
-        if value and isinstance(value, basestring):
+        if value and isinstance(value, six.string_types):
             coordinates = self.deserialize(value)
             field_value["lng"] = coordinates.x
             field_value["lat"] = coordinates.y
@@ -78,16 +85,16 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
     class Media:
         css = {
             "all": (
-                "mapwidgets/css/map_widgets%s.css" % "" if settings.DEBUG else ".min",
+                minify_if_not_debug("mapwidgets/css/map_widgets{}.css"),
             )
         }
 
         js = (
-            "https://maps.googleapis.com/maps/api/js?libraries=places&key=%s" % mw_settings.GOOGLE_MAP_API_KEY,
-            "mapwidgets/js/jquery_class%s.js" % "" if settings.DEBUG else ".min",
-            "mapwidgets/js/django_mw_base%s.js" % "" if settings.DEBUG else ".min",
-            "mapwidgets/js/mw_google_point_field%s.js" % "" if settings.DEBUG else ".min",
-            "mapwidgets/js/mw_google_point_field_generater%s.js" % "" if settings.DEBUG else ".min",
+            "https://maps.googleapis.com/maps/api/js?libraries=places&key={}".format(mw_settings.GOOGLE_MAP_API_KEY),
+            minify_if_not_debug("mapwidgets/js/jquery_class{}.js"),
+            minify_if_not_debug("mapwidgets/js/django_mw_base{}.js"),
+            minify_if_not_debug("mapwidgets/js/mw_google_point_field{}.js"),
+            minify_if_not_debug("mapwidgets/js/mw_google_point_field_generater{}.js"),
         )
 
     def render(self, name, value, attrs=None):
@@ -195,12 +202,12 @@ class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
     class Media:
         css = {
             "all": (
-                "mapwidgets/css/magnific-popup%s.css" % "" if settings.DEBUG else ".min",
+                minify_if_not_debug("mapwidgets/css/magnific-popup{}.css"),
             )
         }
 
         js = (
-            "mapwidgets/js/jquery.custom.magnific-popup%s.js" % "" if settings.DEBUG else ".min",
+            minify_if_not_debug("mapwidgets/js/jquery.custom.magnific-popup{}.js"),
         )
 
     def __init__(self, zoom=None, size=None, thumbnail_size=None, *args, **kwargs):
