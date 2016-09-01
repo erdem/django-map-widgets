@@ -63,8 +63,8 @@ class GooglePointFieldWidget(BaseGeometryWidget):
 
         if value and isinstance(value, six.string_types):
             coordinates = self.deserialize(value)
-            field_value["lng"] = coordinates.x
-            field_value["lat"] = coordinates.y
+            field_value["lng"] = getattr(coordinates, "x", None)
+            field_value["lat"] = getattr(coordinates, "y", None)
 
         extra_attrs = {
             "options": self.map_options(),
@@ -189,7 +189,8 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
         return mw_settings.GoogleStaticMapMarkerSettings
 
     def get_template(self):
-        return '<a href="{image_url}" target="_blank" class="static-map-link"><img src="{image_url}"></a>'
+        return '<a href="{image_url}" target="_blank" class="static-map-link"><img src="{image_url}"></a>' \
+               '<input type="hidden" name="{name}" value="{value}"/>'
 
     def get_point_field_params(self, latitude, longitude):
         marker_point = "%s,%s" % (latitude, longitude)
@@ -245,7 +246,8 @@ class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
         return settings
 
     def get_template(self):
-        return '<a href="{image_url}" class="map-widget-overlay-link"><img src="{thumbnail_url}"></a>'
+        return '<a href="{image_url}" class="map-widget-overlay-link"><img src="{thumbnail_url}"></a>' \
+               '<input type="hidden" name="{name}" value="{value}"/>'
 
     def thumbnail_url(self, value):
         if isinstance(value, Point):

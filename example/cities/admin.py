@@ -20,7 +20,7 @@ class CityAdminForm(forms.ModelForm):
         fields = "__all__"
         widgets = {
             'coordinates': GooglePointFieldWidget,
-            'city_hall': GoogleStaticOverlayMapWidget,
+            'city_hall': GoogleStaticMapWidget,
         }
 
 
