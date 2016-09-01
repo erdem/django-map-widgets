@@ -14,27 +14,39 @@ from mapwidgets.settings import mw_settings
 
 
 def minify_if_not_debug(asset):
-    """Transform template string `asset` by inserting '.min' if DEBUG=False
     """
-    return asset.format("" if settings.DEBUG else ".min")
+        Transform template string `asset` by inserting '.min' if DEBUG=False
+    """
+    return asset.format("" if not mw_settings.MINIFED else ".min")
 
 
 class GooglePointFieldWidget(BaseGeometryWidget):
     template_name = "mapwidgets/google-point-field-widget.html"
 
-    class Media:
+    @property
+    def media(self):
         css = {
-            "all": (
+            "all": [
                 minify_if_not_debug("mapwidgets/css/map_widgets{}.css"),
-                )
+            ]
         }
 
-        js = (
-            "https://maps.googleapis.com/maps/api/js?libraries=places&key={}".format(mw_settings.GOOGLE_MAP_API_KEY),
-            minify_if_not_debug("mapwidgets/js/jquery_class{}.js"),
-            minify_if_not_debug("mapwidgets/js/django_mw_base{}.js"),
-            minify_if_not_debug("mapwidgets/js/mw_google_point_field{}.js")
-        )
+        js = [
+            "https://maps.googleapis.com/maps/api/js?libraries=places&key={}".format(mw_settings.GOOGLE_MAP_API_KEY)
+        ]
+
+        if not mw_settings.MINIFED:
+            js = js + [
+                "mapwidgets/js/jquery_class.js",
+                "mapwidgets/js/django_mw_base.js",
+                "mapwidgets/js/mw_google_point_field.js",
+            ]
+        else:
+            js = js + [
+                "mapwidgets/js/mw_google_point_inline_field.min.js"
+            ]
+
+        return forms.Media(js=js, css=css)
 
     @staticmethod
     def map_options():
@@ -82,20 +94,31 @@ class PointFieldInlineWidgetMixin(object):
 class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointFieldWidget):
     template_name = "mapwidgets/google-point-field-inline-widget.html"
 
-    class Media:
+    @property
+    def media(self):
         css = {
-            "all": (
+            "all": [
                 minify_if_not_debug("mapwidgets/css/map_widgets{}.css"),
-            )
+            ]
         }
 
-        js = (
-            "https://maps.googleapis.com/maps/api/js?libraries=places&key={}".format(mw_settings.GOOGLE_MAP_API_KEY),
-            minify_if_not_debug("mapwidgets/js/jquery_class{}.js"),
-            minify_if_not_debug("mapwidgets/js/django_mw_base{}.js"),
-            minify_if_not_debug("mapwidgets/js/mw_google_point_field{}.js"),
-            minify_if_not_debug("mapwidgets/js/mw_google_point_field_generater{}.js"),
-        )
+        js = [
+            "https://maps.googleapis.com/maps/api/js?libraries=places&key={}".format(mw_settings.GOOGLE_MAP_API_KEY)
+        ]
+
+        if not mw_settings.MINIFED:
+            js = js + [
+                "mapwidgets/js/jquery_class.js",
+                "mapwidgets/js/django_mw_base.js",
+                "mapwidgets/js/mw_google_point_field.js",
+                "mapwidgets/js/mw_google_point_field_generater.js"
+            ]
+        else:
+            js = js + [
+                "mapwidgets/js/mw_google_point_inline_field.min.js"
+            ]
+
+        return forms.Media(js=js, css=css)
 
     def render(self, name, value, attrs=None):
         if not attrs:

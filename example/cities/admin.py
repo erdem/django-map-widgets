@@ -19,7 +19,7 @@ class CityAdminForm(forms.ModelForm):
         model = City
         fields = "__all__"
         widgets = {
-            'coordinates': forms.Textarea,
+            'coordinates': GooglePointFieldWidget,
             'city_hall': GoogleStaticOverlayMapWidget,
         }
 
@@ -29,7 +29,6 @@ class CityAdmin(admin.ModelAdmin):
     list_editable = ("name",)
     inlines = (DistrictAdminInline,)
     form = CityAdminForm
-
 
 
 class DistrictAdmin(admin.ModelAdmin):
