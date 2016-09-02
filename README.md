@@ -90,24 +90,25 @@ If you want develop your map UI on front-end side, you can use map widget jQuery
 * **google_point_map_widget:marker_delete**: Triggered when user delete marker on map. *callback params: lat, lng, locationInputElem, mapWrapID*
         
 
-    $(document).on("google_point_map_widget:marker_create", function (e, lat, lng, locationInputElem, mapWrapID) {
-        console.log(locationInputElem); // django widget textarea widget (hidden)
-        console.log(lat, lng); // created marker coordinates
-        console.log(mapWrapID); // map widget wrapper element ID
-    });
-    
-    $(document).on("google_point_map_widget:marker_change", function (e, lat, lng, locationInputElem, mapWrapID) {
-        console.log(locationInputElem); // django widget textarea widget (hidden)
-        console.log(lat, lng);  // changed marker coordinates
-        console.log(mapWrapID); // map widget wrapper element ID
-    });
-    
-    $(document).on("google_point_map_widget:marker_delete", function (e, lat, lng, locationInputElem, mapWrapID) {
-        console.log(locationInputElem); // django widget textarea widget (hidden)
-        console.log(lat, lng);  // deleted marker coordinates
-        console.log(mapWrapID); // map widget wrapper element ID
-    })
-        
+```javascript
+$(document).on("google_point_map_widget:marker_create", function (e, lat, lng, locationInputElem, mapWrapID) {
+    console.log(locationInputElem); // django widget textarea widget (hidden)
+    console.log(lat, lng); // created marker coordinates
+    console.log(mapWrapID); // map widget wrapper element ID
+});
+
+$(document).on("google_point_map_widget:marker_change", function (e, lat, lng, locationInputElem, mapWrapID) {
+    console.log(locationInputElem); // django widget textarea widget (hidden)
+    console.log(lat, lng);  // changed marker coordinates
+    console.log(mapWrapID); // map widget wrapper element ID
+});
+
+$(document).on("google_point_map_widget:marker_delete", function (e, lat, lng, locationInputElem, mapWrapID) {
+    console.log(locationInputElem); // django widget textarea widget (hidden)
+    console.log(lat, lng);  // deleted marker coordinates
+    console.log(mapWrapID); // map widget wrapper element ID
+})
+``
 
 #### Google Map Widget for Django Admin Inlines
 
