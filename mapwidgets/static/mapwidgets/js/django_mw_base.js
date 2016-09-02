@@ -64,13 +64,42 @@
             this.locationInput.val(location_input_val);
             this.updateCoordinatesInputs(lat, lng);
             this.addMarkerToMap(lat, lng);
+            if ($.isEmptyObject(this.locationFieldValue)){
+                $(document).trigger(this.markerCreateTriggerNameSpace,
+                    [lat, lng, this.wrapElemSelector, this.locationInput]
+                );
+            }else{
+                $(document).trigger(this.markerChangeTriggerNameSpace,
+                    [lat, lng, this.wrapElemSelector, this.locationInput]
+                );
+            }
+
             this.locationFieldValue = {
                 "lng": lng,
                 "lat": lat
             };
             this.deleteBtn.removeClass("btn-default disabled").addClass("btn-danger");
             this.hideOverlay();
-            $(document).trigger('point_map_widget:marker_create', [this.locationInput, lat, lng]);
+        },
+
+        deleteMarker: function(){
+            if (!$.isEmptyObject(this.locationFieldValue)) {
+                console.log(this.locationFieldValue);
+                this.hideOverlay();
+                this.locationInput.val("");
+                this.coordinatesOverlayInputs.val("");
+                this.removeMarker();
+                this.deleteBtn.removeClass("btn-danger").addClass("btn-default disabled");
+                $(document).trigger(this.markerDeleteTriggerNameSpace,
+                    [
+                        this.locationFieldValue.lat,
+                        this.locationFieldValue.lng,
+                        this.wrapElemSelector,
+                        this.locationInput
+                    ]
+                );
+                this.locationFieldValue = null;
+            }
         },
 
         toggleCoordinatesOverlay: function(){
@@ -132,18 +161,6 @@
             this.fitBoundMarker()
         },
 
-        deleteMarker: function(){
-            if (!$.isEmptyObject(this.locationFieldValue)) {
-                console.log(this.locationFieldValue);
-                this.hideOverlay();
-                this.locationInput.val("");
-                this.coordinatesOverlayInputs.val("");
-                this.removeMarker();
-                this.deleteBtn.removeClass("btn-danger").addClass("btn-default disabled");
-                $(document).trigger('point_map_widget:marker_delete', [this.locationInput, this.locationFieldValue.lat, this.locationFieldValue.lng]);
-                this.locationFieldValue = null;
-            }
-        },
 
         showOverlay: function(){
             this.loaderOverlayElem.removeClass("hide")

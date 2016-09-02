@@ -33,7 +33,10 @@
                     deleteBtn: $(".mw-btn-delete", wrapElemSelector),
                     addMarkerBtn: $(".mw-btn-add-marker", wrapElemSelector),
                     loaderOverlayElem: $(".mw-loader-overlay", wrapElemSelector),
-                    zoom: mapOptions.zoom
+                    zoom: mapOptions.zoom,
+                    markerCreateTriggerNameSpace: "google_point_map_widget:marker_create",
+                    markerChangeTriggerNameSpace: "google_point_map_widget:marker_change",
+                    markerDeleteTriggerNameSpace: "google_point_map_widget:marker_delete"
                 };
                 new DjangoGooglePointFieldWidget(mapWidgetOptions);
 

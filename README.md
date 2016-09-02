@@ -21,7 +21,7 @@ Django map widgets require the jQuery framework, it does not import a jQuery lib
 
 * **zoom** : Default zoom value.
 
-Note: If there is no set value for the map center, (mapCenterLocationName, mapCenterLocation) the widget will be centered by the timezone setting of the project.
+> Note: If there is no set value for the map center, (mapCenterLocationName, mapCenterLocation) the widget will be centered by the timezone setting of the project.
 
 Check out this links.
 
