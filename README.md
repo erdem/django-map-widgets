@@ -79,6 +79,36 @@ If you want to give specific coordinates for center of the map, you can update y
 
 ![](http://i.imgur.com/QpBycQu.png)
 
+#### jQuery Triggers
+
+If you want develop your map UI on front-end side, you can use map widget jQuery triggers.  
+
+* **google_point_map_widget:marker_create**: Triggered when user create first marker on map. *callback params: lat, lng, locationInputElem, mapWrapID*
+
+* **google_point_map_widget:marker_change**: Triggered when user change marker position on map. *callback params: lat, lng, locationInputElem, mapWrapID*
+
+* **google_point_map_widget:marker_delete**: Triggered when user delete marker on map. *callback params: lat, lng, locationInputElem, mapWrapID*
+        
+
+    $(document).on("google_point_map_widget:marker_create", function (e, lat, lng, locationInputElem, mapWrapID) {
+        console.log(locationInputElem); // django widget textarea widget (hidden)
+        console.log(lat, lng); // created marker coordinates
+        console.log(mapWrapID); // map widget wrapper element ID
+    });
+    
+    $(document).on("google_point_map_widget:marker_change", function (e, lat, lng, locationInputElem, mapWrapID) {
+        console.log(locationInputElem); // django widget textarea widget (hidden)
+        console.log(lat, lng);  // changed marker coordinates
+        console.log(mapWrapID); // map widget wrapper element ID
+    });
+    
+    $(document).on("google_point_map_widget:marker_delete", function (e, lat, lng, locationInputElem, mapWrapID) {
+        console.log(locationInputElem); // django widget textarea widget (hidden)
+        console.log(lat, lng);  // deleted marker coordinates
+        console.log(mapWrapID); // map widget wrapper element ID
+    })
+        
+
 #### Google Map Widget for Django Admin Inlines
 
 As you know Django Admin has inline feature and you can add an inline row with dynamically. In this case, Django default map widget doesn't initialize widget when created a new inline row. 

@@ -8,14 +8,12 @@
             console.log(locationInputElem); // django widget textarea widget (hidden)
             console.log(lat, lng); // created marker coordinates
             console.log(mapWrapID); // map widget wrapper element ID
-            console.log("create");
         });
 
         $(document).on("google_point_map_widget:marker_change", function (e, lat, lng, locationInputElem, mapWrapID) {
             console.log(locationInputElem); // django widget textarea widget (hidden)
             console.log(lat, lng);  // changed marker coordinates
             console.log(mapWrapID); // map widget wrapper element ID
-            console.log("change");
         });
 
         $(document).on("google_point_map_widget:marker_delete", function (e, lat, lng, locationInputElem, mapWrapID) {
