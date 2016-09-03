@@ -1,4 +1,4 @@
-### Django Map Widgets (Beta)
+### Django Map Widgets
 Configurable, pluggable and more user friendly map widgets for Django PostGIS fields.
 
 ### Achievements
@@ -134,6 +134,8 @@ class CityAdmin(admin.ModelAdmin):
     inlines = (DistrictAdminInline,)
 ```
 
+#### Preview
+![](https://cloud.githubusercontent.com/assets/1518272/18221609/2cac10fe-7178-11e6-9990-a93176693ef7.gif)
 ### Google Static Map Widget (ReadOnly)
 
 #### Settings
