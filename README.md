@@ -32,49 +32,51 @@ Check out this links.
 ### Usage 
 
 **settings.py**    
-
-    MAP_WIDGETS = {
-        "GooglePointFieldWidget": (
-            ("zoom", 15),
-            ("mapCenterLocationName", "london"),
-        ),
-        "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
-    }
+```python
+MAP_WIDGETS = {
+    "GooglePointFieldWidget": (
+        ("zoom", 15),
+        ("mapCenterLocationName", "london"),
+    ),
+    "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
+}
+```
 
 If you want to give specific coordinates for center of the map, you can update your settings file like that. 
 
-    MAP_WIDGETS = {
-        "GooglePointFieldWidget": (
-            ("zoom", 15),
-            ("mapCenterLocation", [57.7177013, -16.6300491]),
-        ),
-        "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
-    }
+```python
+MAP_WIDGETS = {
+    "GooglePointFieldWidget": (
+        ("zoom", 15),
+        ("mapCenterLocation", [57.7177013, -16.6300491]),
+    ),
+    "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
+}
+```
 
 #### Django Admin
-    
-    from mapwidgets.widgets import GooglePointFieldWidget
-    
-    class CityAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        models.PointField: {"widget": GooglePointFieldWidget}
-    }
+```python
+from mapwidgets.widgets import GooglePointFieldWidget
 
+class CityAdmin(admin.ModelAdmin):
+formfield_overrides = {
+    models.PointField: {"widget": GooglePointFieldWidget}
+}
+```
 
 #### Django Forms
+```python
+from mapwidgets.widgets import GooglePointFieldWidget
 
-    from mapwidgets.widgets import GooglePointFieldWidget
-    
-    class CityAdminForm(forms.ModelForm):
-        class Meta:
-            model = City
-            fields = ("coordinates", "city_hall")
-            widgets = {
-                'coordinates': GooglePointFieldWidget,
-                'city_hall': GooglePointFieldWidget,
-            }
-
-
+class CityAdminForm(forms.ModelForm):
+    class Meta:
+        model = City
+        fields = ("coordinates", "city_hall")
+        widgets = {
+            'coordinates': GooglePointFieldWidget,
+            'city_hall': GooglePointFieldWidget,
+        }
+```
 #### Preview
 
 ![](http://i.imgur.com/QpBycQu.png)
@@ -108,7 +110,8 @@ $(document).on("google_point_map_widget:marker_delete", function (e, lat, lng, l
     console.log(lat, lng);  // deleted marker coordinates
     console.log(mapWrapID); // map widget wrapper element ID
 })
-``
+```
+
 
 #### Google Map Widget for Django Admin Inlines
 
@@ -116,20 +119,20 @@ As you know Django Admin has inline feature and you can add an inline row with d
 
 If you want to use Google Map Widget on admin inlines with no issue, you just need to use `GooglePointFieldInlineWidget` class. 
 
-##### Example
+#### Example
+```python
+from mapwidgets.widgets import GooglePointFieldInlineWidget
 
-    from mapwidgets.widgets import GooglePointFieldInlineWidget
+class DistrictAdminInline(admin.TabularInline):
+    model = District
+    extra = 3
+    formfield_overrides = {
+        models.PointField: {"widget": GooglePointFieldInlineWidget}
+    }
     
-    class DistrictAdminInline(admin.TabularInline):
-        model = District
-        extra = 3
-        formfield_overrides = {
-            models.PointField: {"widget": GooglePointFieldInlineWidget}
-        }
-        
-    class CityAdmin(admin.ModelAdmin):
-        inlines = (DistrictAdminInline,)
-
+class CityAdmin(admin.ModelAdmin):
+    inlines = (DistrictAdminInline,)
+```
 
 ### Google Static Map Widget (ReadOnly)
 
@@ -139,64 +142,66 @@ Django map widgets provide all Google Static Map API features. Check out this <a
 
 Here is the all default settings attribute for google static map widget.
 
-    MAP_WIDGETS = {
-        "GoogleStaticMapWidget": (
-            ("zoom", 15),
-            ("size", "480x480"),
-            ("scale", ""),
-            ("format", ""),
-            ("maptype", ""),
-            ("path", ""),
-            ("visible", ""),
-            ("style", ""),
-            ("language", ""),
-            ("region", "")
-        ),
-    
-        "GoogleStaticMapMarkerSettings": (
-            ("size", "normal"),
-            ("color", ""),
-            ("icon", ""),
-        )
-        "GOOGLE_MAP_API_SIGNATURE": "",
-        "GOOGLE_MAP_API_KEY": "",
-    }    
+```python
+MAP_WIDGETS = {
+    "GoogleStaticMapWidget": (
+        ("zoom", 15),
+        ("size", "480x480"),
+        ("scale", ""),
+        ("format", ""),
+        ("maptype", ""),
+        ("path", ""),
+        ("visible", ""),
+        ("style", ""),
+        ("language", ""),
+        ("region", "")
+    ),
 
+    "GoogleStaticMapMarkerSettings": (
+        ("size", "normal"),
+        ("color", ""),
+        ("icon", ""),
+    )
+    "GOOGLE_MAP_API_SIGNATURE": "",
+    "GOOGLE_MAP_API_KEY": "",
+}    
+```
 
 ##### Usage
 
 If you are not using specific features on Google Static Map API, you just need to update `GOOGLE_MAP_API_KEY` value in your Django settings file. You need also individual size map images, you can pass `size` and `zoom` parameter for each `GoogleStaticMapWidget` class. 
 
 
-##### Example
+#### Example
 
 **settings.py**
-
-    MAP_WIDGETS = {
-        "GoogleStaticMapWidget": (
-            ("zoom", 15),
-            ("size", "320x320"),
-        ),
-        "GoogleStaticMapMarkerSettings": (
-            ("color", "green"),
-        )
-        "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
-    }
+```python
+MAP_WIDGETS = {
+    "GoogleStaticMapWidget": (
+        ("zoom", 15),
+        ("size", "320x320"),
+    ),
+    "GoogleStaticMapMarkerSettings": (
+        ("color", "green"),
+    )
+    "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
+}
+```
 
 **forms.py**
+```python
+from mapwidgets.widgets import GoogleStaticMapWidget
 
-    from mapwidgets.widgets import GoogleStaticMapWidget
-    
-    class CityDetailForm(forms.ModelForm):
-    
-        class Meta:
-            model = City
-            fields = ("name", "coordinates", "city_hall")
-            widgets = {
-                'coordinates': GoogleStaticMapWidget,
-                'city_hall': GoogleStaticMapWidget(zoom=12, size="240x240"),
-            }
+class CityDetailForm(forms.ModelForm):
 
+    class Meta:
+        model = City
+        fields = ("name", "coordinates", "city_hall")
+        widgets = {
+            'coordinates': GoogleStaticMapWidget,
+            'city_hall': GoogleStaticMapWidget(zoom=12, size="240x240"),
+        }
+```
 
 ### Google Static Map Overlay Widget (ReadOnly)
 
@@ -208,44 +213,46 @@ You can use also all static map features in this widget. Besides you can give a 
  
 Here is the all default settings attribute for google static overlay map widget.
 
-    MAP_WIDGETS = {
-        "GoogleStaticMapMarkerSettings": (
-            ("size", "normal"),
-            ("color", ""),
-            ("icon", ""),
-        ),
-    
-        "GoogleStaticOverlayMapWidget": (
-            ("zoom", 15),
-            ("size", "480x480"),
-            ("thumbnail_size", "160x160"),
-            ("scale", ""),
-            ("format", ""),
-            ("maptype", ""),
-            ("path", ""),
-            ("visible", ""),
-            ("style", ""),
-            ("language", ""),
-            ("region", "")
-        ),
-    
-        "GOOGLE_MAP_API_SIGNATURE": "",
-        "GOOGLE_MAP_API_KEY": "",
-    }   
- 
+```python
+MAP_WIDGETS = {
+    "GoogleStaticMapMarkerSettings": (
+        ("size", "normal"),
+        ("color", ""),
+        ("icon", ""),
+    ),
 
-### Example
+    "GoogleStaticOverlayMapWidget": (
+        ("zoom", 15),
+        ("size", "480x480"),
+        ("thumbnail_size", "160x160"),
+        ("scale", ""),
+        ("format", ""),
+        ("maptype", ""),
+        ("path", ""),
+        ("visible", ""),
+        ("style", ""),
+        ("language", ""),
+        ("region", "")
+    ),
 
-    from mapwidgets.widgets import GoogleStaticOverlayMapWidget
+    "GOOGLE_MAP_API_SIGNATURE": "",
+    "GOOGLE_MAP_API_KEY": "",
+}   
+```
+
+#### Example
+
+```python
+from mapwidgets.widgets import GoogleStaticOverlayMapWidget
 
 
-    class CityDetailForm(forms.ModelForm):
-    
-        class Meta:
-            model = City
-            fields = ("name", "coordinates", "city_hall")
-            widgets = {
-                'coordinates': GoogleStaticOverlayMapWidget,
-                'city_hall': GoogleStaticOverlayMapWidget(zoom=12, size="640x640", thumbnail_size="50x50"),
-            }
-    
+class CityDetailForm(forms.ModelForm):
+
+    class Meta:
+        model = City
+        fields = ("name", "coordinates", "city_hall")
+        widgets = {
+            'coordinates': GoogleStaticOverlayMapWidget,
+            'city_hall': GoogleStaticOverlayMapWidget(zoom=12, size="640x640", thumbnail_size="50x50"),
+        }
+```
