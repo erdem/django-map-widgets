@@ -22,7 +22,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-### Requirments
+### Requirements
 
 Django map widgets require the jQuery framework, it does not import a jQuery library. It's working with your global jQuery. If you will use map widgets in Django Admin, you don't need to add a jQuery. Map widgets work with Django Admin jQuery file. 
 
@@ -189,7 +189,7 @@ MAP_WIDGETS = {
 
 ##### Usage
 
-If you are not using specific features on Google Static Map API, you just need to update `GOOGLE_MAP_API_KEY` value in your Django settings file. You need also individual size map images, you can pass `size` and `zoom` parameter for each `GoogleStaticMapWidget` class. 
+If you are not using specific features on Google Static Map API, you just need to update `GOOGLE_MAP_API_KEY` value in your Django settings file. If you need also individual size map images, you can pass `size` and `zoom` parameter for each `GoogleStaticMapWidget` class. 
 
 
 #### Example
