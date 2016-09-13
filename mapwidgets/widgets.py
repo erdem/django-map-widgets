@@ -154,7 +154,7 @@ class BaseStaticMapWidget(forms.Widget):
         return {
             "image_url": self.get_image_url(value),
             "name": name,
-            "value": value,
+            "value": value or "",
             "attrs": attrs
         }
 

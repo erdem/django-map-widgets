@@ -4,6 +4,24 @@ Configurable, pluggable and more user friendly map widgets for Django PostGIS fi
 ### Achievements
 The aim of the Django map widgets is to make all the Django widgets more user friendly and configurable. Map widgets support major map services (GoogleMaps, OpenStreetMap) for your geoDjango fields.
 
+### Installation
+
+    pip install django-map-widgets
+
+    
+Add ‘map_widgets’ to your `INSTALLED_APPS` in settings.py
+
+```python
+INSTALLED_APPS = [
+     ...
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    
+    'map_widgets',
+]
+```
+
 ### Requirments
 
 Django map widgets require the jQuery framework, it does not import a jQuery library. It's working with your global jQuery. If you will use map widgets in Django Admin, you don't need to add a jQuery. Map widgets work with Django Admin jQuery file. 
@@ -15,7 +33,7 @@ Django map widgets require the jQuery framework, it does not import a jQuery lib
 
 * **GOOGLE_MAP_API_KEY**: Put your Google API key
 
-* **mapCenterLocationName**: You can give specific location name for center of map. Map widget will found this location coordinates using <a href="https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete" target="_blank"> Google Places Autocomplete</a>. (Optional)
+* **mapCenterLocationName**: You can give specific location name for center of map. Map widget will found this location coordinates using <a href="https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete" target="_blank">Google Places Autocomplete</a>. (Optional)
 
 * **mapCenterLocation**: You can give specific coordinates for center of the map. Coordinates must be list type. ([latitude, longitude]) (Optional)
 
