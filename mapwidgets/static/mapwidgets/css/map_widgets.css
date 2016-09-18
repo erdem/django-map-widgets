@@ -51,6 +51,7 @@
 .icon-arrows-cw:before { content: '\e803'; } /* '' */
 
 .mw-wrap {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     width: 80%;
     min-width: 500px;
     margin-bottom: 10px;
@@ -63,6 +64,10 @@
 }
 
 .mw-wrap .form-control {
+    border: 1px solid #ccc;
+    font-family: inherit;
+    margin: 0;
+    box-sizing: border-box;
     display: block;
     width: 100%;
     padding: 6px 12px;
