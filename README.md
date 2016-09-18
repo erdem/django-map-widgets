@@ -77,9 +77,9 @@ MAP_WIDGETS = {
 from mapwidgets.widgets import GooglePointFieldWidget
 
 class CityAdmin(admin.ModelAdmin):
-formfield_overrides = {
-    models.PointField: {"widget": GooglePointFieldWidget}
-}
+    formfield_overrides = {
+        models.PointField: {"widget": GooglePointFieldWidget}
+    }
 ```
 
 #### Django Forms
@@ -276,3 +276,5 @@ class CityDetailForm(forms.ModelForm):
             'city_hall': GoogleStaticOverlayMapWidget(zoom=12, size="640x640", thumbnail_size="50x50"),
         }
 ```
+
+#### Preview
