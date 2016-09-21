@@ -421,4 +421,4 @@ TIMEZONE_COORDINATES = {
     'Pacific/Wallis': [-13.3, -176.2]
 }
 
-STATIC_MAP_PLACEHOLDER_IMAGE = "mapwidgets/images/static-map-placeholder.png"
+STATIC_MAP_PLACEHOLDER_IMAGE = "mapwidgets/images/no-map-image.png"

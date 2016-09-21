@@ -4,6 +4,8 @@ from django import forms
 from django.conf import settings
 from django.contrib.gis.forms import BaseGeometryWidget
 from django.contrib.gis.geos import Point
+from django.core.exceptions import ImproperlyConfigured
+from django.template.loader import render_to_string
 from django.templatetags.static import static
 from django.utils import six
 from django.utils.html import format_html
@@ -135,6 +137,7 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
 
 
 class BaseStaticMapWidget(forms.Widget):
+    template_name = None
 
     @property
     def map_settings(self):
@@ -145,7 +148,9 @@ class BaseStaticMapWidget(forms.Widget):
         raise NotImplementedError('subclasses of BaseStaticMapWidget must provide a marker_settings method')
 
     def get_template(self):
-        raise NotImplementedError('subclasses of BaseStaticMapWidget must provide a get_template_name method')
+        if self.template_name is None:
+            raise ImproperlyConfigured('BaseStaticMapWidget requires either a definition of "template_name"')
+        return self.template_name
 
     def get_image_url(self, value):
         raise NotImplementedError('subclasses of BaseStaticMapWidget must provide a get_map_image_url method')
@@ -161,12 +166,13 @@ class BaseStaticMapWidget(forms.Widget):
     def render(self, name, value, attrs=None):
         context = self.get_context_data(name, value, attrs)
         template = self.get_template()
-        return format_html(template, **context)
+        return render_to_string(template, context)
 
 
 class GoogleStaticMapWidget(BaseStaticMapWidget):
     base_url = "https://maps.googleapis.com/maps/api/staticmap"
     settings = mw_settings.GoogleStaticMapWidget
+    template_name = "mapwidgets/google-static-map.html"
 
     def __init__(self, zoom=None, size=None, *args, **kwargs):
         self.zoom = zoom
@@ -187,10 +193,6 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
         if not isinstance(mw_settings.GoogleStaticMapMarkerSettings, dict):
             raise TypeError('GoogleStaticMapMarkerSettings must be a dictionary.')
         return mw_settings.GoogleStaticMapMarkerSettings
-
-    def get_template(self):
-        return '<a href="{image_url}" target="_blank" class="static-map-link"><img src="{image_url}"></a>' \
-               '<input type="hidden" name="{name}" value="{value}"/>'
 
     def get_point_field_params(self, latitude, longitude):
         marker_point = "%s,%s" % (latitude, longitude)
@@ -222,6 +224,7 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
 
 class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
     settings = mw_settings.GoogleStaticOverlayMapWidget
+    template_name = "mapwidgets/google-static-overlay-map.html"
 
     class Media:
         css = {
@@ -244,10 +247,6 @@ class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
         if self.thumbnail_size:
             settings["thumbnail_size"] = self.thumbnail_size
         return settings
-
-    def get_template(self):
-        return '<a href="{image_url}" class="map-widget-overlay-link"><img src="{thumbnail_url}"></a>' \
-               '<input type="hidden" name="{name}" value="{value}"/>'
 
     def thumbnail_url(self, value):
         if isinstance(value, Point):

@@ -26,13 +26,14 @@ class CityAdminForm(forms.ModelForm):
 
 class CityAdmin(admin.ModelAdmin):
     list_display = ("name", "coordinates")
-    list_editable = ("name",)
     inlines = (DistrictAdminInline,)
     form = CityAdminForm
 
 
 class DistrictAdmin(admin.ModelAdmin):
-    pass
+    formfield_overrides = {
+        models.PointField: {"widget": GoogleStaticMapWidget}
+    }
 
 
 admin.site.register(City, CityAdmin)

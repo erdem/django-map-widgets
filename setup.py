@@ -1,7 +1,7 @@
 import os
 from setuptools import setup, find_packages
 
-VERSION = (0, 1, 3)
+VERSION = (0, 1, 4)
 __version__ = '.'.join(map(str, VERSION))
 
 with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
@@ -22,12 +22,6 @@ setup(
     platforms=["any"],
     packages=find_packages(exclude=("example", "static", "env")),
     include_package_data=True,
-    package_data={
-        'mapwidgets': [
-            'LICENSE',
-            'README.md',
-        ],
-    },
     classifiers=[
         "Environment :: Web Environment",
         "Intended Audience :: Developers",

@@ -224,8 +224,7 @@ class CityDetailForm(forms.ModelForm):
 ```
 
 ### Google Static Map Overlay Widget (ReadOnly)
-
-This widget working with <a href="https://developers.google.com/maps/documentation/static-maps/intro" target="_blank">Magnific Popup</a> jQuery plugin. 
+This widget is working with <a href="https://developers.google.com/maps/documentation/static-maps/intro" target="_blank">Magnific Popup</a> jQuery plugin. 
 
 ##### Usage
 
@@ -276,5 +275,3 @@ class CityDetailForm(forms.ModelForm):
             'city_hall': GoogleStaticOverlayMapWidget(zoom=12, size="640x640", thumbnail_size="50x50"),
         }
 ```
-
-#### Preview
