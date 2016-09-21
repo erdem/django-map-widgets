@@ -97,7 +97,7 @@ class CityAdminForm(forms.ModelForm):
 ```
 #### Preview
 
-![](http://i.imgur.com/QpBycQu.png)
+![](https://cloud.githubusercontent.com/assets/1518272/18732352/724dd098-805a-11e6-8eb4-6ba9b5e06a81.png)
 
 #### jQuery Triggers
 
@@ -275,3 +275,7 @@ class CityDetailForm(forms.ModelForm):
             'city_hall': GoogleStaticOverlayMapWidget(zoom=12, size="640x640", thumbnail_size="50x50"),
         }
 ```
+
+#### Preview
+![](https://cloud.githubusercontent.com/assets/1518272/18732296/18f1813e-805a-11e6-8801-f1f48ed02a9c.png)
+
