@@ -32,7 +32,7 @@ class CityAdmin(admin.ModelAdmin):
 
 class DistrictAdmin(admin.ModelAdmin):
     formfield_overrides = {
-        models.PointField: {"widget": GoogleStaticMapWidget}
+        models.PointField: {"widget": GoogleStaticOverlayMapWidget}
     }
 
 
