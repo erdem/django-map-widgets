@@ -2,7 +2,7 @@
 Configurable, pluggable and more user friendly map widgets for Django PostGIS fields.
 
 ### Achievements
-The aim of the Django map widgets is to make all the Django widgets more user friendly and configurable. Map widgets support major map services (GoogleMaps, OpenStreetMap) for your geoDjango fields.
+The aim of the Django map widgets is to make all Geo Django widgets more user friendly and configurable. Map widgets support major map services (GoogleMaps, OpenStreetMap) for your geoDjango fields.
 
 ### Installation
 
@@ -24,7 +24,7 @@ INSTALLED_APPS = [
 
 ### Requirements
 
-Django map widgets require the jQuery framework, it does not import a jQuery library. It's working with your global jQuery. If you will use map widgets in Django Admin, you don't need to add a jQuery. Map widgets work with Django Admin jQuery file. 
+Django map widgets requires jQuery framework, it does not import jQuery library. It's working with your global jQuery. If you will use map widgets in Django Admin, you don't need to add jQuery. Map widgets work with Django Admin jQuery file. 
 
 ### PointField Map Widgets
 
@@ -33,15 +33,15 @@ Django map widgets require the jQuery framework, it does not import a jQuery lib
 
 * **GOOGLE_MAP_API_KEY**: Put your Google API key
 
-* **mapCenterLocationName**: You can give specific location name for center of map. Map widget will found this location coordinates using <a href="https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete" target="_blank">Google Places Autocomplete</a>. (Optional)
+* **mapCenterLocationName**: You can give a specific location name for center of map. Map widget will find this location coordinates using <a href="https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete" target="_blank">Google Places Autocomplete</a>. (Optional)
 
 * **mapCenterLocation**: You can give specific coordinates for center of the map. Coordinates must be list type. ([latitude, longitude]) (Optional)
 
 * **zoom** : Default zoom value.
 
-> Note: If there is no set value for the map center, (mapCenterLocationName, mapCenterLocation) the widget will be centered by the timezone setting of the project.
+> Note: If there is no spesific value set for the map center, (mapCenterLocationName, mapCenterLocation) the widget will be centered by the timezone setting of the project.
 
-Check out this links.
+Check out these links.
 
 - <a href="https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/constants.py">Timezone Center Locations</a>
 - <a href="https://gist.github.com/erdem/8c7d26765831d0f9a8c62f02782ae00d">countries.json</a>
@@ -133,7 +133,7 @@ $(document).on("google_point_map_widget:marker_delete", function (e, lat, lng, l
 
 #### Google Map Widget for Django Admin Inlines
 
-As you know Django Admin has inline feature and you can add an inline row with dynamically. In this case, Django default map widget doesn't initialize widget when created a new inline row. 
+As you know Django Admin has inline feature and you can add an inline row dynamically. In this case, Django default map widget doesn't initialize widget when created a new inline row. 
 
 If you want to use Google Map Widget on admin inlines with no issue, you just need to use `GooglePointFieldInlineWidget` class. 
 
@@ -158,7 +158,7 @@ class CityAdmin(admin.ModelAdmin):
 
 #### Settings
 
-Django map widgets provide all Google Static Map API features. Check out this <a href="https://developers.google.com/maps/documentation/static-maps/intro" target="_blank">link</a> for google static map features. 
+Django map widgets provide all Google Static Map API features. Check out this <a href="https://developers.google.com/maps/documentation/static-maps/intro" target="_blank">link</a> for google static map api features. 
 
 Here is the all default settings attribute for google static map widget.
 
@@ -278,4 +278,3 @@ class CityDetailForm(forms.ModelForm):
 
 #### Preview
 ![](https://cloud.githubusercontent.com/assets/1518272/18732296/18f1813e-805a-11e6-8801-f1f48ed02a9c.png)
-
