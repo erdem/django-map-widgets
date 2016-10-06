@@ -1,7 +1,7 @@
 import os
 from setuptools import setup, find_packages
 
-VERSION = (0, 1, 5)
+VERSION = (0, 1, 6)
 __version__ = '.'.join(map(str, VERSION))
 
 readme_rst = os.path.join(os.path.dirname(__file__), 'README.rst')
