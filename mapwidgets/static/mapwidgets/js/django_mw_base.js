@@ -9,8 +9,7 @@
             this.addMarkerBtn.on("click", this.handleAddMarkerBtnClick.bind(this));
             this.myLocationBtn.on("click", this.handleMyLocationBtnClick.bind(this));
             this.deleteBtn.on("click", this.deleteMarker.bind(this));
-
-            var autocomplete = new google.maps.places.Autocomplete(this.addressAutoCompleteInput);
+            var autocomplete = new google.maps.places.Autocomplete(this.addressAutoCompleteInput,{componentRestrictions:this.AutocompleteRestrictions});
             google.maps.event.addListener(autocomplete, 'place_changed', this.handleAutoCompletePlaceChange.bind(this, autocomplete));
             google.maps.event.addDomListener(this.addressAutoCompleteInput, 'keydown', this.handleAutoCompleteInputKeyDown.bind(this));
             this.initializeMap();
