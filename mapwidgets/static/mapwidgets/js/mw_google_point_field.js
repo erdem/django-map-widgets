@@ -59,17 +59,17 @@
             this.marker.addListener("dragend", this.dragMarker.bind(this));
         },
 
-        fitBoundMarker: function () {
-            var bounds = new google.maps.LatLngBounds();
-            bounds.extend(this.marker.getPosition());
-            this.map.fitBounds(bounds);
-            var listener = google.maps.event.addListener(this.map, "bounds_changed", function() {
-                if (this.getZoom() > 15) {
-                    this.setZoom(15)
-                }
-                google.maps.event.removeListener(listener);
-            });
-        },
+        // fitBoundMarker: function () {
+        //     var bounds = new google.maps.LatLngBounds();
+        //     bounds.extend(this.marker.getPosition());
+        //     this.map.fitBounds(bounds);
+        //     var listener = google.maps.event.addListener(this.map, "bounds_changed", function() {
+        //         if (this.getZoom() > 15) {
+        //             this.setZoom(15)
+        //         }
+        //         google.maps.event.removeListener(listener);
+        //     });
+        // },
 
         removeMarker: function(e){
             if (this.marker){
