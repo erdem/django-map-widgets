@@ -64,7 +64,7 @@
             bounds.extend(this.marker.getPosition());
             this.map.fitBounds(bounds);
             var listener = google.maps.event.addListener(this.map, "bounds_changed", function() {
-                if (this.getZoom() > 15) {
+                if (this.getZoom() > 15) { // this.getZoom is always 21, see https://github.com/erdem/django-map-widgets/issues/7
                     this.setZoom(15)
                 }
                 google.maps.event.removeListener(listener);

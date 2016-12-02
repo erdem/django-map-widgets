@@ -28,7 +28,7 @@ Add ‘map\_widgets’ to your ``INSTALLED_APPS`` in settings.py
         'django.contrib.messages',
         'django.contrib.staticfiles',
         
-        'map_widgets',
+        'mapwidgets',
     ]
 
 Requirements
