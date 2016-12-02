@@ -150,6 +150,7 @@ STATICFILES_DIRS = [
 MAP_WIDGETS = {
     "GooglePointFieldWidget": (
         ("zoom", 15),
+        ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'uk'}})
     ),
     "GOOGLE_MAP_API_KEY": "AIzaSyDRIvN9brpxIm_xgyTnhUR9a_VTCcTN2bE",
 }
