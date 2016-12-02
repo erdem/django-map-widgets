@@ -33,11 +33,13 @@ Django map widgets requires jQuery framework, it does not import jQuery library.
 
 * **GOOGLE_MAP_API_KEY**: Put your Google API key
 
-* **mapCenterLocationName**: You can give a specific location name for center of map. Map widget will find this location coordinates using <a href="https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete" target="_blank">Google Places Autocomplete</a>. (Optional)
+* **mapCenterLocationName**: You can give a specific location name for center of map. Map widget will find this location coordinates using <a href="https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete" target="_blank">Google Place Autocomplete</a>. (Optional)
 
 * **mapCenterLocation**: You can give specific coordinates for center of the map. Coordinates must be list type. ([latitude, longitude]) (Optional)
 
 * **zoom** : Default zoom value.
+
+* **GooglePlaceAutocompleteOptions** : Put your custom <a href="https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete" target="_blank">Google Place Autocomplete</a> options. (Optional)
 
 > Note: If there is no spesific value set for the map center, (mapCenterLocationName, mapCenterLocation) the widget will be centered by the timezone setting of the project.
 
@@ -55,6 +57,7 @@ MAP_WIDGETS = {
     "GooglePointFieldWidget": (
         ("zoom", 15),
         ("mapCenterLocationName", "london"),
+        ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'uk'}}),
     ),
     "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
 }
