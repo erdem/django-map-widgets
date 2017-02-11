@@ -181,8 +181,9 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
 
     @property
     def map_settings(self):
-        self.settings["api_key"] = mw_settings.GOOGLE_MAP_API_KEY
-        self.settings["api_signature"] = mw_settings.GOOGLE_MAP_API_SIGNATURE
+        self.settings["key"] = mw_settings.GOOGLE_MAP_API_KEY
+        if mw_settings.GOOGLE_MAP_API_SIGNATURE:
+            self.settings["signature"] = mw_settings.GOOGLE_MAP_API_SIGNATURE
         if self.size:
             self.settings["size"] = self.size
             self.settings["zoom"] = self.zoom

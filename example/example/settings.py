@@ -96,7 +96,7 @@ DATABASES = {
         'NAME': 'map_widget_example',
         'USER': 'mapwidgetdbu',
         'PASSWORD': 'mapwidgetdbu',
-        'HOST': 'localhost',
+        'HOST': 'postgres',
         'PORT': '5432',
     }
 }
@@ -150,7 +150,7 @@ STATICFILES_DIRS = [
 MAP_WIDGETS = {
     "GooglePointFieldWidget": (
         ("zoom", 15),
-        ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'uk'}})
+        ("mapCenterLocation", [51.5073509, -0.12775829999998223]),
     ),
-    "GOOGLE_MAP_API_KEY": "AIzaSyDRIvN9brpxIm_xgyTnhUR9a_VTCcTN2bE",
+    "GOOGLE_MAP_API_KEY": "AIzaSyBjE4nTxkXIJyrFMlw35bJbTXBTaHPkJsg",
 }
