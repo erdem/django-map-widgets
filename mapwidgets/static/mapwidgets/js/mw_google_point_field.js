@@ -63,12 +63,17 @@
             var bounds = new google.maps.LatLngBounds();
             bounds.extend(this.marker.getPosition());
             this.map.fitBounds(bounds);
-            var listener = google.maps.event.addListener(this.map, "bounds_changed", function() {
-                if (this.getZoom() > 15) { // this.getZoom is always 21, see https://github.com/erdem/django-map-widgets/issues/7
-                    this.setZoom(15)
-                }
-                google.maps.event.removeListener(listener);
-            });
+            if (this.markerFocusZoom && this.isInt(this.markerFocusZoom)){
+                var markerFocusZoom = parseInt(this.markerFocusZoom);
+                var listener = google.maps.event.addListener(this.map, "bounds_changed", function() {
+                    console.log(markerFocusZoom);
+                    console.log(this.getZoom());
+                    if (this.getZoom() > markerFocusZoom) {
+                        this.setZoom(markerFocusZoom)
+                    }
+                    google.maps.event.removeListener(listener);
+                });
+            }
         },
 
         removeMarker: function(e){

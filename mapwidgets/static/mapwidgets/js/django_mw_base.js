@@ -47,6 +47,12 @@
             console.warn("Implement handleAddMarkerBtnClick method.");
         },
 
+        isInt : function(value) {
+            return !isNaN(value) &&
+                parseInt(Number(value)) == value &&
+                !isNaN(parseInt(value, 10));
+        },
+        
         getLocationValues: function(){
             var latlng = this.locationInput.val().split(' ');
             var lat = latlng[2].replace(/[\(\)]/g, '');
