@@ -31,23 +31,24 @@ Django map widgets requires jQuery framework, it does not import jQuery library.
 #### Google Map Widget
 ##### Settings
 
-* **GOOGLE_MAP_API_KEY**: Put your Google API key
+&nbsp;&nbsp;&nbsp;&nbsp; **GOOGLE_MAP_API_KEY**: Put your Google API key (required)
 
-* **mapCenterLocationName**: You can give a specific location name for center of map. Map widget will find this location coordinates using <a href="https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete" target="_blank">Google Place Autocomplete</a>. (Optional)
+&nbsp;&nbsp;&nbsp;&nbsp; **GOOGLE_MAP_API_SIGNATURE**: You can give Google Static Map API signature key (optional). Check out this <a href="https://developers.google.com/maps/documentation/static-maps/get-api-key" target="_blank">page</a>.
 
-* **mapCenterLocation**: You can give specific coordinates for center of the map. Coordinates must be list type. ([latitude, longitude]) (Optional)
+&nbsp;&nbsp;&nbsp;&nbsp; **mapCenterLocationName**: You can give a specific location name for center of map. Map widget will find this location coordinates using <a href="https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete" target="_blank">Google Place Autocomplete</a>. (Optional)
 
-* **zoom** : Default zoom value.
+&nbsp;&nbsp;&nbsp;&nbsp; **mapCenterLocation**: You can give specific coordinates for center of the map. Coordinates must be list type. ([latitude, longitude]) (Optional)
 
-* **GooglePlaceAutocompleteOptions** : Put your custom <a href="https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete" target="_blank">Google Place Autocomplete</a> options. (Optional)
-
-> Note: If there is no spesific value set for the map center, (mapCenterLocationName, mapCenterLocation) the widget will be centered by the timezone setting of the project.
+> If there is no spesific value set for the map center, (mapCenterLocationName, mapCenterLocation) the widget will be centered by the timezone setting of the project.
 
 Check out these links.
 
-- <a href="https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/constants.py">Timezone Center Locations</a>
-- <a href="https://gist.github.com/erdem/8c7d26765831d0f9a8c62f02782ae00d">countries.json</a>
+* <a href="https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/constants.py">Timezone Center Locations</a>
+* <a href="https://gist.github.com/erdem/8c7d26765831d0f9a8c62f02782ae00d">countries.json</a>
 
+&nbsp;&nbsp;&nbsp;&nbsp; **zoom** : Default zoom value for maps (optional, default value is "6").
+
+&nbsp;&nbsp;&nbsp;&nbsp; **GooglePlaceAutocompleteOptions** : Put your custom <a href="https://developers.google.com/maps/documentation/javascript/places-autocomplete" target="_blank">Google Place Autocomplete</a> options. (Optional)
 
 ### Usage 
 
@@ -59,7 +60,7 @@ MAP_WIDGETS = {
         ("mapCenterLocationName", "london"),
         ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'uk'}}),
     ),
-    "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
+    "GOOGLE_MAP_API_KEY": "<google-api-key>"
 }
 ```
 
