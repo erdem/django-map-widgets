@@ -61,6 +61,8 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+todo.md
+notes.md
 Vagrantfile
 .vagrant
 docker-compose.yml
