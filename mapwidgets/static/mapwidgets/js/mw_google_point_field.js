@@ -63,13 +63,11 @@
             var bounds = new google.maps.LatLngBounds();
             bounds.extend(this.marker.getPosition());
             this.map.fitBounds(bounds);
-            if (this.markerFocusZoom && this.isInt(this.markerFocusZoom)){
-                var markerFocusZoom = parseInt(this.markerFocusZoom);
+            if (this.markerFitZoom && this.isInt(this.markerFitZoom)){
+                var markerFitZoom = parseInt(this.markerFitZoom);
                 var listener = google.maps.event.addListener(this.map, "bounds_changed", function() {
-                    console.log(markerFocusZoom);
-                    console.log(this.getZoom());
-                    if (this.getZoom() > markerFocusZoom) {
-                        this.setZoom(markerFocusZoom)
+                    if (this.getZoom() > markerFitZoom) {
+                        this.setZoom(markerFitZoom)
                     }
                     google.maps.event.removeListener(listener);
                 });

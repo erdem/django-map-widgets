@@ -151,7 +151,7 @@ MAP_WIDGETS = {
     "GooglePointFieldWidget": (
         ("zoom", 15),
         ("mapCenterLocation", [51.5073509, -0.12775829999998223]),
-        ("markerFocusZoom", 12),
+        ("markerFitZoom", 12),
 
     ),
     "GOOGLE_MAP_API_KEY": "AIzaSyBjE4nTxkXIJyrFMlw35bJbTXBTaHPkJsg",

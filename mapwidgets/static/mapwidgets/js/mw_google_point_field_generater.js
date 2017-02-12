@@ -43,7 +43,7 @@
                 addMarkerBtn: $(".mw-btn-add-marker", wrapElemSelector),
                 loaderOverlayElem: $(".mw-loader-overlay", wrapElemSelector),
                 zoom: mapOptions.zoom,
-                markerFocusZoom: mapOptions.markerFocusZoom,
+                markerFitZoom: mapOptions.markerFitZoom,
                 markerCreateTriggerNameSpace: "google_point_map_widget:marker_create",
                 markerChangeTriggerNameSpace: "google_point_map_widget:marker_change",
                 markerDeleteTriggerNameSpace: "google_point_map_widget:marker_delete"
