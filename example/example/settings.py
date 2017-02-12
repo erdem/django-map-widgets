@@ -147,12 +147,20 @@ STATICFILES_DIRS = [
 ]
 
 
+GOOGLE_MAP_API_KEY = "google-map-js-api-key"
+
+try:
+    from settings_local import *
+except ImportError:
+    pass
+
+
 MAP_WIDGETS = {
     "GooglePointFieldWidget": (
         ("zoom", 15),
         ("mapCenterLocation", [51.5073509, -0.12775829999998223]),
-        ("markerFitZoom", 12),
+        ("markerFitZoom", None),
 
     ),
-    "GOOGLE_MAP_API_KEY": "AIzaSyBjE4nTxkXIJyrFMlw35bJbTXBTaHPkJsg",
+    "GOOGLE_MAP_API_KEY": GOOGLE_MAP_API_KEY,
 }

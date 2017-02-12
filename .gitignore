@@ -61,6 +61,7 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+settings_local.py
 todo.md
 notes.md
 Vagrantfile

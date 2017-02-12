@@ -50,7 +50,7 @@ Check out these links.
 
 **markerFitZoom** : Initializing the map with a marker or user creating a new marker on the map with actions, the map widget using <a href="https://developers.google.com/maps/documentation/javascript/places-autocomplete" target="_blank">fitBounds</a> method on Google Map Javascript interface. When called google `fitBounds` method map zoom value is getting maximum. This is not good map viewing for end users. Because of that the map widget set the map zoom value after called `fitBounds` if it is not define `None`. (optional, default value is 15)
 
-**GooglePlaceAutocompleteOptions** : Put your custom <a href="https://developers.google.com/maps/documentation/javascript/places-autocomplete" target="_blank">Google Place Autocomplete</a> options. (Optional)
+**GooglePlaceAutocompleteOptions** : You can give <a href="https://developers.google.com/maps/documentation/javascript/places-autocomplete" target="_blank">Google Place Autocomplete</a> options as a dictionary. (Optional)
 
 ### Usage 
 
@@ -61,6 +61,7 @@ MAP_WIDGETS = {
         ("zoom", 15),
         ("mapCenterLocationName", "london"),
         ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'uk'}}),
+        ("markerFitZoom", 12),
     ),
     "GOOGLE_MAP_API_KEY": "<google-api-key>"
 }
