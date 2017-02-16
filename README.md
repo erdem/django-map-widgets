@@ -48,7 +48,7 @@ Check out these links.
 
 **zoom** : Default zoom value for maps (optional, default value is 6).
 
-**markerFitZoom** : Initializing the map with a marker or user creating a new marker on the map with actions, the map widget using <a href="https://developers.google.com/maps/documentation/javascript/places-autocomplete" target="_blank">fitBounds</a> method on Google Map Javascript interface. When called google `fitBounds` method map zoom value is getting maximum. This is not good map viewing for end users. Because of that the map widget set the map zoom value after called `fitBounds` if it is not define `None`. (optional, default value is 15)
+**markerFitZoom** : Initializing the map with a marker or user creating a new marker with actions on the map, the map widget using <a href="https://developers.google.com/maps/documentation/javascript/places-autocomplete" target="_blank">fitBounds</a> method on Google Map Javascript interface. When called google `fitBounds` method map zoom value is getting maximum. This is not good map viewing for end users. Because of that the map widget set the map zoom value after called `fitBounds`. If you set the value with `None`, this feature will be disable. (optional, default value is 15)
 
 **GooglePlaceAutocompleteOptions** : You can give <a href="https://developers.google.com/maps/documentation/javascript/places-autocomplete" target="_blank">Google Place Autocomplete</a> options as a dictionary. (Optional)
 
