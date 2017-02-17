@@ -10,7 +10,7 @@
   font-style: normal;
 }
 
-[class^="icon-"]:before, [class*=" icon-"]:before {
+.mw-wrap [class^="icon-"]:before, .mw-wrap [class*=" icon-"]:before {
     font-family: "fontello";
     font-style: normal;
     font-weight: normal;
@@ -45,10 +45,10 @@
     /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 
-.icon-down-dir:before { content: '\e800'; } /* '' */
-.icon-location:before { content: '\e801'; } /* '' */
-.icon-trash-empty:before { content: '\e802'; } /* '' */
-.icon-arrows-cw:before { content: '\e803'; } /* '' */
+.mw-wrap .icon-down-dir:before { content: '\e800'; } /* '' */
+.mw-wrap .icon-location:before { content: '\e801'; } /* '' */
+.mw-wrap .icon-trash-empty:before { content: '\e802'; } /* '' */
+.mw-wrap .icon-arrows-cw:before { content: '\e803'; } /* '' */
 
 .mw-wrap {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
