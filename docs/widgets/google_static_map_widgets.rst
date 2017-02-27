@@ -1,0 +1,4 @@
+Google Static Map Widgets
+=========================
+
+

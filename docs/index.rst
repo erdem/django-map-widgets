@@ -6,9 +6,23 @@
 Welcome to Django Map Widgets's documentation!
 ==============================================
 
+Configurable, pluggable and more user friendly map widgets for Django PostGIS fields.
+
+
+Achievements
+^^^^^^^^^^^^
+
+The aim of the Django map widgets is to make all Geo Django widgets more user friendly and configurable. Map widgets support major map services (GoogleMaps, OpenStreetMap) for your geoDjango fields.
+
+
+Index
+-----
+
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+
+   installation/index
+   widgets/index
 
 
 
