@@ -6,5 +6,6 @@ Widgets
 .. toctree::
    :maxdepth: 2
 
-   google_static_map_widgets
    point_field_map_widgets
+   point_field_inline_map_widgets
+   google_static_map_widgets
