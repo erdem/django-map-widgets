@@ -9,24 +9,141 @@ Preview
 Settings
 ^^^^^^^^
 
-* **GOOGLE_MAP_API_KEY**: Put your Google API key
+* **GOOGLE_MAP_API_KEY**: Put your Google API key (required)
 
-* **mapCenterLocationName**: You can give a specific location name for center of map. Map widget will find this location coordinates using <a href="https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete" target="_blank">Google Places Autocomplete</a>. (Optional)
+* **GOOGLE_MAP_API_SIGNATURE**:: You can give Google Static Map API signature key (optional). Check out this `page <https://developers.google.com/maps/documentation/static-maps/get-api-key/>`_.
+
+* **mapCenterLocationName**: You can give a specific location name for center of map. Map widget will find this location coordinates using `Google Place Autocomplete <https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete/>`_. (Optional)
 
 * **mapCenterLocation**: You can give specific coordinates for center of the map. Coordinates must be list type. ([latitude, longitude]) (Optional)
 
-* **zoom** : Default zoom value.
+* **zoom** : Default zoom value for maps (optional, default value is 6).
+
+* **markerFitZoom** : Initializing the map with a marker or user creating a new marker with actions on the map, the map widget using `fitBounds <https://developers.google.com/maps/documentation/javascript/referencey/>`_ method on Google Map Javascript interface. When called google fitBounds method map zoom value is getting maximum. This is not good map viewing for end users. Because of that the map widget set the map zoom value after called fitBounds. If you set the value with None, this feature will be disable. (optional, default value is 15)
 
 .. Tip::
 
-    If there is no spesific value set for the map center, (mapCenterLocationName, mapCenterLocation) the widget will be centered by the timezone setting of the project
+    If there is no spesific value set for the map center for ``mapCenterLocationName``, ``mapCenterLocation`` the widget will be centered by the timezone setting of the project
     Check out these links.
 
     * `Timezone Center Locations <https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/constants.py/>`_
     * `countries.json <https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/constants.py/>`_
 
 
+Usage
+^^^^^
+
+**Settings**
+
+In your ``settings.py`` file, add your ``MAP_WIDGETS`` config:
+
+.. code-block:: python
+
+    MAP_WIDGETS = {
+        "GooglePointFieldWidget": (
+            ("zoom", 15),
+            ("mapCenterLocationName", "london"),
+            ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'uk'}}),
+            ("markerFitZoom", 12),
+        ),
+        "GOOGLE_MAP_API_KEY": "<google-api-key>"
+    }
+
+If you want to give specific coordinates for center of the map, you can update your settings file like that.
+
+.. code-block:: python
+
+    MAP_WIDGETS = {
+        "GooglePointFieldWidget": (
+            ("zoom", 15),
+            ("mapCenterLocation", [57.7177013, -16.6300491]),
+        ),
+        "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
+    }
 
 
+**Django Admin**
+
+.. code-block:: python
+
+    from mapwidgets.widgets import GooglePointFieldWidget
+
+    class CityAdmin(admin.ModelAdmin):
+        formfield_overrides = {
+            models.PointField: {"widget": GooglePointFieldWidget}
+        }
+
+**Django Admin**
+
+.. code-block:: python
+
+    from mapwidgets.widgets import GooglePointFieldWidget
+
+    class CityAdminForm(forms.ModelForm):
+        class Meta:
+            model = City
+            fields = ("coordinates", "city_hall")
+            widgets = {
+                'coordinates': GooglePointFieldWidget,
+                'city_hall': GooglePointFieldWidget,
+            }
+
+**Javascript API**
+
+If you want develop your map UI on front-end side, you can use map widget jQuery triggers.
 
 
+* **google_point_map_widget:marker_create**: Triggered when user create marker on map. (callback params: lat, lng, locationInputElem, mapWrapID)
+
+* **google_point_map_widget:marker_change**: Triggered when user change marker position on map. (callback params: lat, lng, locationInputElem, mapWrapID)
+
+* **google_point_map_widget:marker_delete**: Triggered when user delete marker on map. (callback params: lat, lng, locationInputElem, mapWrapID)
+
+
+.. code-block:: javascript
+
+    $(document).on("google_point_map_widget:marker_create", function (e, lat, lng, locationInputElem, mapWrapID) {
+        console.log(locationInputElem); // django widget textarea widget (hidden)
+        console.log(lat, lng); // created marker coordinates
+        console.log(mapWrapID); // map widget wrapper element ID
+    });
+
+    $(document).on("google_point_map_widget:marker_change", function (e, lat, lng, locationInputElem, mapWrapID) {
+        console.log(locationInputElem); // django widget textarea widget (hidden)
+        console.log(lat, lng);  // changed marker coordinates
+        console.log(mapWrapID); // map widget wrapper element ID
+    });
+
+    $(document).on("google_point_map_widget:marker_delete", function (e, lat, lng, locationInputElem, mapWrapID) {
+        console.log(locationInputElem); // django widget textarea widget (hidden)
+        console.log(lat, lng);  // deleted marker coordinates
+        console.log(mapWrapID); // map widget wrapper element ID
+    })
+
+Google Map Widget for Django Admin Inlines
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+As you know Django Admin has inline feature and you can add an inline row dynamically. In this case, Django default map widget doesn't initialize widget when created a new inline row.
+
+If you want to use Google Map Widget on admin inlines with no issue, you just need to use ``GooglePointFieldInlineWidget`` class.
+
+**Usage**
+
+.. code-block:: python
+
+    from mapwidgets.widgets import GooglePointFieldInlineWidget
+
+    class DistrictAdminInline(admin.TabularInline):
+        model = District
+        extra = 3
+        formfield_overrides = {
+            models.PointField: {"widget": GooglePointFieldInlineWidget}
+        }
+
+    class CityAdmin(admin.ModelAdmin):
+        inlines = (DistrictAdminInline,)
+
+
+**Preview**
+
+.. image:: ../_static/images/google-point-field-admin-inline-widget.gif
