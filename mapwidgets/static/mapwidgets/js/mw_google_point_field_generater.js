@@ -4,7 +4,7 @@
         init: function (options) {
             $.extend(this, options);
             $(document).on('formset:added', this.handle_added_formset_row.bind(this));
-
+            $(document).on('inline-group-row:added', this.handle_added_formset_row.bind(this));
         },
 
         handle_added_formset_row: function (e, row, prefix) {

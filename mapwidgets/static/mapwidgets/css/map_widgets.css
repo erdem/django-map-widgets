@@ -92,7 +92,7 @@
 }
 
 
-.mw-wrap *{
+.mw-wrap * {
     border-radius: 0 !important;
 }
 
@@ -105,6 +105,12 @@
 }
 
 .mw-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.mw-left-header-part, .mw-right-header-part {
     margin-bottom: 6px;
 }
 
