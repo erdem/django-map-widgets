@@ -1,9 +1,19 @@
 Google Map Widget for Django Admin Inlines
 ==========================================
 
+**Preview**
+
+.. image:: ../_static/images/google-point-field-admin-inline-widget.gif
+
 As you know Django Admin has inline feature and you can add an inline row dynamically. In this case, Django default map widget doesn't initialize widget when created a new inline row.
 
 If you want to use Google Map Widget on admin inlines with no issue, you just need to use ``GooglePointFieldInlineWidget`` class.
+
+
+.. Note::
+
+    This widget working with :ref:`Google Point Field Map Widget <point_field_map_widgets>` settings.
+
 
 **Usage**
 
@@ -22,6 +32,3 @@ If you want to use Google Map Widget on admin inlines with no issue, you just ne
         inlines = (DistrictAdminInline,)
 
 
-**Preview**
-
-.. image:: ../_static/images/google-point-field-admin-inline-widget.gif
