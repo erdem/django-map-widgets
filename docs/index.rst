@@ -23,6 +23,7 @@ Index
 
    installation/index
    widgets/index
+   releases/index
 
 
 
