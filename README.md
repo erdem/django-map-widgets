@@ -1,6 +1,8 @@
 ### Django Map Widgets
 Configurable, pluggable and more user friendly map widgets for Django PostGIS fields.
 
+**Documentation**: <a href="http://django-map-widgets.readthedocs.io/" target="_blank">http://django-map-widgets.readthedocs.io/</a>
+
 ### Achievements
 The aim of the Django map widgets is to make all Geo Django widgets more user friendly and configurable. Map widgets support major map services (GoogleMaps, OpenStreetMap) for your geoDjango fields.
 
@@ -23,7 +25,6 @@ INSTALLED_APPS = [
 ```
 
 
-**Documentation**: <a href="http://django-map-widgets.readthedocs.io/" target="_blank">http://django-map-widgets.readthedocs.io/</a>
 
 ### Requirements
 
