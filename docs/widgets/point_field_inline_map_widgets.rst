@@ -1,5 +1,3 @@
-
-
 Google Map Widget for Django Admin Inlines
 ==========================================
 

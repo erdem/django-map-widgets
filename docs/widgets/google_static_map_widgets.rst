@@ -1,4 +1,4 @@
-Google Static Map Widgets
+Google Map Static Widgets
 =========================
 
 **Preview**

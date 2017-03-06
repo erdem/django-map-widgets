@@ -1,6 +1,6 @@
 .. _point_field_map_widgets:
 
-Google Point Field Map Widget
+Google Map Point Field Widget
 =============================
 
 Preview

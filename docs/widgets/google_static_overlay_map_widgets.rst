@@ -1,4 +1,4 @@
-Google Static Map Overlay Widget
+Google Map Static Overlay Widget
 ================================
 
 **Preview**
