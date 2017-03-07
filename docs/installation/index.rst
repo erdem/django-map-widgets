@@ -5,7 +5,7 @@ Installation
 
 Installing from PyPi
 ^^^^^^^^^^^^^^^^^^^^
-.. note:: This is the preferred installation mechanism.
+.. note:: This is the preferred installation method.
 
 .. code-block:: console
 
