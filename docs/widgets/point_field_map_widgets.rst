@@ -21,7 +21,7 @@ Settings
 
 * **zoom** : Default zoom value for maps (optional, default value is 6).
 
-* **markerFitZoom** : Initializing the map with a marker or user creating a new marker with actions on the map, the map widget using `fitBounds <https://developers.google.com/maps/documentation/javascript/referencey/>`_ method on Google Map Javascript interface. When called google fitBounds method map zoom value is getting maximum. This is not good map viewing for end users. Because of that the map widget set the map zoom value after called fitBounds. If you set the value with None, this feature will be disable. (optional, default value is 15)
+* **markerFitZoom** : When the marker is initialized google's default zoom is set to Max. This method sets the zoom level a reasonable distance and center the marker on the map.
 
 .. Tip::
 
