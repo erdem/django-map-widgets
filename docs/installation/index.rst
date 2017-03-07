@@ -5,7 +5,7 @@ Installation
 
 Installing from PyPi
 ^^^^^^^^^^^^^^^^^^^^
-.. note:: This is the preferred installation mechanism.
+.. note:: This is the preferred installation meth.
 
 .. code-block:: console
 
@@ -25,5 +25,5 @@ Alternatively, install the package from github
 Requirements
 ^^^^^^^^^^^^
 
-Django map widgets requires jQuery framework, it does not import jQuery library. It's working with your global jQuery. If you will use map widgets in Django Admin, you don't need to import jQuery framework. Map widgets work with Django Admin jQuery file.
+Django map widgets uses the inbuilt django jQuery library. No further admin settings is required.
 
