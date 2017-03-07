@@ -21,6 +21,19 @@ Alternatively, install the package from github
     $ pip install git+git://github.com/erdem/django-map-widgets.git
 
 
+Add ‘map_widgets’ to your `INSTALLED_APPS` in settings.py
+
+
+.. code-block:: python
+
+    INSTALLED_APPS = [
+         ...
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+
+        'mapwidgets',
+    ]
 
 Requirements
 ^^^^^^^^^^^^
