@@ -38,5 +38,5 @@ Add ‘map_widgets’ to your `INSTALLED_APPS` in settings.py
 Requirements
 ^^^^^^^^^^^^
 
-Django Map Widgets needs Jquery dependency to work in your regular views. In Django Admin case, you don't need to provide the jQuery just because it's already available on `django.jQuery` namespace.
+Django Map Widgets needs Jquery dependency to work in your regular views. In Django Admin case, you don't need to provide the jQuery just because it's already available on ``django.jQuery`` namespace.
 

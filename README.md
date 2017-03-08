@@ -29,7 +29,7 @@ INSTALLED_APPS = [
 
 ### Requirements
 
-Django map widgets requires jQuery framework, it does not import jQuery library. It's working with your global jQuery. If you will use map widgets in Django Admin, you don't need to add jQuery. Map widgets work with Django Admin jQuery file. 
+Django Map Widgets needs Jquery dependency to work in your regular views. In Django Admin case, you don't need to provide the jQuery just because it's already available on ``django.jQuery`` namespace.
 
 ### Screenshots
 
