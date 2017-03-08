@@ -20,14 +20,31 @@ class CityAdminForm(forms.ModelForm):
         fields = "__all__"
         widgets = {
             'coordinates': GooglePointFieldWidget,
-            'city_hall': GoogleStaticMapWidget,
+            'city_hall': GooglePointFieldWidget,
+        }
+
+
+class CityAdminStaticForm(forms.ModelForm):
+
+    class Meta:
+        model = City
+        fields = "__all__"
+        widgets = {
+            'coordinates': GoogleStaticMapWidget,
+            'city_hall': GoogleStaticOverlayMapWidget,
         }
 
 
 class CityAdmin(admin.ModelAdmin):
     list_display = ("name", "coordinates")
     inlines = (DistrictAdminInline,)
-    form = CityAdminForm
+
+    def get_form(self, request, obj=None, **kwargs):
+        if not obj:
+            self.form = CityAdminForm
+        else:
+            self.form = CityAdminStaticForm
+        return super(CityAdmin, self).get_form(request, obj, **kwargs)
 
 
 class DistrictAdmin(admin.ModelAdmin):
