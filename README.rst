@@ -45,6 +45,7 @@ Google Map Point Field Widget
 -----------------------------
 
 .. image:: https://cloud.githubusercontent.com/assets/1518272/18732352/724dd098-805a-11e6-8eb4-6ba9b5e06a81.png
+   :width: 100 %
 
 
 Google Map Point Field Widget for Django Admin Inlines
@@ -56,4 +57,5 @@ Google Map Static Overlay Widget
 --------------------------------
 
 .. image:: https://cloud.githubusercontent.com/assets/1518272/18732296/18f1813e-805a-11e6-8801-f1f48ed02a9c.png
+   :width: 100 %
 
