@@ -58,6 +58,8 @@ class MapWidgetSettings(object):
 
     def __init__(self, app_settings=None, defaults=None):
         if app_settings:
+            if not isinstance(app_settings, (dict, tuple)):
+                raise TypeError(_("MapWidget settings must be a tuple or dictionary"))
             self._app_settings = app_settings
 
         self.defaults = defaults or DEFAULTS
@@ -84,7 +86,7 @@ class MapWidgetSettings(object):
                     default_bundle.update(user_bundle)
                     val = default_bundle
                 except ValueError:
-                    raise Exception(_("Invalid %s settings value. Please check the settings documentation http://django-map-widgets.readthedocs.io/en/latest/widgets/settings.html" % attr))
+                    raise ValueError(_("Invalid %s settings value. Please check the settings documentation http://django-map-widgets.readthedocs.io/en/latest/widgets/settings.html" % attr))
 
         except KeyError:
             # Fall back to defaults
@@ -93,7 +95,7 @@ class MapWidgetSettings(object):
                 try:
                     val = OrderedDict(val)
                 except ValueError:
-                    raise Exception(_("Invalid %s settings value. Please check the settings documentation http://django-map-widgets.readthedocs.io/en/latest/widgets/settings.html" % attr))
+                    raise ValueError(_("Invalid %s settings value. Please check the settings documentation http://django-map-widgets.readthedocs.io/en/latest/widgets/settings.html" % attr))
 
         # Cache the result
         setattr(self, attr, val)

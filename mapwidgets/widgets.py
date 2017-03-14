@@ -22,9 +22,29 @@ def minify_if_not_debug(asset):
     return asset.format("" if not mw_settings.MINIFED else ".min")
 
 
-class GooglePointFieldWidget(BaseGeometryWidget):
-    template_name = "mapwidgets/google-point-field-widget.html"
+class BasePointFieldMapWidget(BaseGeometryWidget):
     settings = None
+
+    def __init__(self, *args, **kwargs):
+        super(BasePointFieldMapWidget, self).__init__(*args, **kwargs)
+        _settings = kwargs.pop("settings", self.settings)
+        if _settings:
+            self.settings = _settings
+        print self.settings
+
+    def map_options(self):
+        if not self.settings:
+            raise ImproperlyConfigured('%s requires either a definition of "settings"' % self.__class__.__name__)
+
+        if not isinstance(self.settings, MapWidgetSettings):
+            custom_widget_settings = MapWidgetSettings(app_settings=self.settings)
+            return json.dumps(custom_widget_settings)
+        return json.dumps(self.settings)
+
+
+class GooglePointFieldWidget(BasePointFieldMapWidget):
+    template_name = "mapwidgets/google-point-field-widget.html"
+    settings = mw_settings.GooglePointFieldWidget
 
     @property
     def media(self):
@@ -50,9 +70,6 @@ class GooglePointFieldWidget(BaseGeometryWidget):
             ]
 
         return forms.Media(js=js, css=css)
-
-    def map_options(self):
-        return json.dumps(mw_settings.GooglePointFieldWidget)
 
     def render(self, name, value, attrs=None):
         if not attrs:
