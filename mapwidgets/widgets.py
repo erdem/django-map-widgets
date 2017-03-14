@@ -12,7 +12,7 @@ from django.utils.html import format_html
 from django.utils.http import urlencode
 
 from mapwidgets.constants import STATIC_MAP_PLACEHOLDER_IMAGE
-from mapwidgets.settings import mw_settings
+from mapwidgets.settings import mw_settings, MapWidgetSettings
 
 
 def minify_if_not_debug(asset):
@@ -24,6 +24,7 @@ def minify_if_not_debug(asset):
 
 class GooglePointFieldWidget(BaseGeometryWidget):
     template_name = "mapwidgets/google-point-field-widget.html"
+    settings = None
 
     @property
     def media(self):
@@ -50,8 +51,7 @@ class GooglePointFieldWidget(BaseGeometryWidget):
 
         return forms.Media(js=js, css=css)
 
-    @staticmethod
-    def map_options():
+    def map_options(self):
         return json.dumps(mw_settings.GooglePointFieldWidget)
 
     def render(self, name, value, attrs=None):
@@ -95,6 +95,7 @@ class PointFieldInlineWidgetMixin(object):
 
 class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointFieldWidget):
     template_name = "mapwidgets/google-point-field-inline-widget.html"
+    settings = None
 
     @property
     def media(self):
