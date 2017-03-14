@@ -24,27 +24,31 @@ def minify_if_not_debug(asset):
 
 class BasePointFieldMapWidget(BaseGeometryWidget):
     settings = None
+    settings_namespace = None
 
     def __init__(self, *args, **kwargs):
+        if kwargs.get("settings"):
+            self.settings = kwargs.pop("settings")
         super(BasePointFieldMapWidget, self).__init__(*args, **kwargs)
-        _settings = kwargs.pop("settings", self.settings)
-        if _settings:
-            self.settings = _settings
-        print self.settings
 
     def map_options(self):
         if not self.settings:
             raise ImproperlyConfigured('%s requires either a definition of "settings"' % self.__class__.__name__)
 
+        if not self.settings_namespace:
+            raise ImproperlyConfigured('%s requires either a definition of "settings_namespace"' % self.__class__.__name__)
+
+        import ipdb;ipdb.set_trace()
         if not isinstance(self.settings, MapWidgetSettings):
-            custom_widget_settings = MapWidgetSettings(app_settings=self.settings)
-            return json.dumps(custom_widget_settings)
+            custom_settings = MapWidgetSettings(app_settings=self.settings)
+            return json.dumps(getattr(custom_settings, self.settings_namespace))
         return json.dumps(self.settings)
 
 
 class GooglePointFieldWidget(BasePointFieldMapWidget):
     template_name = "mapwidgets/google-point-field-widget.html"
     settings = mw_settings.GooglePointFieldWidget
+    settings_namespace = "GooglePointFieldWidget"
 
     @property
     def media(self):
@@ -112,7 +116,8 @@ class PointFieldInlineWidgetMixin(object):
 
 class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointFieldWidget):
     template_name = "mapwidgets/google-point-field-inline-widget.html"
-    settings = None
+    settings = mw_settings.GooglePointFieldWidget
+    settings_namespace = "GooglePointFieldWidget"
 
     @property
     def media(self):

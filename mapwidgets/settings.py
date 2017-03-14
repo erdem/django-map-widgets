@@ -78,15 +78,21 @@ class MapWidgetSettings(object):
             # Check if present attr in user settings
             val = self.app_settings[attr]
 
-            # Merge user multi value settings with defaults
+            # Merge app tuple settings with defaults
             if isinstance(val, tuple):
                 try:
-                    user_bundle = OrderedDict(val)
+                    app_bundle = OrderedDict(val)
                     default_bundle = OrderedDict(self.defaults[attr])
-                    default_bundle.update(user_bundle)
+                    default_bundle.update(app_bundle)
                     val = default_bundle
                 except ValueError:
                     raise ValueError(_("Invalid %s settings value. Please check the settings documentation http://django-map-widgets.readthedocs.io/en/latest/widgets/settings.html" % attr))
+
+            # Merge app dict settings with defaults
+            if isinstance(val, dict):
+                default_bundle = OrderedDict(self.defaults[attr])
+                default_bundle.update(val)
+                val = default_bundle
 
         except KeyError:
             # Fall back to defaults
