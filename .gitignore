@@ -68,3 +68,5 @@ Vagrantfile
 docker-compose.yml
 Dockerfile
 data/
+
+db.sqlite*
