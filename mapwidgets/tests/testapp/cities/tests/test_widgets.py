@@ -1,7 +1,13 @@
-from django.test import TestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+
+from selenium import webdriver
 
 
-class PointFieldWidgetTest(TestCase):
+class UserRegistrationSeleniumTestCase(StaticLiveServerTestCase):
 
-    def test_google_widget(self):
-        pass
+    def setUp(self):
+        self.browser = webdriver.Firefox()
+        self.browser.get(self.live_server_url)
+
+    def test_user_registration(self):
+        self.browser.find_element("body").click()
