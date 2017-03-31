@@ -1,13 +1,27 @@
+import os
+
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 from selenium import webdriver
 
+from mixins import SeleniumScreenShotMixin
 
-class UserRegistrationSeleniumTestCase(StaticLiveServerTestCase):
+os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = '0.0.0.0:8081 '
+
+
+class DummySeleniumTestCase(SeleniumScreenShotMixin, StaticLiveServerTestCase):
 
     def setUp(self):
-        self.browser = webdriver.Firefox()
-        self.browser.get(self.live_server_url)
+        options = webdriver.ChromeOptions()
+        options.add_argument("--no-sandbox")
+        self.browser = webdriver.Remote(
+            command_executor="http://selenium:4444/wd/hub",
+            desired_capabilities=options.to_capabilities()
+        )
+        print self.live_server_url
 
     def test_user_registration(self):
-        self.browser.find_element("body").click()
+        print "%s/%s/" % (self.live_server_url, "admin")
+        self.browser.get("%s/%s/" % (self.live_server_url, "admin"))
+        self.take_screenshot()
+        print self.browser.title
