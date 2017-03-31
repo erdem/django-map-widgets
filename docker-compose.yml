@@ -1,0 +1,26 @@
+version: "2"
+services:
+  web:
+    restart: on-failure:10
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mapwidgets
+    container_name: django_mapwidgets
+    command: tail -f /bin/bash    # Added not to kill container so that it can be bashed.
+    ports:
+     - "8000:8000"
+    links:
+      - postgres
+    volumes:
+      - ".:/django-map-widgets"
+
+  postgres:
+    image: mdillon/postgis
+    container_name: postgres_mapwidet
+    environment:
+      - POSTGRES_DB=map_widget_example
+      - POSTGRES_USER=mapwidgetdbu
+      - POSTGRES_PASSWORD=mapwidgetdbu
+    volumes:
+      - "./data/db:/var/lib/postgresql/data"

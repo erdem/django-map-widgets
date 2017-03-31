@@ -65,8 +65,6 @@ todo.md
 notes.md
 Vagrantfile
 .vagrant
-docker-compose.yml
-Dockerfile
 data/
 
 db.sqlite*
