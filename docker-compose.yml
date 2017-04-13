@@ -1,6 +1,6 @@
 version: "2"
 services:
-  web:
+  django:
     restart: on-failure:10
     build:
       context: .
@@ -10,6 +10,8 @@ services:
     environment:
       - SELENIUM_HOST=http://selenium:4444/wd/hub
       - TEST_SELENIUM='yes'
+      - SITE_DOMAIN=django
+      - DJANGO_LIVE_TEST_SERVER_ADDRESS=django:8081
     command: tail -f /bin/bash    # Added not to kill container so that it can be bashed.
     ports:
       - "8000:8000"
@@ -21,7 +23,7 @@ services:
       - ".:/django-map-widgets"
     depends_on:
       - selenium
-
+      - postgres
 
   postgres:
     image: mdillon/postgis

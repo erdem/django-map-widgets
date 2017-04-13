@@ -1,12 +1,8 @@
-import os
-
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 from selenium import webdriver
 
 from mixins import SeleniumScreenShotMixin
-
-os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = '0.0.0.0:8081 '
 
 
 class DummySeleniumTestCase(SeleniumScreenShotMixin, StaticLiveServerTestCase):
