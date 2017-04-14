@@ -10,11 +10,11 @@ class PointFieldGoogleWidgetView(TemplateView):
 
 
 class PointFieldGoogleStaticWidgetView(TemplateView):
-    template_name = "widgets/google_static_point_widget.html"
+    template_name = "widgets/google_point_static_widget.html"
 
 
 class PointFieldGoogleStaticOverlayWidgetView(TemplateView):
-    template_name = "widgets/google_static_point_widget.html"
+    template_name = "widgets/google_point_static_overlay_widget.html"
 
 
 

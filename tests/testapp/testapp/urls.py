@@ -22,8 +22,8 @@ from django.views.generic import RedirectView
 
 
 urlpatterns = [
-    url(r'^$', RedirectView.as_view(url=reverse_lazy('widgets:list')),
+    url(r'^$', RedirectView.as_view(url=reverse_lazy('widgets:list'))),
     url(r'^admin/', admin.site.urls),
-    url(r'^widgets/', include('widgets.urls', namespace='widgets'))),
+    url(r'^widgets/', include('widgets.urls', namespace='widgets')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
