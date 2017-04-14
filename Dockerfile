@@ -19,7 +19,7 @@ RUN apt-get -y install \
     python-virtualenv
 
 
-WORKDIR /django-map-widgets/mapwidgets/tests/testapp
+WORKDIR /django-map-widgets/tests/testapp
 COPY conf/requirments-dev.txt /tmp/requirments-dev.txt
 RUN pip install -r /tmp/requirments-dev.txt
 
