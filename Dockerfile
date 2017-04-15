@@ -23,6 +23,6 @@ WORKDIR /django-map-widgets/tests/testapp
 COPY conf/requirments-dev.txt /tmp/requirments-dev.txt
 RUN pip install -r /tmp/requirments-dev.txt
 
-#COPY conf/web_entrypoint.sh /docker-entrypoint.sh
-#RUN ["chmod", "+x", "/docker-entrypoint.sh"]
-#ENTRYPOINT ["/docker-entrypoint.sh"]
+COPY conf/web_entrypoint.sh /docker-entrypoint.sh
+RUN ["chmod", "+x", "/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]

@@ -9,7 +9,7 @@ set -e
 if [[ "'$*'" == *"manage.py test"* ]]  # only add if 'manage.py test' in the args
 then
   # get the container id
-  THIS_CONTAINER_ID_LONG=`cat /proc/self/cgroup | grep 'docker' | sed 's/^.*\///' | tail -n1`
+  THIS_CONTAINER_ID_LONG=`cat /proc/self/cgroup | grep 'docker' | sed 's/^.*\///' | grep -v "docker" | tail -n1`
   # take the first 12 characters - that is the format used in /etc/hosts
   THIS_CONTAINER_ID_SHORT=${THIS_CONTAINER_ID_LONG:0:12}
   # search /etc/hosts for the line with the ip address which will look like this:

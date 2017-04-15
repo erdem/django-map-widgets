@@ -27,7 +27,7 @@ services:
 
   postgres:
     image: mdillon/postgis
-    container_name: postgres_mapwidet
+    container_name: mapwidget_postgres
     environment:
       - POSTGRES_DB=map_widget_example
       - POSTGRES_USER=mapwidgetdbu
@@ -37,7 +37,7 @@ services:
 
   selenium:
     image: selenium/standalone-chrome-debug:3.3.0
-    container_name: selenium
+    container_name: mapwidget_selenium
     environment:
       - HUB_ENV_no_proxy=localhost
       - no_proxy=localhost
