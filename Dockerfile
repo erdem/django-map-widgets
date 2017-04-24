@@ -21,6 +21,7 @@ RUN apt-get -y install \
 
 WORKDIR /django-map-widgets/tests/testapp
 COPY conf/requirments-dev.txt /tmp/requirments-dev.txt
+RUN pip install --upgrade pip
 RUN pip install -r /tmp/requirments-dev.txt
 
 COPY conf/web_entrypoint.sh /docker-entrypoint.sh

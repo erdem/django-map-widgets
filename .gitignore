@@ -66,5 +66,6 @@ notes.md
 Vagrantfile
 .vagrant
 data/
+tests/testapp/screendumps/
 
 db.sqlite*
