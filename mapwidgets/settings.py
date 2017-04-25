@@ -66,6 +66,10 @@ class MapWidgetSettings(object):
 
     @cached_property
     def app_settings(self):
+        # This if block implemented for two reason.
+        # First, It is running when app loader called `mapwidgets` package first time. App need to load settings.
+        # Second logic for only tests, the settings object re-generate each 'override_settings' called running the tests.
+
         if not hasattr(self, '_app_settings') or getattr(django_settings, "TESTING", False):
             self._app_settings = getattr(django_settings, 'MAP_WIDGETS', {})
 
