@@ -1,18 +1,16 @@
 import json
 
 from django import forms
-from django.conf import settings
 from django.contrib.gis.forms import BaseGeometryWidget
 from django.contrib.gis.geos import Point
 from django.core.exceptions import ImproperlyConfigured
 from django.template.loader import render_to_string
 from django.templatetags.static import static
 from django.utils import six
-from django.utils.html import format_html
 from django.utils.http import urlencode
 
 from mapwidgets.constants import STATIC_MAP_PLACEHOLDER_IMAGE
-from mapwidgets.settings import mw_settings, MapWidgetSettings
+from mapwidgets.settings import MapWidgetSettings, mw_settings
 
 
 def minify_if_not_debug(asset):
@@ -38,7 +36,6 @@ class BasePointFieldMapWidget(BaseGeometryWidget):
         if not self.settings_namespace:
             raise ImproperlyConfigured('%s requires either a definition of "settings_namespace"' % self.__class__.__name__)
 
-        import ipdb;ipdb.set_trace()
         if not isinstance(self.settings, MapWidgetSettings):
             custom_settings = MapWidgetSettings(app_settings=self.settings)
             return json.dumps(getattr(custom_settings, self.settings_namespace))

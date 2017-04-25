@@ -66,13 +66,14 @@ class MapWidgetSettings(object):
 
     @cached_property
     def app_settings(self):
-        if not hasattr(self, '_app_settings'):
+        if not hasattr(self, '_app_settings') or getattr(django_settings, "TESTING", False):
             self._app_settings = getattr(django_settings, 'MAP_WIDGETS', {})
+
         return self._app_settings
 
     def __getattr__(self, attr):
         if attr not in self.defaults.keys():
-            raise AttributeError(_("Invalid settings key: '%s'. Please check the settings documentation http://django-map-widgets.readthedocs.io/en/latest/widgets/settings.html") % attr)
+            raise AttributeError("Invalid settings key: '%s'. Please check the settings documentation http://django-map-widgets.readthedocs.io/en/latest/widgets/settings.html" % attr)
 
         try:
             # Check if present attr in user settings

@@ -140,3 +140,4 @@ STATICFILES_DIRS = [
 ]
 
 SITE_DOMAIN = 'django'
+TESTING = sys.argv[1:2] == ['test']
