@@ -1,12 +1,10 @@
 import json
 
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import TestCase
-from django.conf import settings
 from django.test.utils import override_settings
+from django.utils.six.moves import reload_module
 from django.contrib.gis.geos import Point
-
-from selenium import webdriver
+from mapwidgets import widgets as mw_widgets
 
 from mapwidgets import GooglePointFieldWidget
 
@@ -30,6 +28,7 @@ class GooglePointWidgetUnitTests(TestCase):
         }
 
         with override_settings(MAP_WIDGETS=widget_settings):
+            reload_module(mw_widgets)
             widget = GooglePointFieldWidget()
             self.assertEqual(hasattr(widget, "settings"), True)
             self.assertEqual(hasattr(widget, "settings_namespace"), True)
@@ -46,6 +45,3 @@ class GooglePointWidgetUnitTests(TestCase):
             result = widget.render(name="location", value=point, attrs={'id': widget_html_elem_id})
             self.assertIn(widget.serialize(point), result)
             self.assertIn(widget_html_elem_id, result)
-
-    def test_with_custom_settings(self):
-        pass

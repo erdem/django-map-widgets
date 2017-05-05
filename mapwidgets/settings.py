@@ -1,8 +1,8 @@
 from collections import OrderedDict
 
 from django.conf import settings as django_settings
-from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
+from django.test.signals import setting_changed
 
 from mapwidgets.constants import TIMEZONE_COORDINATES
 
@@ -11,7 +11,7 @@ DEFAULTS = {
     "GooglePointFieldWidget": (
         ("mapCenterLocationName", None),
         ("mapCenterLocation", TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC"))),
-        ("zoom", 6),
+        ("zoom", 7),
         ("GooglePlaceAutocompleteOptions", {}),
         ("markerFitZoom", 15),
     ),
@@ -64,13 +64,9 @@ class MapWidgetSettings(object):
 
         self.defaults = defaults or DEFAULTS
 
-    @cached_property
+    @property
     def app_settings(self):
-        # This if block implemented for two reason.
-        # First, It is running when app loader called `mapwidgets` package first time. App need to load settings.
-        # Second logic for only tests, the settings object re-generate each 'override_settings' called running the tests.
-
-        if not hasattr(self, '_app_settings') or getattr(django_settings, "TESTING", False):
+        if not hasattr(self, '_app_settings'):
             self._app_settings = getattr(django_settings, 'MAP_WIDGETS', {})
 
         return self._app_settings
@@ -112,4 +108,16 @@ class MapWidgetSettings(object):
         setattr(self, attr, val)
         return val
 
-mw_settings = MapWidgetSettings()
+mw_settings = MapWidgetSettings(None, DEFAULTS)
+
+
+def reload_api_settings(*args, **kwargs):
+    global mw_settings
+    setting, value = kwargs['setting'], kwargs['value']
+    if setting == 'MAP_WIDGETS' and value:
+        mw_settings = MapWidgetSettings(None, DEFAULTS)
+
+    # print mw_settings.GooglePointFieldWidget
+
+
+setting_changed.connect(reload_api_settings)

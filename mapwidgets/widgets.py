@@ -21,13 +21,22 @@ def minify_if_not_debug(asset):
 
 
 class BasePointFieldMapWidget(BaseGeometryWidget):
-    settings = None
     settings_namespace = None
 
     def __init__(self, *args, **kwargs):
+        attrs = kwargs.get("attrs")
+        self.attrs = {}
+        for key in ('geom_type', 'map_srid', 'map_width', 'map_height', 'display_raw'):
+            self.attrs[key] = getattr(self, key)
+        if attrs:
+            self.attrs.update(attrs)
+
+        self.settings = mw_settings.GooglePointFieldWidget
+        self.custom_settings = False
+
         if kwargs.get("settings"):
             self.settings = kwargs.pop("settings")
-        super(BasePointFieldMapWidget, self).__init__(*args, **kwargs)
+            self.custom_settings = True
 
     def map_options(self):
         if not self.settings:
@@ -36,7 +45,7 @@ class BasePointFieldMapWidget(BaseGeometryWidget):
         if not self.settings_namespace:
             raise ImproperlyConfigured('%s requires either a definition of "settings_namespace"' % self.__class__.__name__)
 
-        if not isinstance(self.settings, MapWidgetSettings):
+        if self.custom_settings:
             custom_settings = MapWidgetSettings(app_settings=self.settings)
             return json.dumps(getattr(custom_settings, self.settings_namespace))
         return json.dumps(self.settings)
@@ -92,7 +101,7 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
         }
 
         attrs.update(extra_attrs)
-        return super(GooglePointFieldWidget, self).render(name, value, attrs)
+        return super(self.__class__, self).render(name, value, attrs)
 
 
 class PointFieldInlineWidgetMixin(object):
@@ -109,6 +118,19 @@ class PointFieldInlineWidgetMixin(object):
             "locationInputID": location_input_id
         }
         return js_widget_params
+
+    def render(self, name, value, attrs=None):
+        if not attrs:
+            attrs = dict()
+
+        element_id = attrs.get("id")
+        is_formset_empty_from_template = "__prefix__" in element_id
+        widget_data = self.get_js_widget_data(name, element_id)
+        attrs.update({
+            "js_widget_data": json.dumps(widget_data),
+            "is_formset_empty_from_template": is_formset_empty_from_template
+        })
+        return super(PointFieldInlineWidgetMixin, self).render(name, value, attrs)
 
 
 class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointFieldWidget):
@@ -141,19 +163,6 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
             ]
 
         return forms.Media(js=js, css=css)
-
-    def render(self, name, value, attrs=None):
-        if not attrs:
-            attrs = dict()
-
-        element_id = attrs.get("id")
-        is_formset_empty_from_template = "__prefix__" in element_id
-        widget_data = self.get_js_widget_data(name, element_id)
-        attrs.update({
-            "js_widget_data": json.dumps(widget_data),
-            "is_formset_empty_from_template": is_formset_empty_from_template
-        })
-        return super(GooglePointFieldInlineWidget, self).render(name, value, attrs)
 
 
 class BaseStaticMapWidget(forms.Widget):
