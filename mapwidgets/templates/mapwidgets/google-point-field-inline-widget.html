@@ -1,6 +1,6 @@
 {% extends "mapwidgets/google-point-field-widget.html" %}
 {% block extra_input %}
-    <input type="hidden"  class="js-class-options" name="district_set-__prefix__-location-mw-wrap">
+    <input type="hidden"  class="js-class-options" name="{{ name }}_set-__prefix__-location-mw-wrap">
 {% endblock extra_input %}
 
 {% block javascript %}
@@ -9,7 +9,7 @@
         (function($) {
             var mapOptions = JSON.parse("{{ options|escapejs }}");
             var fieldValue = JSON.parse("{{ field_value|escapejs }}");
-            {% if not is_formset_empty_from_template %}
+            {% if not is_formset_empty_form_template %}
 
                 var widgetData = JSON.parse("{{ js_widget_data|escapejs }}");
                 var wrapElemSelector = widgetData.wrapElemSelector;

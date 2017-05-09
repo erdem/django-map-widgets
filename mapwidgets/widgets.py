@@ -101,7 +101,8 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
         }
 
         attrs.update(extra_attrs)
-        return super(self.__class__, self).render(name, value, attrs)
+        self.as_super = super(GooglePointFieldWidget, self)
+        return self.as_super.render(name, value, attrs)
 
 
 class PointFieldInlineWidgetMixin(object):
@@ -124,13 +125,14 @@ class PointFieldInlineWidgetMixin(object):
             attrs = dict()
 
         element_id = attrs.get("id")
-        is_formset_empty_from_template = "__prefix__" in element_id
+        is_formset_empty_form_template = "__prefix__" in element_id
         widget_data = self.get_js_widget_data(name, element_id)
         attrs.update({
             "js_widget_data": json.dumps(widget_data),
-            "is_formset_empty_from_template": is_formset_empty_from_template
+            "is_formset_empty_form_template": is_formset_empty_form_template
         })
-        return super(PointFieldInlineWidgetMixin, self).render(name, value, attrs)
+        self.as_super = super(PointFieldInlineWidgetMixin, self)
+        return self.as_super.render(name, value, attrs)
 
 
 class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointFieldWidget):

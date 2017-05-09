@@ -11,7 +11,7 @@ DEFAULTS = {
     "GooglePointFieldWidget": (
         ("mapCenterLocationName", None),
         ("mapCenterLocation", TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC"))),
-        ("zoom", 7),
+        ("zoom", 6),
         ("GooglePlaceAutocompleteOptions", {}),
         ("markerFitZoom", 15),
     ),
@@ -116,8 +116,6 @@ def reload_api_settings(*args, **kwargs):
     setting, value = kwargs['setting'], kwargs['value']
     if setting == 'MAP_WIDGETS' and value:
         mw_settings = MapWidgetSettings(None, DEFAULTS)
-
-    # print mw_settings.GooglePointFieldWidget
 
 
 setting_changed.connect(reload_api_settings)
