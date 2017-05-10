@@ -280,7 +280,7 @@ class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
             settings["thumbnail_size"] = self.thumbnail_size
         return settings
 
-    def thumbnail_url(self, value):
+    def get_thumbnail_url(self, value):
         if isinstance(value, Point):
             longitude, latitude = value.x, value.y
             params = self.get_point_field_params(latitude, longitude)
@@ -296,5 +296,5 @@ class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
 
     def get_context_data(self, name, value, attrs):
         context = super(GoogleStaticOverlayMapWidget, self).get_context_data(name, value, attrs)
-        context["thumbnail_url"] = self.thumbnail_url(value)
+        context["thumbnail_url"] = self.get_thumbnail_url(value)
         return context

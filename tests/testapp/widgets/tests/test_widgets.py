@@ -207,7 +207,7 @@ class GoogleStaticMapWidgetUnitTests(TestCase):
             Test the widget with custom settings which is updated by `settings` parameter
         """
         zoom = 9
-        map_size = "200x200"
+        map_size = "100x100"
 
         widget_settings = {
             "GoogleStaticMapWidget": (
@@ -240,3 +240,92 @@ class GoogleStaticMapWidgetUnitTests(TestCase):
             self.assertEqual(res.getcode(), 200)
             self.assertEqual(res.info().type, "image/png")
 
+
+class GoogleStaticOverlayMapWidgetUnitTests(TestCase):
+
+    def test_widget_with_default_settings(self):
+        """
+            Test the widget with default settings which is defined in django settings file
+        """
+        zoom = 18
+        map_size = "400x400"
+        thumbnail_size = "100x100"
+        widget_settings = {
+            "GoogleStaticOverlayMapWidget": (
+                ("zoom", zoom),
+                ("size", map_size),
+                ("thumbnail_size", thumbnail_size),
+            ),
+            "GOOGLE_MAP_API_KEY": GOOGLE_MAP_API_KEY,
+        }
+
+        with override_settings(MAP_WIDGETS=widget_settings):
+            reload_module(mw_widgets)
+            widget = mw_widgets.GoogleStaticOverlayMapWidget()
+            settings = widget.map_settings
+
+            # test `map_settings` method
+            self.assertEqual(settings.get("zoom"), zoom)
+            self.assertEqual(settings.get("size"), map_size)
+            self.assertEqual(settings.get("thumbnail_size"), thumbnail_size)
+
+            # test render
+            point = Point(-92.9903, 34.7392)
+            widget_html_elem_id = "id_location"
+            widget_html_elem_name = "location"
+            result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id})
+            map_image_url = widget.get_image_url(point)
+            self.assertIn(GOOGLE_MAP_API_KEY, map_image_url)
+            self.assertIn(html_escape(map_image_url), result)
+
+            # test map_image_url
+            res = urllib.urlopen(map_image_url)
+            self.assertEqual(res.getcode(), 200)
+            self.assertEqual(res.info().type, "image/png")
+
+            # test thumbnail_image_url
+            thumbnail_url = widget.get_thumbnail_url(point)
+            res = urllib.urlopen(thumbnail_url)
+            self.assertEqual(res.getcode(), 200)
+            self.assertEqual(res.info().type, "image/png")
+
+    def test_widget_with_custom_settings(self):
+        """
+            Test the widget with custom settings which is updated by `settings` parameter
+        """
+        zoom = 18
+        map_size = "300x300"
+        thumbnail_size = "75x75"
+
+        widget_settings = {
+            "GOOGLE_MAP_API_KEY": GOOGLE_MAP_API_KEY,
+        }
+
+        with override_settings(MAP_WIDGETS=widget_settings):
+            reload_module(mw_widgets)
+            widget = mw_widgets.GoogleStaticOverlayMapWidget(zoom=zoom, size=map_size, thumbnail_size=thumbnail_size)
+            settings = widget.map_settings
+
+            # test `map_settings` method
+            self.assertEqual(settings.get("zoom"), zoom)
+            self.assertEqual(settings.get("size"), map_size)
+
+            # test render
+            point = Point(-105.9903, 38.7392)
+            widget_html_elem_id = "id_location"
+            widget_html_elem_name = "location"
+            result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id})
+            map_image_url = widget.get_image_url(point)
+            self.assertIn(GOOGLE_MAP_API_KEY, map_image_url)
+            self.assertIn(html_escape(map_image_url), result)
+
+            # test map_image_url
+            res = urllib.urlopen(map_image_url)
+            self.assertEqual(res.getcode(), 200)
+            self.assertEqual(res.info().type, "image/png")
+
+            # test thumbnail_image_url
+            thumbnail_url = widget.get_thumbnail_url(point)
+            res = urllib.urlopen(thumbnail_url)
+            self.assertEqual(res.getcode(), 200)
+            self.assertEqual(res.info().type, "image/png")
