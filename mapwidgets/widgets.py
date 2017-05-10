@@ -22,6 +22,7 @@ def minify_if_not_debug(asset):
 
 class BasePointFieldMapWidget(BaseGeometryWidget):
     settings_namespace = None
+    settings = None
 
     def __init__(self, *args, **kwargs):
         attrs = kwargs.get("attrs")
@@ -31,7 +32,6 @@ class BasePointFieldMapWidget(BaseGeometryWidget):
         if attrs:
             self.attrs.update(attrs)
 
-        self.settings = mw_settings.GooglePointFieldWidget
         self.custom_settings = False
 
         if kwargs.get("settings"):
@@ -125,7 +125,7 @@ class PointFieldInlineWidgetMixin(object):
             attrs = dict()
 
         element_id = attrs.get("id")
-        is_formset_empty_form_template = "__prefix__" in element_id
+        is_formset_empty_form_template = "__prefix__" in name
         widget_data = self.get_js_widget_data(name, element_id)
         attrs.update({
             "js_widget_data": json.dumps(widget_data),
