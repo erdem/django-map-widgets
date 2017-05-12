@@ -67,8 +67,11 @@ class MapWidgetSettings(object):
     @property
     def app_settings(self):
         if not hasattr(self, '_app_settings'):
-            self._app_settings = getattr(django_settings, 'MAP_WIDGETS', {})
+            app_settings = getattr(django_settings, 'MAP_WIDGETS', {})
+            if not isinstance(app_settings, (dict, tuple)):
+                raise TypeError(_("MapWidget settings must be a tuple or dictionary"))
 
+            self._app_settings = getattr(django_settings, 'MAP_WIDGETS', {})
         return self._app_settings
 
     def __getattr__(self, attr):
@@ -111,11 +114,10 @@ class MapWidgetSettings(object):
 mw_settings = MapWidgetSettings(None, DEFAULTS)
 
 
-def reload_api_settings(*args, **kwargs):
+def reload_widget_settings(*args, **kwargs):
     global mw_settings
     setting, value = kwargs['setting'], kwargs['value']
     if setting == 'MAP_WIDGETS' and value:
         mw_settings = MapWidgetSettings(None, DEFAULTS)
 
-
-setting_changed.connect(reload_api_settings)
+setting_changed.connect(reload_widget_settings)
