@@ -29,7 +29,7 @@ if MAP_WIDGETS_PATH not in sys.path:
 SECRET_KEY = 'o6b2c!r921-+^h7jlm&4x#sn53qwfif+@8(!4b*csitx+69b=5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 

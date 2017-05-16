@@ -1,3 +1,4 @@
+import os
 import json
 import urllib
 
@@ -6,12 +7,14 @@ from django.test.utils import override_settings
 from django.utils.six.moves import reload_module
 from django.contrib.gis.geos import Point
 from django.utils.html import escapejs
+from django.conf import settings as test_app_settings
+from django import forms as django_forms
 
 from mapwidgets import widgets as mw_widgets
 
 from utils import html_escape, get_textarea_html
 
-GOOGLE_MAP_API_KEY = "AIzaSyC6BeCYCBSWDdC3snYRFKWw18bd9MA-uu4"
+GOOGLE_MAP_API_KEY = os.environ.get("TEST_GOOGLE_MAP_API_KEY", test_app_settings.GOOGLE_MAP_API_KEY)
 
 
 class GooglePointWidgetUnitTests(TestCase):
@@ -34,6 +37,7 @@ class GooglePointWidgetUnitTests(TestCase):
             widget = mw_widgets.GooglePointFieldWidget()
             self.assertEqual(hasattr(widget, "settings"), True)
             self.assertEqual(hasattr(widget, "settings_namespace"), True)
+            self.assertEqual(isinstance(widget.media, django_forms.Media), True)
 
             # test `map_options` method
             options_str = widget.map_options()
@@ -41,7 +45,7 @@ class GooglePointWidgetUnitTests(TestCase):
             self.assertEqual(options.get("zoom"), zoom)
             self.assertEqual(options.get("mapCenterLocation"), default_map_center)
 
-            # test render
+            # test render with Point object value
             point = Point(-104.9903, 39.7392)
             widget_html_elem_id = "id_location"
             widget_html_elem_name = "location"
@@ -49,6 +53,17 @@ class GooglePointWidgetUnitTests(TestCase):
             self.assertIn(widget.serialize(point), result)
             self.assertIn(get_textarea_html(widget_html_elem_id, widget_html_elem_name, point), result)
             self.assertIn(escapejs(options_str), result)
+
+            # test render with serialized data value
+            result = widget.render(name=widget_html_elem_name, value=widget.serialize(point))
+            self.assertIn(widget.serialize(point), result)
+
+            # test widget `attrs` param
+            w = mw_widgets.GooglePointFieldWidget(attrs={"max-height": 600})
+            self.assertIn("max-height", w.attrs)
+
+            # test widget render `attrs` param with `None` value
+            self.assertIn(widget_html_elem_name, w.render(name=widget_html_elem_name, value=None, attrs=None))
 
     def test_widget_with_custom_settings(self):
         """
@@ -66,6 +81,7 @@ class GooglePointWidgetUnitTests(TestCase):
         widget = mw_widgets.GooglePointFieldWidget(settings=widget_settings)
         self.assertEqual(hasattr(widget, "settings"), True)
         self.assertEqual(hasattr(widget, "settings_namespace"), True)
+        self.assertEqual(isinstance(widget.media, django_forms.Media), True)
 
         # test `map_options` method
         options_str = widget.map_options()
@@ -73,7 +89,7 @@ class GooglePointWidgetUnitTests(TestCase):
         self.assertEqual(options.get("zoom"), zoom)
         self.assertEqual(options.get("mapCenterLocation"), default_map_center)
 
-        # test render
+        # test render with Point object value
         point = Point(-105.9903, 38.7392)
         widget_html_elem_id = "id_location"
         widget_html_elem_name = "location"
@@ -81,6 +97,10 @@ class GooglePointWidgetUnitTests(TestCase):
         self.assertIn(widget.serialize(point), result)
         self.assertIn(get_textarea_html(widget_html_elem_id, widget_html_elem_name, point), result)
         self.assertIn(escapejs(options_str), result)
+
+        # test render with serialized data value
+        result = widget.render(name=widget_html_elem_name, value=widget.serialize(point))
+        self.assertIn(widget.serialize(point), result)
 
 
 class GooglePointInlineWidgetUnitTests(TestCase):
@@ -103,6 +123,7 @@ class GooglePointInlineWidgetUnitTests(TestCase):
             widget = mw_widgets.GooglePointFieldInlineWidget()
             self.assertEqual(hasattr(widget, "settings"), True)
             self.assertEqual(hasattr(widget, "settings_namespace"), True)
+            self.assertEqual(isinstance(widget.media, django_forms.Media), True)
 
             # test `map_options` method
             options_str = widget.map_options()
@@ -110,7 +131,7 @@ class GooglePointInlineWidgetUnitTests(TestCase):
             self.assertEqual(options.get("zoom"), zoom)
             self.assertEqual(options.get("mapCenterLocation"), default_map_center)
 
-            # test render
+            # test render with Point object value
             point = Point(-104.9903, 39.7392)
             widget_html_elem_id = "id_location"
             widget_html_elem_name = "location"
@@ -118,11 +139,22 @@ class GooglePointInlineWidgetUnitTests(TestCase):
             self.assertIn(widget.serialize(point), result)
             self.assertIn(get_textarea_html(widget_html_elem_id, widget_html_elem_name, point), result)
 
+            # test render with serialized data value
+            result = widget.render(name=widget_html_elem_name, value=widget.serialize(point))
+            self.assertIn(widget.serialize(point), result)
+
             # test widget as a formset empty form
             result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id})
             self.assertIn(widget.serialize(point), result)
             inline_widget_data = widget.get_js_widget_data(widget_html_elem_name, widget_html_elem_id)
             self.assertIn(escapejs(json.dumps(inline_widget_data)), result)
+
+            # test widget `attrs` param
+            w = mw_widgets.GooglePointFieldInlineWidget(attrs={"max-height": 600})
+            self.assertIn("max-height", w.attrs)
+
+            # test widget render `attrs` param with `None` value
+            self.assertIn(widget_html_elem_name, w.render(name=widget_html_elem_name, value=None, attrs=None))
 
     def test_widget_with_custom_settings(self):
         """
@@ -140,6 +172,7 @@ class GooglePointInlineWidgetUnitTests(TestCase):
         widget = mw_widgets.GooglePointFieldInlineWidget(settings=widget_settings)
         self.assertEqual(hasattr(widget, "settings"), True)
         self.assertEqual(hasattr(widget, "settings_namespace"), True)
+        self.assertEqual(isinstance(widget.media, django_forms.Media), True)
 
         # test `map_options` method
         options_str = widget.map_options()
@@ -147,13 +180,17 @@ class GooglePointInlineWidgetUnitTests(TestCase):
         self.assertEqual(options.get("zoom"), zoom)
         self.assertEqual(options.get("mapCenterLocation"), default_map_center)
 
-        # test render
+        # test render with Point object value
         point = Point(-105.9903, 38.7392)
         widget_html_elem_id = "id_location"
         widget_html_elem_name = "location"
         result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id})
         self.assertIn(widget.serialize(point), result)
         self.assertIn(get_textarea_html(widget_html_elem_id, widget_html_elem_name, point), result)
+
+        # test render with serialized data value
+        result = widget.render(name=widget_html_elem_name, value=widget.serialize(point))
+        self.assertIn(widget.serialize(point), result)
 
         # test widget as a formset empty form
         widget_html_elem_id = "__prefix__id_location"
@@ -201,6 +238,11 @@ class GoogleStaticMapWidgetUnitTests(TestCase):
             res = urllib.urlopen(map_image_url)
             self.assertEqual(res.getcode(), 200)
             self.assertEqual(res.info().type, "image/png")
+
+            # test map_image_url with `None` value
+            result = widget.render(name=widget_html_elem_name, value=None, attrs={'id': widget_html_elem_id})
+            map_image_url = widget.get_image_url(None)
+            self.assertIn(map_image_url, result)
 
     def test_widget_with_custom_settings(self):
         """
@@ -288,6 +330,11 @@ class GoogleStaticOverlayMapWidgetUnitTests(TestCase):
             res = urllib.urlopen(thumbnail_url)
             self.assertEqual(res.getcode(), 200)
             self.assertEqual(res.info().type, "image/png")
+
+            # test map_image_url with `None` value
+            result = widget.render(name=widget_html_elem_name, value=None, attrs={'id': widget_html_elem_id})
+            thumbnail_url = widget.get_thumbnail_url(None)
+            self.assertIn(thumbnail_url, result)
 
     def test_widget_with_custom_settings(self):
         """

@@ -29,7 +29,8 @@ class BasePointFieldMapWidget(BaseGeometryWidget):
         self.attrs = {}
         for key in ('geom_type', 'map_srid', 'map_width', 'map_height', 'display_raw'):
             self.attrs[key] = getattr(self, key)
-        if attrs:
+
+        if isinstance(attrs, dict):
             self.attrs.update(attrs)
 
         self.custom_settings = False
@@ -39,10 +40,10 @@ class BasePointFieldMapWidget(BaseGeometryWidget):
             self.custom_settings = True
 
     def map_options(self):
-        if not self.settings:
+        if not self.settings:  # pragma: no cover
             raise ImproperlyConfigured('%s requires either a definition of "settings"' % self.__class__.__name__)
 
-        if not self.settings_namespace:
+        if not self.settings_namespace:  # pragma: no cover
             raise ImproperlyConfigured('%s requires either a definition of "settings_namespace"' % self.__class__.__name__)
 
         if self.custom_settings:
@@ -68,7 +69,7 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
             "https://maps.googleapis.com/maps/api/js?libraries=places&key={}".format(mw_settings.GOOGLE_MAP_API_KEY)
         ]
 
-        if not mw_settings.MINIFED:
+        if not mw_settings.MINIFED:  # pragma: no cover
             js = js + [
                 "mapwidgets/js/jquery_class.js",
                 "mapwidgets/js/django_mw_base.js",
@@ -152,7 +153,7 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
             "https://maps.googleapis.com/maps/api/js?libraries=places&key={}".format(mw_settings.GOOGLE_MAP_API_KEY)
         ]
 
-        if not mw_settings.MINIFED:
+        if not mw_settings.MINIFED:  # pragma: no cover
             js = js + [
                 "mapwidgets/js/jquery_class.js",
                 "mapwidgets/js/django_mw_base.js",
@@ -171,19 +172,19 @@ class BaseStaticMapWidget(forms.Widget):
     template_name = None
 
     @property
-    def map_settings(self):
+    def map_settings(self):  # pragma: no cover
         raise NotImplementedError('subclasses of BaseStaticMapWidget must provide a map_settings method')
 
     @property
-    def marker_settings(self):
+    def marker_settings(self):  # pragma: no cover
         raise NotImplementedError('subclasses of BaseStaticMapWidget must provide a marker_settings method')
 
-    def get_template(self):
+    def get_template(self):  # pragma: no cover
         if self.template_name is None:
             raise ImproperlyConfigured('BaseStaticMapWidget requires either a definition of "template_name"')
         return self.template_name
 
-    def get_image_url(self, value):
+    def get_image_url(self, value):  # pragma: no cover
         raise NotImplementedError('subclasses of BaseStaticMapWidget must provide a get_map_image_url method')
 
     def get_context_data(self, name, value, attrs):
@@ -213,8 +214,10 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
     @property
     def map_settings(self):
         self.settings["key"] = mw_settings.GOOGLE_MAP_API_KEY
-        if mw_settings.GOOGLE_MAP_API_SIGNATURE:
+
+        if mw_settings.GOOGLE_MAP_API_SIGNATURE:  # pragma: no cover
             self.settings["signature"] = mw_settings.GOOGLE_MAP_API_SIGNATURE
+
         if self.size:
             self.settings["size"] = self.size
             self.settings["zoom"] = self.zoom
@@ -222,8 +225,9 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
 
     @property
     def marker_settings(self):
-        if not isinstance(mw_settings.GoogleStaticMapMarkerSettings, dict):
+        if not isinstance(mw_settings.GoogleStaticMapMarkerSettings, dict):  # pragma: no cover
             raise TypeError('GoogleStaticMapMarkerSettings must be a dictionary.')
+
         return mw_settings.GoogleStaticMapMarkerSettings
 
     def get_point_field_params(self, latitude, longitude):
