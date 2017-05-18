@@ -1,5 +1,5 @@
-Google Map Static Widgets
-=========================
+Google Map Static Widget
+========================
 
 **Preview**
 

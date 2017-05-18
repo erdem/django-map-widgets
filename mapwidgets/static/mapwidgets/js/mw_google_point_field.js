@@ -7,7 +7,7 @@
             if (this.mapCenterLocationName){
                 var geocoder = new google.maps.Geocoder();
                 geocoder.geocode({'address' : this.mapCenterLocationName}, function(results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
+                    if (status === google.maps.GeocoderStatus.OK) {
                         var geo_location = results[0].geometry.location;
                         mapCenter = [geo_location.lat(), geo_location.lng()];
                     }else{
