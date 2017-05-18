@@ -69,3 +69,7 @@ data/
 tests/testapp/screendumps/
 
 db.sqlite*
+docs/_templates/
+example/example/media/
+example/env/
+tests/testapp/assets/
