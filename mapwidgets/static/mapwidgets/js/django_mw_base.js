@@ -173,7 +173,8 @@
 		},
 		
 		handleAutoCompleteInputKeyDown: function (e) {
-			if (e.keyCode === 13){  // pressed enter key
+			var keyCode = e.keyCode || e.which;
+			if (keyCode === 13){  // pressed enter key
 				e.preventDefault();
 			}
 		},
