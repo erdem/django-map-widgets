@@ -46,10 +46,10 @@
                 GooglePlaceAutocompleteOptions: mapOptions.GooglePlaceAutocompleteOptions,
                 markerCreateTriggerNameSpace: "google_point_map_widget:marker_create",
                 markerChangeTriggerNameSpace: "google_point_map_widget:marker_change",
-                markerDeleteTriggerNameSpace: "google_point_map_widget:marker_delete"
+                markerDeleteTriggerNameSpace: "google_point_map_widget:marker_delete",
+                placeChangedTriggerNameSpace: "google_point_map_widget:place_changed"
             };
             new DjangoGooglePointFieldWidget(mapWidgetOptions);
-
         }
     });
 })(jQuery || django.jQuery);
