@@ -11,6 +11,6 @@ install:
   - pip install -r conf/requirements.txt
   - pip install coveralls
 script:
-  - coverage run --source='mapwidgets/' manage.py test
+  - coverage run --source='.' manage.py test
 after_success:
   - coveralls
