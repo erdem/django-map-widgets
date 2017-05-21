@@ -1,16 +1,16 @@
 language: python
 python:
-  - 2.6
-  - 2.7
   - 2.7.8
 env:
   - DJANGO_VERSION=1.9
   - DJANGO_VERSION=1.10
   - DJANGO_VERSION=1.11
+  - TESTAPP_DIR=tests/testapp/
 install:
   - pip install -r conf/requirements-dev.txt
   - pip install coveralls
 script:
+  - cd $TESTAPP_DIR
   - coverage run --source='mapwidgets/' manage.py test
 after_success:
   - coveralls
