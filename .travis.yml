@@ -16,7 +16,7 @@ services:
   - postgresql
 
 before_script:
-  - psql -c 'CREATE USER mapwidgetdbu WITH PASSWORD 'mapwidgetdbu'; create database mapwidget_tests;' -U postgres
+  - psql -c 'CREATE USER mapwidgetdbu WITH PASSWORD "mapwidgetdbu"; create database mapwidget_tests;' -U postgres
 
 script:
   - cd tests/testapp/
