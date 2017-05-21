@@ -155,7 +155,7 @@ STATICFILES_DIRS = [
 SITE_DOMAIN = 'django'
 TESTING = sys.argv[1:2] == ['test']
 
-
+GOOGLE_MAP_API_KEY = "AIzaSyC6BeCYCBSWDdC3snYRFKWw18bd9MA-uu4"
 try:
     from settings_local import *
 except ImportError:
