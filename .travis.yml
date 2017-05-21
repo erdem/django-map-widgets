@@ -1,15 +1,26 @@
 language: python
+
 python:
   - 2.7.8
+
 env:
   - DJANGO_VERSION=1.9
   - DJANGO_VERSION=1.10
   - DJANGO_VERSION=1.11
+
 install:
   - pip install -r conf/requirements-dev.txt
   - pip install coveralls
+
+services:
+  - postgresql
+
+before_script:
+  - psql -c 'CREATE USER mapwidgetdbu WITH PASSWORD 'mapwidgetdbu'; create database mapwidget_tests;' -U postgres
+
 script:
   - cd tests/testapp/
-  - coverage run --source='mapwidgets/' manage.py test
+  - coverage run --source='../../mapwidgets' manage.py test
+
 after_success:
   - coveralls
