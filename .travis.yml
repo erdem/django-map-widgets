@@ -13,9 +13,6 @@ install:
 services:
   - postgresql
 
-before_script:
-  - psql -c "CREATE USER mapwidgetdbu WITH PASSWORD 'mapwidgetdbu'" -U postgres
-
 script:
   - cd tests/testapp/
   - coverage run --source='../../mapwidgets' manage.py test
