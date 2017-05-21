@@ -1,0 +1,15 @@
+{% extends "admin/change_form.html" %}
+
+{% block admin_change_form_document_ready %}
+    <script type="text/javascript">
+		(function($) {
+			$(document).on("google_point_map_widget:place_changed", function (e, place, lat, lng, locationInputElem, mapWrapID) {
+				console.log(place);
+				console.log(locationInputElem); // django widget textarea widget (hidden)
+				console.log(lat, lng); // created marker coordinates
+				console.log(mapWrapID); // map widget wrapper element ID
+			});
+		})(django.jQuery);
+
+    </script>
+{% endblock %}
