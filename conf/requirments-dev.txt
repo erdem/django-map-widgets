@@ -1,4 +1,4 @@
 Django==1.10.6
 psycopg2==2.7.1
 selenium==3.3.1
-ipdb==0.10.2
+coverage==4.4
