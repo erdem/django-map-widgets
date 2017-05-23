@@ -1,3 +1,6 @@
+.. image:: https://coveralls.io/repos/github/erdem/django-map-widgets/badge.svg?branch=master
+:target: https://coveralls.io/github/erdem/django-map-widgets?branch=master
+
 Django Map Widgets
 ==================
 

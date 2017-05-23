@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/erdem/django-map-widgets/badge.svg?branch=master)](https://coveralls.io/github/erdem/django-map-widgets?branch=master)
+
 ### Django Map Widgets
 Configurable, pluggable and more user friendly map widgets for Django PostGIS fields.
 
