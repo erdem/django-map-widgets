@@ -1,5 +1,14 @@
 .. image:: https://coveralls.io/repos/github/erdem/django-map-widgets/badge.svg?branch=master
-:target: https://coveralls.io/github/erdem/django-map-widgets?branch=master
+    :target: https://coveralls.io/github/erdem/django-map-widgets?branch=master
+    :alt: Coverage Status
+
+.. image:: https://travis-ci.org/erdem/django-map-widgets.png
+    :target: https://travis-ci.org/erdem/django-map-widgets
+    :alt: Build Status
+
+.. image:: https://badge.fury.io/py/django-map-widgets.svg
+    :target: https://badge.fury.io/py/django-map-widgets
+    :alt: Latest PyPI version
 
 Django Map Widgets
 ==================
