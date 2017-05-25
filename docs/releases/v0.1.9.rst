@@ -1,0 +1,13 @@
+======================================
+Django map widgets 0.1.9 release notes
+======================================
+
+ * Passing Google Place Autocomplete response object to jQuery triggers.
+ * Added custom widget settings feature for each widget.
+ * Added Google `geolocate` addess support for the marker coordinates.
+ * Added Portuguese localisation support.
+ * Fixed Google Place Autocomplete widget bugs in Django Admin Inlines.
+ * The github repository Integrated with `Travis CI <https://travis-ci.org/>`_
+ * Implemented unit tests for backend code. (%100 code coverage)
+ * Change development environment from Vagrant to Docker.
+
