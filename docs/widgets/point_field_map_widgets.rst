@@ -32,6 +32,10 @@ Settings
     * `countries.json <https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/constants.py/>`_
 
 
+.. Tip::
+
+    The widget has a place autocomplete as a default. You can find the spesific address with this widget.
+
 Usage
 ^^^^^
 
@@ -62,6 +66,29 @@ If you want to give specific coordinates for center of the map, you can update y
         ),
         "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
     }
+
+
+You can also give specific `settings` as a parameter for each widget.
+
+.. code-block:: python
+
+    from django.contrib.gis import forms
+    from mapwidgets.widgets import GooglePointFieldWidget
+
+    CUSTOM_MAP_SETTINGS = {
+        "GooglePointFieldWidget": (
+            ("zoom", 15),
+            ("mapCenterLocation", [60.7177013, -22.6300491]),
+        ),
+    }
+
+    class WidgetForm(forms.Form):
+        location = forms.PointField(widget=GooglePointFieldWidget(settings=CUSTOM_MAP_SETTINGS))
+
+
+.. Note::
+
+    `GOOGLE_MAP_API_KEY` must be
 
 
 **Django Admin**
@@ -95,22 +122,24 @@ If you want to give specific coordinates for center of the map, you can update y
 If you want develop your map UI on front-end side, you can use map widget jQuery triggers.
 
 
-* **google_point_map_widget:marker_create**: Triggered when user create marker on map. (callback params: lat, lng, locationInputElem, mapWrapID)
+* **google_point_map_widget:marker_create**: Triggered when user create marker on map. (callback params: place, lat, lng, locationInputElem, mapWrapID)
 
-* **google_point_map_widget:marker_change**: Triggered when user change marker position on map. (callback params: lat, lng, locationInputElem, mapWrapID)
+* **google_point_map_widget:marker_change**: Triggered when user change marker position on map. (callback params: place, lat, lng, locationInputElem, mapWrapID)
 
 * **google_point_map_widget:marker_delete**: Triggered when user delete marker on map. (callback params: lat, lng, locationInputElem, mapWrapID)
 
 
 .. code-block:: javascript
 
-    $(document).on("google_point_map_widget:marker_create", function (e, lat, lng, locationInputElem, mapWrapID) {
+    $(document).on("google_point_map_widget:marker_create", function (e, place, lat, lng, locationInputElem, mapWrapID) {
+        console.log(place); // google place object
         console.log(locationInputElem); // django widget textarea widget (hidden)
         console.log(lat, lng); // created marker coordinates
         console.log(mapWrapID); // map widget wrapper element ID
     });
 
-    $(document).on("google_point_map_widget:marker_change", function (e, lat, lng, locationInputElem, mapWrapID) {
+    $(document).on("google_point_map_widget:marker_change", function (e, place, lat, lng, locationInputElem, mapWrapID) {
+        console.log(place); // django widget textarea widget (hidden)
         console.log(locationInputElem); // django widget textarea widget (hidden)
         console.log(lat, lng);  // changed marker coordinates
         console.log(mapWrapID); // map widget wrapper element ID
