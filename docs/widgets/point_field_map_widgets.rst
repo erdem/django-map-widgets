@@ -34,7 +34,7 @@ Settings
 
 .. Tip::
 
-    The widget has a place autocomplete as a default. You can find the spesific address with this widget.
+    The widget has a Google Place Autocomplete as a default. You can find a spesific address with it.
 
 Usage
 ^^^^^
@@ -88,7 +88,7 @@ You can also give specific `settings` as a parameter for each widget.
 
 .. Note::
 
-    `GOOGLE_MAP_API_KEY` must be
+    `GOOGLE_MAP_API_KEY` must be set in the project django settings file if you are using custom `settings` parameter.
 
 
 **Django Admin**
@@ -139,7 +139,7 @@ If you want develop your map UI on front-end side, you can use map widget jQuery
     });
 
     $(document).on("google_point_map_widget:marker_change", function (e, place, lat, lng, locationInputElem, mapWrapID) {
-        console.log(place); // django widget textarea widget (hidden)
+        console.log(place); // google place object
         console.log(locationInputElem); // django widget textarea widget (hidden)
         console.log(lat, lng);  // changed marker coordinates
         console.log(mapWrapID); // map widget wrapper element ID
