@@ -111,6 +111,8 @@
 				this.hideOverlay();
 				this.locationInput.val("");
 				this.coordinatesOverlayInputs.val("");
+				$(this.addressAutoCompleteInput).val("");
+				this.addMarkerBtn.removeClass("active");
 				this.removeMarker();
 				this.deleteBtn.removeClass("btn-danger").addClass("btn-default disabled");
 				$(document).trigger(this.markerDeleteTriggerNameSpace,
