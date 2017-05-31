@@ -6,14 +6,24 @@ Google Map Point Field Widget
 Preview
 ^^^^^^^
 
-.. image:: ../_static/images/google-point-field-map-widget.png
+.. image:: ../_static/images/google-point-field-map-widget.gif
+
+
+.. Tip::
+
+    The widget has a Google Place Autocomplete widget as a default. You can find a spesific address with it.
+
+.. Tip::
+
+    The widget has built-in gecoding support. When the user add a marker manualy, the `Google Geocoding <https://developers.google.com/maps/documentation/javascript/geocoding/>`_. event handler will trigger and filled the autocomplete input.
+
 
 Settings
 ^^^^^^^^
 
 * **GOOGLE_MAP_API_KEY**: Put your Google API key (required)
 
-* **GOOGLE_MAP_API_SIGNATURE**:: You can give Google Static Map API signature key (optional). Check out this `page <https://developers.google.com/maps/documentation/static-maps/get-api-key/>`_.
+* **GOOGLE_MAP_API_SIGNATURE**: You can give Google Static Map API signature key (optional). Check out this `page <https://developers.google.com/maps/documentation/static-maps/get-api-key/>`_.
 
 * **mapCenterLocationName**: You can give a specific location name for center of map. Map widget will find this location coordinates using `Google Place Autocomplete <https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete/>`_. (Optional)
 
@@ -22,19 +32,6 @@ Settings
 * **zoom** : Default zoom value for maps (optional, default value is 6).
 
 * **markerFitZoom** : When the marker is initialized google's default zoom is set to Max. This method sets the zoom level a reasonable distance and center the marker on the map.
-
-.. Tip::
-
-    If there is no spesific value set for the map center for ``mapCenterLocationName``, ``mapCenterLocation`` the widget will be centered by the timezone setting of the project
-    Check out these links.
-
-    * `Timezone Center Locations <https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/constants.py/>`_
-    * `countries.json <https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/constants.py/>`_
-
-
-.. Tip::
-
-    The widget has a Google Place Autocomplete as a default. You can find a spesific address with it.
 
 Usage
 ^^^^^
@@ -55,7 +52,7 @@ In your ``settings.py`` file, add your ``MAP_WIDGETS`` config:
         "GOOGLE_MAP_API_KEY": "<google-api-key>"
     }
 
-If you want to give specific coordinates for center of the map, you can update your settings file like that.
+If you want to give specific location name or coordinates for center of the map, you can update your settings like that.
 
 .. code-block:: python
 
@@ -67,6 +64,26 @@ If you want to give specific coordinates for center of the map, you can update y
         "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
     }
 
+
+
+.. code-block:: python
+
+    MAP_WIDGETS = {
+        "GooglePointFieldWidget": (
+            ("zoom", 15),
+            ("mapCenterLocationName", 'Canada'),
+        ),
+        "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
+    }
+
+
+.. Tip::
+
+    If there is no spesific value set for the map center for ``mapCenterLocationName``, ``mapCenterLocation`` the widget will be centered by the timezone setting of the project
+    Check out these links.
+
+    * `Timezone Center Locations <https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/constants.py/>`_
+    * `countries.json <https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/constants.py/>`_
 
 You can also give specific `settings` as a parameter for each widget.
 
@@ -82,13 +99,14 @@ You can also give specific `settings` as a parameter for each widget.
         ),
     }
 
-    class WidgetForm(forms.Form):
-        location = forms.PointField(widget=GooglePointFieldWidget(settings=CUSTOM_MAP_SETTINGS))
-
+    class CityAdmin(admin.ModelAdmin):
+        formfield_overrides = {
+            models.PointField: {"widget": GooglePointFieldWidget(settings=CUSTOM_MAP_SETTINGS)}
+        }
 
 .. Note::
 
-    `GOOGLE_MAP_API_KEY` must be set in the project django settings file if you are using custom `settings` parameter.
+    `GOOGLE_MAP_API_KEY` must be set in the project django settings file for custom `settings` usage.
 
 
 **Django Admin**
@@ -117,7 +135,10 @@ You can also give specific `settings` as a parameter for each widget.
                 'city_hall': GooglePointFieldWidget,
             }
 
-**Javascript API**
+
+Javascript API
+^^^^^^^^^^^^^^
+
 
 If you want develop your map UI on front-end side, you can use map widget jQuery triggers.
 
