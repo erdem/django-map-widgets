@@ -1,0 +1,46 @@
+version: "2"
+services:
+  django:
+    restart: on-failure:10
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mapwidgets
+    container_name: django_mapwidgets
+    environment:
+      - SELENIUM_HOST=http://selenium:4444/wd/hub
+      - TEST_SELENIUM='yes'
+      - SITE_DOMAIN=django
+      - DJANGO_LIVE_TEST_SERVER_ADDRESS=django:8081
+    command: tail -f /bin/bash    # Added not to kill container so that it can be bashed.
+    ports:
+      - "8000:8000"
+      - "8081:8081"
+    links:
+      - postgres
+      - selenium
+    volumes:
+      - ".:/django-map-widgets"
+    depends_on:
+      - selenium
+      - postgres
+
+  postgres:
+    image: mdillon/postgis
+    container_name: mapwidget_postgres
+    environment:
+      - POSTGRES_DB=map_widget_example
+      - POSTGRES_USER=mapwidgetdbu
+      - POSTGRES_PASSWORD=mapwidgetdbu
+    volumes:
+      - "./data/db:/var/lib/postgresql/data"
+
+  selenium:
+    image: selenium/standalone-chrome-debug:3.3.0
+    container_name: mapwidget_selenium
+    environment:
+      - HUB_ENV_no_proxy=localhost
+      - no_proxy=localhost
+    ports:
+      - "4444:4444"
+      - "5900:5900"

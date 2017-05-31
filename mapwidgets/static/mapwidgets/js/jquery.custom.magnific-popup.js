@@ -293,7 +293,8 @@
                 if(mfp.st.enableEscapeKey) {
                     // Close on ESC key
                     _document.on('keyup' + EVENT_NS, function(e) {
-                        if(e.keyCode === 27) {
+                        var keyCode = e.keyCode || e.which;
+                        if(keyCode === 27) {
                             mfp.close();
                         }
                     });
@@ -1708,9 +1709,10 @@
                         }
 
                         _document.on('keydown'+ns, function(e) {
-                            if (e.keyCode === 37) {
+                            var keyCode = e.keyCode || e.which;
+                            if (keyCode === 37) {
                                 mfp.prev();
-                            } else if (e.keyCode === 39) {
+                            } else if (keyCode === 39) {
                                 mfp.next();
                             }
                         });

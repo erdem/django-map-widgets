@@ -3,17 +3,15 @@
 
         initializeMap: function(){
             var mapCenter = this.mapCenterLocation;
-
             if (this.mapCenterLocationName){
-                var geocoder = new google.maps.Geocoder();
-                geocoder.geocode({'address' : this.mapCenterLocationName}, function(results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
+                
+                this.geocoder.geocode({'address' : this.mapCenterLocationName}, function(results, status) {
+                    if (status === google.maps.GeocoderStatus.OK) {
                         var geo_location = results[0].geometry.location;
                         mapCenter = [geo_location.lat(), geo_location.lng()];
                     }else{
                         console.warn("Cannot find " + this.mapCenterLocationName + " on google geo service.")
                     }
-
                     this.map = new google.maps.Map(this.mapElement, {
                         center: new google.maps.LatLng(mapCenter[0], mapCenter[1]),
                         scrollwheel: false,
@@ -22,7 +20,6 @@
                         },
                         zoom: this.zoom
                     });
-
                     if (!$.isEmptyObject(this.locationFieldValue)){
                         this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
                         this.fitBoundMarker();
@@ -64,12 +61,15 @@
             var bounds = new google.maps.LatLngBounds();
             bounds.extend(this.marker.getPosition());
             this.map.fitBounds(bounds);
-            var listener = google.maps.event.addListener(this.map, "bounds_changed", function() {
-                if (this.getZoom() > 15) {
-                    this.setZoom(15)
-                }
-                google.maps.event.removeListener(listener);
-            });
+            if (this.markerFitZoom && this.isInt(this.markerFitZoom)){
+                var markerFitZoom = parseInt(this.markerFitZoom);
+                var listener = google.maps.event.addListener(this.map, "bounds_changed", function() {
+                    if (this.getZoom() > markerFitZoom) {
+                        this.setZoom(markerFitZoom)
+                    }
+                    google.maps.event.removeListener(listener);
+                });
+            }
         },
 
         removeMarker: function(e){

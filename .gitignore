@@ -60,5 +60,16 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+settings_local.py
+todo.md
+notes.md
 Vagrantfile
 .vagrant
+data/
+tests/testapp/screendumps/
+
+db.sqlite*
+docs/_templates/
+example/example/media/
+example/env/
+tests/testapp/assets/

@@ -1,18 +1,16 @@
 import json
 
 from django import forms
-from django.conf import settings
 from django.contrib.gis.forms import BaseGeometryWidget
 from django.contrib.gis.geos import Point
 from django.core.exceptions import ImproperlyConfigured
 from django.template.loader import render_to_string
 from django.templatetags.static import static
 from django.utils import six
-from django.utils.html import format_html
 from django.utils.http import urlencode
 
 from mapwidgets.constants import STATIC_MAP_PLACEHOLDER_IMAGE
-from mapwidgets.settings import mw_settings
+from mapwidgets.settings import MapWidgetSettings, mw_settings
 
 
 def minify_if_not_debug(asset):
@@ -22,8 +20,42 @@ def minify_if_not_debug(asset):
     return asset.format("" if not mw_settings.MINIFED else ".min")
 
 
-class GooglePointFieldWidget(BaseGeometryWidget):
+class BasePointFieldMapWidget(BaseGeometryWidget):
+    settings_namespace = None
+    settings = None
+
+    def __init__(self, *args, **kwargs):
+        attrs = kwargs.get("attrs")
+        self.attrs = {}
+        for key in ('geom_type', 'map_srid', 'map_width', 'map_height', 'display_raw'):
+            self.attrs[key] = getattr(self, key)
+
+        if isinstance(attrs, dict):
+            self.attrs.update(attrs)
+
+        self.custom_settings = False
+
+        if kwargs.get("settings"):
+            self.settings = kwargs.pop("settings")
+            self.custom_settings = True
+
+    def map_options(self):
+        if not self.settings:  # pragma: no cover
+            raise ImproperlyConfigured('%s requires either a definition of "settings"' % self.__class__.__name__)
+
+        if not self.settings_namespace:  # pragma: no cover
+            raise ImproperlyConfigured('%s requires either a definition of "settings_namespace"' % self.__class__.__name__)
+
+        if self.custom_settings:
+            custom_settings = MapWidgetSettings(app_settings=self.settings)
+            return json.dumps(getattr(custom_settings, self.settings_namespace))
+        return json.dumps(self.settings)
+
+
+class GooglePointFieldWidget(BasePointFieldMapWidget):
     template_name = "mapwidgets/google-point-field-widget.html"
+    settings = mw_settings.GooglePointFieldWidget
+    settings_namespace = "GooglePointFieldWidget"
 
     @property
     def media(self):
@@ -37,7 +69,7 @@ class GooglePointFieldWidget(BaseGeometryWidget):
             "https://maps.googleapis.com/maps/api/js?libraries=places&key={}".format(mw_settings.GOOGLE_MAP_API_KEY)
         ]
 
-        if not mw_settings.MINIFED:
+        if not mw_settings.MINIFED:  # pragma: no cover
             js = js + [
                 "mapwidgets/js/jquery_class.js",
                 "mapwidgets/js/django_mw_base.js",
@@ -49,10 +81,6 @@ class GooglePointFieldWidget(BaseGeometryWidget):
             ]
 
         return forms.Media(js=js, css=css)
-
-    @staticmethod
-    def map_options():
-        return json.dumps(mw_settings.GooglePointFieldWidget)
 
     def render(self, name, value, attrs=None):
         if not attrs:
@@ -74,7 +102,8 @@ class GooglePointFieldWidget(BaseGeometryWidget):
         }
 
         attrs.update(extra_attrs)
-        return super(GooglePointFieldWidget, self).render(name, value, attrs)
+        self.as_super = super(GooglePointFieldWidget, self)
+        return self.as_super.render(name, value, attrs)
 
 
 class PointFieldInlineWidgetMixin(object):
@@ -92,9 +121,25 @@ class PointFieldInlineWidgetMixin(object):
         }
         return js_widget_params
 
+    def render(self, name, value, attrs=None):
+        if not attrs:
+            attrs = dict()
+
+        element_id = attrs.get("id")
+        is_formset_empty_form_template = "__prefix__" in name
+        widget_data = self.get_js_widget_data(name, element_id)
+        attrs.update({
+            "js_widget_data": json.dumps(widget_data),
+            "is_formset_empty_form_template": is_formset_empty_form_template
+        })
+        self.as_super = super(PointFieldInlineWidgetMixin, self)
+        return self.as_super.render(name, value, attrs)
+
 
 class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointFieldWidget):
     template_name = "mapwidgets/google-point-field-inline-widget.html"
+    settings = mw_settings.GooglePointFieldWidget
+    settings_namespace = "GooglePointFieldWidget"
 
     @property
     def media(self):
@@ -108,7 +153,7 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
             "https://maps.googleapis.com/maps/api/js?libraries=places&key={}".format(mw_settings.GOOGLE_MAP_API_KEY)
         ]
 
-        if not mw_settings.MINIFED:
+        if not mw_settings.MINIFED:  # pragma: no cover
             js = js + [
                 "mapwidgets/js/jquery_class.js",
                 "mapwidgets/js/django_mw_base.js",
@@ -122,37 +167,24 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
 
         return forms.Media(js=js, css=css)
 
-    def render(self, name, value, attrs=None):
-        if not attrs:
-            attrs = dict()
-
-        element_id = attrs.get("id")
-        is_formset_empty_from_template = "__prefix__" in element_id
-        widget_data = self.get_js_widget_data(name, element_id)
-        attrs.update({
-            "js_widget_data": json.dumps(widget_data),
-            "is_formset_empty_from_template": is_formset_empty_from_template
-        })
-        return super(GooglePointFieldInlineWidget, self).render(name, value, attrs)
-
 
 class BaseStaticMapWidget(forms.Widget):
     template_name = None
 
     @property
-    def map_settings(self):
+    def map_settings(self):  # pragma: no cover
         raise NotImplementedError('subclasses of BaseStaticMapWidget must provide a map_settings method')
 
     @property
-    def marker_settings(self):
+    def marker_settings(self):  # pragma: no cover
         raise NotImplementedError('subclasses of BaseStaticMapWidget must provide a marker_settings method')
 
-    def get_template(self):
+    def get_template(self):  # pragma: no cover
         if self.template_name is None:
             raise ImproperlyConfigured('BaseStaticMapWidget requires either a definition of "template_name"')
         return self.template_name
 
-    def get_image_url(self, value):
+    def get_image_url(self, value):  # pragma: no cover
         raise NotImplementedError('subclasses of BaseStaticMapWidget must provide a get_map_image_url method')
 
     def get_context_data(self, name, value, attrs):
@@ -181,8 +213,11 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
 
     @property
     def map_settings(self):
-        self.settings["api_key"] = mw_settings.GOOGLE_MAP_API_KEY
-        self.settings["api_signature"] = mw_settings.GOOGLE_MAP_API_SIGNATURE
+        self.settings["key"] = mw_settings.GOOGLE_MAP_API_KEY
+
+        if mw_settings.GOOGLE_MAP_API_SIGNATURE:  # pragma: no cover
+            self.settings["signature"] = mw_settings.GOOGLE_MAP_API_SIGNATURE
+
         if self.size:
             self.settings["size"] = self.size
             self.settings["zoom"] = self.zoom
@@ -190,8 +225,9 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
 
     @property
     def marker_settings(self):
-        if not isinstance(mw_settings.GoogleStaticMapMarkerSettings, dict):
+        if not isinstance(mw_settings.GoogleStaticMapMarkerSettings, dict):  # pragma: no cover
             raise TypeError('GoogleStaticMapMarkerSettings must be a dictionary.')
+
         return mw_settings.GoogleStaticMapMarkerSettings
 
     def get_point_field_params(self, latitude, longitude):
@@ -248,7 +284,7 @@ class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
             settings["thumbnail_size"] = self.thumbnail_size
         return settings
 
-    def thumbnail_url(self, value):
+    def get_thumbnail_url(self, value):
         if isinstance(value, Point):
             longitude, latitude = value.x, value.y
             params = self.get_point_field_params(latitude, longitude)
@@ -264,5 +300,5 @@ class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
 
     def get_context_data(self, name, value, attrs):
         context = super(GoogleStaticOverlayMapWidget, self).get_context_data(name, value, attrs)
-        context["thumbnail_url"] = self.thumbnail_url(value)
+        context["thumbnail_url"] = self.get_thumbnail_url(value)
         return context

@@ -1,0 +1,11 @@
+======================================
+Django map widgets 0.1.8 release notes
+======================================
+
+ * Full documentation integrated to readthedocs.org.
+ * Fixed Google Map static widget issues.
+ * Added Russian localization support.
+ * Added `Google Places Autocomplete <https://developers.google.com/maps/documentation/javascript/places-autocomplete>`_ options support.
+ * Fixed CSS issues.
+
+

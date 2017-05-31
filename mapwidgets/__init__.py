@@ -1,5 +1,5 @@
-from __future__ import unicode_literals
-
-VERSION = (0, 1, 7)
+VERSION = (0, 1, 8)
 __version__ = '.'.join(map(str, VERSION))
 
+from widgets import GooglePointFieldWidget, GooglePointFieldInlineWidget, \
+    GoogleStaticMapWidget, GoogleStaticOverlayMapWidget

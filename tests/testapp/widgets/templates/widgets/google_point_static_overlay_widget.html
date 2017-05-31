@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Google Map Point Static Overlay Widget{% endblock title %}
+
+{% block extrahead %}
+    {{ form.media }}
+
+{% endblock extrahead %}
+
+{% block content %}
+    <h3>Google Map Point Static Overlay Widget</h3>
+    <div>
+        {{ form.as_p }}
+    </div>
+{% endblock content %}

@@ -115,7 +115,7 @@
 }
 
 .mw-header .mw-adress-input-wrap{
-    width: 35%;
+    width: 40%;
 }
 
 .mw-header .mw-coordinates-wrap{
@@ -143,7 +143,7 @@
 
 .mw-coordinates-overlay input.form-control{
     margin: 5px 0 10px 0;
-    width: 155px;
+    width: 180px;
 }
 
 .mw-coordinates-overlay input.form-control.error{
