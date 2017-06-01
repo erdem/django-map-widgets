@@ -5,11 +5,11 @@ Google Map Static Overlay Widget
 
 .. image:: ../_static/images/google-point-static-overlay-map-widget.png
 
-This widget is working with `Magnific Popup <http://dimsemenov.com/plugins/magnific-popup/>`_  jQuery plugin.
+This widget is working with `Magnific Popup <http://dimsemenov.com/plugins/magnific-popup/>`_  jQuery plugin. The plugin javascript file load with the widget static files.
 
 **Usage**
 
-You can use also all static map features in this widget. Besides you can give a thumbnail_size value.
+You can also use all static map features in this widget. Besides you can give a ``thumbnail_size`` value.
 
 Here is the all default settings attribute for google static overlay map widget.
 
@@ -19,7 +19,7 @@ Here is the all default settings attribute for google static overlay map widget.
         "GoogleStaticMapMarkerSettings": (
             ("size", "normal"),
             ("color", ""),
-            ("icon", ""),
+            ("icon", "")
         ),
 
         "GoogleStaticOverlayMapWidget": (

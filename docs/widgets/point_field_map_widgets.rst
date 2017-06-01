@@ -15,7 +15,7 @@ Preview
 
 .. Tip::
 
-    The widget has built-in geocoding support. The autocomplete input will be filled by `google geocoding <https://developers.google.com/maps/documentation/javascript/geocoding/>`_. service when the user adds a marker manually.
+    The widget has built-in geocoding support. The autocomplete input will be filled by `google geocoding <https://developers.google.com/maps/documentation/javascript/geocoding/>`_ service when the user adds a marker manually.
 
 
 Settings

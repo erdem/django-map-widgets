@@ -39,11 +39,7 @@ Django Map Widgets needs Jquery dependency to work in your regular views. In Dja
 
 ##### Google Map Point Field Widget
 
-![](https://cloud.githubusercontent.com/assets/1518272/18732352/724dd098-805a-11e6-8eb4-6ba9b5e06a81.png)
-
-##### Google Map Point Field Widget for Django Admin Inlines
-
-![](https://cloud.githubusercontent.com/assets/1518272/18221609/2cac10fe-7178-11e6-9990-a93176693ef7.gif)
+![](https://cloud.githubusercontent.com/assets/1518272/26690966/443df7d6-46f3-11e7-9108-9cd004d80315.gif)
 
 ##### Google Map Static Overlay Widget
 This widget is working with <a href="http://dimsemenov.com/plugins/magnific-popup/" target="_blank">Magnific Popup</a> jQuery plugin. 
