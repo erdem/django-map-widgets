@@ -11,11 +11,11 @@ Preview
 
 .. Tip::
 
-    The widget has a Google Place Autocomplete widget as a default. You can find a spesific address with it.
+    The widget has a Google Place Autocomplete widget as a default. You can find a specific address with it.
 
 .. Tip::
 
-    The widget has built-in gecoding support. When the user add a marker manualy, the `Google Geocoding <https://developers.google.com/maps/documentation/javascript/geocoding/>`_. event handler will trigger and filled the autocomplete input.
+    The widget has built-in geocoding support. The autocomplete input will be filled by `google geocoding <https://developers.google.com/maps/documentation/javascript/geocoding/>`_. service when the user adds a marker manually.
 
 
 Settings
@@ -25,7 +25,7 @@ Settings
 
 * **GOOGLE_MAP_API_SIGNATURE**: You can give Google Static Map API signature key (optional). Check out this `page <https://developers.google.com/maps/documentation/static-maps/get-api-key/>`_.
 
-* **mapCenterLocationName**: You can give a specific location name for center of map. Map widget will find this location coordinates using `Google Place Autocomplete <https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete/>`_. (Optional)
+* **mapCenterLocationName**: You can give a specific location name for center of the map. Map widget will find this location coordinates using `Google Place Autocomplete <https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete/>`_. (Optional)
 
 * **mapCenterLocation**: You can give specific coordinates for center of the map. Coordinates must be list type. ([latitude, longitude]) (Optional)
 
@@ -79,7 +79,7 @@ If you want to give specific location name or coordinates for center of the map,
 
 .. Tip::
 
-    If there is no spesific value set for the map center for ``mapCenterLocationName``, ``mapCenterLocation`` the widget will be centered by the timezone setting of the project
+    If there is no specific value set for the map center for ``mapCenterLocationName``, ``mapCenterLocation`` the widget will be centred by the timezone setting of the project
     Check out these links.
 
     * `Timezone Center Locations <https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/constants.py/>`_
@@ -106,7 +106,7 @@ You can also give specific `settings` as a parameter for each widget.
 
 .. Note::
 
-    `GOOGLE_MAP_API_KEY` must be set in the project django settings file for custom `settings` usage.
+    `GOOGLE_MAP_API_KEY` must be set in the project Django settings file for custom settings usage.
 
 
 **Django Admin**
@@ -140,7 +140,7 @@ Javascript API
 ^^^^^^^^^^^^^^
 
 
-If you want develop your map UI on front-end side, you can use map widget jQuery triggers.
+If you need to develop your map UI on front-end side, you can use map widget jQuery triggers.
 
 
 * **google_point_map_widget:marker_create**: Triggered when user create marker on map. (callback params: place, lat, lng, locationInputElem, mapWrapID)

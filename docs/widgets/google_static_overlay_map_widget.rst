@@ -50,6 +50,7 @@ In your django ``settings.py`` file, add your ``MAP_WIDGETS`` config:
         "GoogleStaticMapWidget": (
             ("zoom", 15),
             ("size", "320x320"),
+            ("thumbnail_size", "100x100"),
         ),
         "GoogleStaticMapMarkerSettings": (
             ("color", "green"),
@@ -62,11 +63,11 @@ In your django ``settings.py`` file, add your ``MAP_WIDGETS`` config:
 
 .. code-block:: python
 
-    from mapwidgets.widgets import GoogleStaticMapWidget
+    from mapwidgets.widgets import GoogleStaticOverlayMapWidget
 
     class CityAdmin(admin.ModelAdmin):
         formfield_overrides = {
-            models.PointField: {"widget": GoogleStaticMapWidget}
+            models.PointField: {"widget": GoogleStaticOverlayMapWidget}
         }
 
 
@@ -75,7 +76,7 @@ In your django ``settings.py`` file, add your ``MAP_WIDGETS`` config:
 
 .. code-block:: python
 
-    from mapwidgets.widgets import GoogleStaticMapWidget
+    from mapwidgets.widgets import GoogleStaticOverlayMapWidget
 
     class CityDetailForm(forms.ModelForm):
 
@@ -83,7 +84,7 @@ In your django ``settings.py`` file, add your ``MAP_WIDGETS`` config:
             model = City
             fields = ("name", "coordinates", "city_hall")
             widgets = {
-                'coordinates': GoogleStaticMapWidget,
-                'city_hall': GoogleStaticMapWidget(zoom=12, size="240x240"),
+                'coordinates': GoogleStaticOverlayMapWidget,
+                'city_hall': GoogleStaticOverlayMapWidget(zoom=12, size="240x240"),
             }
 
