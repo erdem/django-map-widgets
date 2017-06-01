@@ -19,7 +19,7 @@ Installation
 
     $ pip install django-map-widgets
 
-Add ‘map_widgets’ to your `INSTALLED_APPS` in settings.py
+Add 'map_widgets' to your `INSTALLED_APPS` in settings.py
 
 .. code-block:: python
 

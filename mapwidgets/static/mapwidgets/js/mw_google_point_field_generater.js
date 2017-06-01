@@ -4,6 +4,7 @@
         init: function (options) {
             $.extend(this, options);
             $(document).on('formset:added', this.handle_added_formset_row.bind(this));
+            $(document).on('inline-group-row:added', this.handle_jet_added_inline_group_row.bind(this));
         },
 
         handle_added_formset_row: function (e, row, prefix) {
@@ -50,6 +51,15 @@
                 placeChangedTriggerNameSpace: "google_point_map_widget:place_changed"
             };
             new DjangoGooglePointFieldWidget(mapWidgetOptions);
+
+        },
+
+        handle_jet_added_inline_group_row: function (e, row) {
+            var id_parts = $(row).get(0).id.split('-');
+            var prefix = id_parts[0];
+
+            this.handle_added_formset_row(e, row, prefix);
+
         }
     });
 })(jQuery || django.jQuery);
