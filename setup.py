@@ -1,19 +1,13 @@
-import os
 from setuptools import setup, find_packages
 
-VERSION = (0, 1, 8)
+VERSION = (0, 1, 9)
 __version__ = '.'.join(map(str, VERSION))
-
-readme_rst = os.path.join(os.path.dirname(__file__), 'README.rst')
-
-# allow setup.py to be run from any path
-os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-map-widgets',
     version=__version__,
     description="Map widgets for Django PostGIS fields",
-    long_description=open(readme_rst).read(),
+    long_description="Configurable, pluggable and more user friendly map widgets for Django PostGIS fields.",
     author="Erdem Ozkol",
     author_email="erdemozkol@gmail.com",
     url="https://github.com/erdem/django-map-widgets",
