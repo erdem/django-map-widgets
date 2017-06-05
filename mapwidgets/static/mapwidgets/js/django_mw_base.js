@@ -148,6 +148,7 @@
 		
 		handleCoordinatesOverlayDoneBtnClick: function(){
 			$(".mw-coordinates-overlay", this.wrapElemSelector).addClass("hide");
+			this.coordinatesOverlayToggleBtn.removeClass("active");
 		},
 		
 		handleMyLocationBtnClick: function(){
