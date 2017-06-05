@@ -103,7 +103,7 @@
 				"lng": lng,
 				"lat": lat
 			};
-			this.deleteBtn.removeClass("btn-default disabled").addClass("btn-danger");
+			this.deleteBtn.removeClass("mw-btn-default disabled").addClass("mw-btn-danger");
 		},
 		
 		deleteMarker: function(){
@@ -114,7 +114,7 @@
 				$(this.addressAutoCompleteInput).val("");
 				this.addMarkerBtn.removeClass("active");
 				this.removeMarker();
-				this.deleteBtn.removeClass("btn-danger").addClass("btn-default disabled");
+				this.deleteBtn.removeClass("mw-btn-danger").addClass("mw-btn-default disabled");
 				$(document).trigger(this.markerDeleteTriggerNameSpace,
 					[
 						this.locationFieldValue.lat,

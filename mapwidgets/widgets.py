@@ -77,7 +77,7 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
             ]
         else:
             js = js + [
-                "mapwidgets/js/mw_google_point_inline_field.min.js"
+                "mapwidgets/js/mw_google_point_field.min.js"
             ]
 
         return forms.Media(js=js, css=css)
