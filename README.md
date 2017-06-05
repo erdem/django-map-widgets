@@ -77,7 +77,6 @@ This widget is working with <a href="http://dimsemenov.com/plugins/magnific-popu
 ### Release Notes
 
 #### v0.1.9
-======================================
 
 > -   Google Place Autocomplete object binding to jQuery triggers.
 > -   Implemented Google Geocoding support for the marker coordinates.
@@ -92,7 +91,6 @@ This widget is working with <a href="http://dimsemenov.com/plugins/magnific-popu
 
 
 #### v0.1.8
-======================================
 
 > -   Full documentation integrated to readthedocs.org.
 > -   Fixed Google Map static widget issues.
