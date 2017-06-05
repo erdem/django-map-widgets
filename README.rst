@@ -96,3 +96,31 @@ Google Map Static Overlay Widget
 .. image:: https://cloud.githubusercontent.com/assets/1518272/18732296/18f1813e-805a-11e6-8801-f1f48ed02a9c.png
    :width: 100 %
 
+
+Release Notes
+^^^^^^^^^^^^^
+
+======
+v0.1.9
+======
+
+ * Google Place Autocomplete object binding to jQuery triggers.
+ * Implemented Google Geocoding support for the marker coordinates.
+ * Added custom widget settings feature for each widget.
+ * Added Portuguese localisation support.
+ * Fixed Google Place Autocomplete widget bugs in Django Admin Inlines.
+ * Fixed Python 3.6 errors.
+ * Fixed Javascript bugs.
+ * The GitHub repository Integrated with Travis CI.
+ * Implemented unit tests for backend code. (%100 code coverage)
+ * Change development environment from Vagrant to Docker.
+
+======
+v0.1.8
+======
+
+ * Full documentation integrated to readthedocs.org.
+ * Fixed Google Map static widget issues.
+ * Added Russian localisation support.
+ * Added `Google Places Autocomplete <https://developers.google.com/maps/documentation/javascript/places-autocomplete>`_ options support.
+ * Fixed CSS issues.

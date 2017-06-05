@@ -1,6 +1,6 @@
-======================================
-Django map widgets 0.1.9 release notes
-======================================
+======
+v0.1.9
+======
 
  * Google Place Autocomplete object binding to jQuery triggers.
  * Implemented Google Geocoding support for the marker coordinates.

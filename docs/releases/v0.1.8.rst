@@ -1,6 +1,6 @@
-======================================
-Django map widgets 0.1.8 release notes
-======================================
+======
+v0.1.8
+======
 
  * Full documentation integrated to readthedocs.org.
  * Fixed Google Map static widget issues.
