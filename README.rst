@@ -44,6 +44,36 @@ Add ``map_widgets`` to your ``INSTALLED_APPS`` in settings.py
         'mapwidgets',
     ]
 
+**Django Admin**
+
+.. code-block:: python
+
+    from mapwidgets.widgets import GooglePointFieldWidget
+
+
+    class CityAdmin(admin.ModelAdmin):
+        formfield_overrides = {
+            models.PointField: {"widget": GooglePointFieldWidget}
+        }
+
+
+**Django Forms**
+
+.. code-block:: python
+
+    from mapwidgets.widgets import GooglePointFieldWidget, GoogleStaticOverlayMapWidget
+
+
+    class CityForm(forms.ModelForm):
+
+        class Meta:
+            model = City
+            fields = ("coordinates", "city_hall")
+            widgets = {
+                'coordinates': GooglePointFieldWidget,
+                'city_hall': GoogleStaticOverlayMapWidget,
+            }
+
 
 Requirements
 ^^^^^^^^^^^^
