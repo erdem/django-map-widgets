@@ -136,8 +136,8 @@ You can also give specific `settings` as a parameter for each widget.
             }
 
 
-Javascript API
-^^^^^^^^^^^^^^
+Javascript Triggers
+^^^^^^^^^^^^^^^^^^^
 
 
 If you need to develop your map UI on front-end side, you can use map widget jQuery triggers.
