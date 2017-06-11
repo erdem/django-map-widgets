@@ -35,6 +35,13 @@ Add ‘map_widgets’ to your `INSTALLED_APPS` in settings.py
         'mapwidgets',
     ]
 
+Collects the static files into ``STATIC_ROOT``.
+
+.. code-block:: bash
+    
+    python manage.py collectstatic
+    
+
 Requirements
 ^^^^^^^^^^^^
 
