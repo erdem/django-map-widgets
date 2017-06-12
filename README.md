@@ -29,6 +29,12 @@ INSTALLED_APPS = [
 ]
 ```
 
+Collects the static files into `STATIC_ROOT`.
+
+```bash
+python manage.py collectstatic
+```
+
 **Django Admin**
 
 ```python
