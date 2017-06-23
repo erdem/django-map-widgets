@@ -47,7 +47,7 @@ Add ``map_widgets`` to your ``INSTALLED_APPS`` in settings.py
 **Django Admin**
 
 .. code-block:: python
-
+    from django.contrib.gis.db import models
     from mapwidgets.widgets import GooglePointFieldWidget
 
 
