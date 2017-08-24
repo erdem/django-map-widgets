@@ -30,7 +30,7 @@ Here is the all default settings attribute for google static map widget.
             ("size", "normal"),
             ("color", ""),
             ("icon", ""),
-        )
+        ),
         "LANGUAGE": "en",
         "GOOGLE_MAP_API_SIGNATURE": "",
         "GOOGLE_MAP_API_KEY": "",
@@ -53,7 +53,7 @@ In your ``settings.py`` file, add your ``MAP_WIDGETS`` config:
         ),
         "GoogleStaticMapMarkerSettings": (
             ("color", "green"),
-        )
+        ),
         "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
     }
 
