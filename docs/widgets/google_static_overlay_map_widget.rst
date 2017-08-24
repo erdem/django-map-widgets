@@ -54,7 +54,7 @@ In your django ``settings.py`` file, add your ``MAP_WIDGETS`` config:
         ),
         "GoogleStaticMapMarkerSettings": (
             ("color", "green"),
-        )
+        ),
         "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
     }
 
