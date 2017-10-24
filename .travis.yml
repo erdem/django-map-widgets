@@ -1,21 +1,29 @@
 language: python
 
 python:
-  - 2.7.8
+  - 2.7
+  - 3.4
+  - 3.5
 
 env:
+  - DJANGO_VERSION=1.6
+  - DJANGO_VERSION=1.7
+  - DJANGO_VERSION=1.8
+  - DJANGO_VERSION=1.9
   - DJANGO_VERSION=1.10
+  - DJANGO_VERSION=1.11
 
 install:
   - pip install -r conf/requirements-dev.txt
-  - pip install coveralls
-
-services:
-  - postgresql
 
 script:
-  - cd tests/testapp/
-  - coverage run --source='../../mapwidgets' manage.py test
+  - coverage run --source='../../mapwidgets' tests/testapp/manage.py test
 
 after_success:
   - coveralls
+
+addons:
+  postgresql: 9.6
+  apt:
+    packages:
+    - postgresql-9.6-postgis-2.3
