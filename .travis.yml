@@ -1,18 +1,26 @@
 language: python
 
 python:
+  - 2.6
   - 2.7
+
+services: postgresql
 
 env:
   - DJANGO_VERSION=1.10
   - DJANGO_VERSION=1.11
 
+before_install:
+  - export DJANGO_SETTINGS_MODULE=your_project.settings
+  - export PYTHONPATH=$HOME/builds/your_github_username/your_repo
+  - export PIP_USE_MIRRORS=true
+
 install:
   - pip install -r conf/requirements-dev.txt
   - pip install coveralls
 
-services:
-  - postgresql: '9.3'
+before_script:
+  - psql -c "CREATE DATABASE mydb;" -U postgres
 
 script:
   - cd tests/testapp/
