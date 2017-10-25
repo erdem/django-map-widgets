@@ -1,7 +1,6 @@
 language: python
 
 python:
-  - 2.6
   - 2.7
 
 services: postgresql
@@ -11,8 +10,7 @@ env:
   - DJANGO_VERSION=1.11
 
 before_install:
-  - export DJANGO_SETTINGS_MODULE=your_project.settings
-  - export PYTHONPATH=$HOME/builds/your_github_username/your_repo
+  - export PYTHONPATH=$HOME/builds/erdem/django-map-widgets
   - export PIP_USE_MIRRORS=true
 
 install:
