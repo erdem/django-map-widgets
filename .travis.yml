@@ -12,7 +12,7 @@ env:
 before_install:
   - export PYTHONPATH=$HOME/builds/erdem/django-map-widgets
   - export PIP_USE_MIRRORS=true
-  - sudo apt-get install -y libgdal-dev
+  - sudo apt-get install -y libgdal-dev python-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev python-pip
 
 install:
   - pip install -r conf/requirements-dev.txt
