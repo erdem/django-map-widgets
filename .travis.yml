@@ -5,13 +5,14 @@ python:
 
 env:
   - DJANGO_VERSION=1.10
+  - DJANGO_VERSION=1.11
 
 install:
   - pip install -r conf/requirements-dev.txt
   - pip install coveralls
 
 services:
-  - postgresql
+  - postgresql: '9.3'
 
 script:
   - cd tests/testapp/
