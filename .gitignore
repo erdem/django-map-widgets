@@ -72,4 +72,5 @@ db.sqlite*
 docs/_templates/
 example/example/media/
 example/env/
-tests/testapp/assets/
+assets/
+tests/testapp/settings_local.py
