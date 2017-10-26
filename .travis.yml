@@ -17,7 +17,6 @@ before_install:
 install:
   - pip install -r conf/requirements-dev.txt
   - pip install coveralls
-  - pip install gdal
 
 before_script:
   - psql -c "CREATE DATABASE mydb;" -U postgres
