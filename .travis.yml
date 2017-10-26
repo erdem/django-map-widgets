@@ -19,7 +19,7 @@ install:
   - pip install coveralls
 
 before_script:
-  - psql -c "CREATE DATABASE mydb;" -U postgres
+  - apt-get install postgresql-9.6-postgis-2.3 postgis -y -q
 
 script:
   - cd tests/testapp/
