@@ -15,7 +15,7 @@ The aim of the Django map widgets is to make all Geo Django widgets more user fr
 
     pip install django-map-widgets
 
-    
+
 Add ‘map_widgets’ to your `INSTALLED_APPS` in settings.py
 
 ```python
@@ -24,14 +24,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'mapwidgets',
 ]
+```
+
+Collects the static files into `STATIC_ROOT`.
+
+```bash
+python manage.py collectstatic
 ```
 
 **Django Admin**
 
 ```python
+from django.contrib.gis.db import models
 from mapwidgets.widgets import GooglePointFieldWidget
 
 
@@ -69,7 +76,7 @@ Django Map Widgets needs Jquery dependency to work in your regular views. In Dja
 ![](https://cloud.githubusercontent.com/assets/1518272/26807500/ad0af4ea-4a4e-11e7-87d6-632f39e438f7.gif)
 
 ##### Google Map Static Overlay Widget
-This widget is working with <a href="http://dimsemenov.com/plugins/magnific-popup/" target="_blank">Magnific Popup</a> jQuery plugin. 
+This widget is working with <a href="http://dimsemenov.com/plugins/magnific-popup/" target="_blank">Magnific Popup</a> jQuery plugin.
 
 ![](https://cloud.githubusercontent.com/assets/1518272/18732296/18f1813e-805a-11e6-8801-f1f48ed02a9c.png)
 

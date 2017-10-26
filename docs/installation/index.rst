@@ -35,6 +35,31 @@ Add ‘map_widgets’ to your `INSTALLED_APPS` in settings.py
         'mapwidgets',
     ]
 
+Collects the static files into ``STATIC_ROOT``.
+
+.. code-block:: bash
+    
+    python manage.py collectstatic
+
+
+If you are using ``mapwidgets`` in your regular django views, you need to add ``{{ form.media }}`` template variable to the ``<head>`` or end of the ``<body>`` HTML section of your templates:
+
+.. code-block:: html
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+      ...
+      {{ form.media }}
+    </head>
+    <body>
+    ...
+    </body>
+    </html>
+
+
+.. note:: If you are using ``mapwidgets`` on the Django Admin, you don't need to add ``{{ form.media }}`` any template files. The media variable already added in default Django Admin templates.
+
 Requirements
 ^^^^^^^^^^^^
 

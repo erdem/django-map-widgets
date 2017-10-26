@@ -9,6 +9,12 @@
 			this.addMarkerBtn.on("click", this.handleAddMarkerBtnClick.bind(this));
 			this.myLocationBtn.on("click", this.handleMyLocationBtnClick.bind(this));
 			this.deleteBtn.on("click", this.deleteMarker.bind(this));
+			
+			// if the the location field in a collapse on Django admin form, the map need to initialize again when the collapse open by user.
+			if ($(this.wrapElemSelector).closest('.module.collapse').length){
+				$(document).on('show.fieldset', this.initializeMap.bind(this));
+			}
+			
 			var autocomplete = new google.maps.places.Autocomplete(this.addressAutoCompleteInput, this.GooglePlaceAutocompleteOptions);
 			google.maps.event.addListener(autocomplete, 'place_changed', this.handleAutoCompletePlaceChange.bind(this, autocomplete));
 			google.maps.event.addDomListener(this.addressAutoCompleteInput, 'keydown', this.handleAutoCompleteInputKeyDown.bind(this));

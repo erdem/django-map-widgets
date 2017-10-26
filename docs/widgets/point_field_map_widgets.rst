@@ -25,6 +25,8 @@ Settings
 
 * **GOOGLE_MAP_API_SIGNATURE**: You can give Google Static Map API signature key (optional). Check out this `page <https://developers.google.com/maps/documentation/static-maps/get-api-key/>`_.
 
+* **LANGUAGE**: Google Map language (optional, default value is ``en``).
+
 * **mapCenterLocationName**: You can give a specific location name for center of the map. Map widget will find this location coordinates using `Google Place Autocomplete <https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete/>`_. (Optional)
 
 * **mapCenterLocation**: You can give specific coordinates for center of the map. Coordinates must be list type. ([latitude, longitude]) (Optional)

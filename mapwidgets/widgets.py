@@ -1,4 +1,5 @@
 import json
+from pyproj import Proj, transform
 
 from django import forms
 from django.contrib.gis.forms import BaseGeometryWidget
@@ -18,6 +19,24 @@ def minify_if_not_debug(asset):
         Transform template string `asset` by inserting '.min' if DEBUG=False
     """
     return asset.format("" if not mw_settings.MINIFED else ".min")
+
+def coord_transform(x1, y1, proj1='3857', proj2='4326'):
+    """
+    Transforms coordinates between to lat/lon which is used in django-map-widgets
+    Requires the package pyproj.
+    If the coordinate transformation fails, the original coordinates are returned
+    :param x1: Latitude in any coordinate system (srid=proj1)
+    :param y1: Longitude in any coordinate system (srid=proj1)
+    :param proj1: srid of the original coordinate system
+    :param proj2: srid of the target coordinate system
+    :return: Coordinates in lat/lon, ready to be consumed by the widgets
+    """
+    try:
+        inProj = Proj(init='epsg:%s' % proj1)
+        outProj = Proj(init='epsg:%s' % proj2)
+        return transform(inProj, outProj, x1, y1)
+    except:
+        return x1, y1
 
 
 class BasePointFieldMapWidget(BaseGeometryWidget):
@@ -66,7 +85,9 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
         }
 
         js = [
-            "https://maps.googleapis.com/maps/api/js?libraries=places&key={}".format(mw_settings.GOOGLE_MAP_API_KEY)
+            "https://maps.googleapis.com/maps/api/js?libraries=places&language={}&key={}".format(
+                mw_settings.LANGUAGE, mw_settings.GOOGLE_MAP_API_KEY
+            )
         ]
 
         if not mw_settings.MINIFED:  # pragma: no cover
@@ -88,8 +109,9 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
 
         field_value = {}
         if isinstance(value,  Point):
-            field_value["lng"] = value.x
-            field_value["lat"] = value.y
+            x2, y2 = coord_transform(value.x, value.y, proj1=str(value.srid))
+            field_value["lng"] = x2
+            field_value["lat"] = y2
 
         if value and isinstance(value, six.string_types):
             coordinates = self.deserialize(value)
@@ -150,7 +172,9 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
         }
 
         js = [
-            "https://maps.googleapis.com/maps/api/js?libraries=places&key={}".format(mw_settings.GOOGLE_MAP_API_KEY)
+            "https://maps.googleapis.com/maps/api/js?libraries=places&language={}&key={}".format(
+                mw_settings.LANGUAGE, mw_settings.GOOGLE_MAP_API_KEY
+            )
         ]
 
         if not mw_settings.MINIFED:  # pragma: no cover

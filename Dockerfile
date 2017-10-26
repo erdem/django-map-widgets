@@ -19,10 +19,9 @@ RUN apt-get -y install \
     python-virtualenv
 
 
-WORKDIR /django-map-widgets/tests/testapp
-COPY conf/requirments-dev.txt /tmp/requirments-dev.txt
+COPY conf/requirements-dev.txt /tmp/requirements-dev.txt
 RUN pip install --upgrade pip
-RUN pip install -r /tmp/requirments-dev.txt
+RUN pip install -r /tmp/requirements-dev.txt
 
 COPY conf/web_entrypoint.sh /docker-entrypoint.sh
 RUN ["chmod", "+x", "/docker-entrypoint.sh"]
