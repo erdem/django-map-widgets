@@ -3,8 +3,6 @@ language: python
 python:
   - 2.7
 
-services: postgresql
-
 env:
   - DJANGO_VERSION=1.10
   - DJANGO_VERSION=1.11
