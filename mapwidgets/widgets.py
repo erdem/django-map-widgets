@@ -85,7 +85,9 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
         }
 
         js = [
-            "https://maps.googleapis.com/maps/api/js?libraries=places&key={}".format(mw_settings.GOOGLE_MAP_API_KEY)
+            "https://maps.googleapis.com/maps/api/js?libraries=places&language={}&key={}".format(
+                mw_settings.LANGUAGE, mw_settings.GOOGLE_MAP_API_KEY
+            )
         ]
 
         if not mw_settings.MINIFED:  # pragma: no cover
@@ -170,7 +172,9 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
         }
 
         js = [
-            "https://maps.googleapis.com/maps/api/js?libraries=places&key={}".format(mw_settings.GOOGLE_MAP_API_KEY)
+            "https://maps.googleapis.com/maps/api/js?libraries=places&language={}&key={}".format(
+                mw_settings.LANGUAGE, mw_settings.GOOGLE_MAP_API_KEY
+            )
         ]
 
         if not mw_settings.MINIFED:  # pragma: no cover
