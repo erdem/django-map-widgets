@@ -1,7 +1,8 @@
 import json
-from pyproj import Proj, transform
 
 from django import forms
+from django.contrib.gis import gdal
+from django.contrib.gis.admin.widgets import logger
 from django.contrib.gis.forms import BaseGeometryWidget
 from django.contrib.gis.geos import Point
 from django.core.exceptions import ImproperlyConfigured
@@ -20,24 +21,6 @@ def minify_if_not_debug(asset):
     """
     return asset.format("" if not mw_settings.MINIFED else ".min")
 
-def coord_transform(x1, y1, proj1='3857', proj2='4326'):
-    """
-    Transforms coordinates between to lat/lon which is used in django-map-widgets
-    Requires the package pyproj.
-    If the coordinate transformation fails, the original coordinates are returned
-    :param x1: Latitude in any coordinate system (srid=proj1)
-    :param y1: Longitude in any coordinate system (srid=proj1)
-    :param proj1: srid of the original coordinate system
-    :param proj2: srid of the target coordinate system
-    :return: Coordinates in lat/lon, ready to be consumed by the widgets
-    """
-    try:
-        inProj = Proj(init='epsg:%s' % proj1)
-        outProj = Proj(init='epsg:%s' % proj2)
-        return transform(inProj, outProj, x1, y1)
-    except:
-        return x1, y1
-
 
 class BasePointFieldMapWidget(BaseGeometryWidget):
     settings_namespace = None
@@ -47,13 +30,15 @@ class BasePointFieldMapWidget(BaseGeometryWidget):
         attrs = kwargs.get("attrs")
         self.attrs = {}
         for key in ('geom_type', 'map_srid', 'map_width', 'map_height', 'display_raw'):
-            self.attrs[key] = getattr(self, key)
+            if key in kwargs:
+                self.attrs[key] = kwargs.get(key)
+            else:
+                self.attrs[key] = getattr(self, key)
 
         if isinstance(attrs, dict):
             self.attrs.update(attrs)
 
         self.custom_settings = False
-
         if kwargs.get("settings"):
             self.settings = kwargs.pop("settings")
             self.custom_settings = True
@@ -75,6 +60,7 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
     template_name = "mapwidgets/google-point-field-widget.html"
     settings = mw_settings.GooglePointFieldWidget
     settings_namespace = "GooglePointFieldWidget"
+    google_map_sursrid = 4326
 
     @property
     def media(self):
@@ -104,28 +90,38 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
         return forms.Media(js=js, css=css)
 
     def render(self, name, value, attrs=None):
-        if not attrs:
-            attrs = dict()
+        if attrs is None:
+            attrs = {}
 
         field_value = {}
-        if isinstance(value,  Point):
-            x2, y2 = coord_transform(value.x, value.y, proj1=str(value.srid))
-            field_value["lng"] = x2
-            field_value["lat"] = y2
+        if isinstance(value, six.string_types):
+            value = self.deserialize(value)
+            longitude, latitude = value.coords
+            field_value["lng"] = longitude
+            field_value["lat"] = latitude
 
-        if value and isinstance(value, six.string_types):
-            coordinates = self.deserialize(value)
-            field_value["lng"] = getattr(coordinates, "x", None)
-            field_value["lat"] = getattr(coordinates, "y", None)
+        if isinstance(value,  Point):
+            if value.srid != self.google_map_srid:
+                try:
+                    ogr = value.ogr
+                    ogr.transform(self.google_map_srid)
+                    value = ogr
+                except gdal.GDALException as err:
+                    logger.error(
+                        "Error transforming geometry from srid '%s' to srid '%s' (%s)" % (
+                            value.srid, self.map_srid, err)
+                    )
+
+            longitude, latitude = value.coords
+            field_value["lng"] = longitude
+            field_value["lat"] = latitude
 
         extra_attrs = {
             "options": self.map_options(),
             "field_value": json.dumps(field_value)
         }
-
         attrs.update(extra_attrs)
-        self.as_super = super(GooglePointFieldWidget, self)
-        return self.as_super.render(name, value, attrs)
+        return super(GooglePointFieldWidget, self).render(name, value, attrs)
 
 
 class PointFieldInlineWidgetMixin(object):
