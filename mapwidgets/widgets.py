@@ -60,7 +60,7 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
     template_name = "mapwidgets/google-point-field-widget.html"
     settings = mw_settings.GooglePointFieldWidget
     settings_namespace = "GooglePointFieldWidget"
-    google_map_sursrid = 4326
+    google_map_srid = 4326
 
     @property
     def media(self):

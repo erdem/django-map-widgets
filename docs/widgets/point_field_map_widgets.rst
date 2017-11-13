@@ -89,6 +89,11 @@ If you want to give specific location name or coordinates for center of the map,
 
 You can also give specific `settings` as a parameter for each widget.
 
+.. Note::
+
+    Google Map is using SRID (Spatial Reference System Identifier) as `4326` as same as Django’s default SRID value for postgis fields. If you are set SRID parameter on a postgis field, the coordinates will store as your SRID format on your database but the widget always converting coordinates to `4326` format when it rendering. Because, the Google Map Javascript API using `4326` format. So, you can see different coordinates values on frontend from your DB but the point will always some location. You reach more information on this blog post.
+
+
 .. code-block:: python
 
     from django.contrib.gis import forms
