@@ -1,5 +1,5 @@
+import os
 from fabric.api import local
-
 
 JS_FILE_MAPPING = {
     "GooglePointFieldWidget": {
@@ -22,7 +22,6 @@ JS_FILE_MAPPING = {
     }
 }
 
-
 CSS_FILE_MAPPING = {
     "GooglePointFieldWidget": {
         "input_files": [
@@ -38,6 +37,9 @@ CSS_FILE_MAPPING = {
         "output_file": "mapwidgets/static/mapwidgets/css/magnific-popup.min.css",
     }
 }
+
+DJANGO_MAPWIDGETS_CONTAINER_NAME = os.environ.get('DJANGO_MAPWIDGETS_CONTAINER_NAME', 'django_mapwidgets')
+POSTGRES_CONTAINER_NAME = os.environ.get('DJANGO_MAPWIDGETS_CONTAINER_NAME', 'mapwidget_postgres')
 
 
 def minify_js_files():
@@ -73,3 +75,31 @@ def minify_css_files():
 def minify_files():
     minify_js_files()
     minify_css_files()
+
+
+def docker_build():
+    local('docker-compose up --build --force-recreate')
+
+
+def docker_up():
+    local('docker-compose up')
+
+
+def docker_shell():
+    local('docker exec -it {} /bin/bash'.format(DJANGO_MAPWIDGETS_CONTAINER_NAME))
+
+
+def docker_runserver():
+    local('docker exec -it {} /bin/bash -c "cd tests/testapp/; python manage.py runserver 0:8000"'
+          .format(DJANGO_MAPWIDGETS_CONTAINER_NAME)
+          )
+
+
+def docker_run_unit_test():
+    local('docker exec -it {} /bin/bash -c "cd tests/testapp/; python manage.py test"'
+          .format(DJANGO_MAPWIDGETS_CONTAINER_NAME)
+          )
+
+
+def docker_postgres_shell():
+    local('docker exec -it {} /bin/bash -c "su postgres"'.format(POSTGRES_CONTAINER_NAME))
