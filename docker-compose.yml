@@ -12,9 +12,10 @@ services:
       - TEST_SELENIUM='yes'
       - SITE_DOMAIN=django
       - DJANGO_LIVE_TEST_SERVER_ADDRESS=django:8081
-    command: tail -f /bin/bash    # Added not to kill container so that it can be bashed.
+    command: tail -f /bin/bash    # Added for not to kill container.
     ports:
       - "8000:8000"
+      - "8001:8001"
       - "8081:8081"
     links:
       - postgres
@@ -24,12 +25,13 @@ services:
     depends_on:
       - selenium
       - postgres
+    working_dir: /django-map-widgets
 
   postgres:
     image: mdillon/postgis
     container_name: mapwidget_postgres
     environment:
-      - POSTGRES_DB=map_widget_example
+      - POSTGRES_DB=mapwidget_db
       - POSTGRES_USER=mapwidgetdbu
       - POSTGRES_PASSWORD=mapwidgetdbu
     volumes:

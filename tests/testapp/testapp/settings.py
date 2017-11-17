@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'testapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'mapwidget_tests',
+        'NAME': 'mapwidget_db',
         'USER': 'mapwidgetdbu',
         'PASSWORD': 'mapwidgetdbu',
         'HOST': 'postgres',
