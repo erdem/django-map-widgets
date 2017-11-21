@@ -102,15 +102,9 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
 
         if isinstance(value,  Point):
             if value.srid != self.google_map_srid:
-                try:
-                    ogr = value.ogr
-                    ogr.transform(self.google_map_srid)
-                    value = ogr
-                except gdal.GDALException as err:
-                    logger.error(
-                        "Error transforming geometry from srid '%s' to srid '%s' (%s)" % (
-                            value.srid, self.map_srid, err)
-                    )
+                ogr = value.ogr
+                ogr.transform(self.google_map_srid)
+                value = ogr
 
             longitude, latitude = value.coords
             field_value["lng"] = longitude

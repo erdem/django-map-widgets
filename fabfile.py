@@ -1,6 +1,7 @@
 import os
 from fabric.api import local
 
+
 JS_FILE_MAPPING = {
     "GooglePointFieldWidget": {
         "input_files": [
@@ -21,6 +22,7 @@ JS_FILE_MAPPING = {
         "output_file": "mapwidgets/static/mapwidgets/js/mw_google_point_inline_field.min.js"
     }
 }
+
 
 CSS_FILE_MAPPING = {
     "GooglePointFieldWidget": {
@@ -89,17 +91,21 @@ def docker_shell():
     local('docker exec -it {} /bin/bash'.format(DJANGO_MAPWIDGETS_CONTAINER_NAME))
 
 
+def run_on_docker(command):
+    local('docker exec -it {} /bin/bash -c "{}"'.format(DJANGO_MAPWIDGETS_CONTAINER_NAME, command))
+
+
 def docker_runserver():
-    local('docker exec -it {} /bin/bash -c "cd tests/testapp/; python manage.py runserver 0:8000"'
-          .format(DJANGO_MAPWIDGETS_CONTAINER_NAME)
-          )
+    run_on_docker("cd tests/testapp/; python manage.py runserver 0:8000")
 
 
-def docker_run_unit_test():
-    local('docker exec -it {} /bin/bash -c "cd tests/testapp/; python manage.py test"'
-          .format(DJANGO_MAPWIDGETS_CONTAINER_NAME)
-          )
+def docker_run_unit_tests():
+    run_on_docker("cd tests/testapp/; python manage.py test")
 
 
 def docker_postgres_shell():
     local('docker exec -it {} /bin/bash -c "su postgres"'.format(POSTGRES_CONTAINER_NAME))
+
+
+def docker_covarage_tests():
+    run_on_docker('cd tests/testapp;coverage run --source="../../mapwidgets" manage.py test;coverage report')
