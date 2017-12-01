@@ -3,7 +3,15 @@ import mapwidgets
 from django.contrib import admin
 from django.contrib.gis.db import models
 
-from .models import PointField
+from .models import PointField, PointFieldInline
+
+
+class PointFieldAdminInline(admin.StackedInline):
+    model = PointFieldInline
+    extra = 3
+    formfield_overrides = {
+        models.PointField: {"widget": mapwidgets.GooglePointFieldInlineWidget}
+    }
 
 
 class PointFieldAdmin(admin.ModelAdmin):
@@ -19,12 +27,17 @@ class PointFieldAdmin(admin.ModelAdmin):
             'classes': ('collapse',),
         }),
     )
+    inlines = [
+        PointFieldAdminInline
+    ]
 
     def location_text(self, obj):
         return obj.location.get_coords()
 
     def city_text(self, obj):
-        return obj.city.get_coords()
+        if obj.city:
+            return obj.city.get_coords()
+        return ""
 
 
 admin.site.register(PointField, PointFieldAdmin)
