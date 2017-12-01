@@ -15,15 +15,16 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.conf.urls.static import static
 from django.conf import settings
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
+from django.views.static import serve
 
 
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url=reverse_lazy('widgets:list'))),
     url(r'^admin/', admin.site.urls),
     url(r'^widgets/', include('widgets.urls', namespace='widgets')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    url(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),  # Enabled for acceptance tests
+]
 
