@@ -100,7 +100,7 @@ def docker_runserver():
 
 
 def docker_run_unit_tests():
-    run_on_docker("cd tests/testapp/; python manage.py test")
+    run_on_docker("python manage.py test")
 
 
 def docker_postgres_shell():
