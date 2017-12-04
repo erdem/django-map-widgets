@@ -74,7 +74,7 @@ def minify_css_files():
         local(uglifyjs_command)
 
 
-def minify_files():
+def minify_static_files():
     minify_js_files()
     minify_css_files()
 
