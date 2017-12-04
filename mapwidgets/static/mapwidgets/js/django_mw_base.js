@@ -96,11 +96,11 @@
 			this.addMarkerToMap(lat, lng);
 			if ($.isEmptyObject(this.locationFieldValue)){
 				$(document).trigger(this.markerCreateTriggerNameSpace,
-					[lat, lng, this.wrapElemSelector, this.locationInput]
+					[place, lat, lng, this.wrapElemSelector, this.locationInput]
 				);
 			}else{
 				$(document).trigger(this.markerChangeTriggerNameSpace,
-					[lat, lng, this.wrapElemSelector, this.locationInput]
+					[place, lat, lng, this.wrapElemSelector, this.locationInput]
 				);
 			}
 			
@@ -125,8 +125,8 @@
 					[
 						this.locationFieldValue.lat,
 						this.locationFieldValue.lng,
-						this.wrapElemSelector,
-						this.locationInput
+						this.locationInput,
+						this.wrapElemSelector
 					]
 				);
 				this.locationFieldValue = null;
