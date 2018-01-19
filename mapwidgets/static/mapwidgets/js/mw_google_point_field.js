@@ -42,6 +42,7 @@
                     this.fitBoundMarker();
                 }
             }
+            $(this.mapElement).data('map', this.map);
 
         },
 
