@@ -20,6 +20,9 @@
                         },
                         zoom: this.zoom
                     });
+                    
+                    $(this.mapElement).data('map', this.map);
+                    
                     if (!$.isEmptyObject(this.locationFieldValue)){
                         this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
                         this.fitBoundMarker();
@@ -36,6 +39,8 @@
                     },
                     zoom: this.zoom
                 });
+                
+                $(this.mapElement).data('map', this.map);
 
                 if (!$.isEmptyObject(this.locationFieldValue)){
                     this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
