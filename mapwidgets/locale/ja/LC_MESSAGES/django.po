@@ -1,0 +1,51 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-02-09 16:20+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: mapwidgets/templates/mapwidgets/google-point-field-widget.html:8
+msgid "Coordinates"
+msgstr "座標"
+
+#: mapwidgets/templates/mapwidgets/google-point-field-widget.html:11
+msgid "Latitude:"
+msgstr "緯度:"
+
+#: mapwidgets/templates/mapwidgets/google-point-field-widget.html:12
+msgid "Ex: 41.015137"
+msgstr "例: 41.015137"
+
+#: mapwidgets/templates/mapwidgets/google-point-field-widget.html:15
+msgid "Longitude:"
+msgstr "経度:"
+
+#: mapwidgets/templates/mapwidgets/google-point-field-widget.html:16
+msgid "Ex: 28.979530"
+msgstr "例: 28.979530"
+
+#: mapwidgets/templates/mapwidgets/google-point-field-widget.html:18
+msgid "Done"
+msgstr "完了"
+
+#: mapwidgets/templates/mapwidgets/google-point-field-widget.html:22
+msgid "Use My Location"
+msgstr "自分の位置を使う"
+
+#: mapwidgets/templates/mapwidgets/google-point-field-widget.html:25
+msgid "Enter or update the address here"
+msgstr "ここに住所を入力してください"
