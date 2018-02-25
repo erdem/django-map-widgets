@@ -71,6 +71,7 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
         }
 
         js = [
+            "https://code.jquery.com/jquery-3.3.1.slim.min.js",
             "https://maps.googleapis.com/maps/api/js?libraries=places&language={}&key={}".format(
                 mw_settings.LANGUAGE, mw_settings.GOOGLE_MAP_API_KEY
             )
@@ -94,14 +95,14 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
             attrs = {}
 
         field_value = {}
-        if isinstance(value, six.string_types):
+        if value and isinstance(value, six.string_types):
             value = self.deserialize(value)
             longitude, latitude = value.coords
             field_value["lng"] = longitude
             field_value["lat"] = latitude
 
         if isinstance(value,  Point):
-            if value.srid != self.google_map_srid:
+            if value.srid and value.srid != self.google_map_srid:
                 ogr = value.ogr
                 ogr.transform(self.google_map_srid)
                 value = ogr
@@ -162,6 +163,7 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
         }
 
         js = [
+            "https://code.jquery.com/jquery-3.3.1.slim.min.js",
             "https://maps.googleapis.com/maps/api/js?libraries=places&language={}&key={}".format(
                 mw_settings.LANGUAGE, mw_settings.GOOGLE_MAP_API_KEY
             )
