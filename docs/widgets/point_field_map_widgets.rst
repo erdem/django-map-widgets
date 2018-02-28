@@ -151,6 +151,8 @@ If you need to develop your map UI on front-end side, you can use map widget jQu
 
 * **google_point_map_widget:marker_delete**: Triggered when user delete marker on map. (callback params: lat, lng, locationInputElem, mapWrapID)
 
+* **google_point_map_widget:place_changed**: Triggered when the Google Places Autocomplete place changes (callback params: place, lat, lng, locationInputElem, mapWrapID)
+
 
 .. code-block:: javascript
 
@@ -173,4 +175,3 @@ If you need to develop your map UI on front-end side, you can use map widget jQu
         console.log(lat, lng);  // deleted marker coordinates
         console.log(mapWrapID); // map widget wrapper element ID
     })
-
