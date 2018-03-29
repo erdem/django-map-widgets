@@ -1,0 +1,65 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-29 13:31+0200\n"
+"PO-Revision-Date: 2018-03-29 13:37+0200\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: settings.py:63 settings.py:73
+msgid "MapWidget settings must be a tuple or dictionary"
+msgstr "MapWidget nastavenia musia byť typu tuple alebo dictionary"
+
+#: settings.py:94 settings.py:109
+#, python-format
+msgid ""
+"Invalid %s settings value. Please check the settings documentation http://"
+"django-map-widgets.readthedocs.io/en/latest/widgets/settings.html"
+msgstr ""
+"Nesprávna hodnota nastavenia %s. Skontrolujte prosím dokumentáciu "
+"nastavení http://django-map-widgets.readthedocs.io/en/latest/widgets/"
+"settings.html"
+
+#: templates/mapwidgets/google-point-field-widget.html:8
+msgid "Coordinates"
+msgstr "Súradnice"
+
+#: templates/mapwidgets/google-point-field-widget.html:11
+msgid "Latitude:"
+msgstr "Zemepisná šírka:"
+
+#: templates/mapwidgets/google-point-field-widget.html:12
+msgid "Ex: 41.015137"
+msgstr "Napr.: 41.015137"
+
+#: templates/mapwidgets/google-point-field-widget.html:15
+msgid "Longitude:"
+msgstr "Zemepisná dĺžka:"
+
+#: templates/mapwidgets/google-point-field-widget.html:16
+msgid "Ex: 28.979530"
+msgstr "Napr.: 28.979530"
+
+#: templates/mapwidgets/google-point-field-widget.html:18
+msgid "Done"
+msgstr "Hotovo"
+
+#: templates/mapwidgets/google-point-field-widget.html:22
+msgid "Use My Location"
+msgstr "Moja poloha"
+
+#: templates/mapwidgets/google-point-field-widget.html:25
+msgid "Enter or update the address here"
+msgstr "Zadajte alebo aktualizujte adresu"
