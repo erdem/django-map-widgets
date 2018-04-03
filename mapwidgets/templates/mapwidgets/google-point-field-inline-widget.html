@@ -38,11 +38,11 @@
                     markerDeleteTriggerNameSpace: "google_point_map_widget:marker_delete",
                     placeChangedTriggerNameSpace: "google_point_map_widget:place_changed"
                 };
-                new DjangoGooglePointFieldWidget(mapWidgetOptions);
+                var widget = new DjangoGooglePointFieldWidget(mapWidgetOptions);
 
             {% else %}
                 var widgetDataTemplate = JSON.parse("{{ js_widget_data|escapejs }}");
-                new DjangoMapWidgetGenerater({
+                var widgetGenerater = new DjangoMapWidgetGenerater({
                     "widgetDataTemplate": widgetDataTemplate,
                     "mapOptions": mapOptions,
                     "fieldValue": fieldValue
