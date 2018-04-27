@@ -1,10 +1,13 @@
 from django.utils.safestring import mark_safe
-from django.utils.encoding import force_unicode
+try:
+    from django.utils.encoding import force_text
+except ImportError:
+    from django.utils.encoding import force_unicode as force_text
 
 
 def html_escape(html):
-    """Returns the given HTML with ampersands, quotes and carets encoded."""
-    return mark_safe(force_unicode(html).replace('&', '&amp;')
+    """Return the given HTML with ampersands, quotes and carets encoded."""
+    return mark_safe(force_text(html).replace('&', '&amp;')
                      .replace('<', '&lt;').replace('>', '&gt;')
                      .replace('"', '&quot;').replace("'", '&#39;')
                      )

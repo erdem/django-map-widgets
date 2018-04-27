@@ -1,6 +1,10 @@
 import os
 import json
-import urllib
+
+try:
+    from urllib.request import urlopen
+except ImportError:
+    from urllib import urlopen
 
 from django.test import TestCase
 from django.test.utils import override_settings
@@ -12,7 +16,7 @@ from django import forms as django_forms
 
 from mapwidgets import widgets as mw_widgets
 
-from utils import html_escape, get_textarea_html
+from .utils import html_escape, get_textarea_html
 
 GOOGLE_MAP_API_KEY = os.environ.get("TEST_GOOGLE_MAP_API_KEY", test_app_settings.GOOGLE_MAP_API_KEY)
 
@@ -231,13 +235,14 @@ class GoogleStaticMapWidgetUnitTests(TestCase):
             widget_html_elem_name = "location"
             result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id})
             map_image_url = widget.get_image_url(point)
+            print(map_image_url)
             self.assertIn(GOOGLE_MAP_API_KEY, map_image_url)
             self.assertIn(html_escape(map_image_url), result)
 
             # test map_image_url
-            res = urllib.urlopen(map_image_url)
+            res = urlopen(map_image_url)
             self.assertEqual(res.getcode(), 200)
-            self.assertEqual(res.info().type, "image/png")
+            self.assertEqual(res.info().get_content_type(), "image/png")
 
             # test map_image_url with `None` value
             result = widget.render(name=widget_html_elem_name, value=None, attrs={'id': widget_html_elem_id})
@@ -278,9 +283,9 @@ class GoogleStaticMapWidgetUnitTests(TestCase):
             self.assertIn(html_escape(map_image_url), result)
 
             # test map_image_url
-            res = urllib.urlopen(map_image_url)
+            res = urlopen(map_image_url)
             self.assertEqual(res.getcode(), 200)
-            self.assertEqual(res.info().type, "image/png")
+            self.assertEqual(res.info().get_content_type(), "image/png")
 
 
 class GoogleStaticOverlayMapWidgetUnitTests(TestCase):
@@ -321,15 +326,15 @@ class GoogleStaticOverlayMapWidgetUnitTests(TestCase):
             self.assertIn(html_escape(map_image_url), result)
 
             # test map_image_url
-            res = urllib.urlopen(map_image_url)
+            res = urlopen(map_image_url)
             self.assertEqual(res.getcode(), 200)
-            self.assertEqual(res.info().type, "image/png")
+            self.assertEqual(res.info().get_content_type(), "image/png")
 
             # test thumbnail_image_url
             thumbnail_url = widget.get_thumbnail_url(point)
-            res = urllib.urlopen(thumbnail_url)
+            res = urlopen(thumbnail_url)
             self.assertEqual(res.getcode(), 200)
-            self.assertEqual(res.info().type, "image/png")
+            self.assertEqual(res.info().get_content_type(), "image/png")
 
             # test map_image_url with `None` value
             result = widget.render(name=widget_html_elem_name, value=None, attrs={'id': widget_html_elem_id})
@@ -367,12 +372,12 @@ class GoogleStaticOverlayMapWidgetUnitTests(TestCase):
             self.assertIn(html_escape(map_image_url), result)
 
             # test map_image_url
-            res = urllib.urlopen(map_image_url)
+            res = urlopen(map_image_url)
             self.assertEqual(res.getcode(), 200)
-            self.assertEqual(res.info().type, "image/png")
+            self.assertEqual(res.info().get_content_type(), "image/png")
 
             # test thumbnail_image_url
             thumbnail_url = widget.get_thumbnail_url(point)
-            res = urllib.urlopen(thumbnail_url)
+            res = urlopen(thumbnail_url)
             self.assertEqual(res.getcode(), 200)
-            self.assertEqual(res.info().type, "image/png")
+            self.assertEqual(res.info().get_content_type(), "image/png")
