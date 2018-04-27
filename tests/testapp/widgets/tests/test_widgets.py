@@ -242,10 +242,10 @@ class GoogleStaticMapWidgetUnitTests(TestCase):
             # test map_image_url
             res = urlopen(map_image_url)
             self.assertEqual(res.getcode(), 200)
-            if isinstance(res.info(), HTTPMessage):
-                self.assertEqual(res.info().get_content_type(), "image/png")
-            else:
+            if getattr(res.info(), 'type'):
                 self.assertEqual(res.info().type, "image/png")
+            else:
+                self.assertEqual(res.info().get_content_type(), "image/png")
 
             # test map_image_url with `None` value
             result = widget.render(name=widget_html_elem_name, value=None, attrs={'id': widget_html_elem_id})
@@ -288,10 +288,10 @@ class GoogleStaticMapWidgetUnitTests(TestCase):
             # test map_image_url
             res = urlopen(map_image_url)
             self.assertEqual(res.getcode(), 200)
-            if isinstance(res.info(), HTTPMessage):
-                self.assertEqual(res.info().get_content_type(), "image/png")
-            else:
+            if getattr(res.info(), 'type'):
                 self.assertEqual(res.info().type, "image/png")
+            else:
+                self.assertEqual(res.info().get_content_type(), "image/png")
 
 
 class GoogleStaticOverlayMapWidgetUnitTests(TestCase):
@@ -334,19 +334,19 @@ class GoogleStaticOverlayMapWidgetUnitTests(TestCase):
             # test map_image_url
             res = urlopen(map_image_url)
             self.assertEqual(res.getcode(), 200)
-            if isinstance(res.info(), HTTPMessage):
-                self.assertEqual(res.info().get_content_type(), "image/png")
-            else:
+            if getattr(res.info(), 'type'):
                 self.assertEqual(res.info().type, "image/png")
+            else:
+                self.assertEqual(res.info().get_content_type(), "image/png")
 
             # test thumbnail_image_url
             thumbnail_url = widget.get_thumbnail_url(point)
             res = urlopen(thumbnail_url)
             self.assertEqual(res.getcode(), 200)
-            if isinstance(res.info(), HTTPMessage):
-                self.assertEqual(res.info().get_content_type(), "image/png")
-            else:
+            if getattr(res.info(), 'type'):
                 self.assertEqual(res.info().type, "image/png")
+            else:
+                self.assertEqual(res.info().get_content_type(), "image/png")
 
             # test map_image_url with `None` value
             result = widget.render(name=widget_html_elem_name, value=None, attrs={'id': widget_html_elem_id})
@@ -386,16 +386,16 @@ class GoogleStaticOverlayMapWidgetUnitTests(TestCase):
             # test map_image_url
             res = urlopen(map_image_url)
             self.assertEqual(res.getcode(), 200)
-            if isinstance(res.info(), HTTPMessage):
-                self.assertEqual(res.info().get_content_type(), "image/png")
-            else:
+            if getattr(res.info(), 'type'):
                 self.assertEqual(res.info().type, "image/png")
+            else:
+                self.assertEqual(res.info().get_content_type(), "image/png")
 
             # test thumbnail_image_url
             thumbnail_url = widget.get_thumbnail_url(point)
             res = urlopen(thumbnail_url)
             self.assertEqual(res.getcode(), 200)
-            if isinstance(res.info(), HTTPMessage):
-                self.assertEqual(res.info().get_content_type(), "image/png")
-            else:
+            if getattr(res.info(), 'type'):
                 self.assertEqual(res.info().type, "image/png")
+            else:
+                self.assertEqual(res.info().get_content_type(), "image/png")
