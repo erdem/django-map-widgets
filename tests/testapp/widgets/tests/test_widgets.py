@@ -1,9 +1,9 @@
 import os
 import json
-from http.client import HTTPMessage
 
 try:
     from urllib.request import urlopen
+    from http.client import HTTPMessage
 except ImportError:
     from urllib import urlopen
 
