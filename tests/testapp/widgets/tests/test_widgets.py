@@ -242,7 +242,7 @@ class GoogleStaticMapWidgetUnitTests(TestCase):
             # test map_image_url
             res = urlopen(map_image_url)
             self.assertEqual(res.getcode(), 200)
-            if getattr(res.info(), 'type'):
+            if hasattr(res.info(), 'type'):
                 self.assertEqual(res.info().type, "image/png")
             else:
                 self.assertEqual(res.info().get_content_type(), "image/png")
@@ -288,7 +288,7 @@ class GoogleStaticMapWidgetUnitTests(TestCase):
             # test map_image_url
             res = urlopen(map_image_url)
             self.assertEqual(res.getcode(), 200)
-            if getattr(res.info(), 'type'):
+            if hasattr(res.info(), 'type'):
                 self.assertEqual(res.info().type, "image/png")
             else:
                 self.assertEqual(res.info().get_content_type(), "image/png")
@@ -334,7 +334,7 @@ class GoogleStaticOverlayMapWidgetUnitTests(TestCase):
             # test map_image_url
             res = urlopen(map_image_url)
             self.assertEqual(res.getcode(), 200)
-            if getattr(res.info(), 'type'):
+            if hasattr(res.info(), 'type'):
                 self.assertEqual(res.info().type, "image/png")
             else:
                 self.assertEqual(res.info().get_content_type(), "image/png")
@@ -343,7 +343,7 @@ class GoogleStaticOverlayMapWidgetUnitTests(TestCase):
             thumbnail_url = widget.get_thumbnail_url(point)
             res = urlopen(thumbnail_url)
             self.assertEqual(res.getcode(), 200)
-            if getattr(res.info(), 'type'):
+            if hasattr(res.info(), 'type'):
                 self.assertEqual(res.info().type, "image/png")
             else:
                 self.assertEqual(res.info().get_content_type(), "image/png")
@@ -386,7 +386,7 @@ class GoogleStaticOverlayMapWidgetUnitTests(TestCase):
             # test map_image_url
             res = urlopen(map_image_url)
             self.assertEqual(res.getcode(), 200)
-            if getattr(res.info(), 'type'):
+            if hasattr(res.info(), 'type'):
                 self.assertEqual(res.info().type, "image/png")
             else:
                 self.assertEqual(res.info().get_content_type(), "image/png")
@@ -395,7 +395,7 @@ class GoogleStaticOverlayMapWidgetUnitTests(TestCase):
             thumbnail_url = widget.get_thumbnail_url(point)
             res = urlopen(thumbnail_url)
             self.assertEqual(res.getcode(), 200)
-            if getattr(res.info(), 'type'):
+            if hasattr(res.info(), 'type'):
                 self.assertEqual(res.info().type, "image/png")
             else:
                 self.assertEqual(res.info().get_content_type(), "image/png")
