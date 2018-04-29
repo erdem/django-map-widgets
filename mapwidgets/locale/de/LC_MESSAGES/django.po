@@ -26,7 +26,7 @@ msgid "Latitude:"
 msgstr "Breitengrad:"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:12
-msgid "Bspw.: 41.015137"
+msgid "Ex: 41.015137"
 msgstr "Bspw.: 41.015137"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:15
