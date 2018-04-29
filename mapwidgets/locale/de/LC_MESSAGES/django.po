@@ -23,7 +23,7 @@ msgstr "Koordinaten"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:11
 msgid "Latitude:"
-msgstr "Breitengrad"
+msgstr "Breitengrad:"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:12
 msgid "Bspw.: 41.015137"
