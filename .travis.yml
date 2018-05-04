@@ -4,6 +4,7 @@ python:
   - 2.7
   - 3.4
   - 3.5
+  - 3.6
 
 env:
   - DJANGO_VERSION=1.6
@@ -17,7 +18,8 @@ install:
   - pip install -r conf/requirements-dev.txt
 
 script:
-  - coverage run --source='../../mapwidgets' tests/testapp/manage.py test
+  - cd tests/testapp/
+  - coverage run --source='../../mapwidgets' manage.py test
 
 after_success:
   - coveralls
