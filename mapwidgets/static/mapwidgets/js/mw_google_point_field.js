@@ -67,7 +67,7 @@
             this.map.fitBounds(bounds);
             if (this.markerFitZoom && this.isInt(this.markerFitZoom)){
                 var markerFitZoom = parseInt(this.markerFitZoom);
-                var listener = google.maps.event.addListener(this.map, "bounds_changed", function() {
+                var listener = google.maps.event.addListener(this.map, "idle", function() {
                     if (this.getZoom() > markerFitZoom) {
                         this.setZoom(markerFitZoom)
                     }
