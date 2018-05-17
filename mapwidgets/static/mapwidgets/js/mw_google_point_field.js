@@ -20,6 +20,9 @@
                         },
                         zoom: this.zoom
                     });
+                    
+                    $(this.mapElement).data('map', this.map);
+                    
                     if (!$.isEmptyObject(this.locationFieldValue)){
                         this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
                         this.fitBoundMarker();
@@ -36,6 +39,8 @@
                     },
                     zoom: this.zoom
                 });
+                
+                $(this.mapElement).data('map', this.map);
 
                 if (!$.isEmptyObject(this.locationFieldValue)){
                     this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
@@ -62,7 +67,7 @@
             this.map.fitBounds(bounds);
             if (this.markerFitZoom && this.isInt(this.markerFitZoom)){
                 var markerFitZoom = parseInt(this.markerFitZoom);
-                var listener = google.maps.event.addListener(this.map, "bounds_changed", function() {
+                var listener = google.maps.event.addListener(this.map, "idle", function() {
                     if (this.getZoom() > markerFitZoom) {
                         this.setZoom(markerFitZoom)
                     }
