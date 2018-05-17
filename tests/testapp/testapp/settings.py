@@ -29,7 +29,7 @@ if MAP_WIDGETS_PATH not in sys.path:
 SECRET_KEY = 'o6b2c!r921-+^h7jlm&4x#sn53qwfif+@8(!4b*csitx+69b=5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -157,6 +157,7 @@ SITE_DOMAIN = 'django'
 TESTING = sys.argv[1:2] == ['test']
 
 GOOGLE_MAP_API_KEY = os.environ.get('GOOGLE_MAP_API_KEY')
+
 try:
     from settings_local import *
 except ImportError:

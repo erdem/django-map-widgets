@@ -10,8 +10,7 @@ class PointFieldAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.PointField: {"widget": mapwidgets.GooglePointFieldWidget}
     }
-    list_display = ('name', 'location_text', 'city_text')
-    readonly_fields = ('location_text', 'city_text')
+    list_display = ('name',)
     fieldsets = (
         (None, {'fields': ('name', 'location')}),
         ('Extra', {
@@ -19,12 +18,6 @@ class PointFieldAdmin(admin.ModelAdmin):
             'classes': ('collapse',),
         }),
     )
-
-    def location_text(self, obj):
-        return obj.location.get_coords()
-
-    def city_text(self, obj):
-        return obj.city.get_coords()
 
 
 admin.site.register(PointField, PointFieldAdmin)
