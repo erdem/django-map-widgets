@@ -65,6 +65,16 @@ class CityForm(forms.ModelForm):
         }
 ```
 
+...and your template should look something like this
+
+```html
+<form method="POST" action="">
+    {% csrf_token %}
+    {{form.media}}
+    {{form.as_p}}
+</form>
+```
+
 ### Requirements
 
 Django Map Widgets needs Jquery dependency to work in your regular views. In Django Admin case, you don't need to provide the jQuery just because it's already available on ``django.jQuery`` namespace.
