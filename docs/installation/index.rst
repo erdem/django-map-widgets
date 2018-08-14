@@ -1,6 +1,6 @@
 Installation
 ------------
-.. note:: The library has been tested against Python 2.7 and 3.4+.
+.. note:: The library has been tested against Python 2.7 and 3.4-3.6. It is compatible with Django 1.6-2.1.
 
 
 Installing from PyPi
