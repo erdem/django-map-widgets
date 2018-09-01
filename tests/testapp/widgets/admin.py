@@ -10,7 +10,7 @@ class PointFieldAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.PointField: {"widget": mapwidgets.GooglePointFieldWidget}
     }
-
+    list_display = ('name',)
     fieldsets = (
         (None, {'fields': ('name', 'location')}),
         ('Extra', {
