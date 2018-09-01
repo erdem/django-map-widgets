@@ -34,3 +34,13 @@ addons:
   apt:
     packages:
     - postgresql-9.6-postgis-2.3
+deploy:
+- provider: pypi
+  user: djangomapwidgetsmaintainer
+  server: https://test.pypi.org/djangomapwidgets/
+  'on':
+    tags: true
+    branch: staging
+  password:
+    secure: sHEgGwZAQXpzAgHEbSElAeTgGW/tg8oqLUElV46OyRXclLtkJXJKFzkQ2NzKnelC94DdF4MPiZhhO5Ck1gCTqmsXFkeUZcROYU595nVOWcY5ftCpgsFcLKj0iOyzeV8HQz86cOtzSYu7WLShlPK0Dlv9VmiINJEZwthE1yIxnz9Zj8CPX8M/xwvSZo/i36I32wEBN7eQXVMc1R0doRa2qgEW5xR9Cz3QIg656wH3Bb55XlR0Uk2rF4eNgJaaNhLGgpF8v50Yxm34Py9Ph5D3UW4LCAwRPRv/IBhTWa/qrtnGx35Y2zEuxk2vbvw/UOpKPJ0ZunIL4Ce7u0ckwRww8bP19jg6FnInDmBC8s7Rev0cjpqUWebA7Q3hcEzo0V2qaX4ME3oL7FEvdEUzYbkkoGHP29zqgxVJppsJjE3UgTKBCARINXoWg2DTmUGH735sq5Wdj9KOvwbD9LLVqny15w4+erV87dw78BSKchlkoWKzo8una5bWIgMt+aNMd9BSTGsI+o06lNgvPAETcanmchKCEbrI2wssrUrbm0p7zldkZYQkUxlpUt8nAShBfgA4u/QqseDbNmVJ4u0YWvxNOZZXCIZ6Bx8BltJnoAam4udrqA/UL7xxm5/02ActNEJ/pxjd/BeaGZhZaLbd/7n1FlUSWmFQduSNdwGbAI0mVxs=
+
