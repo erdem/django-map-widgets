@@ -159,6 +159,6 @@ TESTING = sys.argv[1:2] == ['test']
 GOOGLE_MAP_API_KEY = os.environ.get('GOOGLE_MAP_API_KEY')
 
 try:
-    from settings_local import *
-except ImportError:
+    from tests.testapp.testapp.settings_local import *
+except:
     pass

@@ -1,8 +1,6 @@
 import json
 
 from django import forms
-from django.contrib.gis import gdal
-from django.contrib.gis.admin.widgets import logger
 from django.contrib.gis.forms import BaseGeometryWidget
 from django.contrib.gis.geos import Point
 from django.core.exceptions import ImproperlyConfigured
