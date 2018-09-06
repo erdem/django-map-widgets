@@ -8,7 +8,7 @@
 			this.coordinatesOverlayInputs.on("change", this.handleCoordinatesInputsChange.bind(this));
 			this.addMarkerBtn.on("click", this.handleAddMarkerBtnClick.bind(this));
 			this.myLocationBtn.on("click", this.handleMyLocationBtnClick.bind(this));
-			this.deleteBtn.on("click", this.deleteMarker.bind(this));
+			this.deleteBtn.on("click", this.resetMap.bind(this));
 			
 			// if the the location field in a collapse on Django admin form, the map need to initialize again when the collapse open by user.
 			if ($(this.wrapElemSelector).closest('.module.collapse').length){
@@ -19,7 +19,7 @@
 			google.maps.event.addListener(autocomplete, 'place_changed', this.handleAutoCompletePlaceChange.bind(this, autocomplete));
 			google.maps.event.addDomListener(this.addressAutoCompleteInput, 'keydown', this.handleAutoCompleteInputKeyDown.bind(this));
 			this.geocoder = new google.maps.Geocoder;
-			this.initializeMap();
+			this.initializeMap.bind(this)();
 		},
 		
 		initializeMap: function(){
@@ -112,7 +112,7 @@
 			this.deleteBtn.removeClass("mw-btn-default disabled").addClass("mw-btn-danger");
 		},
 		
-		deleteMarker: function(){
+		resetMap: function(){
 			if (!$.isEmptyObject(this.locationFieldValue)) {
 				this.hideOverlay();
 				this.locationInput.val("");
