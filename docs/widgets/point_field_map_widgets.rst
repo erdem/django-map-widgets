@@ -179,3 +179,8 @@ $(document).on("google_point_map_widget:marker_delete", function (e, lat, lng, l
     console.log(mapWrapID); // map widget wrapper element ID
 })
 
+Reach Javascript Objects
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+The widget JS objects associated to the map HTML elements with jQuery `$.data` method. You can reach `Google Map object <https://developers.google.com/maps/documentation/javascript/tutorial#google.maps.Map>`_ and `the widget class <https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/static/mapwidgets/js/django_mw_base.js>`_ object instance.
+
