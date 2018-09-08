@@ -291,6 +291,7 @@ class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
         }
 
         js = (
+            "https://code.jquery.com/jquery-3.3.1.slim.min.js",
             minify_if_not_debug("mapwidgets/js/jquery.custom.magnific-popup{}.js"),
         )
 
