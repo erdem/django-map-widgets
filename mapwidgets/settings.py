@@ -13,7 +13,7 @@ DEFAULTS = {
         ("mapCenterLocation", TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC"))),
         ("zoom", 6),
         ("GooglePlaceAutocompleteOptions", {}),
-        ("markerFitZoom", 15),
+        ("markerFitZoom", 12),
     ),
 
     "GoogleStaticMapWidget": (

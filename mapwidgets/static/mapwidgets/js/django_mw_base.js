@@ -96,11 +96,11 @@
 			this.addMarkerToMap(lat, lng);
 			if ($.isEmptyObject(this.locationFieldValue)){
 				$(document).trigger(this.markerCreateTriggerNameSpace,
-					[lat, lng, this.wrapElemSelector, this.locationInput]
+					[place, lat, lng, this.wrapElemSelector, this.locationInput]
 				);
 			}else{
 				$(document).trigger(this.markerChangeTriggerNameSpace,
-					[lat, lng, this.wrapElemSelector, this.locationInput]
+					[place, lat, lng, this.wrapElemSelector, this.locationInput]
 				);
 			}
 			
@@ -185,6 +185,7 @@
 			var keyCode = e.keyCode || e.which;
 			if (keyCode === 13){  // pressed enter key
 				e.preventDefault();
+				return false;
 			}
 		},
 		
