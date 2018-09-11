@@ -89,6 +89,11 @@ If you want to give specific location name or coordinates for center of the map,
 
 You can also give specific `settings` as a parameter for each widget.
 
+.. Note::
+
+    Google Map is using SRID (Spatial Reference System Identifier) as `4326` as same as Django’s default SRID value for postgis fields. If you are set SRID parameter on a postgis field, the coordinates will store as your SRID format on your database but the widget always converting coordinates to `4326` format when it rendering. Because, the Google Map Javascript API using `4326` format. So, you can see different coordinates values on frontend from your DB but the point will always some location. You reach more information on this `Wikipedia page <https://en.wikipedia.org/wiki/Spatial_reference_system>`_.
+
+
 .. code-block:: python
 
     from django.contrib.gis import forms
@@ -154,23 +159,28 @@ If you need to develop your map UI on front-end side, you can use map widget jQu
 
 .. code-block:: javascript
 
-    $(document).on("google_point_map_widget:marker_create", function (e, place, lat, lng, locationInputElem, mapWrapID) {
-        console.log(place); // google place object
-        console.log(locationInputElem); // django widget textarea widget (hidden)
-        console.log(lat, lng); // created marker coordinates
-        console.log(mapWrapID); // map widget wrapper element ID
-    });
+$(document).on("google_point_map_widget:marker_create", function (e, place, lat, lng, locationInputElem, mapWrapID) {
+    console.log(place); // Google geocoding response object
+    console.log(locationInputElem); // django widget textarea widget (hidden)
+    console.log(lat, lng); // created marker coordinates
+    console.log(mapWrapID); // map widget wrapper element ID
+});
 
-    $(document).on("google_point_map_widget:marker_change", function (e, place, lat, lng, locationInputElem, mapWrapID) {
-        console.log(place); // google place object
-        console.log(locationInputElem); // django widget textarea widget (hidden)
-        console.log(lat, lng);  // changed marker coordinates
-        console.log(mapWrapID); // map widget wrapper element ID
-    });
+$(document).on("google_point_map_widget:marker_change", function (e, place, lat, lng, locationInputElem, mapWrapID) {
+    console.log(place); // Google geocoding response object
+    console.log(locationInputElem); // django widget textarea widget (hidden)
+    console.log(lat, lng);  // changed marker coordinates
+    console.log(mapWrapID); // map widget wrapper element ID
+});
 
-    $(document).on("google_point_map_widget:marker_delete", function (e, lat, lng, locationInputElem, mapWrapID) {
-        console.log(locationInputElem); // django widget textarea widget (hidden)
-        console.log(lat, lng);  // deleted marker coordinates
-        console.log(mapWrapID); // map widget wrapper element ID
-    })
+$(document).on("google_point_map_widget:marker_delete", function (e, lat, lng, locationInputElem, mapWrapID) {
+    console.log(locationInputElem); // django widget textarea widget (hidden)
+    console.log(lat, lng);  // deleted marker coordinates
+    console.log(mapWrapID); // map widget wrapper element ID
+})
+
+Reach Javascript Objects
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+The widget JS objects associated to the map HTML elements with jQuery `$.data` method. You can reach `Google Map object <https://developers.google.com/maps/documentation/javascript/tutorial#google.maps.Map>`_ and `the widget class <https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/static/mapwidgets/js/django_mw_base.js>`_ object instance.
 

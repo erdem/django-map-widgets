@@ -1,3 +1,4 @@
+import os
 from fabric.api import local
 
 
@@ -39,6 +40,9 @@ CSS_FILE_MAPPING = {
     }
 }
 
+DJANGO_MAPWIDGETS_CONTAINER_NAME = os.environ.get('DJANGO_MAPWIDGETS_CONTAINER_NAME', 'django_mapwidgets')
+POSTGRES_CONTAINER_NAME = os.environ.get('DJANGO_MAPWIDGETS_CONTAINER_NAME', 'mapwidget_postgres')
+
 
 def minify_js_files():
     """
@@ -73,3 +77,35 @@ def minify_css_files():
 def minify_files():
     minify_js_files()
     minify_css_files()
+
+
+def docker_build():
+    local('docker-compose up --build --force-recreate')
+
+
+def docker_up():
+    local('docker-compose up')
+
+
+def docker_shell():
+    local('docker exec -it {} /bin/bash'.format(DJANGO_MAPWIDGETS_CONTAINER_NAME))
+
+
+def run_on_docker(command):
+    local('docker exec -it {} /bin/bash -c "{}"'.format(DJANGO_MAPWIDGETS_CONTAINER_NAME, command))
+
+
+def docker_runserver():
+    run_on_docker("cd tests/testapp/; python manage.py runserver 0:8000")
+
+
+def docker_run_unit_tests():
+    run_on_docker("cd tests/testapp/; python manage.py test")
+
+
+def docker_postgres_shell():
+    local('docker exec -it {} /bin/bash -c "su postgres"'.format(POSTGRES_CONTAINER_NAME))
+
+
+def docker_covarage_tests():
+    run_on_docker('cd tests/testapp;coverage run --source="../../mapwidgets" manage.py test;coverage report')

@@ -1,0 +1,20 @@
+{
+  "name": "django-map-widgets",
+  "version": "1.0.0",
+  "description": "Pluggable map widgets for Django Postgis fields.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erdem/django-map-widgets.git"
+  },
+  "author": "Erdem Ozkol",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/erdem/django-map-widgets/issues"
+  },
+  "homepage": "https://github.com/erdem/django-map-widgets#readme",
+  "dependencies": {
+    "uglifycss": "0.0.27",
+    "uglify-js": "~3.1.9"
+  }
+}

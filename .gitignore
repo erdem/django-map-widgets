@@ -74,3 +74,4 @@ example/example/media/
 example/env/
 assets/
 tests/testapp/settings_local.py
+node_modules/

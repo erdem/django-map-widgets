@@ -21,6 +21,9 @@ from .utils import html_escape, get_textarea_html
 
 GOOGLE_MAP_API_KEY = os.environ.get("TEST_GOOGLE_MAP_API_KEY", test_app_settings.GOOGLE_MAP_API_KEY)
 
+DJANGO_DEFAULT_SRID_VALUE = 4326
+GOOGLE_MAP_DEFAULT_SRID_VALUE = 4326
+
 
 class GooglePointWidgetUnitTests(TestCase):
 
@@ -51,7 +54,7 @@ class GooglePointWidgetUnitTests(TestCase):
             self.assertEqual(options.get("mapCenterLocation"), default_map_center)
 
             # test render with Point object value
-            point = Point(-104.9903, 39.7392)
+            point = Point(-104.9903, 39.7392, srid=DJANGO_DEFAULT_SRID_VALUE)
             widget_html_elem_id = "id_location"
             widget_html_elem_name = "location"
             result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id})
@@ -95,7 +98,7 @@ class GooglePointWidgetUnitTests(TestCase):
         self.assertEqual(options.get("mapCenterLocation"), default_map_center)
 
         # test render with Point object value
-        point = Point(-105.9903, 38.7392)
+        point = Point(-105.9903, 38.73922, srid=DJANGO_DEFAULT_SRID_VALUE)
         widget_html_elem_id = "id_location"
         widget_html_elem_name = "location"
         result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id})
@@ -107,12 +110,27 @@ class GooglePointWidgetUnitTests(TestCase):
         result = widget.render(name=widget_html_elem_name, value=widget.serialize(point))
         self.assertIn(widget.serialize(point), result)
 
+    def test_widget_with_different_srid(self):
+        """
+            Test the widget with a different `srid` value instead of Geo Django default
+        """
+        point = Point(-16351.8201902, 6708983.38973, srid=3857)
+        widget_html_elem_id = "id_location"
+        widget_html_elem_name = "location"
+        widget = mw_widgets.GooglePointFieldWidget(map_srid=3857)
+        result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id})
+
+        ogr = point.ogr
+        ogr.transform(GOOGLE_MAP_DEFAULT_SRID_VALUE)
+        point_with_google_map_srid_format = ogr
+        self.assertIn(widget.serialize(point_with_google_map_srid_format), result)
+
 
 class GooglePointInlineWidgetUnitTests(TestCase):
 
     def test_widget_with_default_settings(self):
         """
-            Test the widget with default settings which is defined in django settings file
+            Test widget with default settings which is defined in django settings file
         """
         zoom = 15
         default_map_center = [51.5073509, -0.12775829999]
@@ -137,7 +155,7 @@ class GooglePointInlineWidgetUnitTests(TestCase):
             self.assertEqual(options.get("mapCenterLocation"), default_map_center)
 
             # test render with Point object value
-            point = Point(-104.9903, 39.7392)
+            point = Point(-104.9903, 39.73922, srid=DJANGO_DEFAULT_SRID_VALUE)
             widget_html_elem_id = "id_location"
             widget_html_elem_name = "location"
             result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id})
@@ -186,7 +204,7 @@ class GooglePointInlineWidgetUnitTests(TestCase):
         self.assertEqual(options.get("mapCenterLocation"), default_map_center)
 
         # test render with Point object value
-        point = Point(-105.9903, 38.7392)
+        point = Point(-105.9903, 38.73922, srid=DJANGO_DEFAULT_SRID_VALUE)
         widget_html_elem_id = "id_location"
         widget_html_elem_name = "location"
         result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id})

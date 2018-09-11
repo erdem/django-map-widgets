@@ -93,6 +93,15 @@ This widget is working with <a href="http://dimsemenov.com/plugins/magnific-popu
 
 ### Release Notes
 
+#### v0.2.0
+
+> -   Fixed Python 3.6, Django 2.x compatible issues. 
+> -   Fixed SRID format converter issues. 
+> -   Removed `pyproj` package dependency.
+> -   Various development infrastructure updates. (Docker, Fabric files etc.)
+> -   Point map widget JS objects associated to the map HTML elements with jQuey `$.data` method.
+> -   Passing Google Place AutoComplete full response object to jQuery triggers.
+
 #### v0.1.9
 
 > -   Google Place Autocomplete object binding to jQuery triggers.
