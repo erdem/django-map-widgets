@@ -90,7 +90,7 @@
 		},
 		
 		updateLocationInput: function(lat, lng, place){
-			var location_input_val = "POINT (" + lng + " " + lat + ")";
+			var location_input_val = "POINT (" + lat + " " + lng + ")";
 			this.locationInput.val(location_input_val);
 			this.updateCoordinatesInputs(lat, lng);
 			this.addMarkerToMap(lat, lng);
