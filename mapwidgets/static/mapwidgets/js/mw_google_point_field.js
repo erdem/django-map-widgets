@@ -4,7 +4,7 @@
         initializeMap: function(){
             var mapCenter = this.mapCenterLocation;
             if (this.mapCenterLocationName){
-                
+
                 this.geocoder.geocode({'address' : this.mapCenterLocationName}, function(results, status) {
                     if (status === google.maps.GeocoderStatus.OK) {
                         var geo_location = results[0].geometry.location;
@@ -40,7 +40,7 @@
                     },
                     zoom: this.zoom
                 });
-                
+
                 $(this.mapElement).data('google_map', this.map);
                 $(this.mapElement).data('google_map_widget', this);
 
@@ -106,4 +106,4 @@
         }
     });
 
-})(jQuery || django.jQuery);
+})(django.jQuery || jQuery);
