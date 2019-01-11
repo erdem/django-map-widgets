@@ -20,9 +20,10 @@
             });
 
             var wrapElemSelector = widgetData.wrapElemSelector;
-            var mapElemID = row[0].getElementsByClassName('mw-map')[0].id
+            var mapElemID = widgetData.mapElemID;
             var googleAutoInputID = widgetData.googleAutoInputID;
             var locationInputID = widgetData.locationInputID;
+
             var mapWidgetOptions = {
                 locationInput: $(locationInputID),
                 wrapElemSelector: wrapElemSelector,
