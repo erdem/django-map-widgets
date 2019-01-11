@@ -125,7 +125,7 @@ class PointFieldInlineWidgetMixin(object):
 
     def get_js_widget_data(self, name, element_id):
         map_elem_id_selector = "#%s-map-elem" % name
-        map_elem_selector = "#%s-mw-wrap" % name
+        map_elem_selector = "#%s-mw-wrap" % element_id
         map_elem_id = "%s-map-elem" % name
         google_auto_input_id = "%s-mw-google-address-input" % name
         location_input_id = "#%s" % element_id
