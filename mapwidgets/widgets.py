@@ -124,11 +124,13 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
 class PointFieldInlineWidgetMixin(object):
 
     def get_js_widget_data(self, name, element_id):
+        map_elem_id_selector = "#%s-map-elem" % name
         map_elem_selector = "#%s-mw-wrap" % name
         map_elem_id = "%s-map-elem" % name
         google_auto_input_id = "%s-mw-google-address-input" % name
         location_input_id = "#%s" % element_id
         js_widget_params = {
+            "mapElemIDSelector": map_elem_id_selector,
             "wrapElemSelector": map_elem_selector,
             "mapElemID": map_elem_id,
             "googleAutoInputID": google_auto_input_id,
