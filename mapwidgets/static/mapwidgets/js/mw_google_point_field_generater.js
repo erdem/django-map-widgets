@@ -10,26 +10,25 @@
             var mapOptions = this.mapOptions;
             var widgetData = {};
 
-            var id_regex = new RegExp("(" + prefix + "-(\\d+|__prefix__))");
+            var rowIdSelector = '#'+row[0].id
+            var mapElemIdSelector = this.widgetDataTemplate.mapElemIDSelector;
+            var elemIsInRow = document.querySelector(rowIdSelector + ' ' + mapElemIdSelector)
 
-            var numberPattern = /\d+/g;
-            var row_index = $(row).attr("id").match(numberPattern);
-            var replacement = prefix + "-" + row_index;
-            $.each(this.widgetDataTemplate, function (key, value) {
-                widgetData[key] = value.replace(id_regex, replacement)
-            });
+            if (!elemIsInRow) return;
 
-            var wrapElemSelector = widgetData.wrapElemSelector;
-            var mapElemID = widgetData.mapElemID;
-            var googleAutoInputID = widgetData.googleAutoInputID;
-            var locationInputID = widgetData.locationInputID;
+            var row_id = $(row).attr("id")
+
+            var wrapElemSelector = rowIdSelector + ' .mw-wrap';
+            var mapElemID = rowIdSelector + ' ' + mapElemIdSelector;
+            var googleAutoInputID = rowIdSelector + ' .mw-google-address-input';
+            var locationInputID = rowIdSelector + ' .coordinates-input';
 
             var mapWidgetOptions = {
                 locationInput: $(locationInputID),
                 wrapElemSelector: wrapElemSelector,
                 locationFieldValue: this.fieldValue,
                 mapApiKey: null,
-                mapElement: document.getElementById(mapElemID),
+                mapElement: document.querySelector(mapElemID),
                 mapCenterLocationName: mapOptions.mapCenterLocationName,
                 mapCenterLocation: mapOptions.mapCenterLocation,
                 coordinatesOverlayToggleBtn: $(".mw-btn-coordinates", wrapElemSelector),
@@ -37,7 +36,7 @@
                 coordinatesOverlayInputs: $(".mw-overlay-input", wrapElemSelector),
                 coordinatesOverlay: $(".mw-coordinates-overlay", wrapElemSelector),
                 myLocationBtn: $(".mw-btn-my-location", wrapElemSelector),
-                addressAutoCompleteInput: document.getElementById(googleAutoInputID),
+                addressAutoCompleteInput: document.querySelector(googleAutoInputID),
                 deleteBtn: $(".mw-btn-delete", wrapElemSelector),
                 addMarkerBtn: $(".mw-btn-add-marker", wrapElemSelector),
                 loaderOverlayElem: $(".mw-loader-overlay", wrapElemSelector),
