@@ -57,7 +57,8 @@ class GooglePointWidgetUnitTests(TestCase):
             point = Point(-104.9903, 39.7392, srid=DJANGO_DEFAULT_SRID_VALUE)
             widget_html_elem_id = "id_location"
             widget_html_elem_name = "location"
-            result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id})
+            widget_html_elem_class = "coordinates-input"
+            result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id, 'class': widget_html_elem_class })
             self.assertIn(widget.serialize(point), result)
             self.assertIn(get_textarea_html(widget_html_elem_id, widget_html_elem_name, point), result)
             self.assertIn(escapejs(options_str), result)
@@ -101,7 +102,8 @@ class GooglePointWidgetUnitTests(TestCase):
         point = Point(-105.9903, 38.73922, srid=DJANGO_DEFAULT_SRID_VALUE)
         widget_html_elem_id = "id_location"
         widget_html_elem_name = "location"
-        result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id})
+        widget_html_elem_class = "coordinates-input"
+        result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id, 'class': widget_html_elem_class })
         self.assertIn(widget.serialize(point), result)
         self.assertIn(get_textarea_html(widget_html_elem_id, widget_html_elem_name, point), result)
         self.assertIn(escapejs(options_str), result)
@@ -158,7 +160,8 @@ class GooglePointInlineWidgetUnitTests(TestCase):
             point = Point(-104.9903, 39.73922, srid=DJANGO_DEFAULT_SRID_VALUE)
             widget_html_elem_id = "id_location"
             widget_html_elem_name = "location"
-            result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id})
+            widget_html_elem_class = "coordinates-input"
+            result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id, 'class': widget_html_elem_class })
             self.assertIn(widget.serialize(point), result)
             self.assertIn(get_textarea_html(widget_html_elem_id, widget_html_elem_name, point), result)
 
@@ -207,7 +210,8 @@ class GooglePointInlineWidgetUnitTests(TestCase):
         point = Point(-105.9903, 38.73922, srid=DJANGO_DEFAULT_SRID_VALUE)
         widget_html_elem_id = "id_location"
         widget_html_elem_name = "location"
-        result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id})
+        widget_html_elem_class = "coordinates-input"
+        result = widget.render(name=widget_html_elem_name, value=point, attrs={'id': widget_html_elem_id, 'class': widget_html_elem_class })
         self.assertIn(widget.serialize(point), result)
         self.assertIn(get_textarea_html(widget_html_elem_id, widget_html_elem_name, point), result)
 
