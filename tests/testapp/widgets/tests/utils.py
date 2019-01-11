@@ -15,7 +15,7 @@ def html_escape(html):
 
 def get_textarea_html(html_id, name, point, classname):
     point_value = point.wkt if point else ''
-    return '<textarea id="{html_id}" name="{name}" class="{classname}">{point}</textarea>'.format(
+    return '<textarea id="{html_id}" class="{classname}" name="{name}">{point}</textarea>'.format(
         html_id=html_id,
         name=name,
         point=point_value,
