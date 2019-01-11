@@ -18,5 +18,6 @@ def get_textarea_html(html_id, name, point, classname):
     return '<textarea id="{html_id}" name="{name}" class="{classname}">{point}</textarea>'.format(
         html_id=html_id,
         name=name,
-        point=point_value
+        point=point_value,
+        classname=classname
     )
