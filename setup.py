@@ -14,7 +14,7 @@ setup(
     license="MIT",
     platforms=["any"],
     packages=find_packages(exclude=("example", "static", "env")),
-    install_requires = ['pyproj==1.9.5.1'],
+    install_requires = ['pyproj>=1.9.6'],
     include_package_data=True,
     classifiers=[
         "Environment :: Web Environment",
