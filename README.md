@@ -9,7 +9,7 @@ Configurable, pluggable and more user friendly map widgets for Django PostGIS fi
 * **Project Home Page**: <a href="https://github.com/erdem/django-map-widgets">https://github.com/erdem/django-map-widgets/</a>
 
 ### Achievements
-The aim of the Django map widgets is to make all Geo Django widgets more user friendly and configurable. Map widgets support major map services (GoogleMaps, OpenStreetMap) for your geoDjango fields.
+The aim of the Django map widgets is to make all Geo Django widgets more user friendly and configurable. Map widgets support major map services for your geoDjango fields.
 
 ### Installation
 
