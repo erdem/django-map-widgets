@@ -103,7 +103,7 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
 
         return forms.Media(js=js, css=css)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         if not attrs:
             attrs = dict()
 
@@ -125,7 +125,7 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
 
         attrs.update(extra_attrs)
         self.as_super = super(GooglePointFieldWidget, self)
-        return self.as_super.render(name, value, attrs)
+        return self.as_super.render(name, value, attrs, renderer)
 
 
 class PointFieldInlineWidgetMixin(object):
@@ -143,7 +143,7 @@ class PointFieldInlineWidgetMixin(object):
         }
         return js_widget_params
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         if not attrs:
             attrs = dict()
 
@@ -219,7 +219,7 @@ class BaseStaticMapWidget(forms.Widget):
             "attrs": attrs
         }
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         context = self.get_context_data(name, value, attrs)
         template = self.get_template()
         return render_to_string(template, context)
