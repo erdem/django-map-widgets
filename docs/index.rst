@@ -13,7 +13,7 @@ Configurable, pluggable and more user friendly map widgets for Django PostGIS fi
 Achievements
 ^^^^^^^^^^^^
 
-The aim of the Django map widgets is to make all Geo Django widgets more user friendly and configurable. Map widgets support major map services (GoogleMaps, OpenStreetMap) for your geoDjango fields.
+The aim of the Django map widgets is to make all Geo Django widgets more user friendly and configurable. Map widgets are currently supporting only Google Map services, but we are planning to add other major map services.
 
 
 Index
