@@ -9,7 +9,7 @@ from .models import PointField, Street
 class StreetInline(admin.TabularInline):
     model = Street
     formfield_overrides = {
-        models.PointField: {"widget": mapwidgets.GooglePointFieldWidget}
+        models.PointField: {"widget": mapwidgets.GooglePointFieldInlineWidget}
     }
     extra = 2
     
