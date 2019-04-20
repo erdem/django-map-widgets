@@ -49,6 +49,7 @@ DEFAULTS = {
         ("region", "")
     ),
     "LANGUAGE": "en",
+    "LIBRARIES": "places",
     "MINIFED": not django_settings.DEBUG,
     "GOOGLE_MAP_API_SIGNATURE": "",
     "GOOGLE_MAP_API_KEY": "",
