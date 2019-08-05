@@ -52,8 +52,7 @@
 
 .mw-wrap {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    width: 80%;
-    min-width: 500px;
+    width: 100%;
     margin-bottom: 10px;
     display: block;
     overflow: hidden;
@@ -109,7 +108,8 @@
 }
 
 .mw-header .mw-adress-input-wrap{
-    width: 40%;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .mw-header .mw-coordinates-wrap{
