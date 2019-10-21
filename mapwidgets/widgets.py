@@ -69,7 +69,7 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
         }
 
         js = [
-            "https://code.jquery.com/jquery-3.3.1.slim.min.js",
+            'admin/js/jquery.init.js',
             "https://maps.googleapis.com/maps/api/js?libraries=places&language={}&key={}".format(
                 mw_settings.LANGUAGE, mw_settings.GOOGLE_MAP_API_KEY
             )
@@ -168,7 +168,7 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
         }
 
         js = [
-            "https://code.jquery.com/jquery-3.3.1.slim.min.js",
+            'admin/js/jquery.init.js',
             "https://maps.googleapis.com/maps/api/js?libraries=places&language={}&key={}".format(
                 mw_settings.LANGUAGE, mw_settings.GOOGLE_MAP_API_KEY
             )
@@ -291,7 +291,7 @@ class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
         }
 
         js = (
-            "https://code.jquery.com/jquery-3.3.1.slim.min.js",
+            'admin/js/jquery.init.js',
             minify_if_not_debug("mapwidgets/js/jquery.custom.magnific-popup{}.js"),
         )
 
