@@ -1,8 +1,8 @@
 from collections import OrderedDict
+from six.moves import reload_module
 
 from django.test import TestCase
 from django.test.utils import override_settings
-from django.utils.six.moves import reload_module
 
 from mapwidgets.settings import MapWidgetSettings, DEFAULTS
 
