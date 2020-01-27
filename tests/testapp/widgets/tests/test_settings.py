@@ -8,6 +8,8 @@ from mapwidgets.settings import MapWidgetSettings, DEFAULTS
 
 
 class WidgetSettingsTests(TestCase):
+
+    @override_settings(MAP_WIDGETS={})
     def test_default_settings_values(self):
         mw_settings = MapWidgetSettings()
 
