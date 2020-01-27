@@ -2,12 +2,9 @@ language: python
 
 python:
   - 2.7
-  - 3.4
-  - 3.5
   - 3.6
 
 env:
-  - DJANGO_VERSION=1.6
   - DJANGO_VERSION=1.7
   - DJANGO_VERSION=1.8
   - DJANGO_VERSION=1.9
@@ -16,6 +13,22 @@ env:
   - DJANGO_VERSION=2.0
   - DJANGO_VERSION=2.1
 
+matrix:
+  exclude:
+    - python: 3.6
+      env: DJANGO=1.7
+    - python: 3.6
+      env: DJANGO=1.8
+    - python: 3.6
+      env: DJANGO=1.9
+    - python: 3.6
+      env: DJANGO=1.10
+    - python: 3.6
+      env: DJANGO=1.11
+    - python: 3.6
+      env: DJANGO=2.0
+    - python: 3.6
+      env: DJANGO=2.1
 cache:
   directories:
   - "$HOME/virtualenv"
