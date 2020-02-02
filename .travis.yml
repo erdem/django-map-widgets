@@ -3,10 +3,8 @@ language: python
 python:
   - 3.6
   - 3.7
-  - 3.8
 
 env:
-  global:
     - CPLUS_INCLUDE_PATH=/usr/include/gdal
     - C_INCLUDE_PATH=/usr/include/gdal
   - DJANGO_VERSION=1.7
