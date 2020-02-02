@@ -15,8 +15,8 @@ env:
   - DJANGO_VERSION=2.1
 
 before_install:
-  - CPLUS_INCLUDE_PATH=/usr/include/gdal
-  - C_INCLUDE_PATH=/usr/include/gdal
+  - export CPLUS_INCLUDE_PATH=/usr/include/gdal
+  - export C_INCLUDE_PATH=/usr/include/gdal
 
 install:
   - pip install gdal==1.11.2
