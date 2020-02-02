@@ -5,9 +5,6 @@ python:
   - 3.7
   - 3.8
 
-virtualenv:
-  system_site_packages: true
-
 env:
   - DJANGO_VERSION=1.7
   - DJANGO_VERSION=1.8
