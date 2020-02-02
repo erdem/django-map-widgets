@@ -24,6 +24,7 @@ before_install:
   - echo $GDAL_LIBRARY_PATH
 
 install:
+  - pip install GDAL-2.2.4-cp36-cp36m-win_amd64
   - pip install -r conf/requirements-dev.txt
 
 before_script:
@@ -43,6 +44,7 @@ addons:
     - binutils
     - libproj-dev
     - libgdal-dev
+    - gdal-bin
     - python-gdal
     - python3-gdal
     - libgeos-dev
