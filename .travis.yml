@@ -5,6 +5,9 @@ python:
   - 3.7
   - 3.8
 
+virtualenv:
+  system_site_packages: true
+
 env:
   - DJANGO_VERSION=1.7
   - DJANGO_VERSION=1.8
@@ -19,7 +22,6 @@ cache:
   - "$HOME/virtualenv"
 
 install:
-  - pip install gdal
   - pip install -r conf/requirements-dev.txt
 
 before_script:
@@ -39,6 +41,7 @@ addons:
     - binutils
     - libproj-dev
     - libgdal-dev
+    - python-gdal
     - python3-gdal
     - libgeos-dev
     - libyaml-dev
