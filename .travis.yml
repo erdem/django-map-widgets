@@ -1,7 +1,6 @@
 language: python
 
 python:
-  - 2.7
   - 3.6
   - 3.7
   - 3.8
@@ -22,8 +21,17 @@ cache:
   directories:
   - "$HOME/virtualenv"
 
+before_install:
+  - sudo add-apt-repository --yes ppa:ubuntugis/ppa
+  - sudo apt-get --quiet update
+  - sudo apt-get install --yes libgdal-dev gdal-bin
+
 install:
+  - pip install gdal==`gdal-config --version`
   - pip install -r conf/requirements-dev.txt
+
+before_script:
+  - psql -U postgres -c "create extension postgis"
 
 script:
   - coverage run --source='mapwidgets' tests/testapp/manage.py test
@@ -44,5 +52,3 @@ addons:
     - libyaml-dev
     - libgnutls28-dev
 
-before_script:
-  - psql -U postgres -c "create extension postgis"
