@@ -3,10 +3,9 @@ language: python
 python:
   - 3.6
   - 3.7
+  - 3.8
 
 env:
-    - CPLUS_INCLUDE_PATH=/usr/include/gdal
-    - C_INCLUDE_PATH=/usr/include/gdal
   - DJANGO_VERSION=1.7
   - DJANGO_VERSION=1.8
   - DJANGO_VERSION=1.9
@@ -18,6 +17,10 @@ env:
 cache:
   directories:
   - "$HOME/virtualenv"
+
+before_install:
+  - CPLUS_INCLUDE_PATH=/usr/include/gdal
+  - C_INCLUDE_PATH=/usr/include/gdal
 
 install:
   - pip install gdal==1.11.2
