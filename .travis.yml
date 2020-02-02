@@ -37,6 +37,7 @@ addons:
     - postgresql-9.5-postgis-2.4
     - binutils
     - libproj-dev
+    - libgdal-dev
     - python3-gdal
     - libgeos-dev
     - libyaml-dev
