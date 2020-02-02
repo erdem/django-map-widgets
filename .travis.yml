@@ -18,10 +18,6 @@ cache:
   directories:
   - "$HOME/virtualenv"
 
-before_install:
-  - sudo add-apt-repository --yes ppa:ubuntugis/ppa
-  - sudo apt-get --quiet update
-
 install:
   - pip install gdal==`gdal-config --version`
   - pip install -r conf/requirements-dev.txt
