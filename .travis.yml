@@ -19,7 +19,7 @@ before_install:
   - export C_INCLUDE_PATH=/usr/include/gdal
 
 install:
-  - pip install gdal==1.11.2
+  - pip install gdal
   - pip install -r conf/requirements-dev.txt
 
 before_script:
