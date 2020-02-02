@@ -16,12 +16,11 @@ env:
   - DJANGO_VERSION=2.1
 
 before_install:
-  - export CPLUS_INCLUDE_PATH=/usr/include/gdal
+  - export CPLUS_I¨NCLUDE_PATH=/usr/include/gdal
   - export C_INCLUDE_PATH=/usr/include/gdal
   - gdal-config --prefix
   - gdal-config --libs
-  - gdalinfo
-  - echo $GDAL_LIBRARY_PATH
+  - echo $GDAL_LIBRARY_ÿPATH
   - ls -la /usr
 
 install:
