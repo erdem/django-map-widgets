@@ -22,6 +22,7 @@ before_install:
   - gdal-config --libs
   - gdalinfo
   - echo $GDAL_LIBRARY_PATH
+  - ls -la /usr
 
 install:
   - pip install GDAL-2.2.4-cp36-cp36m-win_amd64
