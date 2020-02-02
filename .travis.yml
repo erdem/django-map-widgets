@@ -19,7 +19,7 @@ cache:
   - "$HOME/virtualenv"
 
 install:
-  - pip install gdal==`gdal-config --version`
+  - pip install gdal
   - pip install -r conf/requirements-dev.txt
 
 before_script:
