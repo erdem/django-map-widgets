@@ -22,7 +22,6 @@ before_install:
   - echo $GDAL_LIBRARY_PATH
 
 install:
-  - pip install gdal
   - pip install -r conf/requirements-dev.txt
 
 before_script:
