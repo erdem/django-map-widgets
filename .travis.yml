@@ -21,7 +21,6 @@ cache:
 before_install:
   - sudo add-apt-repository --yes ppa:ubuntugis/ppa
   - sudo apt-get --quiet update
-  - sudo apt-get install --yes libgdal-dev gdal-bin
 
 install:
   - pip install gdal==`gdal-config --version`
