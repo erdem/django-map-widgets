@@ -17,6 +17,7 @@ env:
 before_install:
   - export CPLUS_INCLUDE_PATH=/usr/include/gdal
   - export C_INCLUDE_PATH=/usr/include/gdal
+  - gdal-config --prefix
 
 install:
   - pip install gdal
