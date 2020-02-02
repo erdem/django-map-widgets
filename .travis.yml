@@ -1,12 +1,13 @@
 language: python
-dist: xenial
-sudo: false
 
 python:
   - 2.7
   - 3.6
   - 3.7
   - 3.8
+
+virtualenv:
+  system_site_packages: true
 
 env:
   - DJANGO_VERSION=1.7
@@ -31,10 +32,10 @@ after_success:
   - coveralls
 
 addons:
-  postgresql: "9.5"
+  postgresql: "9.6"
   apt:
     packages:
-    - postgresql-9.5-postgis-2.4
+    - postgresql-9.6-postgis-2.4
     - binutils
     - libproj-dev
     - libgdal-dev
