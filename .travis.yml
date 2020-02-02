@@ -1,5 +1,6 @@
 language: python
 dist: xenial
+sudo: false
 
 python:
   - 2.7
@@ -8,13 +9,6 @@ python:
   - 3.8
 
 env:
-  global:
-    - PIP_WHEEL_DIR=$HOME/.cache/pip/wheels
-    - PIP_FIND_LINKS=file://$HOME/.cache/pip/wheels
-    - GDALINST=$HOME/gdalinstall
-    - GDALBUILD=$HOME/gdalbuild
-    - PROJINST=$HOME/gdalinstall
-    - PROJBUILD=$HOME/projbuild
   - DJANGO_VERSION=1.7
   - DJANGO_VERSION=1.8
   - DJANGO_VERSION=1.9
@@ -27,43 +21,27 @@ cache:
   directories:
   - "$HOME/virtualenv"
 
+install:
+  - pip install -r conf/requirements-dev.txt
 
 script:
-  - "if [[ $TRAVIS_PYTHON_VERSION == 3.5 && $GDALVERSION == 2.1.0 ]]; then python -m pytest --doctest-ignore-import-errors --doctest-glob='*.rst' docs/*.rst -k 'not index and not quickstart and not switch' ; fi"
   - coverage run --source='mapwidgets' tests/testapp/manage.py test
 
 after_success:
   - coveralls
 
 addons:
+  postgresql: "9.5"
   apt:
     packages:
-    - libhdf5-serial-dev
+    - postgresql-9.5-postgis-2.4
+    - binutils
+    - libproj-dev
     - libgdal-dev
-    - libatlas-dev
-    - libatlas-base-dev
-    - gfortran
-
-before_install:
-  - python -m pip install -U pip
-  - python -m pip install wheel
-  - export PATH=$GDALINST/gdal-$GDALVERSION/bin:$PATH
-  - export LD_LIBRARY_PATH=$GDALINST/gdal-$GDALVERSION/lib:$LD_LIBRARY_PATH
-  - . ./scripts/travis_proj_install.sh
-  - travis_wait 20 . ./scripts/travis_gdal_install.sh
-  - export GDAL_DATA=$GDALINST/gdal-$GDALVERSION/share/gdal
-  - export PROJ_LIB=$GDALINST/gdal-$GDALVERSION/share/proj
-
-install:
-  - pip install -r conf/requirements-dev.txt
-  - "if [ \"$GDALVERSION\" == \"master\" -o $(gdal-config --version) == \"$GDALVERSION\" ]; then echo \"Using gdal $GDALVERSION\"; else echo \"NOT using gdal $GDALVERSION as expected; aborting\"; exit 1; fi"
-  - "python -m pip wheel -r requirements-dev.txt"
-  - "python -m pip install -r requirements-dev.txt"
-  - "GDAL_CONFIG=$GDALINST/gdal-$GDALVERSION/bin/gdal-config python -m pip install --upgrade --force-reinstall --no-use-pep517 -e .[test,plot]"
-  - "python -m pip install coveralls>=1.1"
-  - "rio --version"
-  - "rio --gdal-version"
-  - "python -m pip list"
+    - python3-gdal
+    - libgeos-dev
+    - libyaml-dev
+    - libgnutls28-dev
 
 before_script:
   - psql -U postgres -c "create extension postgis"
