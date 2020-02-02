@@ -19,6 +19,7 @@ before_install:
   - export C_INCLUDE_PATH=/usr/include/gdal
   - gdal-config --prefix
   - gdal-config --libs
+  - gdalinfo
   - echo $GDAL_LIBRARY_PATH
 
 install:
