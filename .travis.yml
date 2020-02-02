@@ -14,10 +14,6 @@ env:
   - DJANGO_VERSION=2.0
   - DJANGO_VERSION=2.1
 
-cache:
-  directories:
-  - "$HOME/virtualenv"
-
 before_install:
   - CPLUS_INCLUDE_PATH=/usr/include/gdal
   - C_INCLUDE_PATH=/usr/include/gdal
