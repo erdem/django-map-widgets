@@ -1,6 +1,5 @@
+dist: xenial
 language: python
-dist: trusty
-sudo: required
 
 python:
   - 3.6
@@ -17,11 +16,11 @@ env:
   - DJANGO_VERSION=2.1
 
 before_install:
-  - sudo apt-get update -y
-  - sudo apt-get install -y libgdal-dev libproj-dev libproj-dev spatialite-bin python-dev python3-dev
+  - sudo add-apt-repository -y ppa:ubuntugis/ppa
+  - sudo apt-get update
+  - sudo apt-get install -y libgdal-dev libhdf5-serial-dev
 
 install:
-  - CFLAGS=-I/usr/include/gdal pip install GDAL==1.11.2
   - pip install -r conf/requirements-dev.txt
 
 before_script:
@@ -38,8 +37,3 @@ addons:
   apt:
     packages:
     - postgresql-9.6-postgis-2.4
-    - binutils
-    - libproj-dev
-    - libgeos-dev
-    - libyaml-dev
-    - libgnutls28-dev
