@@ -1,5 +1,6 @@
 language: python
-sudo: true
+dist: trusty
+sudo: required
 
 python:
   - 3.6
@@ -16,15 +17,11 @@ env:
   - DJANGO_VERSION=2.1
 
 before_install:
-  - export CPLUS_INCLUDE_PATH=/usr/include/gdal
-  - export C_INCLUDE_PATH=/usr/include/gdal
-  - gdal-config --prefix
-  - gdal-config --libs
-  - echo $GDAL_LIBRARY_ÿPATH
-  - ls -la /usr
+  - sudo apt-get update -y
+  - sudo apt-get install -y libgdal-dev libproj-dev libproj-dev spatialite-bin python-dev python3-dev
 
 install:
-  - pip install GDAL-2.2.4-cp36-cp36m-win_amd64
+  - CFLAGS=-I/usr/include/gdal pip install GDAL==1.10
   - pip install -r conf/requirements-dev.txt
 
 before_script:
@@ -38,16 +35,5 @@ after_success:
 
 addons:
   postgresql: "9.6"
-  apt:
-    packages:
-    - postgresql-9.6-postgis-2.4
-    - binutils
-    - libproj-dev
-    - libgdal-dev
-    - gdal-bin
-    - python-gdal
-    - python3-gdal
-    - libgeos-dev
-    - libyaml-dev
-    - libgnutls28-dev
+
 
