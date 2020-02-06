@@ -1,13 +1,12 @@
+dist: xenial
 language: python
 
 python:
   - 2.7
-  - 3.4
-  - 3.5
   - 3.6
+  - 3.7
 
 env:
-  - DJANGO_VERSION=1.6
   - DJANGO_VERSION=1.7
   - DJANGO_VERSION=1.8
   - DJANGO_VERSION=1.9
@@ -16,12 +15,16 @@ env:
   - DJANGO_VERSION=2.0
   - DJANGO_VERSION=2.1
 
-cache:
-  directories:
-  - "$HOME/virtualenv"
+before_install:
+  - sudo add-apt-repository -y ppa:ubuntugis/ppa
+  - sudo apt-get update
+  - sudo apt-get install -y libgdal-dev libhdf5-serial-dev
 
 install:
   - pip install -r conf/requirements-dev.txt
+
+before_script:
+  - psql -U postgres -c "create extension postgis"
 
 script:
   - coverage run --source='mapwidgets' tests/testapp/manage.py test
@@ -30,7 +33,7 @@ after_success:
   - coveralls
 
 addons:
-  postgresql: 9.6
+  postgresql: "9.6"
   apt:
     packages:
     - postgresql-9.6-postgis-2.4
