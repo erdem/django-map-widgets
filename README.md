@@ -93,6 +93,12 @@ This widget is working with <a href="http://dimsemenov.com/plugins/magnific-popu
 
 ### Release Notes
 
+#### v0.2.3
+
+> -   Fixed python `six` module import issue. 
+> -   Fixed PostGIS error in CI pipeline. 
+> -   Added Estonian language support.
+
 #### v0.2.0
 
 > -   Fixed Python 3.6, Django 2.x compatible issues. 
