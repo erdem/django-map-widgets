@@ -109,3 +109,12 @@ def docker_postgres_shell():
 
 def docker_covarage_tests():
     run_on_docker('cd tests/testapp;coverage run --source="../../mapwidgets" manage.py test;coverage report')
+
+
+def create_pypi_package():
+    local('python setup.py sdist bdist_wheel')
+    local('twine check dist/*')
+
+
+def upload_pypi_package_to_test_repo():
+    local('twine upload --repository-url https://test.pypi.org/legacy/ dist/*')
