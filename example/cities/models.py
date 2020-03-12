@@ -16,7 +16,7 @@ class City(models.Model):
 
 
 class District(models.Model):
-    city = models.ForeignKey(City)
+    city = models.ForeignKey(City, on_delete=models.SET_NULL)
     name = models.CharField(max_length=255)
     location = models.PointField(help_text="To generate the map for your location")
 

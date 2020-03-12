@@ -1,5 +1,5 @@
-from django.core.urlresolvers import reverse_lazy
 from django.views.generic import FormView, ListView, UpdateView
+from django.urls import reverse
 
 from cities.forms import CityCreateForm, CityDetailForm
 from cities.models import City
@@ -20,7 +20,7 @@ class CityDetailView(UpdateView):
 class CityCreateView(FormView):
     template_name = "cities/form.html"
     form_class = CityCreateForm
-    success_url = reverse_lazy("cities:list")
+    success_url = reverse("cities:list")
 
     def form_valid(self, form):
         form.save()
