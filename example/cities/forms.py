@@ -1,6 +1,5 @@
 from django import forms
 
-from cities.models import City
 from mapwidgets.widgets import GooglePointFieldWidget, GoogleStaticMapWidget, GoogleStaticOverlayMapWidget
 
 

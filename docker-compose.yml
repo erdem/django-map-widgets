@@ -1,7 +1,6 @@
 version: "2"
 services:
   django:
-    restart: on-failure:10
     build:
       context: .
       dockerfile: Dockerfile
@@ -19,11 +18,9 @@ services:
       - "8081:8081"
     links:
       - postgres
-      - selenium
     volumes:
       - ".:/django-map-widgets"
     depends_on:
-      - selenium
       - postgres
     working_dir: /django-map-widgets
 
@@ -37,12 +34,12 @@ services:
     volumes:
       - "./data/db:/var/lib/postgresql/data"
 
-  selenium:
-    image: selenium/standalone-chrome-debug:3.3.0
-    container_name: mapwidget_selenium
-    environment:
-      - HUB_ENV_no_proxy=localhost
-      - no_proxy=localhost
-    ports:
-      - "4444:4444"
-      - "5900:5900"
+#  selenium:
+#    image: selenium/standalone-chrome-debug:3.3.0
+#    container_name: mapwidget_selenium
+#    environment:
+#      - HUB_ENV_no_proxy=localhost
+#      - no_proxy=localhost
+#    ports:
+#      - "4444:4444"
+#      - "5900:5900"

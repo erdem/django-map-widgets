@@ -1,57 +1,58 @@
 from django import forms
 from django.contrib.gis import admin
-from cities.models import City, District
+from .models import House, Neighbour
 from django.contrib.gis.db import models
 from mapwidgets.widgets import GooglePointFieldWidget, GooglePointFieldInlineWidget, GoogleStaticMapWidget, \
     GoogleStaticOverlayMapWidget
 
 
-class DistrictAdminInline(admin.TabularInline):
-    model = District
+class NeighbourAdminInline(admin.TabularInline):
+    model = Neighbour
     extra = 3
     formfield_overrides = {
         models.PointField: {"widget": GooglePointFieldInlineWidget}
     }
 
 
-class CityAdminForm(forms.ModelForm):
+class HouseAdminForm(forms.ModelForm):
     class Meta:
-        model = City
+        model = House
         fields = "__all__"
         widgets = {
-            'coordinates': GooglePointFieldWidget(settings={"GooglePointFieldWidget": (("zoom", 1),)}),
-            'city_hall': GooglePointFieldWidget,
+            'location': GooglePointFieldWidget(settings={"GooglePointFieldWidget": (("zoom", 1),)}),
+            'location_has_default': GooglePointFieldWidget,
         }
 
 
-class CityAdminStaticForm(forms.ModelForm):
+class HouseAdminStaticForm(forms.ModelForm):
 
     class Meta:
-        model = City
+        model = House
         fields = "__all__"
         widgets = {
-            'coordinates': GoogleStaticMapWidget,
-            'city_hall': GoogleStaticOverlayMapWidget,
+            'location': GoogleStaticMapWidget,
+            'location_has_default': GoogleStaticOverlayMapWidget,
         }
 
 
-class CityAdmin(admin.ModelAdmin):
-    list_display = ("name", "coordinates")
-    inlines = (DistrictAdminInline,)
+class HouseAdmin(admin.ModelAdmin):
+    list_display = ("name", "location")
+    inlines = (NeighbourAdminInline,)
 
     def get_form(self, request, obj=None, **kwargs):
         if not obj:
-            self.form = CityAdminForm
+            self.form = HouseAdminForm
         else:
-            self.form = CityAdminStaticForm
-        return super(CityAdmin, self).get_form(request, obj, **kwargs)
+            self.form = HouseAdminStaticForm
+        return super(HouseAdmin, self).get_form(request, obj, **kwargs)
 
 
-class DistrictAdmin(admin.ModelAdmin):
+class NeighbourAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.PointField: {"widget": GoogleStaticOverlayMapWidget}
     }
 
 
-admin.site.register(City, CityAdmin)
-admin.site.register(District, DistrictAdmin)
+admin.site.register(House, HouseAdmin)
+admin.site.register(Neighbour, NeighbourAdmin)
+
