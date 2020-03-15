@@ -3,22 +3,23 @@ from __future__ import unicode_literals
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 
-POINT = Point(-104.9903, 39.7392, srid=4326)
+DEFAULT_LOCATION_POINT = Point(-104.9903, 39.7392)
 
 
-class City(models.Model):
+class House(models.Model):
+    location = models.PointField(help_text="Use map widget for point the house location")
     name = models.CharField(max_length=255)
-    coordinates = models.PointField(help_text="To generate the map for your location")
-    city_hall = models.PointField(blank=True, null=True)
+    location_has_defaul = models.PointField(default=DEFAULT_LOCATION_POINT)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
-class District(models.Model):
-    city = models.ForeignKey(City, on_delete=models.SET_NULL)
-    name = models.CharField(max_length=255)
-    location = models.PointField(help_text="To generate the map for your location")
+class Neighbour(models.Model):
+    neighbour_of_house = models.ForeignKey(House, on_delete=models.CASCADE)
 
-    def __unicode__(self):
-        return self.name
+    location = models.PointField(null=True, blank=True)
+    address = models.TextField()
+
+    def __str__(self):
+        return self.address

@@ -71,8 +71,8 @@ tests/testapp/screendumps/
 
 db.sqlite*
 docs/_templates/
-example/example/media/
-example/env/
+example_2/example/media/
+example_2/env/
 assets/
 tests/testapp/settings_local.py
 node_modules/
