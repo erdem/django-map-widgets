@@ -76,3 +76,4 @@ example_2/env/
 assets/
 tests/testapp/settings_local.py
 node_modules/
+/env3/

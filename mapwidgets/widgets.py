@@ -69,7 +69,6 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
         }
 
         js = [
-            "https://code.jquery.com/jquery-3.3.1.slim.min.js",
             "https://maps.googleapis.com/maps/api/js?libraries=places&language={}&key={}".format(
                 mw_settings.LANGUAGE, mw_settings.GOOGLE_MAP_API_KEY
             )
@@ -77,6 +76,7 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
 
         if not mw_settings.MINIFED:  # pragma: no cover
             js = js + [
+                "mapwidgets/js/jquery_init.js",
                 "mapwidgets/js/jquery_class.js",
                 "mapwidgets/js/django_mw_base.js",
                 "mapwidgets/js/mw_google_point_field.js",
@@ -168,7 +168,6 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
         }
 
         js = [
-            "https://code.jquery.com/jquery-3.3.1.slim.min.js",
             "https://maps.googleapis.com/maps/api/js?libraries=places&language={}&key={}".format(
                 mw_settings.LANGUAGE, mw_settings.GOOGLE_MAP_API_KEY
             )
@@ -176,6 +175,7 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
 
         if not mw_settings.MINIFED:  # pragma: no cover
             js = js + [
+                "mapwidgets/js/jquery_init.js",
                 "mapwidgets/js/jquery_class.js",
                 "mapwidgets/js/django_mw_base.js",
                 "mapwidgets/js/mw_google_point_field.js",
@@ -289,11 +289,15 @@ class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
                 minify_if_not_debug("mapwidgets/css/magnific-popup{}.css"),
             )
         }
-
-        js = (
-            "https://code.jquery.com/jquery-3.3.1.slim.min.js",
-            minify_if_not_debug("mapwidgets/js/jquery.custom.magnific-popup{}.js"),
-        )
+        if not mw_settings.MINIFED:  # pragma: no cover
+            js = (
+                "mapwidgets/js/jquery_init.js",
+                "mapwidgets/js/jquery.custom.magnific-popup.js",
+            )
+        else:
+            js = (
+                "mapwidgets/js/jquery.custom.magnific-popup.min.js",
+            )
 
     def __init__(self, zoom=None, size=None, thumbnail_size=None, *args, **kwargs):
         self.thumbnail_size = thumbnail_size
