@@ -1881,4 +1881,4 @@
           }
         });
     });
-})(jQuery || django.jQuery);
+})(mapWidgets.jQuery);

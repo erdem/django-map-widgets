@@ -52,5 +52,5 @@
             new DjangoGooglePointFieldWidget(mapWidgetOptions);
         }
     });
-})(jQuery || django.jQuery);
+})(mapWidgets.jQuery);
 

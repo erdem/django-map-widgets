@@ -5,6 +5,7 @@ from fabric.api import local
 JS_FILE_MAPPING = {
     "GooglePointFieldWidget": {
         "input_files": [
+            "mapwidgets/static/mapwidgets/js/jquery_init.js",
             "mapwidgets/static/mapwidgets/js/jquery_class.js",
             "mapwidgets/static/mapwidgets/js/django_mw_base.js",
             "mapwidgets/static/mapwidgets/js/mw_google_point_field.js",
@@ -14,12 +15,20 @@ JS_FILE_MAPPING = {
     },
     "GooglePointFieldInlineWidget": {
         "input_files": [
+            "mapwidgets/static/mapwidgets/js/jquery_init.js",
             "mapwidgets/static/mapwidgets/js/jquery_class.js",
             "mapwidgets/static/mapwidgets/js/django_mw_base.js",
             "mapwidgets/static/mapwidgets/js/mw_google_point_field.js",
             "mapwidgets/static/mapwidgets/js/mw_google_point_field_generater.js",
         ],
         "output_file": "mapwidgets/static/mapwidgets/js/mw_google_point_inline_field.min.js"
+    },
+    "GoogleStaticOverlayMapWidget": {
+        "input_files": [
+            "mapwidgets/static/mapwidgets/js/jquery_init.js",
+            "mapwidgets/static/mapwidgets/js/jquery.custom.magnific-popup.js",
+        ],
+        "output_file": "mapwidgets/static/mapwidgets/js/jquery.custom.magnific-popup.min.js"
     }
 }
 
@@ -104,7 +113,7 @@ def docker_run_unit_tests():
 
 
 def docker_postgres_shell():
-    local('docker exec -it {} /bin/bash -c "su postgres"'.format(POSTGRES_CONTAINER_NAME))
+    local('docker exec -it {} /bin/bash'.format(POSTGRES_CONTAINER_NAME))
 
 
 def docker_covarage_tests():
