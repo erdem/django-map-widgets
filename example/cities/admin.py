@@ -36,18 +36,26 @@ class HouseAdminStaticForm(forms.ModelForm):
 
 
 class HouseAdmin(admin.ModelAdmin):
+    search_fields = ('name', )
     list_display = ("name", "location")
     inlines = (NeighbourAdminInline,)
 
     def get_form(self, request, obj=None, **kwargs):
-        if not obj:
-            self.form = HouseAdminForm
-        else:
-            self.form = HouseAdminStaticForm
-        return super(HouseAdmin, self).get_form(request, obj, **kwargs)
+        form = super(HouseAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['location'].widget = GooglePointFieldWidget()
+        return form
+
+    @property
+    def media(self):
+        media = super().media
+        return media
+
+    def _changeform_view(self, request, object_id, form_url, extra_context):
+        return super()._changeform_view(request, object_id, form_url, extra_context)
 
 
 class NeighbourAdmin(admin.ModelAdmin):
+    autocomplete_fields = ('neighbour_of_house',)
     formfield_overrides = {
         models.PointField: {"widget": GoogleStaticOverlayMapWidget}
     }

@@ -9,7 +9,7 @@ DEFAULT_LOCATION_POINT = Point(-104.9903, 39.7392)
 class House(models.Model):
     location = models.PointField(help_text="Use map widget for point the house location")
     name = models.CharField(max_length=255)
-    location_has_defaul = models.PointField(default=DEFAULT_LOCATION_POINT)
+    location_has_default = models.PointField(default=DEFAULT_LOCATION_POINT)
 
     def __str__(self):
         return self.name

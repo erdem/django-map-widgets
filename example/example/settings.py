@@ -135,7 +135,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-GOOGLE_MAP_API_KEY = "google-map-js-api-key"
+GOOGLE_MAP_API_KEY = "AIzaSyBwRaz6Qcmyquj2GG5g4RChfBecOg641Qg"
 MAP_WIDGETS = {
     "GooglePointFieldWidget": (
         ("zoom", 15),
