@@ -3,17 +3,13 @@ language: python
 
 python:
   - 2.7
-  - 3.6
-  - 3.7
+  - 3.8
 
 env:
-  - DJANGO_VERSION=1.7
-  - DJANGO_VERSION=1.8
-  - DJANGO_VERSION=1.9
-  - DJANGO_VERSION=1.10
   - DJANGO_VERSION=1.11
   - DJANGO_VERSION=2.0
   - DJANGO_VERSION=2.1
+  - DJANGO_VERSION=2.2
 
 before_install:
   - sudo add-apt-repository -y ppa:ubuntugis/ppa
