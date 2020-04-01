@@ -77,7 +77,8 @@ class CityForm(forms.ModelForm):
 
 ### Requirements
 
-Django Map Widgets needs Jquery dependency to work in your regular views. In Django Admin case, you don't need to provide the jQuery just because it's already available on ``django.jQuery`` namespace.
+Django Map Widgets needs Jquery dependency to work in your regular views. In Django Admin case, you don't need to provide the jQuery. 
+Just add map widgets to your django admin forms. 
 
 ### Screenshots
 
