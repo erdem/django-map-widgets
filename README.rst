@@ -101,6 +101,23 @@ Release Notes
 ^^^^^^^^^^^^^
 
 ======
+v0.3.0
+======
+
+ * Implemented a new demo project with Django 2.x.
+ * Fixed Django Admin jQuery conflicts. (#100)
+ * Fixed a new widget JS instance initialising issue for Django Admin Inlines. (#84)
+ * Added Python 3.8 env settings to TravisCI configuration.
+
+======
+v0.2.3
+======
+
+ * Fixed python `six` module import issue.
+ * Fixed PostGIS setup errors in CI pipeline.
+ * Added Estonian language support.
+
+======
 v0.2.0
 ======
 
