@@ -20,7 +20,7 @@ class CityDetailView(UpdateView):
 class CityCreateView(FormView):
     template_name = "cities/form.html"
     form_class = CityCreateForm
-    success_url = reverse("cities:list")
+    success_url = '/cities/'
 
     def form_valid(self, form):
         form.save()

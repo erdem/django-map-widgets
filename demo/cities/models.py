@@ -23,3 +23,11 @@ class Neighbour(models.Model):
 
     def __str__(self):
         return self.address
+
+
+class City(models.Model):
+    name = models.CharField(max_length=255)
+    location = models.PointField(help_text="Use map widget for point the house location")
+
+    def __str__(self):
+        return self.name
