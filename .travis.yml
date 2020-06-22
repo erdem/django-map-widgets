@@ -10,6 +10,18 @@ env:
   - DJANGO_VERSION=2.0
   - DJANGO_VERSION=2.1
   - DJANGO_VERSION=2.2
+  - DJANGO_VERSION=3.0
+
+matrix:
+    exclude:
+        - python: 2.7
+          env: DJANGO_VERSION=2.0
+        - python: 2.7
+          env: DJANGO_VERSION=2.1
+        - python: 2.7
+          env: DJANGO_VERSION=2.2
+        - python: 2.7
+          env: DJANGO_VERSION=3.0
 
 before_install:
   - sudo add-apt-repository -y ppa:ubuntugis/ppa
