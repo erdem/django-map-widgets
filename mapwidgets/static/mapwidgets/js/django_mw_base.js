@@ -62,8 +62,8 @@
 		
 		getLocationValues: function(){
 			var latlng = this.locationInput.val().split(' ');
-			var lat = latlng[2].replace(/[\(\)]/g, '');
-			var lng = latlng[1].replace(/[\(\)]/g, '');
+			var lat = latlng[1].replace(/[\(\)]/g, '');
+			var lng = latlng[2].replace(/[\(\)]/g, '');
 			return {
 				"lat": lat,
 				"lng": lng
@@ -90,7 +90,7 @@
 		},
 		
 		updateLocationInput: function(lat, lng, place){
-			var location_input_val = "POINT (" + lng + " " + lat + ")";
+			var location_input_val = "POINT (" + lat + " " + lng + ")";
 			this.locationInput.val(location_input_val);
 			this.updateCoordinatesInputs(lat, lng);
 			this.addMarkerToMap(lat, lng);
@@ -106,8 +106,8 @@
 			
 			this.callPlaceTriggerHandler(lat, lng, place);
 			this.locationFieldValue = {
-				"lng": lng,
-				"lat": lat
+				"lat": lat,
+				"lng": lng
 			};
 			this.deleteBtn.removeClass("mw-btn-default disabled").addClass("mw-btn-danger");
 		},

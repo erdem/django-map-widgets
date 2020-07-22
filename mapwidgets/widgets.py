@@ -95,9 +95,9 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
         field_value = {}
         if value and isinstance(value, six.string_types):
             value = self.deserialize(value)
-            longitude, latitude = value.coords
-            field_value['lng'] = longitude
+            latitude, longitude = value.coords
             field_value['lat'] = latitude
+            field_value['lng'] = longitude
 
         if isinstance(value,  Point):
             if value.srid and value.srid != self.google_map_srid:
@@ -105,9 +105,9 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
                 ogr.transform(self.google_map_srid)
                 value = ogr
 
-            longitude, latitude = value.coords
-            field_value['lng'] = longitude
+            latitude, longitude = value.coords
             field_value['lat'] = latitude
+            field_value['lng'] = longitude
 
         extra_attrs = {
             'options': self.map_options(),
