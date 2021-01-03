@@ -9,13 +9,22 @@ Preview
 .. image:: ../_static/images/google-point-field-map-widget.gif
 
 
+Google Map APIs configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In order to use this widget, you need to enable Google APIs below in your google application configuration;
+
+- `Google Maps JavaScript API <https://console.cloud.google.com/apis/library/maps-backend.googleapis.com>`_
+- `Places API <https://console.cloud.google.com/apis/library/places-backend.googleapis.com>`_
+- `Geocoding API <https://console.cloud.google.com/apis/library/geocoding-backend.googleapis.com>`_
+
+
 .. Tip::
 
-    The widget has a Google Place Autocomplete widget as a default. You can find a specific address with it.
+    The widget has a Google Place Autocomplete component by default. You can find a specific address coordinates with it.
 
 .. Tip::
 
-    The widget has built-in geocoding support. The autocomplete input will be filled by `google geocoding <https://developers.google.com/maps/documentation/javascript/geocoding/>`_ service when the user adds a marker manually.
+    The widget has built-in geocoding support. The autocomplete input will be filled by `google geocoding <https://developers.google.com/maps/documentation/javascript/geocoding/>`_ service when the user adds a marker to map manually.
 
 
 Settings

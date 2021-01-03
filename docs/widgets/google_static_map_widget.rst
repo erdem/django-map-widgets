@@ -40,6 +40,12 @@ Here is the all default settings attribute for google static map widget.
 
 If you are not using specific features on Google Static Map API, you just need to update GOOGLE_MAP_API_KEY value in your Django settings file. If you also need individual size map images, you can pass `size` and `zoom` parameter for each GoogleStaticMapWidget class.
 
+Google Map APIs configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In order to use this widget, you need to enable Google Map static API in your google application configuration;
+
+- `Google Maps Static API <https://console.cloud.google.com/apis/library/static-maps-backend.googleapis.com>`_
+
 **Settings**
 
 In your ``settings.py`` file, add your ``MAP_WIDGETS`` config:

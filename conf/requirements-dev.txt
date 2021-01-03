@@ -1,5 +1,5 @@
 Django
-psycopg2==2.8.4
+# psycopg2==2.8.4
 selenium==3.3.1
 coverage==4.4
 Fabric==1.14.0
