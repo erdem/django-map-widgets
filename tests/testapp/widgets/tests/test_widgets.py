@@ -2,12 +2,15 @@ import os
 import json
 
 try:
+    from importlib import reload as reload_module
+except ImportError:
+    from imp import reload as reload_module
+try:
     from urllib.request import urlopen
     from http.client import HTTPMessage
 except ImportError:
     from urllib import urlopen
 
-from six.moves import reload_module
 from django.test import TestCase
 from django.test.utils import override_settings
 from django.contrib.gis.geos import Point
