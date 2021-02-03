@@ -1,5 +1,4 @@
 import json
-import six
 
 from django import forms
 from django.contrib.gis.forms import BaseGeometryWidget
@@ -93,7 +92,7 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
             attrs = dict()
 
         field_value = {}
-        if value and isinstance(value, six.string_types):
+        if value and isinstance(value, str):
             value = self.deserialize(value)
             longitude, latitude = value.coords
             field_value['lng'] = longitude

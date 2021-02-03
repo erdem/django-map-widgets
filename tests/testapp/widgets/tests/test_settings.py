@@ -1,5 +1,4 @@
 from collections import OrderedDict
-from six.moves import reload_module
 
 from django.test import TestCase
 from django.test.utils import override_settings
