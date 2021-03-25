@@ -10,6 +10,7 @@ __pycache__/
 .Python
 .idea/
 env/
+venv*/
 build/
 develop-eggs/
 dist/
@@ -70,7 +71,10 @@ tests/testapp/screendumps/
 
 db.sqlite*
 docs/_templates/
-example/example/media/
-example/env/
+example_2/example/media/
+example_2/env/
 assets/
 tests/testapp/settings_local.py
+node_modules/
+/env3/
+docker-compose.override.yml

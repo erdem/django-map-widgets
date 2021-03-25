@@ -40,6 +40,13 @@ Here is the all default settings attribute for google static overlay map widget.
         "GOOGLE_MAP_API_KEY": "",
     }
 
+Google Map APIs configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In order to use this widget, you need to enable Google Map static API in your google application configuration;
+
+- `Google Maps Static API <https://console.cloud.google.com/apis/library/static-maps-backend.googleapis.com>`_
+
+
 **Settings**
 
 In your django ``settings.py`` file, add your ``MAP_WIDGETS`` config:

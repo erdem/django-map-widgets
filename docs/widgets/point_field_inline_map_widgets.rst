@@ -12,7 +12,7 @@ If you want to use Google Map Widget on admin inlines with no issue, you just ne
 
 .. Note::
 
-    This widget working with :doc:`/widgets/point_field_map_widgets` settings.
+    This widget using same configuration and settings as :doc:`/widgets/point_field_map_widgets`.
 
 
 **Usage**

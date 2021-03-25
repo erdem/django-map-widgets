@@ -2,7 +2,6 @@ from collections import OrderedDict
 
 from django.test import TestCase
 from django.test.utils import override_settings
-from django.utils.six.moves import reload_module
 
 from mapwidgets.settings import MapWidgetSettings, DEFAULTS
 
@@ -10,18 +9,18 @@ from mapwidgets.settings import MapWidgetSettings, DEFAULTS
 class WidgetSettingsTests(TestCase):
     def test_default_settings_values(self):
         mw_settings = MapWidgetSettings()
+        with override_settings(MAP_WIDGETS={}):
+            google_point_widget_default_settings = OrderedDict(DEFAULTS["GooglePointFieldWidget"])
+            self.assertEqual(mw_settings.GooglePointFieldWidget, google_point_widget_default_settings)
 
-        google_point_widget_default_settings = OrderedDict(DEFAULTS["GooglePointFieldWidget"])
-        self.assertEqual(mw_settings.GooglePointFieldWidget, google_point_widget_default_settings)
+            google_static_widget_default_settings = OrderedDict(DEFAULTS["GoogleStaticMapWidget"])
+            self.assertEqual(mw_settings.GoogleStaticMapWidget, google_static_widget_default_settings)
 
-        google_static_widget_default_settings = OrderedDict(DEFAULTS["GoogleStaticMapWidget"])
-        self.assertEqual(mw_settings.GoogleStaticMapWidget, google_static_widget_default_settings)
+            google_static_widget_marker_default_settings = OrderedDict(DEFAULTS["GoogleStaticMapMarkerSettings"])
+            self.assertEqual(mw_settings.GoogleStaticMapMarkerSettings, google_static_widget_marker_default_settings)
 
-        google_static_widget_marker_default_settings = OrderedDict(DEFAULTS["GoogleStaticMapMarkerSettings"])
-        self.assertEqual(mw_settings.GoogleStaticMapMarkerSettings, google_static_widget_marker_default_settings)
-
-        google_static_overlay_widget_default_settings = OrderedDict(DEFAULTS["GoogleStaticOverlayMapWidget"])
-        self.assertEqual(mw_settings.GoogleStaticOverlayMapWidget, google_static_overlay_widget_default_settings)
+            google_static_overlay_widget_default_settings = OrderedDict(DEFAULTS["GoogleStaticOverlayMapWidget"])
+            self.assertEqual(mw_settings.GoogleStaticOverlayMapWidget, google_static_overlay_widget_default_settings)
 
     def test_custom_settings_values(self):
         zoom = 11

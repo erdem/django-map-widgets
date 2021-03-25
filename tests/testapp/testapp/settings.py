@@ -29,7 +29,7 @@ if MAP_WIDGETS_PATH not in sys.path:
 SECRET_KEY = 'o6b2c!r921-+^h7jlm&4x#sn53qwfif+@8(!4b*csitx+69b=5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
 
     'mapwidgets',
 
@@ -86,7 +87,7 @@ WSGI_APPLICATION = 'testapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'mapwidget_tests',
+        'NAME': 'mapwidget_db',
         'USER': 'mapwidgetdbu',
         'PASSWORD': 'mapwidgetdbu',
         'HOST': 'postgres',
@@ -156,7 +157,19 @@ SITE_DOMAIN = 'django'
 TESTING = sys.argv[1:2] == ['test']
 
 GOOGLE_MAP_API_KEY = os.environ.get('GOOGLE_MAP_API_KEY')
+
+MAP_WIDGETS = {
+    "GooglePointFieldWidget": (
+        ("zoom", 15),
+        ("mapCenterLocation", [51.5073509, -0.12775829999998223]),
+        ("markerFitZoom", 11),
+        ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'uk'}})
+    ),
+    "GOOGLE_MAP_API_KEY": GOOGLE_MAP_API_KEY,
+}
+
+
 try:
-    from settings_local import *
-except ImportError:
+    from tests.testapp.testapp.settings_local import *
+except:
     pass

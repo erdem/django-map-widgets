@@ -1,5 +1,4 @@
 import json
-from pyproj import Proj, transform
 
 from django import forms
 from django.contrib.gis.forms import BaseGeometryWidget
@@ -7,7 +6,6 @@ from django.contrib.gis.geos import Point
 from django.core.exceptions import ImproperlyConfigured
 from django.template.loader import render_to_string
 from django.templatetags.static import static
-from django.utils import six
 from django.utils.http import urlencode
 
 from mapwidgets.constants import STATIC_MAP_PLACEHOLDER_IMAGE
@@ -18,25 +16,7 @@ def minify_if_not_debug(asset):
     """
         Transform template string `asset` by inserting '.min' if DEBUG=False
     """
-    return asset.format("" if not mw_settings.MINIFED else ".min")
-
-def coord_transform(x1, y1, proj1='3857', proj2='4326'):
-    """
-    Transforms coordinates between to lat/lon which is used in django-map-widgets
-    Requires the package pyproj.
-    If the coordinate transformation fails, the original coordinates are returned
-    :param x1: Latitude in any coordinate system (srid=proj1)
-    :param y1: Longitude in any coordinate system (srid=proj1)
-    :param proj1: srid of the original coordinate system
-    :param proj2: srid of the target coordinate system
-    :return: Coordinates in lat/lon, ready to be consumed by the widgets
-    """
-    try:
-        inProj = Proj(init='epsg:%s' % proj1)
-        outProj = Proj(init='epsg:%s' % proj2)
-        return transform(inProj, outProj, x1, y1)
-    except:
-        return x1, y1
+    return asset.format('' if not mw_settings.MINIFED else '.min')
 
 
 class BasePointFieldMapWidget(BaseGeometryWidget):
@@ -44,18 +24,20 @@ class BasePointFieldMapWidget(BaseGeometryWidget):
     settings = None
 
     def __init__(self, *args, **kwargs):
-        attrs = kwargs.get("attrs")
+        attrs = kwargs.get('attrs')
         self.attrs = {}
         for key in ('geom_type', 'map_srid', 'map_width', 'map_height', 'display_raw'):
-            self.attrs[key] = getattr(self, key)
+            if key in kwargs:
+                self.attrs[key] = kwargs.get(key)
+            else:
+                self.attrs[key] = getattr(self, key)
 
         if isinstance(attrs, dict):
             self.attrs.update(attrs)
 
         self.custom_settings = False
-
-        if kwargs.get("settings"):
-            self.settings = kwargs.pop("settings")
+        if kwargs.get('settings'):
+            self.settings = kwargs.pop('settings')
             self.custom_settings = True
 
     def map_options(self):
@@ -72,15 +54,16 @@ class BasePointFieldMapWidget(BaseGeometryWidget):
 
 
 class GooglePointFieldWidget(BasePointFieldMapWidget):
-    template_name = "mapwidgets/google-point-field-widget.html"
+    template_name = 'mapwidgets/google-point-field-widget.html'
     settings = mw_settings.GooglePointFieldWidget
-    settings_namespace = "GooglePointFieldWidget"
+    settings_namespace = 'GooglePointFieldWidget'
+    google_map_srid = 4326
 
     @property
     def media(self):
         css = {
-            "all": [
-                minify_if_not_debug("mapwidgets/css/map_widgets{}.css"),
+            'all': [
+                minify_if_not_debug('mapwidgets/css/map_widgets{}.css'),
             ]
         }
 
@@ -92,54 +75,63 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
 
         if not mw_settings.MINIFED:  # pragma: no cover
             js = js + [
-                "mapwidgets/js/jquery_class.js",
-                "mapwidgets/js/django_mw_base.js",
-                "mapwidgets/js/mw_google_point_field.js",
+                'mapwidgets/js/jquery_init.js',
+                'mapwidgets/js/jquery_class.js',
+                'mapwidgets/js/django_mw_base.js',
+                'mapwidgets/js/mw_google_point_field.js',
             ]
         else:
             js = js + [
-                "mapwidgets/js/mw_google_point_field.min.js"
+                'mapwidgets/js/mw_google_point_field.min.js'
             ]
 
         return forms.Media(js=js, css=css)
 
     def render(self, name, value, attrs=None, renderer=None):
-        if not attrs:
+        if attrs is None:
             attrs = dict()
 
         field_value = {}
-        if isinstance(value,  Point):
-            x2, y2 = coord_transform(value.x, value.y, proj1=str(value.srid))
-            field_value["lng"] = x2
-            field_value["lat"] = y2
+        if value and isinstance(value, str):
+            value = self.deserialize(value)
+            longitude, latitude = value.coords
+            field_value['lng'] = longitude
+            field_value['lat'] = latitude
 
-        if value and isinstance(value, six.string_types):
-            coordinates = self.deserialize(value)
-            field_value["lng"] = getattr(coordinates, "x", None)
-            field_value["lat"] = getattr(coordinates, "y", None)
+        if isinstance(value,  Point):
+            if value.srid and value.srid != self.google_map_srid:
+                ogr = value.ogr
+                ogr.transform(self.google_map_srid)
+                value = ogr
+
+            longitude, latitude = value.coords
+            field_value['lng'] = longitude
+            field_value['lat'] = latitude
 
         extra_attrs = {
-            "options": self.map_options(),
-            "field_value": json.dumps(field_value)
+            'options': self.map_options(),
+            'field_value': json.dumps(field_value)
         }
-
         attrs.update(extra_attrs)
         self.as_super = super(GooglePointFieldWidget, self)
-        return self.as_super.render(name, value, attrs, renderer)
+        if renderer is not None:
+            return self.as_super.render(name, value, attrs, renderer)
+        else:
+            return self.as_super.render(name, value, attrs)
 
 
 class PointFieldInlineWidgetMixin(object):
 
     def get_js_widget_data(self, name, element_id):
-        map_elem_selector = "#%s-mw-wrap" % name
-        map_elem_id = "%s-map-elem" % name
-        google_auto_input_id = "%s-mw-google-address-input" % name
-        location_input_id = "#%s" % element_id
+        map_elem_selector = '#%s-mw-wrap' % name
+        map_elem_id = '%s-map-elem' % name
+        google_auto_input_id = '%s-mw-google-address-input' % name
+        location_input_id = '#%s' % element_id
         js_widget_params = {
-            "wrapElemSelector": map_elem_selector,
-            "mapElemID": map_elem_id,
-            "googleAutoInputID": google_auto_input_id,
-            "locationInputID": location_input_id
+            'wrapElemSelector': map_elem_selector,
+            'mapElemID': map_elem_id,
+            'googleAutoInputID': google_auto_input_id,
+            'locationInputID': location_input_id
         }
         return js_widget_params
 
@@ -147,27 +139,30 @@ class PointFieldInlineWidgetMixin(object):
         if not attrs:
             attrs = dict()
 
-        element_id = attrs.get("id")
-        is_formset_empty_form_template = "__prefix__" in name
+        element_id = attrs.get('id')
+        is_formset_empty_form_template = '__prefix__' in name
         widget_data = self.get_js_widget_data(name, element_id)
         attrs.update({
-            "js_widget_data": json.dumps(widget_data),
-            "is_formset_empty_form_template": is_formset_empty_form_template
+            'js_widget_data': json.dumps(widget_data),
+            'is_formset_empty_form_template': is_formset_empty_form_template
         })
         self.as_super = super(PointFieldInlineWidgetMixin, self)
-        return self.as_super.render(name, value, attrs)
+        if renderer is not None:
+            return self.as_super.render(name, value, attrs, renderer)
+        else:
+            return self.as_super.render(name, value, attrs)
 
 
 class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointFieldWidget):
-    template_name = "mapwidgets/google-point-field-inline-widget.html"
+    template_name = 'mapwidgets/google-point-field-inline-widget.html'
     settings = mw_settings.GooglePointFieldWidget
-    settings_namespace = "GooglePointFieldWidget"
+    settings_namespace = 'GooglePointFieldWidget'
 
     @property
     def media(self):
         css = {
-            "all": [
-                minify_if_not_debug("mapwidgets/css/map_widgets{}.css"),
+            'all': [
+                minify_if_not_debug('mapwidgets/css/map_widgets{}.css'),
             ]
         }
 
@@ -179,14 +174,15 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
 
         if not mw_settings.MINIFED:  # pragma: no cover
             js = js + [
-                "mapwidgets/js/jquery_class.js",
-                "mapwidgets/js/django_mw_base.js",
-                "mapwidgets/js/mw_google_point_field.js",
-                "mapwidgets/js/mw_google_point_field_generater.js"
+                'mapwidgets/js/jquery_init.js',
+                'mapwidgets/js/jquery_class.js',
+                'mapwidgets/js/django_mw_base.js',
+                'mapwidgets/js/mw_google_point_field.js',
+                'mapwidgets/js/mw_google_point_field_generater.js'
             ]
         else:
             js = js + [
-                "mapwidgets/js/mw_google_point_inline_field.min.js"
+                'mapwidgets/js/mw_google_point_inline_field.min.js'
             ]
 
         return forms.Media(js=js, css=css)
@@ -292,10 +288,15 @@ class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
                 minify_if_not_debug("mapwidgets/css/magnific-popup{}.css"),
             )
         }
-
-        js = (
-            minify_if_not_debug("mapwidgets/js/jquery.custom.magnific-popup{}.js"),
-        )
+        if not mw_settings.MINIFED:  # pragma: no cover
+            js = (
+                "mapwidgets/js/jquery_init.js",
+                "mapwidgets/js/jquery.custom.magnific-popup.js",
+            )
+        else:
+            js = (
+                "mapwidgets/js/jquery.custom.magnific-popup.min.js",
+            )
 
     def __init__(self, zoom=None, size=None, thumbnail_size=None, *args, **kwargs):
         self.thumbnail_size = thumbnail_size

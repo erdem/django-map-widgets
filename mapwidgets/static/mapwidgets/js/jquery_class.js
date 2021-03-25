@@ -1,3 +1,11 @@
+var mapWidgets = mapWidgets || {};
+if (typeof django !== "undefined" && django.jQuery){
+    mapWidgets.jQuery = django.jQuery.noConflict();
+}else{
+    mapWidgets.jQuery = jQuery.noConflict();
+}
+
+
 (function($) {
 
     var initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\bSuper\b/ : /.*/;
@@ -69,4 +77,4 @@
         };
     }
 
-})(jQuery || django.jQuery);
+})(mapWidgets.jQuery);

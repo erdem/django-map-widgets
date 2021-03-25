@@ -9,7 +9,7 @@ Configurable, pluggable and more user friendly map widgets for Django PostGIS fi
 * **Project Home Page**: <a href="https://github.com/erdem/django-map-widgets">https://github.com/erdem/django-map-widgets/</a>
 
 ### Achievements
-The aim of the Django map widgets is to make all Geo Django widgets more user friendly and configurable. Map widgets support major map services (GoogleMaps, OpenStreetMap) for your geoDjango fields.
+The aim of the Django map widgets is to make all Geo Django widgets more user friendly and configurable. Map widgets are currently supporting only Google Map services, but we are planning to add other major map services.
 
 ### Installation
 
@@ -65,9 +65,20 @@ class CityForm(forms.ModelForm):
         }
 ```
 
+...and your template should look something like this
+
+```html
+<form method="POST" action="">
+    {% csrf_token %}
+    {{form.media}}
+    {{form.as_p}}
+</form>
+```
+
 ### Requirements
 
-Django Map Widgets needs Jquery dependency to work in your regular views. In Django Admin case, you don't need to provide the jQuery just because it's already available on ``django.jQuery`` namespace.
+Django Map Widgets needs Jquery dependency to work in your regular views. In Django Admin case, you don't need to provide the jQuery. 
+Just add map widgets to your django admin forms. 
 
 ### Screenshots
 
@@ -82,6 +93,29 @@ This widget is working with <a href="http://dimsemenov.com/plugins/magnific-popu
 
 
 ### Release Notes
+
+#### v0.3.0
+
+> -   Implemented a new demo project with Django 2.x.
+> -   Fixed Django Admin jQuery conflicts. (#100)
+> -   Fixed a new widget JS instance initialising issue for Django Admin Inlines. (#84)
+> -   Added Python 3.8 env settings to TravisCI configuration.
+
+
+#### v0.2.3
+
+> -   Fixed python `six` module import issue. 
+> -   Fixed PostGIS setup errors in CI pipeline. 
+> -   Added Estonian language support.
+
+#### v0.2.0
+
+> -   Fixed Python 3.6, Django 2.x compatible issues. 
+> -   Fixed SRID format converter issues. 
+> -   Removed `pyproj` package dependency.
+> -   Various development infrastructure updates. (Docker, Fabric files etc.)
+> -   Point map widget JS objects associated to the map HTML elements with jQuey `$.data` method.
+> -   Passing Google Place AutoComplete full response object to jQuery triggers.
 
 #### v0.1.9
 
