@@ -94,6 +94,12 @@ This widget is working with <a href="http://dimsemenov.com/plugins/magnific-popu
 
 ### Release Notes
 
+#### v0.3.1
+
+> -   Removed `six` package usages. (#117)
+> -   Added a new general widget setting in order to specify Google JS libraries. (#119)
+> -   Implemented some improvement for the demo project.
+
 #### v0.3.0
 
 > -   Implemented a new demo project with Django 2.x.
