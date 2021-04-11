@@ -98,7 +98,7 @@ This widget is working with <a href="http://dimsemenov.com/plugins/magnific-popu
 
 > -   Removed `six` package usages. (#117)
 > -   Added a new general widget setting in order to specify Google JS libraries. (#119)
-> -   Implemented some improvement for the demo project.
+> -   Implemented some improvements for the demo project.
 
 #### v0.3.0
 
