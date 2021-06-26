@@ -18,7 +18,8 @@
                         zoomControlOptions: {
                             position: google.maps.ControlPosition.RIGHT
                         },
-                        zoom: this.zoom
+                        zoom: this.zoom,
+                        streetViewControl: this.streetViewControl
                     });
 
                     $(this.mapElement).data('google_map', this.map);
@@ -38,7 +39,8 @@
                     zoomControlOptions: {
                         position: google.maps.ControlPosition.RIGHT
                     },
-                    zoom: this.zoom
+                    zoom: this.zoom,
+                    streetViewControl: this.streetViewControl
                 });
                 
                 $(this.mapElement).data('google_map', this.map);

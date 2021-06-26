@@ -14,6 +14,7 @@ DEFAULTS = {
         ("zoom", 6),
         ("GooglePlaceAutocompleteOptions", {}),
         ("markerFitZoom", 15),
+        ("streetViewControl", True),
     ),
 
     "GoogleStaticMapWidget": (

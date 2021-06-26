@@ -44,6 +44,8 @@ Settings
 
 * **markerFitZoom** : When the marker is initialized google's default zoom is set to Max. This method sets the zoom level a reasonable distance and center the marker on the map.
 
+* **streetViewControl** : Whether or not to display the Street View "Peg Man" (optional, default is ``True``). Setting this to ``False`` effectively disables Street View for the widget.
+
 Usage
 ^^^^^
 
@@ -59,6 +61,7 @@ In your ``settings.py`` file, add your ``MAP_WIDGETS`` config:
             ("mapCenterLocationName", "london"),
             ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'uk'}}),
             ("markerFitZoom", 12),
+            ("streetViewControl", True),
         ),
         "GOOGLE_MAP_API_KEY": "<google-api-key>"
     }
