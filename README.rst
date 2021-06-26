@@ -101,6 +101,20 @@ Release Notes
 ^^^^^^^^^^^^^
 
 ======
+v0.3.2
+======
+
+ * Added `streetViewControl <https://developers.google.com/maps/documentation/javascript/streetview#StreetViewMapUsage>`_ switch option to GooglePointFieldWidget settings. (#124)
+
+======
+v0.3.1
+======
+
+ * Removed `six` package usages. (#117)
+ * Added a new general widget setting in order to specify Google JS libraries. (#119)
+ * Implemented some improvements for the demo project.
+
+======
 v0.3.0
 ======
 

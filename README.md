@@ -94,6 +94,10 @@ This widget is working with <a href="http://dimsemenov.com/plugins/magnific-popu
 
 ### Release Notes
 
+#### v0.3.2
+
+> -   Added [streetViewControl](https://developers.google.com/maps/documentation/javascript/streetview#StreetViewMapUsage) switch to GooglePointFieldWidget settings. (#124)
+
 #### v0.3.1
 
 > -   Removed `six` package usages. (#117)

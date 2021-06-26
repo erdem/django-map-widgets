@@ -141,7 +141,8 @@ MAP_WIDGETS = {
         ("zoom", 15),
         ("mapCenterLocation", [51.5073509, -0.12775829999998223]),
         ("markerFitZoom", 11),
-        ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'uk'}})
+        ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'uk'}}),
+        ("streetViewControl", False)
     ),
     "GOOGLE_MAP_API_KEY": GOOGLE_MAP_API_KEY,
 }
