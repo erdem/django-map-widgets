@@ -132,12 +132,14 @@ class MapboxPointFieldWidget(BasePointFieldMapWidget):
             'all': [
                 minify_if_not_debug('mapwidgets/css/map_widgets{}.css'),
                 "https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css",
+                "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css",
             ]
         }
 
         js = [
             "https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js",
-            "https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"
+            "https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js",
+            "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js",
         ]
 
         if not mw_settings.MINIFED:  # pragma: no cover
