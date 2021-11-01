@@ -120,6 +120,73 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
             return self.as_super.render(name, value, attrs)
 
 
+class MapboxPointFieldWidget(BasePointFieldMapWidget):
+    template_name = 'mapwidgets/mapbox-point-field-widget.html'
+    settings = mw_settings.MapboxPointFieldWidget
+    settings_namespace = 'MapboxPointFieldWidget'
+    mapbox_map_srid = 4326
+
+    @property
+    def media(self):
+        css = {
+            'all': [
+                minify_if_not_debug('mapwidgets/css/map_widgets{}.css'),
+                "https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css",
+            ]
+        }
+
+        js = [
+            "https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js",
+            "https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"
+        ]
+
+        if not mw_settings.MINIFED:  # pragma: no cover
+            js = js + [
+                'mapwidgets/js/jquery_init.js',
+                'mapwidgets/js/jquery_class.js',
+                'mapwidgets/js/django_mw_base.js',
+                'mapwidgets/js/mw_mapbox_point_field.js',
+            ]
+        else:
+            js = js + [
+              'mapwidgets/js/mw_mapbox_point_field.min.js'
+            ]
+
+        return forms.Media(js=js, css=css)
+
+    def render(self, name, value, attrs=None, renderer=None):
+        if attrs is None:
+            attrs = dict()
+
+        field_value = {}
+        if value and isinstance(value, str):
+            value = self.deserialize(value)
+            longitude, latitude = value.coords
+            field_value['lng'] = longitude
+            field_value['lat'] = latitude
+
+        if isinstance(value,  Point):
+            if value.srid and value.srid != self.mapbox_map_srid:
+                ogr = value.ogr
+                ogr.transform(self.mapbox_map_srid)
+                value = ogr
+
+            longitude, latitude = value.coords
+            field_value['lng'] = longitude
+            field_value['lat'] = latitude
+
+
+        extra_attrs = {
+            'options': self.map_options(),
+            'field_value': json.dumps(field_value)
+        }
+        attrs.update(extra_attrs)
+        self.as_super = super(MapboxPointFieldWidget, self)
+        if renderer is not None:
+            return self.as_super.render(name, value, attrs, renderer)
+        else:
+            return self.as_super.render(name, value, attrs)
+
 class PointFieldInlineWidgetMixin(object):
 
     def get_js_widget_data(self, name, element_id):
