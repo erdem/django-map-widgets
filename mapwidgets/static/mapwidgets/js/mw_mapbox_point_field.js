@@ -53,7 +53,6 @@
                 this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
                 this.fitBoundMarker();
             }
-
         },
 
         addMarkerToMap: function(lat, lng){

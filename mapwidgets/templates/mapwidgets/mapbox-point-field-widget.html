@@ -5,7 +5,7 @@
         <div class="mw-header">
             {% block header %}
                 <div class="mw-coordinates-wrap">
-                    <a  class="mw-btn mw-btn-primary mw-btn-coordinates">{% trans "Coordinates" %} <i class="icon-down-dir" ></i></a>
+                    <a  class="mw-btn mw-btn-primary mw-btn-coordinates">{% trans "Edit coordinates" %} <i class="icon-down-dir" ></i></a>
                     <div class="mw-coordinates-overlay hide">
                         <label for="{{ name }}-mw-overlay-latitude">
                             {% trans "Latitude:" %}
@@ -20,7 +20,7 @@
                 </div>
 
                 <a class="mw-btn mw-btn-info mw-btn-my-location" >{% trans "Use My Location" %}</a>
-                <a class="mw-btn mw-btn-warning mw-btn-add-marker" ><i class="icon-location"></i></a>
+                <a class="mw-btn mw-btn-warning mw-btn-add-marker" >{% trans "Choose point on map" %}</a>
             {% endblock header %}
         </div>
 
