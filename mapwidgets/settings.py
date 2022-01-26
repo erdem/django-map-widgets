@@ -17,6 +17,14 @@ DEFAULTS = {
         ("streetViewControl", True),
     ),
 
+    "MapboxPointFieldWidget": (
+        ("mapCenterLocationName", None),
+        ("mapCenterLocation", TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC"))),
+        ("zoom", 6),
+        ("markerFitZoom", 15),
+        ("access_token", ""),
+    ),
+
     "GoogleStaticMapWidget": (
         ("zoom", 15),
         ("size", "480x480"),
@@ -54,6 +62,7 @@ DEFAULTS = {
     "MINIFED": not django_settings.DEBUG,
     "GOOGLE_MAP_API_SIGNATURE": "",
     "GOOGLE_MAP_API_KEY": "",
+    "MAPBOX_API_KEY": "",
 }
 
 
