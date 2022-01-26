@@ -94,6 +94,12 @@ This widget is working with <a href="http://dimsemenov.com/plugins/magnific-popu
 
 ### Release Notes
 
+#### v0.3.3
+
+> -   Replaced [ugettext_lazy](https://github.com/erdem/django-map-widgets/pull/127) usages with [gettext_lazy](https://docs.djangoproject.com/en/4.0/releases/4.0/#features-removed-in-4-0) for Django 4.0. (#127)
+> -   Updated [Travis CI file](https://github.com/erdem/django-map-widgets/pull/129). (#129)
+
+
 #### v0.3.2
 
 > -   Added [streetViewControl](https://developers.google.com/maps/documentation/javascript/streetview#StreetViewMapUsage) switch to GooglePointFieldWidget settings. (#124)
