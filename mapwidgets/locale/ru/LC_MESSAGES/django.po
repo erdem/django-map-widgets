@@ -21,7 +21,7 @@ msgstr ""
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:8
-msgid "Coordinates"
+msgid "Edit Coordinates"
 msgstr "Координаты"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:11
@@ -49,5 +49,5 @@ msgid "Use My Location"
 msgstr "Использовать мое местоположение"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:25
-msgid "Enter or update the address here"
-msgstr "Введите или обновите адрес"
+msgid "Find a Location by Address"
+msgstr "Найти местоположение по адресу"

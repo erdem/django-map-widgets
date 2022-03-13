@@ -80,6 +80,15 @@
 	                    $(document).trigger(this.placeChangedTriggerNameSpace,
 		                    [placeObj, lat, lng, this.wrapElemSelector, this.locationInput]
 	                    );
+						if ($.isEmptyObject(this.locationFieldValue)){
+							$(document).trigger(this.markerCreateTriggerNameSpace,
+								[placeObj, lat, lng, this.wrapElemSelector, this.locationInput]
+							);
+						}else{
+							$(document).trigger(this.markerChangeTriggerNameSpace,
+								[placeObj, lat, lng, this.wrapElemSelector, this.locationInput]
+							);
+						}
                     }
                 }.bind(this));
 			}else{  // user entered an address
@@ -94,16 +103,6 @@
 			this.locationInput.val(location_input_val);
 			this.updateCoordinatesInputs(lat, lng);
 			this.addMarkerToMap(lat, lng);
-			if ($.isEmptyObject(this.locationFieldValue)){
-				$(document).trigger(this.markerCreateTriggerNameSpace,
-					[place, lat, lng, this.wrapElemSelector, this.locationInput]
-				);
-			}else{
-				$(document).trigger(this.markerChangeTriggerNameSpace,
-					[place, lat, lng, this.wrapElemSelector, this.locationInput]
-				);
-			}
-
 			this.callPlaceTriggerHandler(lat, lng, place);
 			this.locationFieldValue = {
 				"lng": lng,

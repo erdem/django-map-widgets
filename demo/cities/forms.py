@@ -1,7 +1,7 @@
 from django import forms
 
 from cities.models import City
-from mapwidgets.widgets import GooglePointFieldWidget, GoogleStaticMapWidget, GoogleStaticOverlayMapWidget
+from mapwidgets.widgets import MapboxPointFieldWidget, GoogleStaticMapWidget, GoogleStaticOverlayMapWidget, GooglePointFieldWidget
 
 
 class CityCreateForm(forms.ModelForm):

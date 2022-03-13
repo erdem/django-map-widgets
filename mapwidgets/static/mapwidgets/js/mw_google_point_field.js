@@ -2,15 +2,13 @@
     DjangoGooglePointFieldWidget = DjangoMapWidgetBase.extend({
 
         initializeMap: function(){
-            var mapCenter = this.mapCenterLocation;
+            let mapCenter = this.mapCenterLocation;
             if (this.mapCenterLocationName){
-                
+
                 this.geocoder.geocode({'address' : this.mapCenterLocationName}, function(results, status) {
                     if (status === google.maps.GeocoderStatus.OK) {
                         var geo_location = results[0].geometry.location;
                         mapCenter = [geo_location.lat(), geo_location.lng()];
-                    }else{
-                        console.warn("Cannot find " + this.mapCenterLocationName + " on google geo service.")
                     }
                     this.map = new google.maps.Map(this.mapElement, {
                         center: new google.maps.LatLng(mapCenter[0], mapCenter[1]),
@@ -22,8 +20,6 @@
                         streetViewControl: this.streetViewControl
                     });
 
-                    $(this.mapElement).data('google_map', this.map);
-                    $(this.mapElement).data('google_map_widget', this);
 
                     if (!$.isEmptyObject(this.locationFieldValue)){
                         this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
@@ -42,16 +38,15 @@
                     zoom: this.zoom,
                     streetViewControl: this.streetViewControl
                 });
-                
-                $(this.mapElement).data('google_map', this.map);
-                $(this.mapElement).data('google_map_widget', this);
+
 
                 if (!$.isEmptyObject(this.locationFieldValue)){
                     this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
                     this.fitBoundMarker();
                 }
             }
-
+            $(this.mapElement).data('googleMapObj', this.map);
+            $(this.mapElement).data('googleMapWidgetObj', this);
         },
 
         addMarkerToMap: function(lat, lng){

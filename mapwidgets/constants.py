@@ -1,5 +1,6 @@
 TIMEZONE_COORDINATES = {
-    'UTC': [40.2044358, -101.9953523],
+    # (latitude, longitude)
+    'UTC': [51.4913, 0.0411],
     'Africa/Abidjan': [8, -5],
     'Africa/Accra': [8, -2],
     'Africa/Addis_Ababa': [8, 38],

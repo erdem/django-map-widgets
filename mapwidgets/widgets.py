@@ -22,6 +22,7 @@ def minify_if_not_debug(asset):
 class BasePointFieldMapWidget(BaseGeometryWidget):
     settings_namespace = None
     settings = None
+    map_srid = mw_settings.srid
 
     def __init__(self, *args, **kwargs):
         attrs = kwargs.get('attrs')
@@ -57,7 +58,6 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
     template_name = 'mapwidgets/google-point-field-widget.html'
     settings = mw_settings.GooglePointFieldWidget
     settings_namespace = 'GooglePointFieldWidget'
-    google_map_srid = 4326
 
     @property
     def media(self):
@@ -99,9 +99,9 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
             field_value['lat'] = latitude
 
         if isinstance(value,  Point):
-            if value.srid and value.srid != self.google_map_srid:
+            if value.srid and value.srid != self.map_srid:
                 ogr = value.ogr
-                ogr.transform(self.google_map_srid)
+                ogr.transform(self.map_srid)
                 value = ogr
 
             longitude, latitude = value.coords
@@ -124,7 +124,6 @@ class MapboxPointFieldWidget(BasePointFieldMapWidget):
     template_name = 'mapwidgets/mapbox-point-field-widget.html'
     settings = mw_settings.MapboxPointFieldWidget
     settings_namespace = 'MapboxPointFieldWidget'
-    mapbox_map_srid = 4326
 
     @property
     def media(self):
@@ -156,6 +155,14 @@ class MapboxPointFieldWidget(BasePointFieldMapWidget):
 
         return forms.Media(js=js, css=css)
 
+    def map_options(self):
+        settings_json = super().map_options()
+        settings = json.loads(settings_json)
+        if not settings.get("access_token"):
+            # Use global `access_token` if it is not set in widget settings.
+            settings["access_token"] = mw_settings.MAPBOX_API_KEY
+        return json.dumps(settings)
+
     def render(self, name, value, attrs=None, renderer=None):
         if attrs is None:
             attrs = dict()
@@ -168,16 +175,14 @@ class MapboxPointFieldWidget(BasePointFieldMapWidget):
             field_value['lat'] = latitude
 
         if isinstance(value,  Point):
-            if value.srid and value.srid != self.mapbox_map_srid:
+            if value.srid and value.srid != self.map_srid:
                 ogr = value.ogr
-                ogr.transform(self.mapbox_map_srid)
+                ogr.transform(self.map_srid)
                 value = ogr
 
             longitude, latitude = value.coords
             field_value['lng'] = longitude
             field_value['lat'] = latitude
-
-
         extra_attrs = {
             'options': self.map_options(),
             'field_value': json.dumps(field_value)
@@ -188,6 +193,7 @@ class MapboxPointFieldWidget(BasePointFieldMapWidget):
             return self.as_super.render(name, value, attrs, renderer)
         else:
             return self.as_super.render(name, value, attrs)
+
 
 class PointFieldInlineWidgetMixin(object):
 

@@ -13,6 +13,16 @@ JS_FILE_MAPPING = {
         ],
         "output_file": "mapwidgets/static/mapwidgets/js/mw_google_point_field.min.js"
     },
+    "MapboxPointFieldWidget": {
+        "input_files": [
+            "mapwidgets/static/mapwidgets/js/jquery_init.js",
+            "mapwidgets/static/mapwidgets/js/jquery_class.js",
+            "mapwidgets/static/mapwidgets/js/django_mw_base.js",
+            "mapwidgets/static/mapwidgets/js/mw_mapbox_point_field.js",
+
+        ],
+        "output_file": "mapwidgets/static/mapwidgets/js/mw_mapbox_point_field.min.js"
+    },
     "GooglePointFieldInlineWidget": {
         "input_files": [
             "mapwidgets/static/mapwidgets/js/jquery_init.js",
@@ -51,6 +61,14 @@ CSS_FILE_MAPPING = {
 
 DJANGO_MAPWIDGETS_CONTAINER_NAME = os.environ.get('DJANGO_MAPWIDGETS_CONTAINER_NAME', 'django_mapwidgets')
 POSTGRES_CONTAINER_NAME = os.environ.get('DJANGO_MAPWIDGETS_CONTAINER_NAME', 'mapwidget_postgres')
+
+
+def install_npm_packages():
+    """
+    Install uglifycss and uglifyjs CLI to minify the static files.
+    """
+    local("npm install uglify-js -g")
+    local("npm install uglifycss -g")
 
 
 def minify_js_files():

@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:8
-msgid "Coordinates"
+msgid "Edit Coordinates"
 msgstr "Coordenadas"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:11
@@ -47,5 +47,5 @@ msgid "Use My Location"
 msgstr "Usar minha localização"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:25
-msgid "Enter or update the address here"
-msgstr "Insira ou atualize o endereço aqui"
+msgid "Find a Location by Address"
+msgstr "Encontre um local por endereço"

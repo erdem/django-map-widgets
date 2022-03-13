@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:8
-msgid "Coordinates"
+msgid "Edit Coordinates"
 msgstr "座標"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:11
@@ -47,5 +47,5 @@ msgid "Use My Location"
 msgstr "自分の位置を使う"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:25
-msgid "Enter or update the address here"
-msgstr "ここに住所を入力してください"
+msgid "Find a Location by Address"
+msgstr "住所で場所を探す"

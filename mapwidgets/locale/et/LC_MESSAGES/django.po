@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:8
-msgid "Coordinates"
+msgid "Edit Coordinates"
 msgstr "Koordinaadid"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:11
@@ -46,5 +46,5 @@ msgid "Use My Location"
 msgstr "Kasuta minu asukohta"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:25
-msgid "Enter or update the address here"
+msgid "Find a Location by Address"
 msgstr "Sisesta aadress"

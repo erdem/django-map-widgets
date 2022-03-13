@@ -1,9 +1,0 @@
-======
-v0.1.8
-======
-
- * Full documentation integrated to readthedocs.org.
- * Fixed Google Map static widget issues.
- * Added Russian localisation support.
- * Added `Google Places Autocomplete <https://developers.google.com/maps/documentation/javascript/places-autocomplete>`_ options support.
- * Fixed CSS issues.

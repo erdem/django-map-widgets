@@ -3,7 +3,7 @@ from django.contrib.gis import admin
 from .models import House, Neighbour
 from django.contrib.gis.db import models
 from mapwidgets.widgets import GooglePointFieldWidget, GooglePointFieldInlineWidget, GoogleStaticMapWidget, \
-    GoogleStaticOverlayMapWidget
+    GoogleStaticOverlayMapWidget, MapboxPointFieldWidget
 
 
 class NeighbourAdminInline(admin.TabularInline):
@@ -14,24 +14,14 @@ class NeighbourAdminInline(admin.TabularInline):
     }
 
 
-class HouseAdminForm(forms.ModelForm):
-    class Meta:
-        model = House
-        fields = "__all__"
-        widgets = {
-            'location': GooglePointFieldWidget(settings={"GooglePointFieldWidget": (("zoom", 1),)}),
-            'location_has_default': GooglePointFieldWidget,
-        }
-
-
 class HouseAdminStaticForm(forms.ModelForm):
 
     class Meta:
         model = House
         fields = "__all__"
         widgets = {
-            'location': GoogleStaticMapWidget,
-            'location_has_default': GoogleStaticOverlayMapWidget,
+            'location': GoogleStaticOverlayMapWidget,
+            'location_has_default': GoogleStaticMapWidget,
         }
 
 
@@ -39,10 +29,13 @@ class HouseAdmin(admin.ModelAdmin):
     search_fields = ('name', )
     list_display = ("name", "location")
     inlines = (NeighbourAdminInline,)
+    form = HouseAdminStaticForm
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(HouseAdmin, self).get_form(request, obj, **kwargs)
-        form.base_fields['location'].widget = GooglePointFieldWidget()
+        if obj is None:  # manipulate page form
+            form.base_fields['location'].widget = MapboxPointFieldWidget()
+            form.base_fields['location_has_default'].widget = GooglePointFieldWidget()
         return form
 
     @property
@@ -57,7 +50,7 @@ class HouseAdmin(admin.ModelAdmin):
 class NeighbourAdmin(admin.ModelAdmin):
     autocomplete_fields = ('neighbour_of_house',)
     formfield_overrides = {
-        models.PointField: {"widget": GoogleStaticOverlayMapWidget}
+        models.PointField: {"widget": MapboxPointFieldWidget}
     }
 
 

@@ -15,14 +15,19 @@ Django Map Widgets
 
 Configurable, pluggable and more user friendly map widgets for Django PostGIS fields.
 
+.. note::
+    Check the `project home page <https://github.com/erdem/django-map-widgets/>`_ for latest updates.
+
  * **Project Home Page** : `https://github.com/erdem/django-map-widgets <https://github.com/erdem/django-map-widgets/>`_.
  * **Documentation**:  `http://django-map-widgets.readthedocs.io <http://django-map-widgets.readthedocs.io/>`_.
 
 Achievements
 ^^^^^^^^^^^^
 
-The aim of the Django map widgets is to make all Geo Django widgets more user friendly and configurable. Map widgets are currently supporting only Google Map services, but we are planning to add other major map services.
-
+| The aim of the Django map widgets is to make all Geo Django widgets more user-friendly and configurable.  
+|   
+| Django map widgets package has support for Mapbox and Google Map services currently, if you want to see more widgets and think you can help, feel free to contribute to the project. 
+| We would be happy to review and merge your contributions. :) 
 
 Installation
 ^^^^^^^^^^^^
@@ -100,6 +105,16 @@ Google Map Static Overlay Widget
 Release Notes
 ^^^^^^^^^^^^^
 
+=====
+0.4.0
+=====
+
+ * Supported MapBox Map for Geo Point Field
+ * Fixed undefined place object binding issue in javascript triggers. (#125)
+ * Documented MapBox point field map widget
+ * Updated various localize files.
+
+
 ======
 v0.3.2
 ======
@@ -122,48 +137,3 @@ v0.3.0
  * Fixed Django Admin jQuery conflicts. (#100)
  * Fixed a new widget JS instance initialising issue for Django Admin Inlines. (#84)
  * Added Python 3.8 env settings to TravisCI configuration.
-
-======
-v0.2.3
-======
-
- * Fixed python `six` module import issue.
- * Fixed PostGIS setup errors in CI pipeline.
- * Added Estonian language support.
-
-======
-v0.2.0
-======
-
- * Fixed Python 3.6, Django 2.x compatible issues.
- * Fixed SRID format converter issues.
- * Removed pyproj package dependency.
- * Various development infrastructure updates. (Docker, Fabric files etc.)
- * Fixed Google Place Autocomplete widget bugs in Django Admin Inlines.
- * Point map widget JS objects associated to the map HTML elements with jQuey $.data method.
- * Passing Google Place AutoComplete full response object to jQuery triggers.
-
-======
-v0.1.9
-======
-
- * Google Place Autocomplete object binding to jQuery triggers.
- * Implemented Google Geocoding support for the marker coordinates.
- * Added custom widget settings feature for each widget.
- * Added Portuguese localisation support.
- * Fixed Google Place Autocomplete widget bugs in Django Admin Inlines.
- * Fixed Python 3.6 errors.
- * Fixed Javascript bugs.
- * The GitHub repository Integrated with Travis CI.
- * Implemented unit tests for backend code. (%100 code coverage)
- * Change development environment from Vagrant to Docker.
-
-======
-v0.1.8
-======
-
- * Full documentation integrated to readthedocs.org.
- * Fixed Google Map static widget issues.
- * Added Russian localisation support.
- * Added `Google Places Autocomplete <https://developers.google.com/maps/documentation/javascript/places-autocomplete>`_ options support.
- * Fixed CSS issues.
