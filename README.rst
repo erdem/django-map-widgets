@@ -16,7 +16,7 @@ Django Map Widgets
 Configurable, pluggable and more user friendly map widgets for Django PostGIS fields.
 
 .. note::
-    Check the `project home page <https://github.com/erdem/django-map-widgets/>`_ for latest updates.
+    Please check the `project home page <https://github.com/erdem/django-map-widgets/>`_ for latest updates.
 
  * **Project Home Page** : `https://github.com/erdem/django-map-widgets <https://github.com/erdem/django-map-widgets/>`_.
  * **Documentation**:  `http://django-map-widgets.readthedocs.io <http://django-map-widgets.readthedocs.io/>`_.

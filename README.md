@@ -89,6 +89,12 @@ Just add map widgets to your django admin forms.
 
 ![](https://cloud.githubusercontent.com/assets/1518272/26807500/ad0af4ea-4a4e-11e7-87d6-632f39e438f7.gif)
 
+
+##### MapBox Map Point Field Widget
+
+![](https://user-images.githubusercontent.com/1518272/168497515-f97363f4-6860-410e-9e24-230a2c4233b7.png)
+
+
 ##### Google Map Static Overlay Widget
 This widget is working with <a href="http://dimsemenov.com/plugins/magnific-popup/" target="_blank">Magnific Popup</a> jQuery plugin.
 
