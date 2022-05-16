@@ -33,7 +33,7 @@ msgstr ""
 "settings.html"
 
 #: templates/mapwidgets/google-point-field-widget.html:8
-msgid "Coordinates"
+msgid "Edit Coordinates"
 msgstr "Súradnice"
 
 #: templates/mapwidgets/google-point-field-widget.html:11
@@ -61,5 +61,5 @@ msgid "Use My Location"
 msgstr "Moja poloha"
 
 #: templates/mapwidgets/google-point-field-widget.html:25
-msgid "Enter or update the address here"
-msgstr "Zadajte alebo aktualizujte adresu"
+msgid "Find a Location by Address"
+msgstr "Nájsť miesto podľa adresy"

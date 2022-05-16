@@ -5,7 +5,7 @@
         <div class="mw-header">
             {% block header %}
                 <div class="mw-coordinates-wrap">
-                    <a  class="mw-btn mw-btn-primary mw-btn-coordinates">{% trans "Coordinates" %} <i class="icon-down-dir" ></i></a>
+                    <a  class="mw-btn mw-btn-primary mw-btn-coordinates">{% trans "Edit coordinates" %} <i class="icon-down-dir" ></i></a>
                     <div class="mw-coordinates-overlay hide">
                         <label for="{{ name }}-mw-overlay-latitude">
                             {% trans "Latitude:" %}
@@ -20,9 +20,9 @@
                 </div>
 
                 <a class="mw-btn mw-btn-info mw-btn-my-location" >{% trans "Use My Location" %}</a>
-                <a class="mw-btn mw-btn-warning mw-btn-add-marker" ><i class="icon-location"></i></a>
+                <a class="mw-btn mw-btn-warning mw-btn-add-marker" ><i class="icon-location"></i> <span class="point-text">{% trans "Choose point on map" %}</span></a>
                 <div class="mw-adress-input-wrap pull-right">
-                    <input type="text" class="form-control pull-right" id="{{ name }}-mw-google-address-input" placeholder="{% trans 'Enter or update the address here' %}"/>
+                    <input type="text" class="form-control pull-right" id="{{ name }}-mw-google-address-input" role="presentation" autocomplete="off" placeholder="{% trans 'Find a Location by Address' %}" />
                 </div>
             {% endblock header %}
         </div>
@@ -59,7 +59,7 @@
             var googleAutoInputID = "{{ name }}-mw-google-address-input";
             var locationInputID = "#{{ id }}";
 
-            var mapWidgetOptions = {
+            const mapWidgetOptions = {
                 locationInput: $(locationInputID),
                 wrapElemSelector: wrapElemSelector,
                 locationFieldValue: field_value,
@@ -84,7 +84,7 @@
                 markerDeleteTriggerNameSpace: "google_point_map_widget:marker_delete",
                 placeChangedTriggerNameSpace: "google_point_map_widget:place_changed"
             };
-            var widget = new DjangoGooglePointFieldWidget(mapWidgetOptions);
+            new DjangoGooglePointFieldWidget(mapWidgetOptions);
             {% block extra_javascript %}
 
             {% endblock %}

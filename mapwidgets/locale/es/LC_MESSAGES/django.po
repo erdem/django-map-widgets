@@ -30,7 +30,7 @@ msgid ""
 msgstr ""
 
 #: templates/mapwidgets/google-point-field-widget.html:8
-msgid "Coordinates"
+msgid "Edit Coordinates"
 msgstr "Coordenadas"
 
 #: templates/mapwidgets/google-point-field-widget.html:11
@@ -58,5 +58,5 @@ msgid "Use My Location"
 msgstr "Usar mi ubicación"
 
 #: templates/mapwidgets/google-point-field-widget.html:25
-msgid "Enter or update the address here"
-msgstr "Ingresar o actualizar la dirección aquí"
+msgid "Find a Location by Address"
+msgstr "Buscar una ubicación por dirección"
