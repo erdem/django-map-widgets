@@ -1,15 +1,3 @@
-.. image:: https://coveralls.io/repos/github/erdem/django-map-widgets/badge.svg?branch=master
-    :target: https://coveralls.io/github/erdem/django-map-widgets?branch=master
-    :alt: Coverage Status
-
-.. image:: https://travis-ci.org/erdem/django-map-widgets.png
-    :target: https://travis-ci.org/erdem/django-map-widgets
-    :alt: Build Status
-
-.. image:: https://badge.fury.io/py/django-map-widgets.svg
-    :target: https://badge.fury.io/py/django-map-widgets
-    :alt: Latest PyPI version
-
 Django Map Widgets
 ==================
 
@@ -104,6 +92,13 @@ Google Map Static Overlay Widget
 
 Release Notes
 ^^^^^^^^^^^^^
+
+=====
+0.4.1
+=====
+
+ * Added scroll wheel zooming functionality switch to Google Point Map Settings. (#134)
+ * Added Chinese(ZH) localisation support. (#133)
 
 =====
 0.4.0

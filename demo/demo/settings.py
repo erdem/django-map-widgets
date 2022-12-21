@@ -18,8 +18,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SITE_PATH = os.path.abspath(os.path.dirname(__file__))
 PROJECT_PATH = os.path.normpath(os.path.join(SITE_PATH, '..', '..'))
-if PROJECT_PATH not in sys.path:
-    sys.path.insert(0, PROJECT_PATH)
+# if PROJECT_PATH not in sys.path:
+#     sys.path.insert(0, PROJECT_PATH)
 
 
 # Quick-start development settings - unsuitable for production
