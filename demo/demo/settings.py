@@ -148,7 +148,8 @@ MAP_WIDGETS = {
         ("mapCenterLocation", [51.5073509, -0.12775829999998223]),
         ("markerFitZoom", 11),
         ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'uk'}}),
-        ("streetViewControl", False)
+        ("streetViewControl", False),
+        ("scrollWheel", True)
     ),
     "MapboxPointFieldWidget": {
         "access_token": MAPBOX_API_KEY,
@@ -159,4 +160,3 @@ MAP_WIDGETS = {
     },
     "GOOGLE_MAP_API_KEY": GOOGLE_MAP_API_KEY
 }
-

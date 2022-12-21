@@ -12,7 +12,7 @@
                     }
                     this.map = new google.maps.Map(this.mapElement, {
                         center: new google.maps.LatLng(mapCenter[0], mapCenter[1]),
-                        scrollwheel: false,
+                        scrollwheel: this.scrollWheel,
                         zoomControlOptions: {
                             position: google.maps.ControlPosition.RIGHT
                         },
@@ -31,7 +31,7 @@
             }else{
                 this.map = new google.maps.Map(this.mapElement, {
                     center: new google.maps.LatLng(mapCenter[0], mapCenter[1]),
-                    scrollwheel: false,
+                    scrollwheel: this.scrollWheel,
                     zoomControlOptions: {
                         position: google.maps.ControlPosition.RIGHT
                     },

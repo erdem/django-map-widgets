@@ -10,6 +10,7 @@ DEFAULTS = {
         ("mapCenterLocationName", None),
         ("mapCenterLocation", TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC"))),
         ("zoom", 12),
+        ("scrollWheel", False),
         ("GooglePlaceAutocompleteOptions", {}),
         ("markerFitZoom", 14),
         ("streetViewControl", True),
