@@ -103,6 +103,10 @@ This widget is working with <a href="http://dimsemenov.com/plugins/magnific-popu
 
 ### Release Notes
 
+#### 0.4.1
+> -   Added scroll wheel zooming functionality switch to Google Point Map Settings. (#134)
+> -   Added Chinese(ZH) localisation support. (#133)
+
 #### 0.4.0
 > -   Supported MapBox Map for Django Geo Point Field.
 > -   Fixed undefined place object binding issue in javascript triggers. (#125)
