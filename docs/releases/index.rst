@@ -2,6 +2,14 @@
 Release Notes
 =============
 
+
+0.4.1
+^^^^^
+
+   -  Added scroll wheel zooming functionality switch to Google Point Map Settings. (#134)
+   -  Added Chinese(ZH) localisation support. (#133)
+
+
 0.4.0
 ^^^^^
 
