@@ -1,0 +1,77 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-24 12:49+0100\n"
+"PO-Revision-Date: 2022-12-24 12:57+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#: .\settings.py:86 .\settings.py:96
+msgid "MapWidget settings must be a tuple or dictionary"
+msgstr ""
+
+#: .\settings.py:115 .\settings.py:137
+#, python-format
+msgid ""
+"Invalid %s settings value. Please check the settings documentation http://"
+"django-map-widgets.readthedocs.io/en/latest/widgets/settings.html"
+msgstr ""
+
+#: .\templates\mapwidgets\google-point-field-widget.html:8
+#: .\templates\mapwidgets\mapbox-point-field-widget.html:8
+msgid "Edit coordinates"
+msgstr "Edytuj współrzędne"
+
+#: .\templates\mapwidgets\google-point-field-widget.html:11
+#: .\templates\mapwidgets\mapbox-point-field-widget.html:11
+msgid "Latitude:"
+msgstr "Szerokość geograficzna:"
+
+#: .\templates\mapwidgets\google-point-field-widget.html:12
+#: .\templates\mapwidgets\mapbox-point-field-widget.html:12
+msgid "Ex: 41.015137"
+msgstr "Np.: 41.015137"
+
+#: .\templates\mapwidgets\google-point-field-widget.html:15
+#: .\templates\mapwidgets\mapbox-point-field-widget.html:15
+msgid "Longitude:"
+msgstr "Długość geograficzna:"
+
+#: .\templates\mapwidgets\google-point-field-widget.html:16
+#: .\templates\mapwidgets\mapbox-point-field-widget.html:16
+msgid "Ex: 28.979530"
+msgstr "Np.: 28.979530"
+
+#: .\templates\mapwidgets\google-point-field-widget.html:18
+#: .\templates\mapwidgets\mapbox-point-field-widget.html:18
+msgid "Done"
+msgstr "Gotowe"
+
+#: .\templates\mapwidgets\google-point-field-widget.html:22
+#: .\templates\mapwidgets\mapbox-point-field-widget.html:22
+msgid "Use My Location"
+msgstr "Użyj mojej lokalizacji"
+
+#: .\templates\mapwidgets\google-point-field-widget.html:23
+#: .\templates\mapwidgets\mapbox-point-field-widget.html:23
+msgid "Choose point on map"
+msgstr "Wybierz punkt na mapie"
+
+#: .\templates\mapwidgets\google-point-field-widget.html:25
+#: .\templates\mapwidgets\mapbox-point-field-widget.html:64
+msgid "Find a Location by Address"
+msgstr "Znajdź lokalizację na podstawie adresu"
