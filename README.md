@@ -103,6 +103,12 @@ This widget is working with <a href="http://dimsemenov.com/plugins/magnific-popu
 
 ### Release Notes
 
+
+#### 0.4.2
+> -   GooglePointFieldInlineWidget bug fixes for Django 4.2.x (#142), thanks for @isarota.
+> -   Added `.readthedocs.yaml` to cover new **Read the Docs** updates. 
+
+
 #### 0.4.1
 > -   Added scroll wheel zooming functionality switch to Google Point Map Settings. (#134)
 > -   Added Chinese(ZH) localisation support. (#133)

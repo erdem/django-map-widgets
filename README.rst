@@ -94,6 +94,13 @@ Release Notes
 ^^^^^^^^^^^^^
 
 =====
+0.4.2
+=====
+
+ * GooglePointFieldInlineWidget bug fixes for Django 4.2.x (#142)
+ * Added `.readthedocs.yaml` to cover new **Read the Docs** updates.
+
+=====
 0.4.1
 =====
 
