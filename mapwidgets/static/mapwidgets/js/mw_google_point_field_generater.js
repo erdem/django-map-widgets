@@ -10,8 +10,10 @@
             var mapOptions = this.mapOptions;
             var widgetData = {};
 
+            prefix = prefix || $(e.target).attr("id").split("-")[0];
             var id_regex = new RegExp("(" + prefix + "-(\\d+|__prefix__))");
 
+            row = row || e.target;
             var numberPattern = /\d+/g;
             var row_index = $(row).attr("id").match(numberPattern);
             var replacement = prefix + "-" + row_index;
