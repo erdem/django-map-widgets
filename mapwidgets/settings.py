@@ -36,6 +36,11 @@ DEFAULTS = {
         })
     ),
 
+    "OSMPointFieldWidget": (
+        ("markerFitZoom", 14),
+        ("showZoomNavigation", True),
+    ),
+
     "GoogleStaticMapWidget": (
         ("zoom", 15),
         ("size", "480x480"),

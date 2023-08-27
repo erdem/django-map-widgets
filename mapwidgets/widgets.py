@@ -6,6 +6,7 @@ from django.contrib.gis.geos import Point
 from django.core.exceptions import ImproperlyConfigured
 from django.template.loader import render_to_string
 from django.templatetags.static import static
+from django.utils.html import json_script
 from django.utils.http import urlencode
 
 from mapwidgets.constants import STATIC_MAP_PLACEHOLDER_IMAGE
@@ -189,6 +190,61 @@ class MapboxPointFieldWidget(BasePointFieldMapWidget):
         }
         attrs.update(extra_attrs)
         self.as_super = super(MapboxPointFieldWidget, self)
+        if renderer is not None:
+            return self.as_super.render(name, value, attrs, renderer)
+        else:
+            return self.as_super.render(name, value, attrs)
+
+
+class OSMPointFieldWidget(BasePointFieldMapWidget):
+    template_name = 'mapwidgets/osm_point_field_widget.html'
+    settings_namespace = 'OSMPointFieldWidget'
+    settings = mw_settings.OSMPointFieldWidget
+
+    @property
+    def media(self):
+        css = {
+            'all': [
+                'mapwidgets/css/map_widgets.css',
+            ]
+        }
+
+        js = [
+            'https://unpkg.com/leaflet@1.7.1/dist/leaflet.js',
+            'mapwidgets/js/jquery_init.js',
+            'mapwidgets/js/jquery_class.js',
+            'mapwidgets/js/django_mw_base.js',
+            'mapwidgets/js/mw_osm_point_field.js',
+        ]
+
+        return forms.Media(js=js, css=css)
+
+    def render(self, name, value, attrs=None, renderer=None):
+        if attrs is None:
+            attrs = dict()
+
+        field_value = {}
+        if value and isinstance(value, str):
+            value = self.deserialize(value)
+            longitude, latitude = value.coords
+            field_value['lng'] = longitude
+            field_value['lat'] = latitude
+
+        if isinstance(value, Point):
+            if value.srid and value.srid != self.map_srid:
+                value.transform(self.map_srid)
+
+            longitude, latitude = value.coords
+            field_value['lng'] = longitude
+            field_value['lat'] = latitude
+
+        extra_attrs = {
+            'options': json_script(json.dumps(self.map_options())),
+            'field_value': json_script(json.dumps(field_value))
+        }
+        attrs.update(extra_attrs)
+
+        self.as_super = super(OSMPointFieldWidget, self)
         if renderer is not None:
             return self.as_super.render(name, value, attrs, renderer)
         else:
