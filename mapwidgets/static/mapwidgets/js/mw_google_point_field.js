@@ -21,8 +21,9 @@
                     });
 
 
-                    if (!$.isEmptyObject(this.locationFieldValue)){
-                        this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
+                    if (!$.isEmptyObject(this.djangoGeoJSONValue)){
+                        this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng)
+                        this.updateDjangoInput(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng);
                         this.fitBoundMarker();
                     }
 
@@ -40,8 +41,9 @@
                 });
 
 
-                if (!$.isEmptyObject(this.locationFieldValue)){
-                    this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
+                if (!$.isEmptyObject(this.djangoGeoJSONValue)){
+                    this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng)
+                    this.updateDjangoInput(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng);
                     this.fitBoundMarker();
                 }
             }
@@ -60,9 +62,21 @@
             this.marker.addListener("dragend", this.dragMarker.bind(this));
         },
 
+        serializeMarkerToGeoJSON: function(){
+            if (this.marker){
+                const position = this.marker.getPosition();
+                return {
+                    type: "Point",
+                    coordinates: [position.lng(), position.lat()]
+                };
+            }
+            return null;
+        },
+
         fitBoundMarker: function () {
             var bounds = new google.maps.LatLngBounds();
             bounds.extend(this.marker.getPosition());
+            console.log(this.markerFitZoom)
             this.map.fitBounds(bounds);
             if (this.markerFitZoom && this.isInt(this.markerFitZoom)){
                 var markerFitZoom = parseInt(this.markerFitZoom);
@@ -79,10 +93,12 @@
             if (this.marker){
                 this.marker.setMap(null);
             }
+            this.marker = null;
         },
 
         dragMarker: function(e){
-            this.updateLocationInput(e.latLng.lat(), e.latLng.lng())
+            this.addMarkerToMap(e.latLng.lat(), e.latLng.lng())
+            this.updateDjangoInput()
         },
 
         handleAddMarkerBtnClick: function(e){
@@ -99,7 +115,8 @@
             google.maps.event.clearListeners(this.map, 'click');
             $(this.mapElement).removeClass("click");
             this.addMarkerBtn.removeClass("active");
-            this.updateLocationInput(e.latLng.lat(), e.latLng.lng())
+            this.addMarkerToMap(e.latLng.lat(), e.latLng.lng())
+            this.updateDjangoInput()
         }
     });
 

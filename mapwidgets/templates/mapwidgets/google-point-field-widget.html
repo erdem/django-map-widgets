@@ -60,9 +60,9 @@
             var locationInputID = "#{{ id }}";
 
             const mapWidgetOptions = {
-                locationInput: $(locationInputID),
+                djangoInput: $(locationInputID),
                 wrapElemSelector: wrapElemSelector,
-                locationFieldValue: field_value,
+                djangoGeoJSONValue: field_value,
                 mapElement: document.getElementById(mapElemID),
                 mapCenterLocationName: mapOptions.mapCenterLocationName,
                 mapCenterLocation: mapOptions.mapCenterLocation,

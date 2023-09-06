@@ -2,6 +2,7 @@ import json
 
 from django import forms
 from django.contrib.gis.forms import BaseGeometryWidget
+from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.geos import Point
 from django.core.exceptions import ImproperlyConfigured
 from django.template.loader import render_to_string
@@ -26,33 +27,51 @@ class BasePointFieldMapWidget(BaseGeometryWidget):
     map_srid = mw_settings.srid
 
     def __init__(self, *args, **kwargs):
-        attrs = kwargs.get('attrs')
-        self.attrs = {}
-        for key in ('geom_type', 'map_srid', 'map_width', 'map_height', 'display_raw'):
-            if key in kwargs:
-                self.attrs[key] = kwargs.get(key)
-            else:
-                self.attrs[key] = getattr(self, key)
-
-        if isinstance(attrs, dict):
-            self.attrs.update(attrs)
-
-        self.custom_settings = False
-        if kwargs.get('settings'):
-            self.settings = kwargs.pop('settings')
-            self.custom_settings = True
+        super().__init__(*args, **kwargs)
+        self.custom_settings = kwargs.pop('settings', None)
 
     def map_options(self):
-        if not self.settings:  # pragma: no cover
-            raise ImproperlyConfigured('%s requires either a definition of "settings"' % self.__class__.__name__)
-
-        if not self.settings_namespace:  # pragma: no cover
-            raise ImproperlyConfigured('%s requires either a definition of "settings_namespace"' % self.__class__.__name__)
+        if not self.settings or not self.settings_namespace:
+            raise ImproperlyConfigured(f'{self.__class__.__name__} requires "settings" and "settings_namespace" to be defined')
 
         if self.custom_settings:
-            custom_settings = MapWidgetSettings(app_settings=self.settings)
-            return json.dumps(getattr(custom_settings, self.settings_namespace))
-        return json.dumps(self.settings)
+            custom_settings = MapWidgetSettings(app_settings=self.custom_settings)
+            return getattr(custom_settings, self.settings_namespace)
+        return self.settings
+
+    def generate_media(self, js_sources, css_files, min_js, dev_js):
+        suffix = '.min' if mw_settings.MINIFED else ''
+        css_files = [css_file.format(suffix) for css_file in css_files]
+        js_files = js_sources + ([min_js] if mw_settings.MINIFED else dev_js)
+        css = {'all': css_files}
+        return forms.Media(js=js_files, css=css)
+
+    def geos_to_dict(self, geom: GEOSGeometry):
+        if geom is None:
+            return None
+
+        geom_dict = {
+            'srid': geom.srid,
+            'wkt': str(geom),
+            'coords': geom.coords,
+            'geom_type': geom.geom_type,
+        }
+        longitude, latitude = geom.coords
+
+        # Transform the coordinates for backwards compatibility
+        geom_dict['lng'] = longitude
+        geom_dict['lat'] = latitude
+        return geom_dict
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        de_value = self.deserialize(context["serialized"])
+        extra_context = {
+            'options': json.dumps(self.map_options()),
+            'field_value': json.dumps(self.geos_to_dict(de_value))
+        }
+        context.update(extra_context)
+        return context
 
 
 class GooglePointFieldWidget(BasePointFieldMapWidget):
@@ -62,63 +81,21 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
 
     @property
     def media(self):
-        css = {
-            'all': [
-                minify_if_not_debug('mapwidgets/css/map_widgets{}.css'),
-            ]
-        }
-
-        js = [
-            "https://maps.googleapis.com/maps/api/js?libraries={}&language={}&key={}".format(
-                mw_settings.LIBRARIES, mw_settings.LANGUAGE, mw_settings.GOOGLE_MAP_API_KEY
-            )
-        ]
-
-        if not mw_settings.MINIFED:  # pragma: no cover
-            js = js + [
+        return self.generate_media(
+            js_sources=[
+                f"https://maps.googleapis.com/maps/api/js?libraries={mw_settings.LIBRARIES}&language={mw_settings.LANGUAGE}&key={mw_settings.GOOGLE_MAP_API_KEY}"
+            ],
+            css_files=[
+                'mapwidgets/css/map_widgets{}.css',
+            ],
+            min_js='mapwidgets/js/mw_google_point_field.min.js',
+            dev_js=[
                 'mapwidgets/js/jquery_init.js',
                 'mapwidgets/js/jquery_class.js',
                 'mapwidgets/js/django_mw_base.js',
-                'mapwidgets/js/mw_google_point_field.js',
+                'mapwidgets/js/mw_google_point_field.js'
             ]
-        else:
-            js = js + [
-                'mapwidgets/js/mw_google_point_field.min.js'
-            ]
-
-        return forms.Media(js=js, css=css)
-
-    def render(self, name, value, attrs=None, renderer=None):
-        if attrs is None:
-            attrs = dict()
-
-        field_value = {}
-        if value and isinstance(value, str):
-            value = self.deserialize(value)
-            longitude, latitude = value.coords
-            field_value['lng'] = longitude
-            field_value['lat'] = latitude
-
-        if isinstance(value,  Point):
-            if value.srid and value.srid != self.map_srid:
-                ogr = value.ogr
-                ogr.transform(self.map_srid)
-                value = ogr
-
-            longitude, latitude = value.coords
-            field_value['lng'] = longitude
-            field_value['lat'] = latitude
-
-        extra_attrs = {
-            'options': self.map_options(),
-            'field_value': json.dumps(field_value)
-        }
-        attrs.update(extra_attrs)
-        self.as_super = super(GooglePointFieldWidget, self)
-        if renderer is not None:
-            return self.as_super.render(name, value, attrs, renderer)
-        else:
-            return self.as_super.render(name, value, attrs)
+        )
 
 
 class MapboxPointFieldWidget(BasePointFieldMapWidget):
@@ -128,72 +105,25 @@ class MapboxPointFieldWidget(BasePointFieldMapWidget):
 
     @property
     def media(self):
-        css = {
-            'all': [
-                minify_if_not_debug('mapwidgets/css/map_widgets{}.css'),
+        return self.generate_media(
+            js_sources=[
+                "https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js",
+                "https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js",
+                "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"
+            ],
+            css_files=[
+                'mapwidgets/css/map_widgets{}.css',
                 "https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css",
-                "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css",
-            ]
-        }
-
-        js = [
-            "https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js",
-            "https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js",
-            "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js",
-        ]
-
-        if not mw_settings.MINIFED:  # pragma: no cover
-            js = js + [
+                "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css"
+            ],
+            min_js='mapwidgets/js/mw_mapbox_point_field.min.js',
+            dev_js=[
                 'mapwidgets/js/jquery_init.js',
                 'mapwidgets/js/jquery_class.js',
                 'mapwidgets/js/django_mw_base.js',
-                'mapwidgets/js/mw_mapbox_point_field.js',
+                'mapwidgets/js/mw_mapbox_point_field.js'
             ]
-        else:
-            js = js + [
-              'mapwidgets/js/mw_mapbox_point_field.min.js'
-            ]
-
-        return forms.Media(js=js, css=css)
-
-    def map_options(self):
-        settings_json = super().map_options()
-        settings = json.loads(settings_json)
-        if not settings.get("access_token"):
-            # Use global `access_token` if it is not set in widget settings.
-            settings["access_token"] = mw_settings.MAPBOX_API_KEY
-        return json.dumps(settings)
-
-    def render(self, name, value, attrs=None, renderer=None):
-        if attrs is None:
-            attrs = dict()
-
-        field_value = {}
-        if value and isinstance(value, str):
-            value = self.deserialize(value)
-            longitude, latitude = value.coords
-            field_value['lng'] = longitude
-            field_value['lat'] = latitude
-
-        if isinstance(value,  Point):
-            if value.srid and value.srid != self.map_srid:
-                ogr = value.ogr
-                ogr.transform(self.map_srid)
-                value = ogr
-
-            longitude, latitude = value.coords
-            field_value['lng'] = longitude
-            field_value['lat'] = latitude
-        extra_attrs = {
-            'options': self.map_options(),
-            'field_value': json.dumps(field_value)
-        }
-        attrs.update(extra_attrs)
-        self.as_super = super(MapboxPointFieldWidget, self)
-        if renderer is not None:
-            return self.as_super.render(name, value, attrs, renderer)
-        else:
-            return self.as_super.render(name, value, attrs)
+        )
 
 
 class OSMPointFieldWidget(BasePointFieldMapWidget):

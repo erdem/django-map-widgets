@@ -60,14 +60,8 @@
 				!isNaN(parseInt(value, 10));
 		},
 
-		getLocationValues: function(){
-			var latlng = this.locationInput.val().split(' ');
-			var lat = latlng[2].replace(/[\(\)]/g, '');
-			var lng = latlng[1].replace(/[\(\)]/g, '');
-			return {
-				"lat": lat,
-				"lng": lng
-			}
+		serializeMarkerToGeoJSON: function(){
+			console.warn("Implement serializeMarkerToGeoJSON method.");
 		},
 
 		callPlaceTriggerHandler: function (lat, lng, place) {
@@ -78,57 +72,76 @@
 	                    var placeObj = results[0] || {};
 	                    $(this.addressAutoCompleteInput).val(placeObj.formatted_address || "");
 	                    $(document).trigger(this.placeChangedTriggerNameSpace,
-		                    [placeObj, lat, lng, this.wrapElemSelector, this.locationInput]
+		                    [placeObj, lat, lng, this.wrapElemSelector, this.djangoInput]
 	                    );
-						if ($.isEmptyObject(this.locationFieldValue)){
+						if ($.isEmptyObject(this.djangoGeoJSONValue)){
 							$(document).trigger(this.markerCreateTriggerNameSpace,
-								[placeObj, lat, lng, this.wrapElemSelector, this.locationInput]
+								[placeObj, lat, lng, this.wrapElemSelector, this.djangoInput]
 							);
 						}else{
 							$(document).trigger(this.markerChangeTriggerNameSpace,
-								[placeObj, lat, lng, this.wrapElemSelector, this.locationInput]
+								[placeObj, lat, lng, this.wrapElemSelector, this.djangoInput]
 							);
 						}
                     }
                 }.bind(this));
 			}else{  // user entered an address
 				$(document).trigger(this.placeChangedTriggerNameSpace,
-					[place, lat, lng, this.wrapElemSelector, this.locationInput]
+					[place, lat, lng, this.wrapElemSelector, this.djangoInput]
 				);
 			}
 		},
 
-		updateLocationInput: function(lat, lng, place){
-			var location_input_val = "POINT (" + lng + " " + lat + ")";
-			this.locationInput.val(location_input_val);
-			this.updateCoordinatesInputs(lat, lng);
-			this.addMarkerToMap(lat, lng);
-			this.callPlaceTriggerHandler(lat, lng, place);
-			this.locationFieldValue = {
-				"lng": lng,
-				"lat": lat
-			};
+		updateDjangoGeoJSONValue: function(lat, lng){
+			if (this.djangoGeoJSONValue){
+				this.djangoGeoJSONValue.lat = lat;
+				this.djangoGeoJSONValue.lng = lng;
+			}else{
+				this.djangoGeoJSONValue = {
+					"lng": lng,
+					"lat": lat
+				};
+			}
+		},
+
+		enableClearBtn: function(){
 			this.deleteBtn.removeClass("mw-btn-default disabled").addClass("mw-btn-danger");
 		},
 
+		disableClearBtn: function(){
+			this.deleteBtn.removeClass("mw-btn-danger").addClass("mw-btn-default disabled");
+		},
+
+		updateDjangoInput: function(place){
+			console.log(place)
+			const django_input_val = this.serializeMarkerToGeoJSON();
+			const lng = django_input_val.coordinates[0];
+			const lat = django_input_val.coordinates[1];
+			this.djangoInput.val(JSON.stringify(django_input_val));
+			this.updateUXCoordinatesInputs(lat, lng);
+			this.callPlaceTriggerHandler(lat, lng, place);
+			this.updateDjangoGeoJSONValue(lat, lng);
+			this.enableClearBtn();
+		},
+
 		resetMap: function(){
-			if (!$.isEmptyObject(this.locationFieldValue)) {
+			if (!$.isEmptyObject(this.djangoGeoJSONValue)) {
 				this.hideOverlay();
-				this.locationInput.val("");
+				this.djangoInput.val("");
 				this.coordinatesOverlayInputs.val("");
 				$(this.addressAutoCompleteInput).val("");
 				this.addMarkerBtn.removeClass("active");
 				this.removeMarker();
-				this.deleteBtn.removeClass("mw-btn-danger").addClass("mw-btn-default disabled");
+				this.disableClearBtn();
 				$(document).trigger(this.markerDeleteTriggerNameSpace,
 					[
-						this.locationFieldValue.lat,
-						this.locationFieldValue.lng,
+						this.djangoGeoJSONValue.lat,
+						this.djangoGeoJSONValue.lng,
 						this.wrapElemSelector,
-						this.locationInput
+						this.djangoInput
 					]
 				);
-				this.locationFieldValue = null;
+				this.djangoGeoJSONValue = null;
 			}
 		},
 
@@ -137,7 +150,7 @@
 			$(".mw-coordinates-overlay", this.wrapElemSelector).toggleClass("hide");
 		},
 
-		updateCoordinatesInputs: function(lat, lng){
+		updateUXCoordinatesInputs: function(lat, lng){
 			$(".mw-overlay-latitude", this.wrapElemSelector).val(lat || "");
 			$(".mw-overlay-longitude", this.wrapElemSelector).val(lng || "");
 		},
@@ -146,7 +159,8 @@
 			var lat = $(".mw-overlay-latitude", this.wrapElemSelector).val();
 			var lng = $(".mw-overlay-longitude", this.wrapElemSelector).val();
 			if (lat && lng){
-				this.updateLocationInput(lat, lng);
+				this.addMarkerToMap(lat, lng);
+				this.updateDjangoInput();
 				this.fitBoundMarker();
 			}
 		},
@@ -170,7 +184,8 @@
 		},
 
 		handleCurrentPosition: function(location){
-			this.updateLocationInput(location.coords.latitude, location.coords.longitude);
+			this.addMarkerToMap(location.coords.latitude, location.coords.longitude);
+			this.updateDjangoInput();
 			this.hideOverlay();
 			this.fitBoundMarker();
 		},
@@ -195,9 +210,10 @@
 				// pressed the Enter key, or the Place Details request failed.
 				return;
 			}
-			var lat = place.geometry.location.lat();
-			var lng = place.geometry.location.lng();
-			this.updateLocationInput(lat, lng, place);
+			const lat = place.geometry.location.lat();
+			const lng = place.geometry.location.lng();
+			this.addMarkerToMap(lat, lng);
+			this.updateDjangoInput(place);
 			this.fitBoundMarker()
 		},
 
