@@ -113,7 +113,6 @@
 		},
 
 		updateDjangoInput: function(place){
-			console.log(place)
 			const django_input_val = this.serializeMarkerToGeoJSON();
 			const lng = django_input_val.coordinates[0];
 			const lat = django_input_val.coordinates[1];

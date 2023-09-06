@@ -23,7 +23,7 @@
 
                     if (!$.isEmptyObject(this.djangoGeoJSONValue)){
                         this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng)
-                        this.updateDjangoInput(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng);
+                        this.updateDjangoInput();
                         this.fitBoundMarker();
                     }
 
@@ -43,7 +43,7 @@
 
                 if (!$.isEmptyObject(this.djangoGeoJSONValue)){
                     this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng)
-                    this.updateDjangoInput(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng);
+                    this.updateDjangoInput();
                     this.fitBoundMarker();
                 }
             }
@@ -76,7 +76,6 @@
         fitBoundMarker: function () {
             var bounds = new google.maps.LatLngBounds();
             bounds.extend(this.marker.getPosition());
-            console.log(this.markerFitZoom)
             this.map.fitBounds(bounds);
             if (this.markerFitZoom && this.isInt(this.markerFitZoom)){
                 var markerFitZoom = parseInt(this.markerFitZoom);

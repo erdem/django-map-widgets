@@ -59,11 +59,11 @@
           var locationInputID = "#{{ id }}";
 
           var mapWidgetOptions = {
-              locationInput: $(locationInputID),
+              djangoInput: $(locationInputID),
               geocoderWrapID: mapboxGeocoderWrapID,
               geocoderInputPlaceholderText: "{% trans 'Find a Location by Address' %}",
               wrapElemSelector: wrapElemSelector,
-              locationFieldValue: field_value,
+              djangoGeoJSONValue: field_value,
               mapElement: document.getElementById(mapElemID),
               mapCenterLocationName: mapOptions.mapCenterLocationName,
               mapCenterLocation: mapOptions.mapCenterLocation,

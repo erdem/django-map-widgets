@@ -52,13 +52,14 @@
             $(this.mapElement).data('mapboxMapObj', this.map);
             $(this.mapElement).data('mapboxMapWidgetObj', this);
 
-            if (!$.isEmptyObject(this.locationFieldValue)){
-                this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
+            if (!$.isEmptyObject(this.djangoGeoJSONValue)){
+                this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng);
+                this.updateDjangoInput();
                 this.fitBoundMarker();
             }
         },
 
-        addMarkerToMap: function(lat, lng){
+        addMarkerToMap: function(lat, lng) {
             this.removeMarker();
             this.marker = new mapboxgl.Marker()
                 .setLngLat([parseFloat(lng), parseFloat(lat)])
@@ -67,7 +68,18 @@
             this.marker.on("dragend", this.dragMarker.bind(this));
         },
 
-        fitBoundMarker: function () {
+        serializeMarkerToGeoJSON: function() {
+            if (this.marker) {
+                const position = this.marker.getLngLat();
+                return {
+                    type: "Point",
+                    coordinates: [position.lng, position.lat]
+                };
+            }
+            return null;
+        },
+
+        fitBoundMarker: function() {
             if (this.marker) {
                 if (this.flyToEnabled){
                     this.map.flyTo({
@@ -83,18 +95,20 @@
             }
         },
 
-        removeMarker: function(e){
-            if (this.marker){
-                this.marker.remove()
+        removeMarker: function() {
+            if (this.marker) {
+                this.marker.remove();
             }
+            this.marker = null;
         },
 
-        dragMarker: function(e){
-            const position = this.marker.getLngLat()
-            this.updateLocationInput(position.lat, position.lng)
+        dragMarker: function(e) {
+            const position = this.marker.getLngLat();
+            this.addMarkerToMap(position.lat, position.lng);
+            this.updateDjangoInput();
         },
 
-        handleAddMarkerBtnClick: function(e){
+        handleAddMarkerBtnClick: function(e) {
             $(this.mapElement).toggleClass("click");
             this.addMarkerBtn.toggleClass("active");
             if ($(this.addMarkerBtn).hasClass("active")){
@@ -104,11 +118,12 @@
             }
         },
 
-        handleMapClick: function(e){
+        handleMapClick: function(e) {
             this.map.off("click", this.handleMapClick.bind(this));
             $(this.mapElement).removeClass("click");
             this.addMarkerBtn.removeClass("active");
-            this.updateLocationInput(e.lngLat.lat, e.lngLat.lng)
+            this.addMarkerToMap(e.lngLat.lat, e.lngLat.lng);
+            this.updateDjangoInput();
         },
 
         callPlaceTriggerHandler: function (lat, lng, place) {
@@ -146,8 +161,10 @@
                 // pressed the Enter key, or the Place Details request failed.
                 return;
             }
-            var [lng, lat] = place.geometry.coordinates;
-            this.updateLocationInput(lat, lng, place);
+            const lng = place.geometry.coordinates[0];
+            const lat = place.geometry.coordinates[1];
+            this.addMarkerToMap(lat, lng);
+            this.updateDjangoInput(place);
             this.fitBoundMarker()
         }
     });
