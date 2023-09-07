@@ -37,8 +37,10 @@ DEFAULTS = {
     ),
 
     "OSMPointFieldWidget": (
+        ("zoom", 12),
         ("markerFitZoom", 14),
         ("showZoomNavigation", True),
+        ("mapCenterLocation", TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC"))),
     ),
 
     "GoogleStaticMapWidget": (

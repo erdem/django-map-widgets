@@ -1,69 +1,85 @@
 (function($) {
     DjangoOSMPointFieldWidget = DjangoMapWidgetBase.extend({
 
-        initializeMap: function() {
-            let mapCenter = this.mapCenterLocation;
-            this.map = L.map(this.mapElement).setView([mapCenter[0], mapCenter[1]], this.zoom);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(this.map);
+        initializeMap: function(){
+            this.map = L.map(this.mapElement.id).setView(this.mapCenterLocation, this.zoom);
 
-            if (!$.isEmptyObject(this.locationFieldValue)) {
-                this.updateLocationInput(this.locationFieldValue.lat, this.locationFieldValue.lng);
-                this.fitBoundMarker();
-            }
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+            }).addTo(this.map);
 
             $(this.mapElement).data('osmMapObj', this.map);
             $(this.mapElement).data('osmMapWidgetObj', this);
+
+            if (!$.isEmptyObject(this.djangoGeoJSONValue)){
+                this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng);
+                this.updateDjangoInput();
+                this.fitBoundMarker();
+            }
         },
 
         addMarkerToMap: function(lat, lng) {
             this.removeMarker();
-            this.marker = L.marker([lat, lng], { draggable: true }).addTo(this.map);
-            this.marker.on('dragend', this.dragMarker.bind(this));
+            this.marker = L.marker([lat, lng], {draggable: true}).addTo(this.map);
+            this.marker.on("dragend", this.dragMarker.bind(this));
+        },
+
+        serializeMarkerToGeoJSON: function() {
+            if (this.marker) {
+                const position = this.marker.getLatLng();
+                return {
+                    type: "Point",
+                    coordinates: [position.lng, position.lat]
+                };
+            }
+            return null;
         },
 
         fitBoundMarker: function() {
-            var bounds = L.latLngBounds([this.marker.getLatLng()]);
-            this.map.fitBounds(bounds);
-
-            if (this.markerFitZoom && this.isInt(this.markerFitZoom)) {
-                var markerFitZoom = parseInt(this.markerFitZoom);
-                this.map.on('zoomend', function() {
-                    if (this.map.getZoom() > markerFitZoom) {
-                        this.map.setZoom(markerFitZoom);
-                    }
-                }.bind(this));
+            if (this.marker) {
+                this.map.setView(this.marker.getLatLng(), this.markerFitZoom || 14);
             }
         },
+
+        updateDjangoInput: function(place){
+			const django_input_val = this.serializeMarkerToGeoJSON();
+			const lng = django_input_val.coordinates[0];
+			const lat = django_input_val.coordinates[1];
+			this.djangoInput.val(JSON.stringify(django_input_val));
+			this.updateUXCoordinatesInputs(lat, lng);
+			this.updateDjangoGeoJSONValue(lat, lng);
+			this.enableClearBtn();
+		},
 
         removeMarker: function() {
             if (this.marker) {
                 this.map.removeLayer(this.marker);
             }
+            this.marker = null;
         },
 
         dragMarker: function(e) {
-            var latlng = e.target.getLatLng();
-            this.updateLocationInput(latlng.lat, latlng.lng);
+            const position = e.target.getLatLng();
+            this.addMarkerToMap(position.lat, position.lng);
+            this.updateDjangoInput();
         },
 
-        handleAddMarkerBtnClick: function() {
+        handleAddMarkerBtnClick: function(e) {
             $(this.mapElement).toggleClass("click");
             this.addMarkerBtn.toggleClass("active");
-
-            if ($(this.addMarkerBtn).hasClass("active")) {
-                this.map.on('click', this.handleMapClick.bind(this));
+            if ($(this.addMarkerBtn).hasClass("active")){
+                this.map.on("click", this.handleMapClick.bind(this));
             } else {
-                this.map.off('click');
+                this.map.off("click", this.handleMapClick.bind(this));
             }
         },
 
         handleMapClick: function(e) {
-            this.map.off('click');
+            this.map.off("click", this.handleMapClick.bind(this));
             $(this.mapElement).removeClass("click");
             this.addMarkerBtn.removeClass("active");
-            this.updateLocationInput(e.latlng.lat, e.latlng.lng);
+            this.addMarkerToMap(e.latlng.lat, e.latlng.lng);
+            this.updateDjangoInput();
         }
     });
 

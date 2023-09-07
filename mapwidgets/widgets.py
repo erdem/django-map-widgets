@@ -133,12 +133,13 @@ class OSMPointFieldWidget(BasePointFieldMapWidget):
 
     @property
     def media(self):
+
         css = {
             'all': [
+                'https://unpkg.com/leaflet@1.7.1/dist/leaflet.css',
                 'mapwidgets/css/map_widgets.css',
             ]
         }
-
         js = [
             'https://unpkg.com/leaflet@1.7.1/dist/leaflet.js',
             'mapwidgets/js/jquery_init.js',
@@ -148,37 +149,6 @@ class OSMPointFieldWidget(BasePointFieldMapWidget):
         ]
 
         return forms.Media(js=js, css=css)
-
-    def render(self, name, value, attrs=None, renderer=None):
-        if attrs is None:
-            attrs = dict()
-
-        field_value = {}
-        if value and isinstance(value, str):
-            value = self.deserialize(value)
-            longitude, latitude = value.coords
-            field_value['lng'] = longitude
-            field_value['lat'] = latitude
-
-        if isinstance(value, Point):
-            if value.srid and value.srid != self.map_srid:
-                value.transform(self.map_srid)
-
-            longitude, latitude = value.coords
-            field_value['lng'] = longitude
-            field_value['lat'] = latitude
-
-        extra_attrs = {
-            'options': json_script(json.dumps(self.map_options())),
-            'field_value': json_script(json.dumps(field_value))
-        }
-        attrs.update(extra_attrs)
-
-        self.as_super = super(OSMPointFieldWidget, self)
-        if renderer is not None:
-            return self.as_super.render(name, value, attrs, renderer)
-        else:
-            return self.as_super.render(name, value, attrs)
 
 
 class PointFieldInlineWidgetMixin(object):
