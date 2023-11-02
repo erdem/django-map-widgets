@@ -10,16 +10,20 @@
 			this.myLocationBtn.on("click", this.handleMyLocationBtnClick.bind(this));
 			this.deleteBtn.on("click", this.resetMap.bind(this));
 
-			// if the the location field in a collapse on Django admin form, the map need to initialize again when the collapse open by user.
+			// if the location field in a collapse on Django admin form, the map need to initialize again when the collapse open by user.
 			if ($(this.wrapElemSelector).closest('.module.collapse').length){
 				$(document).on('show.fieldset', this.initializeMap.bind(this));
 			}
 
-			var autocomplete = new google.maps.places.Autocomplete(this.addressAutoCompleteInput, this.GooglePlaceAutocompleteOptions);
-			google.maps.event.addListener(autocomplete, 'place_changed', this.handleAutoCompletePlaceChange.bind(this, autocomplete));
+			let autocomplete = new google.maps.places.Autocomplete(this.addressAutoCompleteInput, this.GooglePlaceAutocompleteOptions);
+			google.maps.event.addEventListener(autocomplete, 'place_changed', this.handleAutoCompletePlaceChange.bind(this, autocomplete));
 			google.maps.event.addDomListener(this.addressAutoCompleteInput, 'keydown', this.handleAutoCompleteInputKeyDown.bind(this));
 			this.geocoder = new google.maps.Geocoder;
-			this.initializeMap.bind(this)();
+			this.initializeWidget.bind(this)();
+		},
+
+		initializeWidget: function(){
+			console.warn("Implement initializeMap method.");
 		},
 
 		initializeMap: function(){
@@ -66,10 +70,10 @@
 
 		callPlaceTriggerHandler: function (lat, lng, place) {
 			if (place === undefined){
-                var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)};
+                let latlng = {lat: parseFloat(lat), lng: parseFloat(lng)};
 				this.geocoder.geocode({'location' : latlng}, function(results, status) {
                     if (status === google.maps.GeocoderStatus.OK) {
-	                    var placeObj = results[0] || {};
+	                    let placeObj = results[0] || {};
 	                    $(this.addressAutoCompleteInput).val(placeObj.formatted_address || "");
 	                    $(document).trigger(this.placeChangedTriggerNameSpace,
 		                    [placeObj, lat, lng, this.wrapElemSelector, this.djangoInput]
@@ -155,8 +159,8 @@
 		},
 
 		handleCoordinatesInputsChange: function (e) {
-			var lat = $(".mw-overlay-latitude", this.wrapElemSelector).val();
-			var lng = $(".mw-overlay-longitude", this.wrapElemSelector).val();
+			let lat = $(".mw-overlay-latitude", this.wrapElemSelector).val();
+			let lng = $(".mw-overlay-longitude", this.wrapElemSelector).val();
 			if (lat && lng){
 				this.addMarkerToMap(lat, lng);
 				this.updateDjangoInput();
@@ -195,7 +199,7 @@
 		},
 
 		handleAutoCompleteInputKeyDown: function (e) {
-			var keyCode = e.keyCode || e.which;
+			let keyCode = e.keyCode || e.which;
 			if (keyCode === 13){  // pressed enter key
 				e.preventDefault();
 				return false;
@@ -203,7 +207,7 @@
 		},
 
 		handleAutoCompletePlaceChange: function (autocomplete) {
-			var place = autocomplete.getPlace();
+			let place = autocomplete.getPlace();
 			if (!place.geometry) {
 				// User entered the name of a Place that was not suggested and
 				// pressed the Enter key, or the Place Details request failed.
