@@ -7,7 +7,6 @@ from django.contrib.gis.geos import Point
 from django.core.exceptions import ImproperlyConfigured
 from django.template.loader import render_to_string
 from django.templatetags.static import static
-from django.utils.html import json_script
 from django.utils.http import urlencode
 
 from mapwidgets.constants import STATIC_MAP_PLACEHOLDER_IMAGE

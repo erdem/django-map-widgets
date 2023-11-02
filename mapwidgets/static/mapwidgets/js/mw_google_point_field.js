@@ -78,7 +78,6 @@
                     coordinates: [position.lng(), position.lat()]
                 };
             }
-            return null;
         },
 
         fitBoundMarker: function () {

@@ -21,9 +21,11 @@
 
                 <a class="mw-btn mw-btn-info mw-btn-my-location" >{% trans "Use My Location" %}</a>
                 <a class="mw-btn mw-btn-warning mw-btn-add-marker" ><i class="icon-location"></i> <span class="point-text">{% trans "Choose point on map" %}</span></a>
-                <div class="mw-adress-input-wrap pull-right">
-                    <input type="text" class="form-control pull-right" id="{{ name }}-mw-google-address-input" role="presentation" autocomplete="off" placeholder="{% trans 'Find a Location by Address' %}" />
-                </div>
+
+{# OSM widget has no place lookup functionality yet #}
+{#                <div class="mw-adress-input-wrap pull-right">#}
+{#                    <input type="text" class="form-control pull-right" id="{{ name }}-mw-google-address-input" role="presentation" autocomplete="off" placeholder="{% trans 'Find a Location by Address' %}" />#}
+{#                </div>#}
             {% endblock header %}
         </div>
 

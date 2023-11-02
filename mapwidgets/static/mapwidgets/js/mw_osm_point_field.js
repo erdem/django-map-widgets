@@ -47,7 +47,10 @@
 			const lat = django_input_val.coordinates[1];
 			this.djangoInput.val(JSON.stringify(django_input_val));
 			this.updateUXCoordinatesInputs(lat, lng);
-			this.updateDjangoGeoJSONValue(lat, lng);
+            this.djangoGeoJSONValue = {
+                "lng": lng,
+                "lat": lat
+            };
 			this.enableClearBtn();
 		},
 

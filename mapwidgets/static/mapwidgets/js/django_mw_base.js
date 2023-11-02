@@ -61,14 +61,14 @@
 
 		callPlaceTriggerHandler: function (lat, lng, place) {
 			if (place === undefined){
-                var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)};
+				var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)};
 				this.geocoder.geocode({'location' : latlng}, function(results, status) {
-                    if (status === google.maps.GeocoderStatus.OK) {
-	                    var placeObj = results[0] || {};
-	                    $(this.addressAutoCompleteInput).val(placeObj.formatted_address || "");
-	                    $(document).trigger(this.placeChangedTriggerNameSpace,
-		                    [placeObj, lat, lng, this.wrapElemSelector, this.djangoInput]
-	                    );
+					if (status === google.maps.GeocoderStatus.OK) {
+						var placeObj = results[0] || {};
+						$(this.addressAutoCompleteInput).val(placeObj.formatted_address || "");
+						$(document).trigger(this.placeChangedTriggerNameSpace,
+							[placeObj, lat, lng, this.wrapElemSelector, this.djangoInput]
+						);
 						if ($.isEmptyObject(this.djangoGeoJSONValue)){
 							$(document).trigger(this.markerCreateTriggerNameSpace,
 								[placeObj, lat, lng, this.wrapElemSelector, this.djangoInput]
@@ -78,24 +78,12 @@
 								[placeObj, lat, lng, this.wrapElemSelector, this.djangoInput]
 							);
 						}
-                    }
-                }.bind(this));
+					}
+				}.bind(this));
 			}else{  // user entered an address
 				$(document).trigger(this.placeChangedTriggerNameSpace,
 					[place, lat, lng, this.wrapElemSelector, this.djangoInput]
 				);
-			}
-		},
-
-		updateDjangoGeoJSONValue: function(lat, lng){
-			if (this.djangoGeoJSONValue){
-				this.djangoGeoJSONValue.lat = lat;
-				this.djangoGeoJSONValue.lng = lng;
-			}else{
-				this.djangoGeoJSONValue = {
-					"lng": lng,
-					"lat": lat
-				};
 			}
 		},
 
@@ -114,7 +102,10 @@
 			this.djangoInput.val(JSON.stringify(django_input_val));
 			this.updateUXCoordinatesInputs(lat, lng);
 			this.callPlaceTriggerHandler(lat, lng, place);
-			this.updateDjangoGeoJSONValue(lat, lng);
+			this.djangoGeoJSONValue = {
+				"lng": lng,
+				"lat": lat
+			};
 			this.enableClearBtn();
 		},
 

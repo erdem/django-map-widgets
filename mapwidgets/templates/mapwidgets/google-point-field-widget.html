@@ -51,13 +51,13 @@
 {% block javascript %}
     <script type="application/javascript">
         (function($) {
-            var mapOptions = JSON.parse("{{ options|escapejs }}");
-            var field_value = JSON.parse("{{ field_value|escapejs }}");
+            const mapOptions = JSON.parse("{{ options|escapejs }}");
+            const field_value = JSON.parse("{{ field_value|escapejs }}");
 
-            var wrapElemSelector = "#{{ name }}-mw-wrap";
-            var mapElemID = "{{ name }}-map-elem";
-            var googleAutoInputID = "{{ name }}-mw-google-address-input";
-            var locationInputID = "#{{ id }}";
+            const wrapElemSelector = "#{{ name }}-mw-wrap";
+            const mapElemID = "{{ name }}-map-elem";
+            const googleAutoInputID = "{{ name }}-mw-google-address-input";
+            const locationInputID = "#{{ id }}";
 
             const mapWidgetOptions = {
                 djangoInput: $(locationInputID),
