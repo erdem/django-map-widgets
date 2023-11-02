@@ -10,15 +10,10 @@
 			this.myLocationBtn.on("click", this.handleMyLocationBtnClick.bind(this));
 			this.deleteBtn.on("click", this.resetMap.bind(this));
 
-			// if the the location field in a collapse on Django admin form, the map need to initialize again when the collapse open by user.
+			// if the location field in a collapse on Django admin form, the map need to initialize again when the collapse open by user.
 			if ($(this.wrapElemSelector).closest('.module.collapse').length){
 				$(document).on('show.fieldset', this.initializeMap.bind(this));
 			}
-
-			var autocomplete = new google.maps.places.Autocomplete(this.addressAutoCompleteInput, this.GooglePlaceAutocompleteOptions);
-			google.maps.event.addListener(autocomplete, 'place_changed', this.handleAutoCompletePlaceChange.bind(this, autocomplete));
-			google.maps.event.addDomListener(this.addressAutoCompleteInput, 'keydown', this.handleAutoCompleteInputKeyDown.bind(this));
-			this.geocoder = new google.maps.Geocoder;
 			this.initializeMap.bind(this)();
 		},
 
@@ -193,29 +188,6 @@
 			this.hideOverlay();
 			alert("Your location could not be found.");
 		},
-
-		handleAutoCompleteInputKeyDown: function (e) {
-			var keyCode = e.keyCode || e.which;
-			if (keyCode === 13){  // pressed enter key
-				e.preventDefault();
-				return false;
-			}
-		},
-
-		handleAutoCompletePlaceChange: function (autocomplete) {
-			var place = autocomplete.getPlace();
-			if (!place.geometry) {
-				// User entered the name of a Place that was not suggested and
-				// pressed the Enter key, or the Place Details request failed.
-				return;
-			}
-			const lat = place.geometry.location.lat();
-			const lng = place.geometry.location.lng();
-			this.addMarkerToMap(lat, lng);
-			this.updateDjangoInput(place);
-			this.fitBoundMarker()
-		},
-
 
 		showOverlay: function(){
 			this.loaderOverlayElem.removeClass("hide")
