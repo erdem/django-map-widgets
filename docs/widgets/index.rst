@@ -6,6 +6,7 @@ Map Widgets
 .. toctree::
    :maxdepth: 2
 
+   settings
    mapbox_point_field_map_widgets
    google_point_field_map_widgets
    google_point_field_inline_map_widgets

@@ -53,7 +53,6 @@ Usage
 
 **Settings**
 
-In your ``settings.py`` file, add your ``MAP_WIDGETS`` config:
 
 .. code-block:: python
 
