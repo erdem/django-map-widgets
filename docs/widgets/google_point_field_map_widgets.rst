@@ -58,14 +58,14 @@ In your ``settings.py`` file, add your ``MAP_WIDGETS`` config:
 .. code-block:: python
 
     MAP_WIDGETS = {
-        "GooglePointFieldWidget": (
-            ("zoom", 15),
-            ("mapCenterLocationName", "london"),
-            ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'uk'}}),
-            ("markerFitZoom", 12),
-            ("scrollWheel", False),
-            ("streetViewControl", True),
-        ),
+        "GooglePointFieldWidget": {
+            "zoom": 15,
+            "mapCenterLocationName": "london",
+            "GooglePlaceAutocompleteOptions": {'componentRestrictions': {'country': 'uk'}},
+            "markerFitZoom": 12,
+            "scrollWheel": False,
+            "streetViewControl": True,
+        },
         "GOOGLE_MAP_API_KEY": "<google-api-key>"
     }
 
@@ -74,10 +74,10 @@ If you want to give specific location name or coordinates for center of the map,
 .. code-block:: python
 
     MAP_WIDGETS = {
-        "GooglePointFieldWidget": (
-            ("zoom", 15),
-            ("mapCenterLocation", [57.7177013, -16.6300491]),
-        ),
+        "GooglePointFieldWidget": {
+            "zoom": 15,
+            "mapCenterLocation": [57.7177013, -16.6300491],
+        },
         "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
     }
 
@@ -86,10 +86,10 @@ If you want to give specific location name or coordinates for center of the map,
 .. code-block:: python
 
     MAP_WIDGETS = {
-        "GooglePointFieldWidget": (
-            ("zoom", 15),
-            ("mapCenterLocationName", 'Canada'),
-        ),
+        "GooglePointFieldWidget": {
+            "zoom": 15,
+            "mapCenterLocationName": 'Canada',
+        },
         "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
     }
 
@@ -115,10 +115,10 @@ You can also give specific `settings` as a parameter for each widget.
     from mapwidgets.widgets import GooglePointFieldWidget
 
     CUSTOM_MAP_SETTINGS = {
-        "GooglePointFieldWidget": (
-            ("zoom", 15),
-            ("mapCenterLocation", [60.7177013, -22.6300491]),
-        ),
+        "GooglePointFieldWidget": {
+            "zoom": 15,
+            "mapCenterLocation": [60.7177013, -22.6300491],
+        },
     }
 
     class CityAdmin(admin.ModelAdmin):
@@ -151,7 +151,7 @@ You can also give specific `settings` as a parameter for each widget.
     class CityAdminForm(forms.ModelForm):
         class Meta:
             model = City
-            fields = ("coordinates", "city_hall")
+            fields = "coordinates": "city_hall"
             widgets = {
                 'coordinates': GooglePointFieldWidget,
                 'city_hall': GooglePointFieldWidget,
@@ -175,28 +175,28 @@ If you need to develop your map UI on front-end side, you can use map widget jQu
 .. code-block:: javascript
 
       (function ($){
-          $(document).on("google_point_map_widget:marker_create", function (e, lat, lng, locationInputElem, mapWrapID) {
+          $(document).on"google_point_map_widget:marker_create": function (e, lat, lng, locationInputElem, mapWrapID {
               console.log("EVENT: marker_create"); // django widget textarea widget (hidden)
               console.log(locationInputElem); // django widget textarea widget (hidden)
               console.log(lat, lng); // created marker coordinates
               console.log(mapWrapID); // map widget wrapper element ID
           });
 
-          $(document).on("google_point_map_widget:marker_change", function (e, lat, lng, locationInputElem, mapWrapID) {
+          $(document).on"google_point_map_widget:marker_change": function (e, lat, lng, locationInputElem, mapWrapID {
               console.log("EVENT: marker_change"); // django widget textarea widget (hidden)
               console.log(locationInputElem); // django widget textarea widget (hidden)
               console.log(lat, lng);  // changed marker coordinates
               console.log(mapWrapID); // map widget wrapper element ID
           });
 
-          $(document).on("google_point_map_widget:marker_delete", function (e, lat, lng, locationInputElem, mapWrapID) {
+          $(document).on"google_point_map_widget:marker_delete": function (e, lat, lng, locationInputElem, mapWrapID {
               console.log("EVENT: marker_delete"); // django widget textarea widget (hidden)
               console.log(locationInputElem); // django widget textarea widget (hidden)
               console.log(lat, lng);  // deleted marker coordinates
               console.log(mapWrapID); // map widget wrapper element ID
           })
 
-          $(document).on("google_point_map_widget:place_changed", function (e, place, lat, lng, locationInputElem, mapWrapID) {
+          $(document).on"google_point_map_widget:place_changed": function (e, place, lat, lng, locationInputElem, mapWrapID {
               console.log("EVENT: place_changed"); // django widget textarea widget (hidden)
               console.log(place);  // google geocoder place object
               console.log(locationInputElem); // django widget textarea widget (hidden)

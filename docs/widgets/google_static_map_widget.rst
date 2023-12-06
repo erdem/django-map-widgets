@@ -13,24 +13,24 @@ Here is the all default settings attribute for google static map widget.
 .. code-block:: python
 
     MAP_WIDGETS = {
-        "GoogleStaticMapWidget": (
-            ("zoom", 15),
-            ("size", "480x480"),
-            ("scale", ""),
-            ("format", ""),
-            ("maptype", ""),
-            ("path", ""),
-            ("visible", ""),
-            ("style", ""),
-            ("language", ""),
-            ("region", "")
-        ),
+        "GoogleStaticMapWidget": {
+            "zoom": 15,
+            "size": "480x480",
+            "scale": "",
+            "format": "",
+            "maptype": "",
+            "path": "",
+            "visible": "",
+            "style": "",
+            "language": "",
+            "region": ""
+        },
 
-        "GoogleStaticMapMarkerSettings": (
-            ("size", "normal"),
-            ("color", ""),
-            ("icon", ""),
-        ),
+        "GoogleStaticMapMarkerSettings": {
+            "size": "normal",
+            "color": "",
+            "icon": "",
+        },
         "LANGUAGE": "en",
         "GOOGLE_MAP_API_SIGNATURE": "",
         "GOOGLE_MAP_API_KEY": "",
@@ -53,13 +53,13 @@ In your ``settings.py`` file, add your ``MAP_WIDGETS`` config:
 .. code-block:: python
 
     MAP_WIDGETS = {
-        "GoogleStaticMapWidget": (
-            ("zoom", 15),
-            ("size", "320x320"),
-        ),
-        "GoogleStaticMapMarkerSettings": (
-            ("color", "green"),
-        ),
+        "GoogleStaticMapWidget": {
+            "zoom": 15,
+            "size": "320x320",
+        },
+        "GoogleStaticMapMarkerSettings": {
+            "color": "green",
+        },
         "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
     }
 
@@ -87,7 +87,7 @@ In your ``settings.py`` file, add your ``MAP_WIDGETS`` config:
 
         class Meta:
             model = City
-            fields = ("name", "coordinates", "city_hall")
+            fields = "name": "coordinates", "city_hall"
             widgets = {
                 'coordinates': GoogleStaticMapWidget,
                 'city_hall': GoogleStaticMapWidget(zoom=12, size="240x240"),

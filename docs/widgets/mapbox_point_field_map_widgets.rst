@@ -121,7 +121,7 @@ Use the widget in Django Admin or Forms:
 
         class Meta:
             model = House
-            fields = ("name", "location", "location_has_default")
+            fields = "name": "location", "location_has_default"
             widgets = {
                 "location": GooglePointFieldWidget,
             }
@@ -137,17 +137,17 @@ Custom settings can provide individual form fields separately with `settings` as
     from mapwidgets.widgets import MapboxPointFieldWidget
 
     FIRST_WIDGET_SETTINGS = {
-        "MapboxPointFieldWidget": (
-            ("zoom", 15),
-            ("mapCenterLocation", [60.7177013, -22.6300491]),
-        ),
+        "MapboxPointFieldWidget": {
+            "zoom": 15,
+            "mapCenterLocation": [60.7177013, -22.6300491],
+        },
     }
 
     SECOND_WIDGET_SETTINGS = {
-        "MapboxPointFieldWidget": (
-            ("zoom", 15),
-            ("mapCenterLocation", [60.7177013, -22.6300491]),
-        ),
+        "MapboxPointFieldWidget": {
+            "zoom": 15,
+            "mapCenterLocation": [60.7177013, -22.6300491],
+        },
     }
 
     class HouseCreateForm(forms.ModelForm):
@@ -156,7 +156,7 @@ Custom settings can provide individual form fields separately with `settings` as
 
         class Meta:
             model = House
-            fields = ("name", "location", "location_has_default")
+            fields = "name": "location", "location_has_default"
 
 
 
@@ -179,28 +179,28 @@ If you need to develop your map UI on front-end side, you can use map widget jQu
 .. code-block:: javascript
 
       (function ($){
-          $(document).on("mapbox_point_map_widget:marker_create", function (e, lat, lng, locationInputElem, mapWrapID) {
+          $(document).on"mapbox_point_map_widget:marker_create": function (e, lat, lng, locationInputElem, mapWrapID {
               console.log("EVENT: marker_create"); // django widget textarea widget (hidden)
               console.log(locationInputElem); // django widget textarea widget (hidden)
               console.log(lat, lng); // created marker coordinates
               console.log(mapWrapID); // map widget wrapper element ID
           });
 
-          $(document).on("mapbox_point_map_widget:marker_change", function (e, lat, lng, locationInputElem, mapWrapID) {
+          $(document).on"mapbox_point_map_widget:marker_change": function (e, lat, lng, locationInputElem, mapWrapID {
               console.log("EVENT: marker_change"); // django widget textarea widget (hidden)
               console.log(locationInputElem); // django widget textarea widget (hidden)
               console.log(lat, lng);  // changed marker coordinates
               console.log(mapWrapID); // map widget wrapper element ID
           });
 
-          $(document).on("mapbox_point_map_widget:marker_delete", function (e, lat, lng, locationInputElem, mapWrapID) {
+          $(document).on"mapbox_point_map_widget:marker_delete": function (e, lat, lng, locationInputElem, mapWrapID {
               console.log("EVENT: marker_delete"); // django widget textarea widget (hidden)
               console.log(locationInputElem); // django widget textarea widget (hidden)
               console.log(lat, lng);  // deleted marker coordinates
               console.log(mapWrapID); // map widget wrapper element ID
           })
 
-          $(document).on("mapbox_point_map_widget:place_changed", function (e, place, lat, lng, locationInputElem, mapWrapID) {
+          $(document).on"mapbox_point_map_widget:place_changed": function (e, place, lat, lng, locationInputElem, mapWrapID {
               console.log("EVENT: place_changed"); // django widget textarea widget (hidden)
               console.log(place);  // mapbox geocoder place object
               console.log(locationInputElem); // django widget textarea widget (hidden)
