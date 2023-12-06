@@ -6,75 +6,70 @@ from mapwidgets.constants import TIMEZONE_COORDINATES
 
 
 DEFAULTS = {
-    "GooglePointFieldWidget": (
-        ("mapCenterLocationName", None),
-        ("mapCenterLocation", TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC"))),
-        ("zoom", 12),
-        ("scrollWheel", False),
-        ("GooglePlaceAutocompleteOptions", {}),
-        ("markerFitZoom", 14),
-        ("streetViewControl", True),
-    ),
-
-    "MapboxPointFieldWidget": (
-        ("access_token", ""),
-        ("markerFitZoom", 14),
-        ("showZoomNavigation", True),
-        ("mapOptions", {
+    "GooglePointFieldWidget": {
+        "mapCenterLocationName": None,
+        "mapCenterLocation": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
+        "zoom": 12,
+        "scrollWheel": False,
+        "GooglePlaceAutocompleteOptions": {},
+        "markerFitZoom": 14,
+        "streetViewControl": True,
+    },
+    "MapboxPointFieldWidget": {
+        "access_token": "",
+        "markerFitZoom": 14,
+        "showZoomNavigation": True,
+        "mapOptions": {
             "zoom": 12,
             "style": "mapbox://styles/mapbox/streets-v11",
             "scrollZoom": False,
             "animate": False,
             "center": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
-        }),
-        ("geocoderOptions", {
+        },
+        "geocoderOptions": {
             "zoom": 6,
             "flyTo": False,
             "style": "mapbox://styles/mapbox/streets-v11",
             "reverseGeocode": True,
             "marker": False,
-        })
-    ),
-
-    "OSMPointFieldWidget": (
-        ("zoom", 12),
-        ("markerFitZoom", 14),
-        ("showZoomNavigation", True),
-        ("mapCenterLocation", TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC"))),
-    ),
-
-    "GoogleStaticMapWidget": (
-        ("zoom", 15),
-        ("size", "480x480"),
-        ("scale", ""),
-        ("format", ""),
-        ("maptype", ""),
-        ("path", ""),
-        ("visible", ""),
-        ("style", ""),
-        ("language", ""),
-        ("region", "")
-    ),
-
-    "GoogleStaticMapMarkerSettings": (
-        ("size", "normal"),
-        ("color", ""),
-        ("icon", ""),
-    ),
-
-    "GoogleStaticOverlayMapWidget": (
-        ("zoom", 15),
-        ("size", "480x480"),
-        ("thumbnail_size", "160x160"),
-        ("scale", ""),
-        ("format", ""),
-        ("maptype", ""),
-        ("path", ""),
-        ("visible", ""),
-        ("style", ""),
-        ("language", ""),
-        ("region", "")
-    ),
+        }
+    },
+    "OSMPointFieldWidget": {
+        "zoom": 12,
+        "markerFitZoom": 14,
+        "showZoomNavigation": True,
+        "mapCenterLocation": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
+    },
+    "GoogleStaticMapWidget": {
+        "zoom": 15,
+        "size": "480x480",
+        "scale": "",
+        "format": "",
+        "maptype": "",
+        "path": "",
+        "visible": "",
+        "style": "",
+        "language": "",
+        "region": ""
+    },
+    "GoogleStaticMapMarkerSettings": {
+        "size": "normal",
+        "color": "",
+        "icon": "",
+    },
+    "GoogleStaticOverlayMapWidget": {
+        "zoom": 15,
+        "size": "480x480",
+        "thumbnail_size": "160x160",
+        "scale": "",
+        "format": "",
+        "maptype": "",
+        "path": "",
+        "visible": "",
+        "style": "",
+        "language": "",
+        "region": ""
+    },
     "LANGUAGE": "en",
     "LIBRARIES": "places",
     "srid": 4326,
@@ -85,66 +80,36 @@ DEFAULTS = {
 }
 
 
-class MapWidgetSettings(object):
-
+class MapWidgetSettings:
     def __init__(self, app_settings=None, defaults=None):
-        if app_settings:
-            if not isinstance(app_settings, (dict, tuple)):
-                raise TypeError(_("MapWidget settings must be a tuple or dictionary"))
-            self._app_settings = app_settings
-
+        self.django_settings = getattr(django_settings, 'MAP_WIDGETS', {})
+        self._app_settings = app_settings if isinstance(app_settings, dict) else self.django_settings
         self.defaults = defaults or DEFAULTS
 
     @property
     def app_settings(self):
-        if not hasattr(self, '_app_settings'):
-            app_settings = getattr(django_settings, 'MAP_WIDGETS', {})
-            if not isinstance(app_settings, (dict, tuple)):
-                raise TypeError(_("MapWidget settings must be a tuple or dictionary"))
-
-            self._app_settings = getattr(django_settings, 'MAP_WIDGETS', {})
         return self._app_settings
 
-    def __getattr__(self, attr):
-        if attr not in self.defaults.keys():
-            raise AttributeError("Invalid settings key: '%s'. Please check the settings documentation http://django-map-widgets.readthedocs.io/en/latest/widgets/settings.html" % attr)
+    def get_settings(self, attr):
+        user_settings = self.app_settings.get(attr, {})
+        default_settings = self.defaults.get(attr, {})
 
+        if not user_settings:
+            return default_settings
+
+        # Merge settings, with user settings overriding defaults
         try:
-            # Check if present attr in user settings
-            settings = self.app_settings[attr]
+            merged_settings = {**default_settings, **user_settings}
+        except TypeError:
+            raise TypeError(f"Invalid settings type: '{attr}'. Please check the settings documentation.")
+        return merged_settings
 
-            # Merge app tuple settings with defaults
-            if isinstance(settings, tuple):
-                try:
-                    # support backwards compatibility for old settings format
-                    settings = dict(settings)
-                except ValueError:
-                    raise ValueError(_("Invalid %s settings value. Please check the settings documentation http://django-map-widgets.readthedocs.io/en/latest/widgets/settings.html" % attr))
+    def __getattr__(self, attr):
+        if attr not in self.defaults:
+            raise AttributeError(f"Invalid settings key: '{attr}'. Please check the settings documentation.")
 
-            # Merge app dict settings with defaults
-            if type(settings) is dict:
-                django_settings = dict(self.defaults[attr])
-                for key, value in settings.items():
-                    # merge nested settings with defaults if it is dictionary
-                    if type(value) is dict:
-                        nested_setting = django_settings[key]
-                        for k, v in value.items():
-                            nested_setting[k] = v
-                        value = nested_setting
-                    django_settings[key] = value
-                settings = django_settings
-
-        except KeyError:
-            # Fall back to defaults
-            settings = self.defaults[attr]
-            if isinstance(settings, tuple):
-                try:
-                    settings = dict(settings)
-                except ValueError:
-                    raise ValueError(_("Invalid %s settings value. Please check the settings documentation http://django-map-widgets.readthedocs.io/en/latest/widgets/settings.html" % attr))
-
-        # Cache the result
-        setattr(self, attr, settings)
+        settings = self.get_settings(attr)
+        setattr(self, attr, settings)  # Cache the result
         return settings
 
 
