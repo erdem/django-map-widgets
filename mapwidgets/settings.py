@@ -6,69 +6,84 @@ from mapwidgets.constants import TIMEZONE_COORDINATES
 
 
 DEFAULTS = {
-    "GooglePointFieldWidget": {
-        "mapCenterLocationName": None,
-        "mapCenterLocation": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
-        "zoom": 12,
-        "scrollWheel": False,
-        "GooglePlaceAutocompleteOptions": {},
-        "markerFitZoom": 14,
-        "streetViewControl": True,
-    },
-    "MapboxPointFieldWidget": {
-        "access_token": "",
-        "markerFitZoom": 14,
-        "showZoomNavigation": True,
-        "mapOptions": {
-            "zoom": 12,
-            "style": "mapbox://styles/mapbox/streets-v11",
-            "scrollZoom": False,
-            "animate": False,
-            "center": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
-        },
-        "geocoderOptions": {
-            "zoom": 6,
-            "flyTo": False,
-            "style": "mapbox://styles/mapbox/streets-v11",
-            "reverseGeocode": True,
-            "marker": False,
+    "GoogleMap": {
+        "PointFieldWidget": {
+            "interactive": {
+                "mapCenterLocationName": None,
+                "mapCenterLocation": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
+                "zoom": 12,
+                "scrollWheel": False,
+                "GooglePlaceAutocompleteOptions": {},
+                "markerFitZoom": 14,
+                "streetViewControl": True,
+            },
+            "read-only": {
+                "thumbnail": {
+                    "zoom": 15,
+                    "size": "480x480",
+                    "scale": "",
+                    "format": "",
+                    "maptype": "",
+                    "path": "",
+                    "visible": "",
+                    "style": "",
+                    "language": "",
+                    "region": "",
+                    "marker": {
+                        "size": "normal",
+                        "color": "",
+                        "icon": "",
+                    }
+                },
+                "overlay": {
+                    "zoom": 15,
+                    "size": "480x480",
+                    "thumbnail_size": "160x160",
+                    "scale": "",
+                    "format": "",
+                    "maptype": "",
+                    "path": "",
+                    "visible": "",
+                    "style": "",
+                    "language": "",
+                    "region": "",
+                    "marker": {
+                        "size": "normal",
+                        "color": "",
+                        "icon": "",
+                    }
+                },
+            }
         }
     },
-    "OSMPointFieldWidget": {
-        "zoom": 12,
-        "markerFitZoom": 14,
-        "showZoomNavigation": True,
-        "mapCenterLocation": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
+    "Mapbox": {
+        "PointFieldWidget": {
+            "access_token": "",
+            "markerFitZoom": 14,
+            "showZoomNavigation": True,
+            "mapOptions": {
+                "zoom": 12,
+                "style": "mapbox://styles/mapbox/streets-v11",
+                "scrollZoom": False,
+                "animate": False,
+                "center": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
+            },
+            "geocoderOptions": {
+                "zoom": 6,
+                "flyTo": False,
+                "style": "mapbox://styles/mapbox/streets-v11",
+                "reverseGeocode": True,
+                "marker": False,
+            }
+        }
     },
-    "GoogleStaticMapWidget": {
-        "zoom": 15,
-        "size": "480x480",
-        "scale": "",
-        "format": "",
-        "maptype": "",
-        "path": "",
-        "visible": "",
-        "style": "",
-        "language": "",
-        "region": ""
-    },
-    "GoogleStaticMapMarkerSettings": {
-        "size": "normal",
-        "color": "",
-        "icon": "",
-    },
-    "GoogleStaticOverlayMapWidget": {
-        "zoom": 15,
-        "size": "480x480",
-        "thumbnail_size": "160x160",
-        "scale": "",
-        "format": "",
-        "maptype": "",
-        "path": "",
-        "visible": "",
-        "style": "",
-        "language": "",
-        "region": ""
+    "OpenStreetMap": {
+        "PointFieldWidget": {
+            "zoom": 12,
+            "markerFitZoom": 14,
+            "showZoomNavigation": True,
+            "mapCenterLocation": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
+        }
     },
     "LANGUAGE": "en",
     "LIBRARIES": "places",
@@ -83,6 +98,7 @@ DEFAULTS = {
 class MapWidgetSettings:
     def __init__(self, app_settings=None, defaults=None):
         self.django_settings = getattr(django_settings, 'MAP_WIDGETS', {})
+
         self._app_settings = app_settings if isinstance(app_settings, dict) else self.django_settings
         self.defaults = defaults or DEFAULTS
 
