@@ -29,14 +29,14 @@ class BasePointFieldMapWidget(BaseGeometryWidget):
         super().__init__(*args, **kwargs)
         self.custom_settings = kwargs.pop('settings', None)
 
-    def map_options(self):
+    def _map_options(self):
         if not self.settings or not self.settings_namespace:
             raise ImproperlyConfigured(f'{self.__class__.__name__} requires "settings" and "settings_namespace" to be defined')
 
         if self.custom_settings:
             custom_settings = MapWidgetSettings(app_settings=self.custom_settings)
-            return getattr(custom_settings, self.settings_namespace)
-        return self.settings
+            self.settings = getattr(custom_settings, self.settings_namespace)
+        return self.settings.merged
 
     def generate_media(self, js_sources, css_files, min_js, dev_js):
         suffix = '.min' if mw_settings.MINIFED else ''
@@ -66,7 +66,7 @@ class BasePointFieldMapWidget(BaseGeometryWidget):
         context = super().get_context(name, value, attrs)
         de_value = self.deserialize(context["serialized"])
         extra_context = {
-            'options': json.dumps(self.map_options()),
+            'options': json.dumps(self._map_options()),
             'field_value': json.dumps(self.geos_to_dict(de_value))
         }
         context.update(extra_context)
@@ -75,8 +75,8 @@ class BasePointFieldMapWidget(BaseGeometryWidget):
 
 class GooglePointFieldWidget(BasePointFieldMapWidget):
     template_name = 'mapwidgets/google-point-field-widget.html'
-    settings = mw_settings.GooglePointFieldWidget
-    settings_namespace = 'GooglePointFieldWidget'
+    settings = mw_settings.GoogleMap.PointFieldWidget.interactive
+    settings_namespace = 'mw_settings.GoogleMap.PointFieldWidget.interactive'
 
     @property
     def media(self):
@@ -99,8 +99,8 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
 
 class MapboxPointFieldWidget(BasePointFieldMapWidget):
     template_name = 'mapwidgets/mapbox-point-field-widget.html'
-    settings = mw_settings.MapboxPointFieldWidget
-    settings_namespace = 'MapboxPointFieldWidget'
+    settings = mw_settings.Mapbox.PointFieldWidget.interactive
+    settings_namespace = 'mw_settings.Mapbox.PointFieldWidget.interactive'
 
     @property
     def media(self):
@@ -127,8 +127,8 @@ class MapboxPointFieldWidget(BasePointFieldMapWidget):
 
 class OSMPointFieldWidget(BasePointFieldMapWidget):
     template_name = 'mapwidgets/osm_point_field_widget.html'
-    settings_namespace = 'OSMPointFieldWidget'
-    settings = mw_settings.OSMPointFieldWidget
+    settings_namespace = 'mw_settings.OSM.PointFieldWidget.interactive'
+    settings = mw_settings.OSM.PointFieldWidget.interactive
 
     @property
     def media(self):
@@ -185,8 +185,8 @@ class PointFieldInlineWidgetMixin(object):
 
 class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointFieldWidget):
     template_name = 'mapwidgets/google-point-field-inline-widget.html'
-    settings = mw_settings.GooglePointFieldWidget
-    settings_namespace = 'GooglePointFieldWidget'
+    settings = mw_settings.GoogleMap.PointFieldWidget.interactive
+    settings_namespace = 'mw_settings.GoogleMap.PointFieldWidget.interactive'
 
     @property
     def media(self):
@@ -253,7 +253,7 @@ class BaseStaticMapWidget(forms.Widget):
 
 class GoogleStaticMapWidget(BaseStaticMapWidget):
     base_url = "https://maps.googleapis.com/maps/api/staticmap"
-    settings = mw_settings.GoogleStaticMapWidget
+    settings = mw_settings.GoogleMap.PointFieldWidget
     template_name = "mapwidgets/google-static-map.html"
 
     def __init__(self, zoom=None, size=None, *args, **kwargs):
@@ -309,7 +309,7 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
 
 
 class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
-    settings = mw_settings.GoogleStaticOverlayMapWidget
+    settings = mw_settings.GoogleMap.PointFieldWidget
     template_name = "mapwidgets/google-static-overlay-map.html"
 
     class Media:

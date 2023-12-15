@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from django.conf import settings as django_settings
 from django.utils.translation import gettext_lazy as _
 from django.test.signals import setting_changed
@@ -17,7 +19,7 @@ DEFAULTS = {
                 "markerFitZoom": 14,
                 "streetViewControl": True,
             },
-            "read-only": {
+            "readonly": {
                 "thumbnail": {
                     "zoom": 15,
                     "size": "480x480",
@@ -58,31 +60,35 @@ DEFAULTS = {
     },
     "Mapbox": {
         "PointFieldWidget": {
-            "access_token": "",
-            "markerFitZoom": 14,
-            "showZoomNavigation": True,
-            "mapOptions": {
-                "zoom": 12,
-                "style": "mapbox://styles/mapbox/streets-v11",
-                "scrollZoom": False,
-                "animate": False,
-                "center": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
+            "interactive": {
+                "access_token": "",
+                "markerFitZoom": 14,
+                "showZoomNavigation": True,
+                "mapOptions": {
+                    "zoom": 12,
+                    "style": "mapbox://styles/mapbox/streets-v11",
+                    "scrollZoom": False,
+                    "animate": False,
+                    "center": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
+                },
+                "geocoderOptions": {
+                    "zoom": 6,
+                    "flyTo": False,
+                    "style": "mapbox://styles/mapbox/streets-v11",
+                    "reverseGeocode": True,
+                    "marker": False,
+                }
             },
-            "geocoderOptions": {
-                "zoom": 6,
-                "flyTo": False,
-                "style": "mapbox://styles/mapbox/streets-v11",
-                "reverseGeocode": True,
-                "marker": False,
-            }
         }
     },
-    "OpenStreetMap": {
+    "OSM": {
         "PointFieldWidget": {
-            "zoom": 12,
-            "markerFitZoom": 14,
-            "showZoomNavigation": True,
-            "mapCenterLocation": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
+            "interactive": {
+                "zoom": 12,
+                "markerFitZoom": 14,
+                "showZoomNavigation": True,
+                "mapCenterLocation": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
+            }
         }
     },
     "LANGUAGE": "en",
@@ -99,35 +105,22 @@ class MapWidgetSettings:
     def __init__(self, app_settings=None, defaults=None):
         self.django_settings = getattr(django_settings, 'MAP_WIDGETS', {})
 
-        self._app_settings = app_settings if isinstance(app_settings, dict) else self.django_settings
-        self.defaults = defaults or DEFAULTS
+        self._app_settings = app_settings if app_settings is not None else self.django_settings
+        self.defaults = defaults if defaults is not None else DEFAULTS
 
-    @property
-    def app_settings(self):
-        return self._app_settings
-
-    def get_settings(self, attr):
-        user_settings = self.app_settings.get(attr, {})
-        default_settings = self.defaults.get(attr, {})
-
-        if not user_settings:
-            return default_settings
-
-        # Merge settings, with user settings overriding defaults
-        try:
-            merged_settings = {**default_settings, **user_settings}
-        except TypeError:
-            raise TypeError(f"Invalid settings type: '{attr}'. Please check the settings documentation.")
-        return merged_settings
+        self.merged = {**self.defaults, **self._app_settings}
 
     def __getattr__(self, attr):
-        if attr not in self.defaults:
+        if attr not in self.merged:
             raise AttributeError(f"Invalid settings key: '{attr}'. Please check the settings documentation.")
 
-        settings = self.get_settings(attr)
-        setattr(self, attr, settings)  # Cache the result
-        return settings
+        value = self.merged[attr]
 
+        if isinstance(value, dict):
+            value = MapWidgetSettings(value)
+            self.merged[attr] = value  # cache the result
+
+        return value
 
 mw_settings = MapWidgetSettings(None, DEFAULTS)
 
