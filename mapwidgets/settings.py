@@ -75,6 +75,7 @@ DEFAULTS = {
     "GOOGLE_MAP_API_SIGNATURE": "",
     "GOOGLE_MAP_API_KEY": "",
     "MAPBOX_API_KEY": "",
+    "NO_GEODJANGO": False,
 }
 
 

@@ -1,11 +1,13 @@
+import importlib
 import json
 
 from django import forms
-from django.contrib.gis.forms import BaseGeometryWidget
-from django.contrib.gis.geos import Point
+from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
+from django.forms import Widget
 from django.template.loader import render_to_string
 from django.templatetags.static import static
+from django.utils import translation
 from django.utils.http import urlencode
 
 from mapwidgets.constants import STATIC_MAP_PLACEHOLDER_IMAGE
@@ -17,6 +19,55 @@ def minify_if_not_debug(asset):
         Transform template string `asset` by inserting '.min' if DEBUG=False
     """
     return asset.format('' if not mw_settings.MINIFED else '.min')
+
+
+Point = (
+    importlib.import_module('django.contrib.gis.geos').Point
+    if not mw_settings.NO_GEODJANGO
+    else importlib.import_module('mapwidgets.fields').WKTPoint
+)
+
+
+class BaseWKTGeometryWidget(Widget):
+    """
+    Mimics Django's django.contrib.gis.forms.BaseGeometryWidget for WKTPoint
+    """
+    geom_type = "GEOMETRY"
+    map_width = 600
+    map_height = 400
+    display_raw = False
+
+    def serialize(self, value):
+        return str(value) if value else ''
+
+    def deserialize(self, value):
+        return Point(value) if value else ''
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+
+        context.update(
+            self.build_attrs(
+                self.attrs,
+                {
+                    'name': name,
+                    'module': 'geodjango_%s' % name.replace('-', '_'),  # JS-safe
+                    'serialized': self.serialize(value),
+                    'geom_type': 'Point',
+                    'STATIC_URL': settings.STATIC_URL,
+                    'LANGUAGE_BIDI': translation.get_language_bidi(),
+                    **(attrs or {}),
+                },
+            )
+        )
+        return context
+
+
+BaseGeometryWidget = (
+    importlib.import_module('django.contrib.gis.forms').BaseGeometryWidget
+    if not mw_settings.NO_GEODJANGO
+    else BaseWKTGeometryWidget
+)
 
 
 class BasePointFieldMapWidget(BaseGeometryWidget):
