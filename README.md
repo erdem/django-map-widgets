@@ -38,16 +38,42 @@ Collects the static files into `STATIC_ROOT`.
 python manage.py collectstatic
 ```
 
+
+**Usage without Geo Django**
+
+If you don't need any of <a href="https://docs.djangoproject.com/en/dev/ref/contrib/gis/">GeoDjango features</a> (and don't want to install GEOS, PROJ and GDAL dependencies) and want to use these widgets to store/view location in non-geo models you can use `WKTPointField` and set `NO_GEODJANGO: True` in `MAP_WIDGETS` settings. You can use either `PointField` or `WKTPointField` in whole project depending on this setting.
+
+```python
+from django.db import models
+from django.contrib.gis.db import models as gis_models
+from mapwidgets.fields import WKTPointField
+
+
+class City(models.Model):
+    coordinates = gis_models.PointField()
+    city_hall = WKTPointField()
+
+    def example_no_geo(self):
+        x, y = self.city_hall
+        self.city_hall = 'POINT(-0.118092, 51.509865)'
+        p1 = self.city_hall.x, self.city_hall.y
+        p2 = self.city_hall.coords
+        x = self.city_hall[0]
+
+```
+
 **Django Admin**
 
 ```python
 from django.contrib.gis.db import models
 from mapwidgets.widgets import GooglePointFieldWidget
+from mapwidgets.fields import WKTPointField
 
 
 class CityAdmin(admin.ModelAdmin):
     formfield_overrides = {
-        models.PointField: {"widget": GooglePointFieldWidget}
+        models.PointField: {"widget": GooglePointFieldWidget},
+        WKTPointField: {"widget": GooglePointFieldWidget},
     }
 ```
 
@@ -102,6 +128,10 @@ This widget is working with <a href="http://dimsemenov.com/plugins/magnific-popu
 
 
 ### Release Notes
+
+
+#### 0.5.0
+> -   Option to use mapwidgets without geodjango (#90)
 
 
 #### 0.4.2
