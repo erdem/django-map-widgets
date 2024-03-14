@@ -27,7 +27,7 @@ class BasePointFieldMapWidget(BaseGeometryWidget):
     def __init__(self, *args, **kwargs):
         attrs = kwargs.get('attrs')
         self.attrs = {}
-        for key in ('geom_type', 'map_srid', 'map_width', 'map_height', 'display_raw'):
+        for key in ('geom_type', 'map_srid', 'display_raw'):
             if key in kwargs:
                 self.attrs[key] = kwargs.get(key)
             else:
