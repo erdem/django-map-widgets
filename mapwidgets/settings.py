@@ -110,22 +110,35 @@ DEFAULTS = {
 class MapWidgetSettings:
     def __init__(self, defaults=None, app_settings=None):
         self.django_settings = getattr(django_settings, 'MAP_WIDGETS', {})
-
         self._app_settings = app_settings if app_settings is not None else self.django_settings
         self.defaults = defaults if defaults is not None else DEFAULTS
+        self._merged = self.merge_dict(self.defaults, self._app_settings)
 
-        self.merged = {**self.defaults, **self._app_settings}
+    def dict(self):
+        return self._merged
+
+    @classmethod
+    def merge_dict(cls, dict1, dict2):
+        for key, val in dict1.items():
+            if isinstance(val, dict):
+                if key in dict2 and type(dict2[key] == dict):
+                    cls.merge_dict(dict1[key], dict2[key])
+            else:
+                if key in dict2:
+                    dict1[key] = dict2[key]
+
+        for key, val in dict2.items():
+            if key not in dict1:
+                dict1[key] = val
+        return dict1
 
     def __getattr__(self, attr):
-        if attr not in self.merged:
+        if attr not in self._merged:
             raise AttributeError(f"Invalid settings key: '{attr}'")
-
-        value = self.merged[attr]
-
+        value = self._merged[attr]
         if isinstance(value, dict):
             value = MapWidgetSettings(value)
-            self.merged[attr] = value  # cache the result
-
+            self._merged[attr] = value
         return value
 
 

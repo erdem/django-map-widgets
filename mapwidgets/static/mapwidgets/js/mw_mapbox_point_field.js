@@ -3,7 +3,6 @@
 
         init: function(options){
             $.extend(this, options);
-
             this.coordinatesOverlayToggleBtn.on("click", this.toggleCoordinatesOverlay.bind(this));
             this.coordinatesOverlayDoneBtn.on("click", this.handleCoordinatesOverlayDoneBtnClick.bind(this));
             this.coordinatesOverlayInputs.on("change", this.handleCoordinatesInputsChange.bind(this));
@@ -11,7 +10,7 @@
             this.myLocationBtn.on("click", this.handleMyLocationBtnClick.bind(this));
             this.deleteBtn.on("click", this.resetMap.bind(this));
 
-            // if the the location field in a collapse on Django admin form, the map need to initialize again when the collapse open by user.
+            // if the location field in a collapse on Django admin form, the map need to initialize again when the collapse open by user.
             if ($(this.wrapElemSelector).closest('.module.collapse').length){
                 $(document).on('show.fieldset', this.initializeMap.bind(this));
             }

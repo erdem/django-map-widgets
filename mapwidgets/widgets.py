@@ -36,7 +36,7 @@ class BasePointFieldMapWidget(BaseGeometryWidget):
         if self.custom_settings:
             custom_settings = MapWidgetSettings(app_settings=self.custom_settings)
             self.settings = getattr(custom_settings, self.settings_namespace)
-        return self.settings.merged
+        return self.settings.dict()
 
     def generate_media(self, js_sources, css_files, min_js, dev_js):
         suffix = '.min' if mw_settings.MINIFED else ''
@@ -349,7 +349,6 @@ class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
                 "params": urlencode(params)
             }
             return image_url_template % image_url_data
-
         return static(STATIC_MAP_PLACEHOLDER_IMAGE)
 
     def get_context_data(self, name, value, attrs):
