@@ -125,14 +125,13 @@ class MapboxPointFieldWidget(BasePointFieldMapWidget):
         )
 
 
-class OSMPointFieldWidget(BasePointFieldMapWidget):
-    template_name = 'mapwidgets/osm_point_field_widget.html'
-    settings_namespace = 'mw_settings.OSM.PointFieldWidget.interactive'
-    settings = mw_settings.OSM.PointFieldWidget.interactive
+class LeafletPointFieldWidget(BasePointFieldMapWidget):
+    template_name = 'mapwidgets/leaflet_point_field_widget.html'
+    settings_namespace = 'mw_settings.Leaflet.PointFieldWidget.interactive'
+    settings = mw_settings.Leaflet.PointFieldWidget.interactive
 
     @property
     def media(self):
-
         css = {
             'all': [
                 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.css',
@@ -144,7 +143,7 @@ class OSMPointFieldWidget(BasePointFieldMapWidget):
             'mapwidgets/js/jquery_init.js',
             'mapwidgets/js/jquery_class.js',
             'mapwidgets/js/django_mw_base.js',
-            'mapwidgets/js/mw_osm_point_field.js',
+            'mapwidgets/js/mw_leaflet_point_field.js',
         ]
 
         return forms.Media(js=js, css=css)

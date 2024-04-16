@@ -1,15 +1,17 @@
 (function($) {
-    DjangoOSMPointFieldWidget = DjangoMapWidgetBase.extend({
+    DjangoLeafletPointFieldWidget = DjangoMapWidgetBase.extend({
 
         initializeMap: function(){
-            this.map = L.map(this.mapElement.id).setView(this.mapCenterLocation, this.zoom);
+            this.leafletMapOptions = this.mapOptions.mapOptions || {}
+            if (!this.leafletMapOptions.center){
+                this.leafletMapOptions.center = this.mapCenterLocation
+            }
+            this.leafletTileLayer = this.mapOptions.tileLayer
+            this.map = L.map(this.mapElement.id, this.leafletMapOptions);
+            L.tileLayer(this.leafletTileLayer.urlTemplate, this.leafletTileLayer.options).addTo(this.map);
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-            }).addTo(this.map);
-
-            $(this.mapElement).data('osmMapObj', this.map);
-            $(this.mapElement).data('osmMapWidgetObj', this);
+            $(this.mapElement).data('leafletMapObj', this.map);
+            $(this.mapElement).data('leafletMapWidgetObj', this);
 
             if (!$.isEmptyObject(this.djangoGeoJSONValue)){
                 this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng);

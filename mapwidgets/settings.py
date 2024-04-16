@@ -1,7 +1,4 @@
-from collections import defaultdict
-
 from django.conf import settings as django_settings
-from django.utils.translation import gettext_lazy as _
 from django.test.signals import setting_changed
 
 from mapwidgets.constants import TIMEZONE_COORDINATES
@@ -81,10 +78,19 @@ DEFAULTS = {
             },
         }
     },
-    "OSM": {
+    "Leaflet": {
         "PointFieldWidget": {
             "interactive": {
-                "zoom": 12,
+                "mapOptions": {
+                    "zoom": 12,
+                    "scrollWheelZoom": False
+                },
+                "tileLayer": {
+                    "urlTemplate": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    "options": {
+                        "maxZoom": 20
+                    }
+                },
                 "markerFitZoom": 14,
                 "showZoomNavigation": True,
                 "mapCenterLocation": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
@@ -102,7 +108,7 @@ DEFAULTS = {
 
 
 class MapWidgetSettings:
-    def __init__(self, app_settings=None, defaults=None):
+    def __init__(self, defaults=None, app_settings=None):
         self.django_settings = getattr(django_settings, 'MAP_WIDGETS', {})
 
         self._app_settings = app_settings if app_settings is not None else self.django_settings
@@ -112,7 +118,7 @@ class MapWidgetSettings:
 
     def __getattr__(self, attr):
         if attr not in self.merged:
-            raise AttributeError(f"Invalid settings key: '{attr}'. Please check the settings documentation.")
+            raise AttributeError(f"Invalid settings key: '{attr}'")
 
         value = self.merged[attr]
 
@@ -122,14 +128,15 @@ class MapWidgetSettings:
 
         return value
 
-mw_settings = MapWidgetSettings(None, DEFAULTS)
+
+mw_settings = MapWidgetSettings(DEFAULTS)
 
 
 def reload_widget_settings(*args, **kwargs):
     global mw_settings
     setting, value = kwargs['setting'], kwargs['value']
     if setting == 'MAP_WIDGETS' and value:
-        mw_settings = MapWidgetSettings(None, DEFAULTS)
+        mw_settings = MapWidgetSettings(value, DEFAULTS)
 
 
 setting_changed.connect(reload_widget_settings)
