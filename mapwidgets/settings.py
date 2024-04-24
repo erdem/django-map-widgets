@@ -6,7 +6,7 @@ from mapwidgets.constants import TIMEZONE_COORDINATES
 
 DEFAULTS = {
     "GoogleMap": {
-        "PointFieldWidget": {
+        "PointField": {
             "interactive": {
                 "mapCenterLocationName": None,
                 "mapCenterLocation": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
@@ -56,7 +56,7 @@ DEFAULTS = {
         }
     },
     "Mapbox": {
-        "PointFieldWidget": {
+        "PointField": {
             "interactive": {
                 "access_token": "",
                 "markerFitZoom": 14,
@@ -79,7 +79,7 @@ DEFAULTS = {
         }
     },
     "Leaflet": {
-        "PointFieldWidget": {
+        "PointField": {
             "interactive": {
                 "mapOptions": {
                     "zoom": 12,
@@ -98,7 +98,7 @@ DEFAULTS = {
         }
     },
     "LANGUAGE": "en",
-    "LIBRARIES": "places",
+    "LIBRARIES": "places,marker",
     "srid": 4326,
     "MINIFED": not django_settings.DEBUG,
     "GOOGLE_MAP_API_SIGNATURE": "",

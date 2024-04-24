@@ -27,7 +27,7 @@
             var locationInputID = widgetData.locationInputID;
 
             var mapWidgetOptions = {
-                locationInput: $(locationInputID),
+                djangoInput: $(locationInputID),
                 wrapElemSelector: wrapElemSelector,
                 locationFieldValue: this.fieldValue,
                 mapApiKey: null,

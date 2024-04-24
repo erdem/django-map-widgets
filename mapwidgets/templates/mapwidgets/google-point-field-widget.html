@@ -36,7 +36,6 @@
                 <textarea id="{{ id }}" name="{{ name }}">{{ serialized }}</textarea>
                 {% block extra_input %}
                 {% endblock extra_input %}
-
             </div>
         </div>
 
@@ -50,46 +49,48 @@
 
 {% block javascript %}
     <script type="application/javascript">
-        (function($) {
-            const mapOptions = JSON.parse("{{ options|escapejs }}");
-            const field_value = JSON.parse("{{ field_value|escapejs }}");
+        function googleMapWidgetsCallback(){
+            (function($) {
+                const mapOptions = JSON.parse("{{ options|escapejs }}");
+                const field_value = JSON.parse("{{ field_value|escapejs }}");
 
-            const wrapElemSelector = "#{{ name }}-mw-wrap";
-            const mapElemID = "{{ name }}-map-elem";
-            const googleAutoInputID = "{{ name }}-mw-google-address-input";
-            const locationInputID = "#{{ id }}";
+                const wrapElemSelector = "#{{ name }}-mw-wrap";
+                const mapElemID = "{{ name }}-map-elem";
+                const googleAutoInputID = "{{ name }}-mw-google-address-input";
+                const locationInputID = "#{{ id }}";
 
-            const mapWidgetOptions = {
-                djangoInput: $(locationInputID),
-                wrapElemSelector: wrapElemSelector,
-                djangoGeoJSONValue: field_value,
-                mapElement: document.getElementById(mapElemID),
-                mapCenterLocationName: mapOptions.mapCenterLocationName,
-                mapCenterLocation: mapOptions.mapCenterLocation,
-                coordinatesOverlayToggleBtn: $(".mw-btn-coordinates", wrapElemSelector),
-                coordinatesOverlayDoneBtn: $(".mw-btn-coordinates-done", wrapElemSelector),
-                coordinatesOverlayInputs: $(".mw-overlay-input", wrapElemSelector),
-                coordinatesOverlay: $(".mw-coordinates-overlay", wrapElemSelector),
-                myLocationBtn: $(".mw-btn-my-location", wrapElemSelector),
-                addressAutoCompleteInput: document.getElementById(googleAutoInputID),
-                deleteBtn: $(".mw-btn-delete", wrapElemSelector),
-                addMarkerBtn: $(".mw-btn-add-marker", wrapElemSelector),
-                loaderOverlayElem: $(".mw-loader-overlay", wrapElemSelector),
-                scrollWheel: mapOptions.scrollWheel,
-                mapOptions: mapOptions,
-                zoom: mapOptions.zoom,
-                markerFitZoom: mapOptions.markerFitZoom,
-                GooglePlaceAutocompleteOptions: mapOptions.GooglePlaceAutocompleteOptions,
-                streetViewControl: mapOptions.streetViewControl,
-                markerCreateTriggerNameSpace: "google_point_map_widget:marker_create",
-                markerChangeTriggerNameSpace: "google_point_map_widget:marker_change",
-                markerDeleteTriggerNameSpace: "google_point_map_widget:marker_delete",
-                placeChangedTriggerNameSpace: "google_point_map_widget:place_changed"
-            };
-            const mapWidget = new DjangoGooglePointFieldWidget(mapWidgetOptions);
-            {% block extra_javascript %}
+                const mapWidgetOptions = {
+                    djangoInput: $(locationInputID),
+                    wrapElemSelector: wrapElemSelector,
+                    djangoGeoJSONValue: field_value,
+                    mapElement: document.getElementById(mapElemID),
+                    mapCenterLocationName: mapOptions.mapCenterLocationName,
+                    mapCenterLocation: mapOptions.mapCenterLocation,
+                    coordinatesOverlayToggleBtn: $(".mw-btn-coordinates", wrapElemSelector),
+                    coordinatesOverlayDoneBtn: $(".mw-btn-coordinates-done", wrapElemSelector),
+                    coordinatesOverlayInputs: $(".mw-overlay-input", wrapElemSelector),
+                    coordinatesOverlay: $(".mw-coordinates-overlay", wrapElemSelector),
+                    myLocationBtn: $(".mw-btn-my-location", wrapElemSelector),
+                    addressAutoCompleteInput: document.getElementById(googleAutoInputID),
+                    deleteBtn: $(".mw-btn-delete", wrapElemSelector),
+                    addMarkerBtn: $(".mw-btn-add-marker", wrapElemSelector),
+                    loaderOverlayElem: $(".mw-loader-overlay", wrapElemSelector),
+                    scrollWheel: mapOptions.scrollWheel,
+                    mapOptions: mapOptions,
+                    zoom: mapOptions.zoom,
+                    markerFitZoom: mapOptions.markerFitZoom,
+                    GooglePlaceAutocompleteOptions: mapOptions.GooglePlaceAutocompleteOptions,
+                    streetViewControl: mapOptions.streetViewControl,
+                    markerCreateTriggerNameSpace: "google_point_map_widget:marker_create",
+                    markerChangeTriggerNameSpace: "google_point_map_widget:marker_change",
+                    markerDeleteTriggerNameSpace: "google_point_map_widget:marker_delete",
+                    placeChangedTriggerNameSpace: "google_point_map_widget:place_changed"
+                };
+                document.body.addEventListener('load', new DjangoGooglePointFieldWidget(mapWidgetOptions));
+                {% block extra_javascript %}
 
-            {% endblock %}
-        })(mapWidgets.jQuery);
+                {% endblock %}
+            })(mapWidgets.jQuery);
+         }
     </script>
 {% endblock javascript %}

@@ -30,7 +30,7 @@ Settings
 |
 | *default:* ``None``
 
-| **markerFitZoom**: When the marker is initialized google's default zoom is set to Max. This method sets the zoom level a reasonable distance and center the marker on the map.
+| **markerFitZoom**: When the marker is initialized, Mapbox JS library  default zoom is set to Max. This method sets the zoom level a reasonable distance and center the marker on the map.
 |
 | *default:* ``14``
 

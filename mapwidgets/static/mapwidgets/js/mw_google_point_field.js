@@ -28,7 +28,6 @@
                     }
                     this.initializePlaceAutocomplete()
                 }.bind(this));
-
             }else{
                 this.map = new google.maps.Map(this.mapElement, {
                     center: new google.maps.LatLng(mapCenter[0], mapCenter[1]),
@@ -37,9 +36,9 @@
                         position: google.maps.ControlPosition.RIGHT
                     },
                     zoom: this.zoom,
-                    streetViewControl: this.streetViewControl
+                    streetViewControl: this.streetViewControl,
+                    mapId: "test-id"
                 });
-
 
                 if (!$.isEmptyObject(this.djangoGeoJSONValue)){
                     this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng)
@@ -62,9 +61,9 @@
         addMarkerToMap: function(lat, lng){
             this.removeMarker();
             const marker_position = {lat: parseFloat(lat), lng: parseFloat(lng)};
-            this.marker = new google.maps.Marker({
-                position: marker_position,
+            this.marker = new google.maps.marker.AdvancedMarkerElement({
                 map: this.map,
+                position: marker_position,
                 draggable: true
             });
             this.marker.addListener("dragend", this.dragMarker.bind(this));
@@ -72,17 +71,17 @@
 
         serializeMarkerToGeoJSON: function(){
             if (this.marker){
-                const position = this.marker.getPosition();
+                const position = this.marker.position;
                 return {
                     type: "Point",
-                    coordinates: [position.lng(), position.lat()]
+                    coordinates: [position.lng, position.lat]
                 };
             }
         },
 
         fitBoundMarker: function () {
             const bounds = new google.maps.LatLngBounds();
-            bounds.extend(this.marker.getPosition());
+            bounds.extend(this.marker.position);
             this.map.fitBounds(bounds);
             if (this.markerFitZoom && this.isInt(this.markerFitZoom)){
                 const markerFitZoom = parseInt(this.markerFitZoom);

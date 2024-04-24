@@ -11,6 +11,7 @@ from django.utils.http import urlencode
 
 from mapwidgets.constants import STATIC_MAP_PLACEHOLDER_IMAGE
 from mapwidgets.settings import MapWidgetSettings, mw_settings
+from mapwidgets.utils import AsyncJS
 
 
 def minify_if_not_debug(asset):
@@ -75,14 +76,18 @@ class BasePointFieldMapWidget(BaseGeometryWidget):
 
 class GooglePointFieldWidget(BasePointFieldMapWidget):
     template_name = 'mapwidgets/google-point-field-widget.html'
-    settings = mw_settings.GoogleMap.PointFieldWidget.interactive
-    settings_namespace = 'mw_settings.GoogleMap.PointFieldWidget.interactive'
+    settings = mw_settings.GoogleMap.PointField.interactive
+    settings_namespace = 'mw_settings.GoogleMap.PointField.interactive'
+
+
 
     @property
     def media(self):
         return self.generate_media(
             js_sources=[
-                f"https://maps.googleapis.com/maps/api/js?libraries={mw_settings.LIBRARIES}&language={mw_settings.LANGUAGE}&key={mw_settings.GOOGLE_MAP_API_KEY}"
+                AsyncJS(
+                    f"https://maps.googleapis.com/maps/api/js?libraries={mw_settings.LIBRARIES}&loading=async&callback=googleMapWidgetsCallback&language={mw_settings.LANGUAGE}&key={mw_settings.GOOGLE_MAP_API_KEY}&v=quarterly"
+                )
             ],
             css_files=[
                 'mapwidgets/css/map_widgets{}.css',
@@ -99,8 +104,8 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
 
 class MapboxPointFieldWidget(BasePointFieldMapWidget):
     template_name = 'mapwidgets/mapbox-point-field-widget.html'
-    settings = mw_settings.Mapbox.PointFieldWidget.interactive
-    settings_namespace = 'mw_settings.Mapbox.PointFieldWidget.interactive'
+    settings = mw_settings.Mapbox.PointField.interactive
+    settings_namespace = 'mw_settings.Mapbox.PointField.interactive'
 
     @property
     def media(self):
@@ -127,8 +132,8 @@ class MapboxPointFieldWidget(BasePointFieldMapWidget):
 
 class LeafletPointFieldWidget(BasePointFieldMapWidget):
     template_name = 'mapwidgets/leaflet_point_field_widget.html'
-    settings_namespace = 'mw_settings.Leaflet.PointFieldWidget.interactive'
-    settings = mw_settings.Leaflet.PointFieldWidget.interactive
+    settings_namespace = 'mw_settings.Leaflet.PointField.interactive'
+    settings = mw_settings.Leaflet.PointField.interactive
 
     @property
     def media(self):
@@ -184,8 +189,9 @@ class PointFieldInlineWidgetMixin(object):
 
 class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointFieldWidget):
     template_name = 'mapwidgets/google-point-field-inline-widget.html'
-    settings = mw_settings.GoogleMap.PointFieldWidget.interactive
-    settings_namespace = 'mw_settings.GoogleMap.PointFieldWidget.interactive'
+    settings = mw_settings.GoogleMap.PointField.interactive
+    settings_namespace = 'mw_settings.GoogleMap.PointField.interactive'
+
 
     @property
     def media(self):
@@ -196,8 +202,8 @@ class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointField
         }
 
         js = [
-            "https://maps.googleapis.com/maps/api/js?libraries={}&language={}&key={}".format(
-                mw_settings.LIBRARIES, mw_settings.LANGUAGE, mw_settings.GOOGLE_MAP_API_KEY
+            AsyncJS(
+                f"https://maps.googleapis.com/maps/api/js?libraries={mw_settings.LIBRARIES}&loading=async&callback=googleMapWidgetsCallback&language={mw_settings.LANGUAGE}&key={mw_settings.GOOGLE_MAP_API_KEY}&v=quarterly"
             )
         ]
 
@@ -252,7 +258,7 @@ class BaseStaticMapWidget(forms.Widget):
 
 class GoogleStaticMapWidget(BaseStaticMapWidget):
     base_url = "https://maps.googleapis.com/maps/api/staticmap"
-    settings = mw_settings.GoogleMap.PointFieldWidget
+    settings = mw_settings.GoogleMap.PointField
     template_name = "mapwidgets/google-static-map.html"
 
     def __init__(self, zoom=None, size=None, *args, **kwargs):
@@ -308,7 +314,7 @@ class GoogleStaticMapWidget(BaseStaticMapWidget):
 
 
 class GoogleStaticOverlayMapWidget(GoogleStaticMapWidget):
-    settings = mw_settings.GoogleMap.PointFieldWidget
+    settings = mw_settings.GoogleMap.PointField
     template_name = "mapwidgets/google-static-overlay-map.html"
 
     class Media:
