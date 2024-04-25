@@ -20,7 +20,6 @@
                         zoom: this.zoom,
                         streetViewControl: this.streetViewControl,
                     });
-
                     if (!$.isEmptyObject(this.djangoGeoJSONValue)){
                         this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng)
                         this.updateDjangoInput();
@@ -64,7 +63,7 @@
             this.marker = new google.maps.marker.AdvancedMarkerElement({
                 map: this.map,
                 position: marker_position,
-                draggable: true
+                gmpDraggable: true
             });
             this.marker.addListener("dragend", this.dragMarker.bind(this));
         },

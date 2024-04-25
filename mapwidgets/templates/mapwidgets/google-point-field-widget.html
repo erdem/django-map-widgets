@@ -52,7 +52,7 @@
         function googleMapWidgetsCallback(){
             (function($) {
                 const mapOptions = JSON.parse("{{ options|escapejs }}");
-                const field_value = JSON.parse("{{ field_value|escapejs }}");
+                const fieldValue = JSON.parse("{{ field_value|escapejs }}");
 
                 const widgetWrapSelector = "#{{ name }}-mw-wrap";
                 const mapId = "{{ name }}-map-elem";
@@ -63,7 +63,7 @@
                     mapId: mapId,
                     djangoInput: $(djangoInputId),
                     wrapElemSelector: widgetWrapSelector,
-                    djangoGeoJSONValue: field_value,
+                    djangoGeoJSONValue: fieldValue,
                     mapElement: document.getElementById(mapId),
                     mapCenterLocationName: mapOptions.mapCenterLocationName,
                     mapCenterLocation: mapOptions.mapCenterLocation,
