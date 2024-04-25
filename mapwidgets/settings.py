@@ -6,6 +6,14 @@ from mapwidgets.constants import TIMEZONE_COORDINATES
 
 DEFAULTS = {
     "GoogleMap": {
+        "apiKey": None,
+        "apiSignature": None,
+        "CDNURLParams": {
+            "language": "en",
+            "libraries": "places,marker",
+            "loading": "async",
+            "v": "quarterly",
+        },
         "PointField": {
             "interactive": {
                 "mapOptions": {
@@ -99,7 +107,6 @@ DEFAULTS = {
             }
         }
     },
-    "LANGUAGE": "en",
     "LIBRARIES": "places,marker",
     "srid": 4326,
     "MINIFED": not django_settings.DEBUG,

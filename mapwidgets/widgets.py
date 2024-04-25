@@ -79,15 +79,22 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
     settings = mw_settings.GoogleMap.PointField.interactive
     settings_namespace = 'mw_settings.GoogleMap.PointField.interactive'
 
-
+    @property
+    def _google_map_js_url(self):
+        if mw_settings.GoogleMap.apiKey is None:
+            raise ImproperlyConfigured("`GoogleMap.apiKey` setting is required to use Google Map widgets.")
+        cdn_url_params = {
+            "key": mw_settings.GoogleMap.apiKey,
+            "callback": "googleMapWidgetsCallback"
+        }
+        cdn_url_params.update(mw_settings.GoogleMap.dict()["CDNURLParams"])
+        return f"https://maps.googleapis.com/maps/api/js?{urlencode(cdn_url_params)}"
 
     @property
     def media(self):
         return self.generate_media(
             js_sources=[
-                AsyncJS(
-                    f"https://maps.googleapis.com/maps/api/js?libraries={mw_settings.LIBRARIES}&loading=async&callback=googleMapWidgetsCallback&language={mw_settings.LANGUAGE}&key={mw_settings.GOOGLE_MAP_API_KEY}&v=quarterly"
-                )
+                AsyncJS(self._google_map_js_url)
             ],
             css_files=[
                 'mapwidgets/css/map_widgets{}.css',
@@ -100,6 +107,82 @@ class GooglePointFieldWidget(BasePointFieldMapWidget):
                 'mapwidgets/js/mw_google_point_field.js'
             ]
         )
+
+
+class PointFieldInlineWidgetMixin(object):
+
+    def get_js_widget_data(self, name, element_id):
+        map_elem_selector = '#%s-mw-wrap' % name
+        map_elem_id = '%s-map-elem' % name
+        google_auto_input_id = '%s-mw-google-address-input' % name
+        django_input_id = '#%s' % element_id
+        js_widget_params = {
+            'widgetWrapSelector': map_elem_selector,
+            'mapId': map_elem_id,
+            'googleAutoInputId': google_auto_input_id,
+            'djangoInputId': django_input_id
+        }
+        return js_widget_params
+
+    def render(self, name, value, attrs=None, renderer=None):
+        if not attrs:
+            attrs = dict()
+
+        element_id = attrs.get('id')
+        is_formset_empty_form_template = '__prefix__' in name
+        widget_data = self.get_js_widget_data(name, element_id)
+        attrs.update({
+            'js_widget_data': json.dumps(widget_data),
+            'is_formset_empty_form_template': is_formset_empty_form_template
+        })
+        self.as_super = super(PointFieldInlineWidgetMixin, self)
+        if renderer is not None:
+            return self.as_super.render(name, value, attrs, renderer)
+        else:
+            return self.as_super.render(name, value, attrs)
+
+
+class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointFieldWidget):
+    template_name = 'mapwidgets/google-point-field-inline-widget.html'
+    settings = mw_settings.GoogleMap.PointField.interactive
+    settings_namespace = 'mw_settings.GoogleMap.PointField.interactive'
+
+    @property
+    def _google_map_js_url(self):
+        if mw_settings.GoogleMap.apiKey is None:
+            raise ImproperlyConfigured("`GoogleMap.apiKey` setting is required to use Google Map widgets.")
+
+        cdn_url_params = {
+            "key": mw_settings.GoogleMap.apiKey,
+            "callback": "googleMapWidgetsCallback"
+        }
+        cdn_url_params.update(mw_settings.GoogleMap.dict()["CDNURLParams"])
+        return f"https://maps.googleapis.com/maps/api/js?{urlencode(cdn_url_params)}"
+
+    @property
+    def media(self):
+        js = [AsyncJS(self._google_map_js_url)]
+
+        css = {
+            'all': [
+                minify_if_not_debug('mapwidgets/css/map_widgets{}.css'),
+            ]
+        }
+
+        if not mw_settings.MINIFED:  # pragma: no cover
+            js = js + [
+                'mapwidgets/js/jquery_init.js',
+                'mapwidgets/js/jquery_class.js',
+                'mapwidgets/js/django_mw_base.js',
+                'mapwidgets/js/mw_google_point_field.js',
+                'mapwidgets/js/mw_google_point_field_generater.js'
+            ]
+        else:
+            js = js + [
+                'mapwidgets/js/mw_google_point_inline_field.min.js'
+            ]
+
+        return forms.Media(js=js, css=css)
 
 
 class MapboxPointFieldWidget(BasePointFieldMapWidget):
@@ -150,75 +233,6 @@ class LeafletPointFieldWidget(BasePointFieldMapWidget):
             'mapwidgets/js/django_mw_base.js',
             'mapwidgets/js/mw_leaflet_point_field.js',
         ]
-
-        return forms.Media(js=js, css=css)
-
-
-class PointFieldInlineWidgetMixin(object):
-
-    def get_js_widget_data(self, name, element_id):
-        map_elem_selector = '#%s-mw-wrap' % name
-        map_elem_id = '%s-map-elem' % name
-        google_auto_input_id = '%s-mw-google-address-input' % name
-        django_input_id = '#%s' % element_id
-        js_widget_params = {
-            'widgetWrapSelector': map_elem_selector,
-            'mapId': map_elem_id,
-            'googleAutoInputId': google_auto_input_id,
-            'djangoInputId': django_input_id
-        }
-        return js_widget_params
-
-    def render(self, name, value, attrs=None, renderer=None):
-        if not attrs:
-            attrs = dict()
-
-        element_id = attrs.get('id')
-        is_formset_empty_form_template = '__prefix__' in name
-        widget_data = self.get_js_widget_data(name, element_id)
-        attrs.update({
-            'js_widget_data': json.dumps(widget_data),
-            'is_formset_empty_form_template': is_formset_empty_form_template
-        })
-        self.as_super = super(PointFieldInlineWidgetMixin, self)
-        if renderer is not None:
-            return self.as_super.render(name, value, attrs, renderer)
-        else:
-            return self.as_super.render(name, value, attrs)
-
-
-class GooglePointFieldInlineWidget(PointFieldInlineWidgetMixin, GooglePointFieldWidget):
-    template_name = 'mapwidgets/google-point-field-inline-widget.html'
-    settings = mw_settings.GoogleMap.PointField.interactive
-    settings_namespace = 'mw_settings.GoogleMap.PointField.interactive'
-
-
-    @property
-    def media(self):
-        css = {
-            'all': [
-                minify_if_not_debug('mapwidgets/css/map_widgets{}.css'),
-            ]
-        }
-
-        js = [
-            AsyncJS(
-                f"https://maps.googleapis.com/maps/api/js?libraries={mw_settings.LIBRARIES}&loading=async&callback=googleMapWidgetsCallback&language={mw_settings.LANGUAGE}&key={mw_settings.GOOGLE_MAP_API_KEY}&v=quarterly"
-            )
-        ]
-
-        if not mw_settings.MINIFED:  # pragma: no cover
-            js = js + [
-                'mapwidgets/js/jquery_init.js',
-                'mapwidgets/js/jquery_class.js',
-                'mapwidgets/js/django_mw_base.js',
-                'mapwidgets/js/mw_google_point_field.js',
-                'mapwidgets/js/mw_google_point_field_generater.js'
-            ]
-        else:
-            js = js + [
-                'mapwidgets/js/mw_google_point_inline_field.min.js'
-            ]
 
         return forms.Media(js=js, css=css)
 
