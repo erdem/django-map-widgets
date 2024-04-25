@@ -36,7 +36,6 @@
         initializeMap: async function(){
             this.geocoder = new google.maps.Geocoder();
             await this.setMapOptions();
-            console.log("ss")
             this.map = new google.maps.Map(this.mapElement, this.mapInitializeOptions);
             if (!$.isEmptyObject(this.djangoGeoJSONValue)){
                 this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng)

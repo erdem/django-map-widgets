@@ -7,45 +7,41 @@
         },
 
         handle_added_formset_row: function (e, row, prefix) {
-            var mapOptions = this.mapOptions;
-            var widgetData = {};
-
             prefix = prefix || $(e.target).attr("id").split("-")[0];
-            var id_regex = new RegExp("(" + prefix + "-(\\d+|__prefix__))");
 
             row = row || e.target;
-            var numberPattern = /\d+/g;
-            var row_index = $(row).attr("id").match(numberPattern);
-            var replacement = prefix + "-" + row_index;
+            const id_regex = new RegExp("(" + prefix + "-(\\d+|__prefix__))");
+            const numberPattern = /\d+/g;
+            const row_index = $(row).attr("id").match(numberPattern);
+            const replacement = prefix + "-" + row_index;
+            let widgetData = {};
             $.each(this.widgetDataTemplate, function (key, value) {
                 widgetData[key] = value.replace(id_regex, replacement)
             });
 
-            var wrapElemSelector = widgetData.wrapElemSelector;
-            var mapElemID = widgetData.mapElemID;
-            var googleAutoInputID = widgetData.googleAutoInputID;
-            var locationInputID = widgetData.locationInputID;
+            const widgetWrapSelector = widgetData.widgetWrapSelector;
+            const mapId = widgetData.mapId;
+            const googleAutoInputId = widgetData.googleAutoInputId;
+            const djangoInputId = widgetData.djangoInputId;
 
-            var mapWidgetOptions = {
-                djangoInput: $(locationInputID),
-                wrapElemSelector: wrapElemSelector,
-                locationFieldValue: this.fieldValue,
-                mapApiKey: null,
-                mapElement: document.getElementById(mapElemID),
-                mapCenterLocationName: mapOptions.mapCenterLocationName,
-                mapCenterLocation: mapOptions.mapCenterLocation,
-                coordinatesOverlayToggleBtn: $(".mw-btn-coordinates", wrapElemSelector),
-                coordinatesOverlayDoneBtn: $(".mw-btn-coordinates-done", wrapElemSelector),
-                coordinatesOverlayInputs: $(".mw-overlay-input", wrapElemSelector),
-                coordinatesOverlay: $(".mw-coordinates-overlay", wrapElemSelector),
-                myLocationBtn: $(".mw-btn-my-location", wrapElemSelector),
-                addressAutoCompleteInput: document.getElementById(googleAutoInputID),
-                deleteBtn: $(".mw-btn-delete", wrapElemSelector),
-                addMarkerBtn: $(".mw-btn-add-marker", wrapElemSelector),
-                loaderOverlayElem: $(".mw-loader-overlay", wrapElemSelector),
-                zoom: mapOptions.zoom,
-                markerFitZoom: mapOptions.markerFitZoom,
-                GooglePlaceAutocompleteOptions: mapOptions.GooglePlaceAutocompleteOptions,
+            const mapWidgetOptions= {
+                mapId: mapId,
+                djangoInput: $(djangoInputId),
+                wrapElemSelector: widgetWrapSelector,
+                mapElement: document.getElementById(mapId),
+                coordinatesOverlayToggleBtn: $(".mw-btn-coordinates", widgetWrapSelector),
+                coordinatesOverlayDoneBtn: $(".mw-btn-coordinates-done", widgetWrapSelector),
+                coordinatesOverlayInputs: $(".mw-overlay-input", widgetWrapSelector),
+                coordinatesOverlay: $(".mw-coordinates-overlay", widgetWrapSelector),
+                myLocationBtn: $(".mw-btn-my-location", widgetWrapSelector),
+                addressAutoCompleteInput: document.getElementById(googleAutoInputId),
+                deleteBtn: $(".mw-btn-delete", widgetWrapSelector),
+                addMarkerBtn: $(".mw-btn-add-marker", widgetWrapSelector),
+                loaderOverlayElem: $(".mw-loader-overlay", widgetWrapSelector),
+                mapOptions: this.widgetSettings.mapOptions,
+                mapCenterLocationName: this.widgetSettings.mapCenterLocationName,
+                markerFitZoom: this.widgetSettings.markerFitZoom,
+                GooglePlaceAutocompleteOptions: this.widgetSettings.GooglePlaceAutocompleteOptions,
                 markerCreateTriggerNameSpace: "google_point_map_widget:marker_create",
                 markerChangeTriggerNameSpace: "google_point_map_widget:marker_change",
                 markerDeleteTriggerNameSpace: "google_point_map_widget:marker_delete",

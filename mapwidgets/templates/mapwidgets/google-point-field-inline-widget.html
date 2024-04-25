@@ -6,7 +6,7 @@
             console.log("inline")
         }
         (function($) {
-            const mapOptions = JSON.parse("{{ options|escapejs }}");
+            const widgetSettings = JSON.parse("{{ options|escapejs }}");
             const fieldValue = JSON.parse("{{ field_value|escapejs }}");
             {% if not is_formset_empty_form_template %}
                 const widgetData = JSON.parse("{{ js_widget_data|escapejs }}");
@@ -21,8 +21,6 @@
                     wrapElemSelector: widgetWrapSelector,
                     djangoGeoJSONValue: fieldValue,
                     mapElement: document.getElementById(mapId),
-                    mapCenterLocationName: mapOptions.mapCenterLocationName,
-                    mapCenterLocation: mapOptions.mapCenterLocation,
                     coordinatesOverlayToggleBtn: $(".mw-btn-coordinates", widgetWrapSelector),
                     coordinatesOverlayDoneBtn: $(".mw-btn-coordinates-done", widgetWrapSelector),
                     coordinatesOverlayInputs: $(".mw-overlay-input", widgetWrapSelector),
@@ -32,10 +30,10 @@
                     deleteBtn: $(".mw-btn-delete", widgetWrapSelector),
                     addMarkerBtn: $(".mw-btn-add-marker", widgetWrapSelector),
                     loaderOverlayElem: $(".mw-loader-overlay", widgetWrapSelector),
-                    zoom: mapOptions.zoom,
-                    scrollWheel: mapOptions.scrollWheel,
-                    markerFitZoom: mapOptions.markerFitZoom,
-                    GooglePlaceAutocompleteOptions: mapOptions.GooglePlaceAutocompleteOptions,
+                    mapOptions: widgetSettings.mapOptions,
+                    mapCenterLocationName: widgetSettings.mapCenterLocationName,
+                    markerFitZoom: widgetSettings.markerFitZoom,
+                    GooglePlaceAutocompleteOptions: widgetSettings.GooglePlaceAutocompleteOptions,
                     markerCreateTriggerNameSpace: "google_point_map_widget:marker_create",
                     markerChangeTriggerNameSpace: "google_point_map_widget:marker_change",
                     markerDeleteTriggerNameSpace: "google_point_map_widget:marker_delete",
@@ -49,7 +47,7 @@
                 const widgetDataTemplate = JSON.parse("{{ js_widget_data|escapejs }}");
                 const widgetGenerater = new DjangoMapWidgetGenerater({
                     "widgetDataTemplate": widgetDataTemplate,
-                    "mapOptions": mapOptions,
+                    "widgetSettings": widgetSettings,
                     "fieldValue": fieldValue
                 });
             {% endif %}
