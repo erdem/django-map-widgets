@@ -51,7 +51,7 @@
     <script type="application/javascript">
         function googleMapWidgetsCallback(){
             (function($) {
-                const mapOptions = JSON.parse("{{ options|escapejs }}");
+                const widgetSettings = JSON.parse("{{ options|escapejs }}");
                 const fieldValue = JSON.parse("{{ field_value|escapejs }}");
 
                 const widgetWrapSelector = "#{{ name }}-mw-wrap";
@@ -65,8 +65,6 @@
                     wrapElemSelector: widgetWrapSelector,
                     djangoGeoJSONValue: fieldValue,
                     mapElement: document.getElementById(mapId),
-                    mapCenterLocationName: mapOptions.mapCenterLocationName,
-                    mapCenterLocation: mapOptions.mapCenterLocation,
                     coordinatesOverlayToggleBtn: $(".mw-btn-coordinates", widgetWrapSelector),
                     coordinatesOverlayDoneBtn: $(".mw-btn-coordinates-done", widgetWrapSelector),
                     coordinatesOverlayInputs: $(".mw-overlay-input", widgetWrapSelector),
@@ -76,12 +74,10 @@
                     deleteBtn: $(".mw-btn-delete", widgetWrapSelector),
                     addMarkerBtn: $(".mw-btn-add-marker", widgetWrapSelector),
                     loaderOverlayElem: $(".mw-loader-overlay", widgetWrapSelector),
-                    scrollWheel: mapOptions.scrollWheel,
-                    mapOptions: mapOptions,
-                    zoom: mapOptions.zoom,
-                    markerFitZoom: mapOptions.markerFitZoom,
-                    GooglePlaceAutocompleteOptions: mapOptions.GooglePlaceAutocompleteOptions,
-                    streetViewControl: mapOptions.streetViewControl,
+                    mapOptions: widgetSettings.mapOptions,
+                    mapCenterLocationName: widgetSettings.mapCenterLocationName,
+                    markerFitZoom: widgetSettings.markerFitZoom,
+                    GooglePlaceAutocompleteOptions: widgetSettings.GooglePlaceAutocompleteOptions,
                     markerCreateTriggerNameSpace: "google_point_map_widget:marker_create",
                     markerChangeTriggerNameSpace: "google_point_map_widget:marker_change",
                     markerDeleteTriggerNameSpace: "google_point_map_widget:marker_delete",

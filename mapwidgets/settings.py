@@ -8,13 +8,15 @@ DEFAULTS = {
     "GoogleMap": {
         "PointField": {
             "interactive": {
-                "mapCenterLocationName": None,
-                "mapCenterLocation": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
-                "zoom": 12,
-                "scrollWheel": False,
+                "mapOptions": {
+                    "zoom": 12,
+                    "scrollwheel": False,
+                    "streetViewControl": True,
+                    "center": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC"))
+                },
                 "GooglePlaceAutocompleteOptions": {},
+                "mapCenterLocationName": None,
                 "markerFitZoom": 14,
-                "streetViewControl": True,
             },
             "readonly": {
                 "thumbnail": {

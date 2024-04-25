@@ -1,53 +1,51 @@
 (function($) {
     DjangoGooglePointFieldWidget = DjangoMapWidgetBase.extend({
 
-        initializeMap: function(){
-            let mapCenter = this.mapCenterLocation;
-            this.geocoder = new google.maps.Geocoder();
-            if (this.mapCenterLocationName){
-                this.geocoder.geocode({'address' : this.mapCenterLocationName}, function(results, status) {
-                    if (status === google.maps.GeocoderStatus.OK) {
-                        const geo_location = results[0].geometry.location;
-                        mapCenter = [geo_location.lat(), geo_location.lng()];
-                    }
-                    this.map = new google.maps.Map(this.mapElement, {
-                        center: new google.maps.LatLng(mapCenter[0], mapCenter[1]),
-                        mapId: this.mapId,
-                        scrollwheel: this.scrollWheel,
-                        zoomControlOptions: {
-                            position: google.maps.ControlPosition.RIGHT
-                        },
-                        zoom: this.zoom,
-                        streetViewControl: this.streetViewControl,
-                    });
-                    if (!$.isEmptyObject(this.djangoGeoJSONValue)){
-                        this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng)
-                        this.updateDjangoInput();
-                        this.fitBoundMarker();
-                    }
-                    this.initializePlaceAutocomplete()
-                }.bind(this));
-            }else{
-                this.map = new google.maps.Map(this.mapElement, {
-                    center: new google.maps.LatLng(mapCenter[0], mapCenter[1]),
-                    scrollwheel: this.scrollWheel,
-                    zoomControlOptions: {
-                        position: google.maps.ControlPosition.RIGHT
-                    },
-                    zoom: this.zoom,
-                    streetViewControl: this.streetViewControl,
-                    mapId: this.mapId
-                });
-
-                if (!$.isEmptyObject(this.djangoGeoJSONValue)){
-                    this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng)
-                    this.updateDjangoInput();
-                    this.fitBoundMarker();
-                }
-                this.initializePlaceAutocomplete()
+        setMapOptions: async function (){
+            this.mapInitializeOptions = {
+                mapId: this.mapId,
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.RIGHT
+                },
             }
-            $(this.mapElement).data('googleMapObj', this.map);
-            $(this.mapElement).data('googleMapWidgetObj', this);
+            this.mapInitializeOptions = $.extend({}, this.mapInitializeOptions, this.mapOptions);
+            let mapCenter = this.mapInitializeOptions.center
+            if (!(mapCenter instanceof google.maps.LatLng) && Array.isArray(mapCenter)){
+                mapCenter = new google.maps.LatLng(mapCenter[0], mapCenter[1]);
+            }
+            if (this.mapCenterLocationName) {
+                try {
+                    const response = await new Promise((resolve, reject) => {
+                        this.geocoder.geocode({ 'address': this.mapCenterLocationName }, (results, status) => {
+                            if (status === google.maps.GeocoderStatus.OK) {
+                                resolve(results);
+                            } else {
+                                reject(status);
+                            }
+                        });
+                    });
+                    const geo_location = response[0].geometry.location;
+                    mapCenter = new google.maps.LatLng(geo_location.lat(), geo_location.lng());
+                } catch (error) {
+                    console.error('Geocode lookup failed for `mapCenterLocationName` option:', error);
+                }
+            }
+            this.mapInitializeOptions["center"] = mapCenter
+        },
+
+        initializeMap: async function(){
+            this.geocoder = new google.maps.Geocoder();
+            await this.setMapOptions();
+            console.log("ss")
+            this.map = new google.maps.Map(this.mapElement, this.mapInitializeOptions);
+            if (!$.isEmptyObject(this.djangoGeoJSONValue)){
+                this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng)
+                this.updateDjangoInput();
+                this.fitBoundMarker();
+            }
+            this.initializePlaceAutocomplete()
+            $(this.mapElement).data('googlePointFieldMapObj', this.map);
+            $(this.mapElement).data('googlePointFieldObj', this);
         },
 
         initializePlaceAutocomplete: function (){
