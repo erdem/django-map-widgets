@@ -2,36 +2,36 @@
 
 {% block javascript %}
     <script type="application/javascript">
-        function googleMapWidgetsCallback(){
+        function googleMapWidgetsInlineCallback(){
             console.log("inline")
         }
         (function($) {
-            var mapOptions = JSON.parse("{{ options|escapejs }}");
-            var fieldValue = JSON.parse("{{ field_value|escapejs }}");
+            const mapOptions = JSON.parse("{{ options|escapejs }}");
+            const fieldValue = JSON.parse("{{ field_value|escapejs }}");
             {% if not is_formset_empty_form_template %}
+                const widgetData = JSON.parse("{{ js_widget_data|escapejs }}");
+                const widgetWrapSelector = widgetData.widgetWrapSelector;
+                const mapId = widgetData.mapId;
+                const googleAutoInputId = widgetData.googleAutoInputId;
+                const djangoInputId = widgetData.djangoInputId;
 
-                var widgetData = JSON.parse("{{ js_widget_data|escapejs }}");
-                var wrapElemSelector = widgetData.wrapElemSelector;
-                var mapElemID = widgetData.mapElemID;
-                var googleAutoInputID = widgetData.googleAutoInputID;
-                var locationInputID = widgetData.locationInputID;
-
-                var mapWidgetOptions = {
-                    locationInput: $(locationInputID),
-                    wrapElemSelector: wrapElemSelector,
+                const mapWidgetOptions = {
+                    mapId: mapId,
+                    djangoInput: $(djangoInputId),
+                    wrapElemSelector: widgetWrapSelector,
                     locationFieldValue: fieldValue,
-                    mapElement: document.getElementById(mapElemID),
+                    mapElement: document.getElementById(mapId),
                     mapCenterLocationName: mapOptions.mapCenterLocationName,
                     mapCenterLocation: mapOptions.mapCenterLocation,
-                    coordinatesOverlayToggleBtn: $(".mw-btn-coordinates", wrapElemSelector),
-                    coordinatesOverlayDoneBtn: $(".mw-btn-coordinates-done", wrapElemSelector),
-                    coordinatesOverlayInputs: $(".mw-overlay-input", wrapElemSelector),
-                    coordinatesOverlay: $(".mw-coordinates-overlay", wrapElemSelector),
-                    myLocationBtn: $(".mw-btn-my-location", wrapElemSelector),
-                    addressAutoCompleteInput: document.getElementById(googleAutoInputID),
-                    deleteBtn: $(".mw-btn-delete", wrapElemSelector),
-                    addMarkerBtn: $(".mw-btn-add-marker", wrapElemSelector),
-                    loaderOverlayElem: $(".mw-loader-overlay", wrapElemSelector),
+                    coordinatesOverlayToggleBtn: $(".mw-btn-coordinates", widgetWrapSelector),
+                    coordinatesOverlayDoneBtn: $(".mw-btn-coordinates-done", widgetWrapSelector),
+                    coordinatesOverlayInputs: $(".mw-overlay-input", widgetWrapSelector),
+                    coordinatesOverlay: $(".mw-coordinates-overlay", widgetWrapSelector),
+                    myLocationBtn: $(".mw-btn-my-location", widgetWrapSelector),
+                    addressAutoCompleteInput: document.getElementById(googleAutoInputId),
+                    deleteBtn: $(".mw-btn-delete", widgetWrapSelector),
+                    addMarkerBtn: $(".mw-btn-add-marker", widgetWrapSelector),
+                    loaderOverlayElem: $(".mw-loader-overlay", widgetWrapSelector),
                     zoom: mapOptions.zoom,
                     scrollWheel: mapOptions.scrollWheel,
                     markerFitZoom: mapOptions.markerFitZoom,
@@ -41,11 +41,13 @@
                     markerDeleteTriggerNameSpace: "google_point_map_widget:marker_delete",
                     placeChangedTriggerNameSpace: "google_point_map_widget:place_changed"
                 };
-                var widget = new DjangoGooglePointFieldWidget(mapWidgetOptions);
-
+                function initializeMapWidget() {
+                    setTimeout(function (){new DjangoGooglePointFieldWidget(mapWidgetOptions)}, 500)
+                }
+                document.addEventListener('DOMContentLoaded', initializeMapWidget);
             {% else %}
-                var widgetDataTemplate = JSON.parse("{{ js_widget_data|escapejs }}");
-                var widgetGenerater = new DjangoMapWidgetGenerater({
+                const widgetDataTemplate = JSON.parse("{{ js_widget_data|escapejs }}");
+                const widgetGenerater = new DjangoMapWidgetGenerater({
                     "widgetDataTemplate": widgetDataTemplate,
                     "mapOptions": mapOptions,
                     "fieldValue": fieldValue

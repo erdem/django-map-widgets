@@ -160,12 +160,12 @@ class PointFieldInlineWidgetMixin(object):
         map_elem_selector = '#%s-mw-wrap' % name
         map_elem_id = '%s-map-elem' % name
         google_auto_input_id = '%s-mw-google-address-input' % name
-        location_input_id = '#%s' % element_id
+        django_input_id = '#%s' % element_id
         js_widget_params = {
-            'wrapElemSelector': map_elem_selector,
-            'mapElemID': map_elem_id,
-            'googleAutoInputID': google_auto_input_id,
-            'locationInputID': location_input_id
+            'widgetWrapSelector': map_elem_selector,
+            'mapId': map_elem_id,
+            'googleAutoInputId': google_auto_input_id,
+            'djangoInputId': django_input_id
         }
         return js_widget_params
 

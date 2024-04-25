@@ -12,14 +12,14 @@
                     }
                     this.map = new google.maps.Map(this.mapElement, {
                         center: new google.maps.LatLng(mapCenter[0], mapCenter[1]),
+                        mapId: this.mapId,
                         scrollwheel: this.scrollWheel,
                         zoomControlOptions: {
                             position: google.maps.ControlPosition.RIGHT
                         },
                         zoom: this.zoom,
-                        streetViewControl: this.streetViewControl
+                        streetViewControl: this.streetViewControl,
                     });
-
 
                     if (!$.isEmptyObject(this.djangoGeoJSONValue)){
                         this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng)
@@ -37,7 +37,7 @@
                     },
                     zoom: this.zoom,
                     streetViewControl: this.streetViewControl,
-                    mapId: "test-id"
+                    mapId: this.mapId
                 });
 
                 if (!$.isEmptyObject(this.djangoGeoJSONValue)){
