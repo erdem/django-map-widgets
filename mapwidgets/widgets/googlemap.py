@@ -12,7 +12,7 @@ from mapwidgets.widgets.mixins import PointFieldInlineWidgetMixin
 
 
 class GoogleMapPointFieldWidget(BasePointFieldWidget):
-    template_name = 'mapwidgets/google-point-field-widget.html'
+    template_name = 'mapwidgets/googlemap/pointfield/interactive_widget.html'
     settings = mw_settings.GoogleMap.PointField.interactive
     settings_namespace = 'mw_settings.GoogleMap.PointField.interactive'
 
@@ -47,7 +47,7 @@ class GoogleMapPointFieldWidget(BasePointFieldWidget):
 
 
 class GoogleMapPointFieldInlineWidget(PointFieldInlineWidgetMixin, GoogleMapPointFieldWidget):
-    template_name = 'mapwidgets/google-point-field-inline-widget.html'
+    template_name = 'mapwidgets/googlemap/pointfield/interactive_inline_widget.html'
     settings = mw_settings.GoogleMap.PointField.interactive
     settings_namespace = 'mw_settings.GoogleMap.PointField.interactive'
 
@@ -92,7 +92,7 @@ class GoogleMapPointFieldInlineWidget(PointFieldInlineWidgetMixin, GoogleMapPoin
 class GoogleMapPointFieldStaticWidget(BasePointFieldStaticWidget):
     base_url = "https://maps.googleapis.com/maps/api/staticmap"
     settings = mw_settings.GoogleMap.PointField
-    template_name = "mapwidgets/google-static-map.html"
+    template_name = "mapwidgets/googlemap/pointfield/static_widget.html"
 
     def __init__(self, zoom=None, size=None, *args, **kwargs):
         self.zoom = zoom
@@ -148,7 +148,7 @@ class GoogleMapPointFieldStaticWidget(BasePointFieldStaticWidget):
 
 class GoogleMapPointFieldStaticOverlayWidget(GoogleMapPointFieldStaticWidget):
     settings = mw_settings.GoogleMap.PointField
-    template_name = "mapwidgets/google-static-overlay-map.html"
+    template_name = "mapwidgets/googlemap/pointfield/static_overlay_widget.html"
 
     class Media:
         css = {
