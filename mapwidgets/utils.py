@@ -2,6 +2,8 @@ from django import VERSION
 from django.templatetags.static import static
 from django.utils.html import format_html, html_safe, mark_safe
 
+from mapwidgets.settings import mw_settings
+
 
 __all__ = ("AsyncJS", "static")
 
@@ -49,3 +51,10 @@ class AsyncJS:
 
 if VERSION >= (4, 1):
     AsyncJS = html_safe(AsyncJS)
+
+
+def minify_if_not_debug(asset):
+    """
+        Transform template string `asset` by inserting '.min' if DEBUG=False
+    """
+    return asset.format('' if not mw_settings.MINIFED else '.min')

@@ -26,7 +26,7 @@ DEFAULTS = {
                 "mapCenterLocationName": None,
                 "markerFitZoom": 14,
             },
-            "readonly": {
+            "static": {
                 "thumbnail": {
                     "zoom": 15,
                     "size": "480x480",
