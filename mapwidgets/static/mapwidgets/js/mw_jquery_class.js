@@ -8,7 +8,6 @@
 
     $.Class.extend = function(prop) {
         const Super = this.prototype;
-
         initializing = true;
         let prototype = new this();
         initializing = false;
