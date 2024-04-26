@@ -6,7 +6,7 @@ from django.utils.http import urlencode
 
 from mapwidgets.constants import STATIC_MAP_PLACEHOLDER_IMAGE
 from mapwidgets.settings import mw_settings
-from mapwidgets.utils import AsyncJS, minify_if_not_debug
+from mapwidgets.utils import AsyncJS
 from mapwidgets.widgets.base import BasePointFieldWidget, BasePointFieldStaticWidget
 from mapwidgets.widgets.mixins import PointFieldInlineWidgetMixin
 
@@ -34,14 +34,14 @@ class GoogleMapPointFieldWidget(BasePointFieldWidget):
                 AsyncJS(self._google_map_js_url)
             ],
             css_files=[
-                'mapwidgets/css/map_widgets{}.css',
+                'mapwidgets/css/map_widgets.css',
             ],
-            min_js='mapwidgets/js/mw_google_point_field.min.js',
+            min_js='mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield.min.js',
             dev_js=[
                 'mapwidgets/js/mw_init.js',
                 'mapwidgets/js/mw_jquery_class.js',
-                'mapwidgets/js/mw_pointfield_base.js',
-                'mapwidgets/js/mw_google_point_field.js'
+                'mapwidgets/js/pointfield/interactive/mw_pointfield_base.js',
+                'mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield.js'
             ]
         )
 
@@ -57,7 +57,7 @@ class GoogleMapPointFieldInlineWidget(PointFieldInlineWidgetMixin, GoogleMapPoin
 
         css = {
             'all': [
-                minify_if_not_debug('mapwidgets/css/map_widgets{}.css'),
+                'mapwidgets/css/map_widgets.css',
             ]
         }
 
@@ -65,13 +65,13 @@ class GoogleMapPointFieldInlineWidget(PointFieldInlineWidgetMixin, GoogleMapPoin
             js = js + [
                 'mapwidgets/js/mw_init.js',
                 'mapwidgets/js/mw_jquery_class.js',
-                'mapwidgets/js/mw_pointfield_base.js',
-                'mapwidgets/js/mw_google_point_field.js',
-                'mapwidgets/js/mw_google_point_field_generater.js'
+                'mapwidgets/js/pointfield/interactive/mw_pointfield_base.js',
+                'mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield.js',
+                'mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield_inline_generater.js'
             ]
         else:
             js = js + [
-                'mapwidgets/js/mw_google_point_inline_field.min.js'
+                'mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield_inline.min.js'
             ]
 
         return forms.Media(js=js, css=css)
@@ -141,17 +141,17 @@ class GoogleMapPointFieldStaticOverlayWidget(GoogleMapPointFieldStaticWidget):
     class Media:
         css = {
             "all": (
-                minify_if_not_debug("mapwidgets/css/magnific-popup{}.css"),
+                "mapwidgets/css/magnific-popup.css",
             )
         }
         if not mw_settings.MINIFED:  # pragma: no cover
             js = (
-                "mapwidgets/js/mw_init.js",
-                "mapwidgets/js/jquery.custom.magnific-popup.js",
+                "mapwidgets/js/pointfield/mw_init.js",
+                "mapwidgets/js/pointfield/static/googlemap/mw_custom_magnific_popup.js",
             )
         else:
             js = (
-                "mapwidgets/js/jquery.custom.magnific-popup.min.js",
+                "mapwidgets/js/pointfield/static/googlemap/mw_custom_magnific_popup.min.js",
             )
 
     def __init__(self, zoom=None, size=None, thumbnail_size=None, *args, **kwargs):
