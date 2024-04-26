@@ -38,9 +38,9 @@ class GoogleMapPointFieldWidget(BasePointFieldWidget):
             ],
             min_js='mapwidgets/js/mw_google_point_field.min.js',
             dev_js=[
-                'mapwidgets/js/jquery_init.js',
-                'mapwidgets/js/jquery_class.js',
-                'mapwidgets/js/django_mw_base.js',
+                'mapwidgets/js/mw_init.js',
+                'mapwidgets/js/mw_jquery_class.js',
+                'mapwidgets/js/mw_pointfield_base.js',
                 'mapwidgets/js/mw_google_point_field.js'
             ]
         )
@@ -50,18 +50,6 @@ class GoogleMapPointFieldInlineWidget(PointFieldInlineWidgetMixin, GoogleMapPoin
     template_name = 'mapwidgets/googlemap/pointfield/interactive_inline_widget.html'
     settings = mw_settings.GoogleMap.PointField.interactive
     settings_namespace = 'mw_settings.GoogleMap.PointField.interactive'
-
-    @property
-    def _google_map_js_url(self):
-        if mw_settings.GoogleMap.apiKey is None:
-            raise ImproperlyConfigured("`GoogleMap.apiKey` setting is required to use Google Map widgets.")
-
-        cdn_url_params = {
-            "key": mw_settings.GoogleMap.apiKey,
-            "callback": "googleMapWidgetsCallback"
-        }
-        cdn_url_params.update(mw_settings.GoogleMap.dict()["CDNURLParams"])
-        return f"https://maps.googleapis.com/maps/api/js?{urlencode(cdn_url_params)}"
 
     @property
     def media(self):
@@ -75,9 +63,9 @@ class GoogleMapPointFieldInlineWidget(PointFieldInlineWidgetMixin, GoogleMapPoin
 
         if not mw_settings.MINIFED:  # pragma: no cover
             js = js + [
-                'mapwidgets/js/jquery_init.js',
-                'mapwidgets/js/jquery_class.js',
-                'mapwidgets/js/django_mw_base.js',
+                'mapwidgets/js/mw_init.js',
+                'mapwidgets/js/mw_jquery_class.js',
+                'mapwidgets/js/mw_pointfield_base.js',
                 'mapwidgets/js/mw_google_point_field.js',
                 'mapwidgets/js/mw_google_point_field_generater.js'
             ]
@@ -158,7 +146,7 @@ class GoogleMapPointFieldStaticOverlayWidget(GoogleMapPointFieldStaticWidget):
         }
         if not mw_settings.MINIFED:  # pragma: no cover
             js = (
-                "mapwidgets/js/jquery_init.js",
+                "mapwidgets/js/mw_init.js",
                 "mapwidgets/js/jquery.custom.magnific-popup.js",
             )
         else:
