@@ -15,9 +15,9 @@
                 $(document).on('show.fieldset', this.initializeMap.bind(this));
             }
 
-            // set mapbox access_token.
-            mapboxgl.accessToken = this.mapOptions.access_token;
-            this.mapboxSDK = new mapboxSdk({ accessToken: this.mapOptions.access_token });
+            // set mapbox accessToken.
+            mapboxgl.accessToken = this.mapOptions.accessToken;
+            this.mapboxSDK = new mapboxSdk({ accessToken: this.mapOptions.accessToken });
 
             // transform map options
             this.mapboxOptions = this.mapOptions.mapOptions || {}

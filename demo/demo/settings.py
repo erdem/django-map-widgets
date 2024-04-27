@@ -165,12 +165,12 @@ MAP_WIDGETS = {
         },
     },
     "Mapbox": {
+        "accessToken": MAPBOX_API_KEY,
         "PointField": {
             "interactive": {
-                "access_token": MAPBOX_API_KEY,  # Assuming MAPBOX_API_KEY is a variable defined elsewhere
                 "mapOptions": {"zoom": 12, "center": (51.515618, -0.091998)},
                 "markerFitZoom": 14,
             }
-        }
+        },
     },
 }

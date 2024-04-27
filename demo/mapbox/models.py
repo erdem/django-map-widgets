@@ -15,3 +15,6 @@ class InteractivePointField(BaseModel):
     class Meta:
         verbose_name = "Interactive PointField"
         verbose_name_plural = "Interactive PointField"
+
+    def __str__(self):
+        return self.name

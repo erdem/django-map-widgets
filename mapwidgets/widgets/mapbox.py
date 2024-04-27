@@ -7,6 +7,11 @@ class MapboxPointFieldWidget(BasePointFieldWidget):
     settings = mw_settings.Mapbox.PointField.interactive
     settings_namespace = "mw_settings.Mapbox.PointField.interactive"
 
+    def map_settings(self):
+        settings = super().map_settings()
+        settings["accessToken"] = mw_settings.Mapbox.accessToken
+        return settings
+
     @property
     def media(self):
         return self.generate_media(

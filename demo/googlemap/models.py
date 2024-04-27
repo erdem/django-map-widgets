@@ -16,6 +16,9 @@ class InteractivePointField(BaseModel):
         verbose_name = "Interactive PointField"
         verbose_name_plural = "Interactive PointField"
 
+    def __str__(self):
+        return self.name
+
 
 class InteractiveInlinePointField(BaseModel):
     point = models.ForeignKey(InteractivePointField, on_delete=models.CASCADE)

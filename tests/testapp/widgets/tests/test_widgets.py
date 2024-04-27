@@ -53,7 +53,7 @@ class GooglePointWidgetUnitTests(TestCase):
             self.assertEqual(isinstance(widget.media, django_forms.Media), True)
 
             # test `map_options` method
-            options_str = widget._map_options()
+            options_str = widget.map_settings()
             options = json.loads(options_str)
             self.assertEqual(options.get("zoom"), zoom)
             self.assertEqual(options.get("mapCenterLocation"), default_map_center)
@@ -109,7 +109,7 @@ class GooglePointWidgetUnitTests(TestCase):
         self.assertEqual(isinstance(widget.media, django_forms.Media), True)
 
         # test `map_options` method
-        options_str = widget._map_options()
+        options_str = widget.map_settings()
         options = json.loads(options_str)
         self.assertEqual(options.get("zoom"), zoom)
         self.assertEqual(options.get("mapCenterLocation"), default_map_center)
@@ -174,7 +174,7 @@ class GooglePointInlineWidgetUnitTests(TestCase):
             self.assertEqual(isinstance(widget.media, django_forms.Media), True)
 
             # test `map_options` method
-            options_str = widget._map_options()
+            options_str = widget.map_settings()
             options = json.loads(options_str)
             self.assertEqual(options.get("zoom"), zoom)
             self.assertEqual(options.get("mapCenterLocation"), default_map_center)
@@ -241,7 +241,7 @@ class GooglePointInlineWidgetUnitTests(TestCase):
         self.assertEqual(isinstance(widget.media, django_forms.Media), True)
 
         # test `map_options` method
-        options_str = widget._map_options()
+        options_str = widget.map_settings()
         options = json.loads(options_str)
         self.assertEqual(options.get("zoom"), zoom)
         self.assertEqual(options.get("mapCenterLocation"), default_map_center)

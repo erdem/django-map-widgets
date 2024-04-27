@@ -2,7 +2,6 @@ from django.conf import settings as django_settings
 from django.test.signals import setting_changed
 
 from mapwidgets.constants import TIMEZONE_COORDINATES
-from mapwidgets.utils import DotDict
 
 DEFAULT_SETTINGS = {
     "GoogleMap": {
@@ -31,9 +30,9 @@ DEFAULT_SETTINGS = {
         },
     },
     "Mapbox": {
+        "accessToken": "",
         "PointField": {
             "interactive": {
-                "access_token": "",
                 "markerFitZoom": 14,
                 "showZoomNavigation": True,
                 "mapOptions": {
@@ -53,7 +52,7 @@ DEFAULT_SETTINGS = {
                     "marker": False,
                 },
             },
-        }
+        },
     },
     "Leaflet": {
         "PointField": {
@@ -73,8 +72,38 @@ DEFAULT_SETTINGS = {
     },
     "srid": 4326,
     "MINIFED": not django_settings.DEBUG,
-    "MAPBOX_API_KEY": "",
 }
+
+
+class DotDict(dict):
+    """
+    A dictionary that allows accessing keys using dot notation and is JSON serializable.
+    """
+
+    def __getattr__(self, attr):
+        try:
+            value = self[attr]
+        except KeyError:
+            raise AttributeError(
+                f"'{self.__class__.__name__}' object has no attribute '{attr}'"
+            )
+
+        if isinstance(value, dict):
+            return DotDict(value)
+        else:
+            return value
+
+    __setattr__ = dict.__setitem__
+    __delattr__ = dict.__delitem__
+
+    def __iter__(self):
+        return iter(self)
+
+    def items(self):
+        for key, value in super().items():
+            if isinstance(value, dict):
+                value = DotDict(value)
+            yield key, value
 
 
 class MapWidgetSettings(DotDict):

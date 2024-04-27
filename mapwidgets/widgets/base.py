@@ -17,7 +17,7 @@ class BasePointFieldWidget(BaseGeometryWidget):
         super().__init__(*args, **kwargs)
         self.custom_settings = kwargs.pop("settings", None)
 
-    def _map_options(self):
+    def map_settings(self):
         if not self.settings or not self.settings_namespace:
             raise ImproperlyConfigured(
                 f'{self.__class__.__name__} requires "settings" and "settings_namespace" to be defined'
@@ -61,7 +61,7 @@ class BasePointFieldWidget(BaseGeometryWidget):
             field_value = None
 
         extra_context = {
-            "options": json.dumps(self._map_options()),
+            "options": json.dumps(self.map_settings()),
             "field_value": json.dumps(field_value),
         }
         context.update(extra_context)
