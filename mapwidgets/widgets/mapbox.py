@@ -16,7 +16,7 @@ class MapboxPointFieldWidget(BasePointFieldWidget):
                 "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js",
             ],
             css_files=[
-                "mapwidgets/css/map_widgets{}.css",
+                "mapwidgets/css/map_widgets.css",
                 "https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css",
                 "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css",
             ],

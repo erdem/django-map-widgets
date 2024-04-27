@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.gis",
     "mapwidgets",
     "googlemap",
+    "mapbox",
 ]
 
 MIDDLEWARE = [
@@ -167,9 +168,8 @@ MAP_WIDGETS = {
             "interactive": {
                 "access_token": MAPBOX_API_KEY,  # Assuming MAPBOX_API_KEY is a variable defined elsewhere
                 "mapOptions": {"zoom": 12, "center": (51.515618, -0.091998)},
-                "markerFitZoom": 16,
+                "markerFitZoom": 14,
             }
         }
     },
-    "MAPBOX_API_KEY": MAPBOX_API_KEY,  # Assuming GOOGLE_MAP_API_KEY is a variable defined elsewhere
 }
