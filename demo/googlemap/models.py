@@ -16,12 +16,29 @@ class InteractivePointField(BaseModel):
         verbose_name = "Interactive PointField"
         verbose_name_plural = "Interactive PointField"
 
-    def __str__(self):
-        return self.name
-
 
 class InteractiveInlinePointField(BaseModel):
     point = models.ForeignKey(InteractivePointField, on_delete=models.CASCADE)
 
     first_point = models.PointField(help_text="Use map widget to point the location")
     second_point = models.PointField(default=DEFAULT_LOCATION_POINT)
+
+
+class StaticPointField(BaseModel):
+    name = models.CharField(max_length=255)
+    location = models.PointField(help_text="Use map widget to point the location")
+    location_optional = models.PointField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Static PointField"
+        verbose_name_plural = "Static PointField"
+
+
+class StaticOverlayPointField(BaseModel):
+    name = models.CharField(max_length=255)
+    location = models.PointField(help_text="Use map widget to point the location")
+    location_optional = models.PointField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Static Overlay PointField"
+        verbose_name_plural = "Static Overlay PointField"

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.gis",
     "mapwidgets",
     "googlemap",
 ]
@@ -138,11 +139,13 @@ if platform.system() == "Darwin":
     GEOS_LIBRARY_PATH = "/opt/homebrew/opt/geos/lib/libgeos_c.dylib"
 
 GOOGLE_MAP_API_KEY = os.getenv("GOOGLE_MAP_API_KEY")
+GOOGLE_MAP_API_SIGNATURE = os.getenv("GOOGLE_MAP_API_SIGNATURE")
 MAPBOX_API_KEY = os.getenv("MAPBOX_API_KEY")
 
 MAP_WIDGETS = {
     "GoogleMap": {
         "apiKey": GOOGLE_MAP_API_KEY,
+        "apiSignature": GOOGLE_MAP_API_KEY,
         "PointField": {
             "interactive": {
                 "mapOptions": {
