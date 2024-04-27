@@ -1,6 +1,10 @@
 from django import forms
 
-from mapwidgets.widgets import GooglePointFieldWidget, GoogleStaticMapWidget, GoogleStaticOverlayMapWidget
+from mapwidgets.widgets import (
+    GooglePointFieldWidget,
+    GoogleStaticMapWidget,
+    GoogleStaticOverlayMapWidget,
+)
 from .models import PointField
 
 
@@ -10,6 +14,6 @@ class PointFieldCreateForm(forms.ModelForm):
         model = PointField
         fields = ("name", "location", "city")
         widgets = {
-            'location': GooglePointFieldWidget,
-            'city': GooglePointFieldWidget,
+            "location": GooglePointFieldWidget,
+            "city": GooglePointFieldWidget,
         }

@@ -10,12 +10,12 @@ class SeleniumScreenShotMixin(object):
         self.browser.get_screenshot_as_file(filename)
 
     def get_filename(self):
-        timestamp = datetime.now().isoformat().replace(':', '.')[:19]
-        return '{folder}/{classname}.{method}-{timestamp}.png'.format(
+        timestamp = datetime.now().isoformat().replace(":", ".")[:19]
+        return "{folder}/{classname}.{method}-{timestamp}.png".format(
             folder=SCREENSHOT_DUMP_LOCATION,
             classname=self.__class__.__name__,
             method=self._testMethodName,
-            timestamp=timestamp
+            timestamp=timestamp,
         )
 
     def tearDown(self):

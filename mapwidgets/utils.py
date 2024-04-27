@@ -9,8 +9,7 @@ __all__ = ("AsyncJS", "static")
 
 
 class AsyncJS:
-    """
-    """
+    """ """
 
     def __init__(self, js):
         self.js = js
@@ -27,9 +26,11 @@ class AsyncJS:
         def __str__(self):
             return format_html(
                 '<script async src="{}"></script>',
-                self.js
-                if self.js.startswith(("http://", "https://", "/"))
-                else static(self.js)
+                (
+                    self.js
+                    if self.js.startswith(("http://", "https://", "/"))
+                    else static(self.js)
+                ),
             )
 
     else:
@@ -37,9 +38,11 @@ class AsyncJS:
         def __html__(self):
             return format_html(
                 '<script async src="{}"></script>',
-                self.js
-                if self.js.startswith(("http://", "https://", "/"))
-                else static(self.js)
+                (
+                    self.js
+                    if self.js.startswith(("http://", "https://", "/"))
+                    else static(self.js)
+                ),
             )
 
     def __eq__(self, other):
@@ -55,6 +58,6 @@ if VERSION >= (4, 1):
 
 def minify_if_not_debug(asset):
     """
-        Transform template string `asset` by inserting '.min' if DEBUG=False
+    Transform template string `asset` by inserting '.min' if DEBUG=False
     """
-    return asset.format('' if not mw_settings.MINIFED else '.min')
+    return asset.format("" if not mw_settings.MINIFED else ".min")

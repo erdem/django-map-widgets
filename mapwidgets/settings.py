@@ -20,50 +20,15 @@ DEFAULTS = {
                     "zoom": 12,
                     "scrollwheel": False,
                     "streetViewControl": True,
-                    "center": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC"))
+                    "center": TIMEZONE_COORDINATES.get(
+                        getattr(django_settings, "TIME_ZONE", "UTC")
+                    ),
                 },
                 "GooglePlaceAutocompleteOptions": {},
                 "mapCenterLocationName": None,
                 "markerFitZoom": 14,
             },
-            "static": {
-                "thumbnail": {
-                    "zoom": 15,
-                    "size": "480x480",
-                    "scale": "",
-                    "format": "",
-                    "maptype": "",
-                    "path": "",
-                    "visible": "",
-                    "style": "",
-                    "language": "",
-                    "region": "",
-                    "marker": {
-                        "size": "normal",
-                        "color": "",
-                        "icon": "",
-                    }
-                },
-                "overlay": {
-                    "zoom": 15,
-                    "size": "480x480",
-                    "thumbnail_size": "160x160",
-                    "scale": "",
-                    "format": "",
-                    "maptype": "",
-                    "path": "",
-                    "visible": "",
-                    "style": "",
-                    "language": "",
-                    "region": "",
-                    "marker": {
-                        "size": "normal",
-                        "color": "",
-                        "icon": "",
-                    }
-                },
-            }
-        }
+        },
     },
     "Mapbox": {
         "PointField": {
@@ -76,7 +41,9 @@ DEFAULTS = {
                     "style": "mapbox://styles/mapbox/streets-v11",
                     "scrollZoom": False,
                     "animate": False,
-                    "center": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
+                    "center": TIMEZONE_COORDINATES.get(
+                        getattr(django_settings, "TIME_ZONE", "UTC")
+                    ),
                 },
                 "geocoderOptions": {
                     "zoom": 6,
@@ -84,42 +51,38 @@ DEFAULTS = {
                     "style": "mapbox://styles/mapbox/streets-v11",
                     "reverseGeocode": True,
                     "marker": False,
-                }
+                },
             },
         }
     },
     "Leaflet": {
         "PointField": {
             "interactive": {
-                "mapOptions": {
-                    "zoom": 12,
-                    "scrollWheelZoom": False
-                },
+                "mapOptions": {"zoom": 12, "scrollWheelZoom": False},
                 "tileLayer": {
                     "urlTemplate": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                    "options": {
-                        "maxZoom": 20
-                    }
+                    "options": {"maxZoom": 20},
                 },
                 "markerFitZoom": 14,
                 "showZoomNavigation": True,
-                "mapCenterLocation": TIMEZONE_COORDINATES.get(getattr(django_settings, "TIME_ZONE", "UTC")),
+                "mapCenterLocation": TIMEZONE_COORDINATES.get(
+                    getattr(django_settings, "TIME_ZONE", "UTC")
+                ),
             }
         }
     },
-    "LIBRARIES": "places,marker",
     "srid": 4326,
     "MINIFED": not django_settings.DEBUG,
-    "GOOGLE_MAP_API_SIGNATURE": "",
-    "GOOGLE_MAP_API_KEY": "",
     "MAPBOX_API_KEY": "",
 }
 
 
 class MapWidgetSettings:
     def __init__(self, defaults=None, app_settings=None):
-        self.django_settings = getattr(django_settings, 'MAP_WIDGETS', {})
-        self._app_settings = app_settings if app_settings is not None else self.django_settings
+        self.django_settings = getattr(django_settings, "MAP_WIDGETS", {})
+        self._app_settings = (
+            app_settings if app_settings is not None else self.django_settings
+        )
         self.defaults = defaults if defaults is not None else DEFAULTS
         self._merged = self.merge_dict(self.defaults, self._app_settings)
 
@@ -156,8 +119,8 @@ mw_settings = MapWidgetSettings(DEFAULTS)
 
 def reload_widget_settings(*args, **kwargs):
     global mw_settings
-    setting, value = kwargs['setting'], kwargs['value']
-    if setting == 'MAP_WIDGETS' and value:
+    setting, value = kwargs["setting"], kwargs["value"]
+    if setting == "MAP_WIDGETS" and value:
         mw_settings = MapWidgetSettings(value, DEFAULTS)
 
 

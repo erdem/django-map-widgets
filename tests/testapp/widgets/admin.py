@@ -12,19 +12,22 @@ class StreetInline(admin.TabularInline):
         models.PointField: {"widget": mapwidgets.GooglePointFieldWidget}
     }
     extra = 2
-    
+
 
 class PointFieldAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.PointField: {"widget": mapwidgets.GooglePointFieldWidget}
     }
-    list_display = ('name',)
+    list_display = ("name",)
     fieldsets = (
-        (None, {'fields': ('name', 'location')}),
-        ('Extra', {
-            'fields': ('city',),
-            'classes': ('collapse',),
-        }),
+        (None, {"fields": ("name", "location")}),
+        (
+            "Extra",
+            {
+                "fields": ("city",),
+                "classes": ("collapse",),
+            },
+        ),
     )
     inlines = [StreetInline]
 

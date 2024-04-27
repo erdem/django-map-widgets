@@ -1,10 +1,11 @@
-from .googlemap import GoogleMapPointFieldWidget, GoogleMapPointFieldInlineWidget, GoogleMapPointFieldStaticWidget, GoogleMapPointFieldStaticOverlayWidget
+from .googlemap import GoogleMapPointFieldWidget, GoogleMapPointFieldInlineWidget
 from .leaflet import LeafletPointFieldWidget
 from .mapbox import MapboxPointFieldWidget
 
 
 __all__ = [
-    'GoogleMapPointFieldWidget', 'GoogleMapPointFieldInlineWidget',
-    'GoogleMapPointFieldStaticWidget', 'GoogleMapPointFieldStaticOverlayWidget',
-    'MapboxPointFieldWidget', 'LeafletPointFieldWidget'
+    "GoogleMapPointFieldWidget",
+    "GoogleMapPointFieldInlineWidget",
+    "MapboxPointFieldWidget",
+    "LeafletPointFieldWidget",
 ]

@@ -1,4 +1,3 @@
-from django import forms
 from django.contrib.gis import admin
 from django.contrib.gis.db import models
 

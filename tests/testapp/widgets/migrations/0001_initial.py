@@ -10,17 +10,29 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='PointField',
+            name="PointField",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('location', django.contrib.gis.db.models.fields.PointField(srid=4326)),
-                ('city', django.contrib.gis.db.models.fields.PointField(blank=True, null=True, srid=3857)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                ("location", django.contrib.gis.db.models.fields.PointField(srid=4326)),
+                (
+                    "city",
+                    django.contrib.gis.db.models.fields.PointField(
+                        blank=True, null=True, srid=3857
+                    ),
+                ),
             ],
         ),
     ]

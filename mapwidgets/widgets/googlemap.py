@@ -1,13 +1,10 @@
 from django import forms
-from django.contrib.gis.geos import Point
 from django.core.exceptions import ImproperlyConfigured
-from django.templatetags.static import static
 from django.utils.http import urlencode
 
-from mapwidgets.constants import STATIC_MAP_PLACEHOLDER_IMAGE
 from mapwidgets.settings import mw_settings
 from mapwidgets.utils import AsyncJS
-from mapwidgets.widgets.base import BasePointFieldWidget, BasePointFieldStaticWidget
+from mapwidgets.widgets.base import BasePointFieldWidget
 from mapwidgets.widgets.mixins import PointFieldInlineWidgetMixin
 
 

@@ -8,17 +8,33 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('widgets', '0001_initial'),
+        ("widgets", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Street',
+            name="Street",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('street', django.contrib.gis.db.models.fields.PointField(srid=4326)),
-                ('point', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='widgets.PointField')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                ("street", django.contrib.gis.db.models.fields.PointField(srid=4326)),
+                (
+                    "point",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="widgets.PointField",
+                    ),
+                ),
             ],
         ),
     ]

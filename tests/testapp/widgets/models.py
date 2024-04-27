@@ -13,6 +13,8 @@ class PointField(models.Model):
 
 
 class Street(models.Model):
-    point = models.ForeignKey(PointField, blank=True, null=True, on_delete=models.SET_NULL)
+    point = models.ForeignKey(
+        PointField, blank=True, null=True, on_delete=models.SET_NULL
+    )
     name = models.CharField(max_length=255)
     street = models.PointField(srid=4326)
