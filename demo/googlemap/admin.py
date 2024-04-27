@@ -1,9 +1,8 @@
 from django.contrib.gis import admin
 from django.contrib.gis.db import models
+from googlemap import models as googlemap_models
 
 import mapwidgets
-
-from googlemap import models as googlemap_models
 
 
 class InteractiveAdminInline(admin.TabularInline):

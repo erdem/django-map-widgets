@@ -1,9 +1,8 @@
 from django.contrib.gis import admin
 from django.contrib.gis.db import models
+from leaflet import models as leaflet_models
 
 import mapwidgets
-
-from leaflet import models as leaflet_models
 
 
 class InteractivePointFieldAdmin(admin.ModelAdmin):

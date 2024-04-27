@@ -4,7 +4,6 @@ from django.utils.html import format_html, html_safe, mark_safe
 
 from mapwidgets.settings import mw_settings
 
-
 __all__ = ("AsyncJS", "static")
 
 

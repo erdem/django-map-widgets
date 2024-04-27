@@ -1,9 +1,8 @@
 from django.contrib.gis import admin
 from django.contrib.gis.db import models
+from mapbox import models as mapbox_models
 
 import mapwidgets
-
-from mapbox import models as mapbox_models
 
 
 class InteractivePointFieldAdmin(admin.ModelAdmin):
