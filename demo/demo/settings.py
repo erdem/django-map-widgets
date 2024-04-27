@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "mapwidgets",
     "googlemap",
     "mapbox",
+    "leaflet",
 ]
 
 MIDDLEWARE = [
