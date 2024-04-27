@@ -23,7 +23,7 @@ class GoogleMapPointFieldWidget(BasePointFieldWidget):
             "key": mw_settings.GoogleMap.apiKey,
             "callback": "googleMapWidgetsCallback",
         }
-        cdn_url_params.update(mw_settings.GoogleMap.dict()["CDNURLParams"])
+        cdn_url_params.update(mw_settings.GoogleMap["CDNURLParams"])
         return f"https://maps.googleapis.com/maps/api/js?{urlencode(cdn_url_params)}"
 
     @property

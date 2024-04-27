@@ -26,7 +26,7 @@ class BasePointFieldWidget(BaseGeometryWidget):
         if self.custom_settings:
             custom_settings = MapWidgetSettings(app_settings=self.custom_settings)
             self.settings = getattr(custom_settings, self.settings_namespace)
-        return self.settings.dict()
+        return self.settings
 
     def generate_media(self, js_sources, css_files, min_js, dev_js):
         suffix = ".min" if mw_settings.MINIFED else ""
@@ -54,10 +54,15 @@ class BasePointFieldWidget(BaseGeometryWidget):
 
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
-        de_value = self.deserialize(context["serialized"])
+        field_value = context["serialized"]
+        if field_value:
+            field_value = self.geos_to_dict(self.deserialize(field_value))
+        else:
+            field_value = None
+
         extra_context = {
             "options": json.dumps(self._map_options()),
-            "field_value": json.dumps(self.geos_to_dict(de_value)),
+            "field_value": json.dumps(field_value),
         }
         context.update(extra_context)
         return context

@@ -3,7 +3,7 @@ from collections import OrderedDict
 from django.test import TestCase
 from django.test.utils import override_settings
 
-from mapwidgets.settings import MapWidgetSettings, DEFAULTS
+from mapwidgets.settings import MapWidgetSettings, DEFAULT_SETTINGS
 
 
 class WidgetSettingsTests(TestCase):
@@ -11,21 +11,21 @@ class WidgetSettingsTests(TestCase):
         mw_settings = MapWidgetSettings()
         with override_settings(MAP_WIDGETS={}):
             google_point_widget_default_settings = OrderedDict(
-                DEFAULTS["GooglePointFieldWidget"]
+                DEFAULT_SETTINGS["GooglePointFieldWidget"]
             )
             self.assertEqual(
                 mw_settings.GooglePointFieldWidget, google_point_widget_default_settings
             )
 
             google_static_widget_default_settings = OrderedDict(
-                DEFAULTS["GoogleStaticMapWidget"]
+                DEFAULT_SETTINGS["GoogleStaticMapWidget"]
             )
             self.assertEqual(
                 mw_settings.GoogleStaticMapWidget, google_static_widget_default_settings
             )
 
             google_static_widget_marker_default_settings = OrderedDict(
-                DEFAULTS["GoogleStaticMapMarkerSettings"]
+                DEFAULT_SETTINGS["GoogleStaticMapMarkerSettings"]
             )
             self.assertEqual(
                 mw_settings.GoogleStaticMapMarkerSettings,
@@ -33,7 +33,7 @@ class WidgetSettingsTests(TestCase):
             )
 
             google_static_overlay_widget_default_settings = OrderedDict(
-                DEFAULTS["GoogleStaticOverlayMapWidget"]
+                DEFAULT_SETTINGS["GoogleStaticOverlayMapWidget"]
             )
             self.assertEqual(
                 mw_settings.GoogleStaticOverlayMapWidget,
@@ -95,7 +95,7 @@ class WidgetSettingsTests(TestCase):
         self.assertRaises(
             ValueError,
             lambda: getattr(
-                MapWidgetSettings(defaults=invalid_tuple_settings),
+                MapWidgetSettings(default_settings=invalid_tuple_settings),
                 "GooglePointFieldWidget",
             ),
         )

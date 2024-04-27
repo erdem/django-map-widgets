@@ -2,9 +2,9 @@ from django.conf import settings as django_settings
 from django.test.signals import setting_changed
 
 from mapwidgets.constants import TIMEZONE_COORDINATES
+from mapwidgets.utils import DotDict
 
-
-DEFAULTS = {
+DEFAULT_SETTINGS = {
     "GoogleMap": {
         "apiKey": None,
         "apiSignature": None,
@@ -77,51 +77,62 @@ DEFAULTS = {
 }
 
 
-class MapWidgetSettings:
-    def __init__(self, defaults=None, app_settings=None):
-        self.django_settings = getattr(django_settings, "MAP_WIDGETS", {})
-        self._app_settings = (
-            app_settings if app_settings is not None else self.django_settings
-        )
-        self.defaults = defaults if defaults is not None else DEFAULTS
-        self._merged = self.merge_dict(self.defaults, self._app_settings)
+class MapWidgetSettings(DotDict):
+    """
+    A class for merging and accessing map widget settings using dot notation.
 
-    def dict(self):
-        return self._merged
+    This class inherits from `DotDict`, allowing access to dictionary keys using
+    dot notation (e.g., `settings.GoogleMap.PointField.interactive`).
+
+    It merges two dictionaries: `default_settings` and `app_settings`.
+    `app_settings` takes precedence over `default_settings`.
+
+    If `app_settings` is not provided as argument, it uses the `MAP_WIDGETS`
+    setting from the Django settings module.
+
+    The `merge_dict` method recursively merges nested dictionaries, with
+    `app_settings` values taking precedence.
+
+    Example:
+    >>> settings = MapWidgetSettings()
+    >>> settings.GoogleMap.PointField.interactive.markerFitZoom
+    14
+    """
+
+    def __init__(self, default_settings=None, app_settings=None):
+        _django_settings = getattr(django_settings, "MAP_WIDGETS", {})
+        app_settings = app_settings if app_settings is not None else _django_settings
+        default_settings = (
+            default_settings if default_settings is not None else DEFAULT_SETTINGS
+        )
+
+        merged = self.merge_dict(default_settings, app_settings)
+        super().__init__(merged)
 
     @classmethod
     def merge_dict(cls, dict1, dict2):
-        for key, val in dict1.items():
-            if isinstance(val, dict):
-                if key in dict2 and type(dict2[key] == dict):
-                    cls.merge_dict(dict1[key], dict2[key])
-            else:
-                if key in dict2:
-                    dict1[key] = dict2[key]
-
+        merged = dict1.copy()
         for key, val in dict2.items():
-            if key not in dict1:
-                dict1[key] = val
-        return dict1
-
-    def __getattr__(self, attr):
-        if attr not in self._merged:
-            raise AttributeError(f"Invalid settings key: '{attr}'")
-        value = self._merged[attr]
-        if isinstance(value, dict):
-            value = MapWidgetSettings(value)
-            self._merged[attr] = value
-        return value
+            if isinstance(val, dict):
+                if key in merged and isinstance(merged[key], dict):
+                    merged[key] = cls.merge_dict(merged[key], val)
+                else:
+                    merged[key] = val
+            else:
+                merged[key] = val
+        return merged
 
 
-mw_settings = MapWidgetSettings(DEFAULTS)
+mw_settings = MapWidgetSettings(default_settings=DEFAULT_SETTINGS)
 
 
 def reload_widget_settings(*args, **kwargs):
     global mw_settings
     setting, value = kwargs["setting"], kwargs["value"]
     if setting == "MAP_WIDGETS" and value:
-        mw_settings = MapWidgetSettings(value, DEFAULTS)
+        mw_settings = MapWidgetSettings(
+            default_settings=DEFAULT_SETTINGS, app_settings=value
+        )
 
 
 setting_changed.connect(reload_widget_settings)
