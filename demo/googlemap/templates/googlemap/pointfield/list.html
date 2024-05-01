@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div style="margin-bottom: 20px"><a href="{% url "googlemap:add" %}" class="btn btn-default block">Create</a></div>
+    <div style="margin-bottom: 20px"><a href="{% url "googlemap:add" %}" class="btn btn-default block">Add New Item</a>
+    </div>
     <ul class="block">
         {% for obj in pointfield_objs %}
             <li><a href="{% url "googlemap:edit" obj.pk %}">{{ obj.name }}</a></li>

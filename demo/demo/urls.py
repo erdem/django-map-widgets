@@ -23,4 +23,5 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("googlemap/", include("googlemap.urls")),
+    path("leaflet/", include("leaflet.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

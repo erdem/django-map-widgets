@@ -1,4 +1,4 @@
-(function($) {
+(function ($) {
     DjangoMapWidgetGenerater = $.Class.extend({
 
         init: function (options) {
@@ -24,7 +24,7 @@
             const googleAutoInputId = widgetData.googleAutoInputId;
             const djangoInputId = widgetData.djangoInputId;
 
-            const mapWidgetOptions= {
+            const mapWidgetOptions = {
                 mapId: mapId,
                 djangoInput: $(djangoInputId),
                 wrapElemSelector: widgetWrapSelector,
@@ -42,10 +42,10 @@
                 mapCenterLocationName: this.widgetSettings.mapCenterLocationName,
                 markerFitZoom: this.widgetSettings.markerFitZoom,
                 GooglePlaceAutocompleteOptions: this.widgetSettings.GooglePlaceAutocompleteOptions,
-                markerCreateTriggerNameSpace: "google_point_map_widget:marker_create",
-                markerChangeTriggerNameSpace: "google_point_map_widget:marker_change",
-                markerDeleteTriggerNameSpace: "google_point_map_widget:marker_delete",
-                placeChangedTriggerNameSpace: "google_point_map_widget:place_changed"
+                markerCreateTriggerNameSpace: "googleMapPointFieldWidget:markerCreate",
+                markerChangeTriggerNameSpace: "googleMapPointFieldWidget:markerChange",
+                markerDeleteTriggerNameSpace: "googleMapPointFieldWidget:markerDelete",
+                placeChangedTriggerNameSpace: "googleMapPointFieldWidget:placeChanged"
             };
             new DjangoGooglePointFieldWidget(mapWidgetOptions);
         }

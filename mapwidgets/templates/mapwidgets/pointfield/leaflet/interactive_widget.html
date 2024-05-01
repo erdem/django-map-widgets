@@ -83,10 +83,10 @@
                 markerFitZoom: mapOptions.markerFitZoom,
                 GooglePlaceAutocompleteOptions: mapOptions.GooglePlaceAutocompleteOptions,
                 streetViewControl: mapOptions.streetViewControl,
-                markerCreateTriggerNameSpace: "google_point_map_widget:marker_create",
-                markerChangeTriggerNameSpace: "google_point_map_widget:marker_change",
-                markerDeleteTriggerNameSpace: "google_point_map_widget:marker_delete",
-                placeChangedTriggerNameSpace: "google_point_map_widget:place_changed"
+                markerCreateTriggerNameSpace: "leafletPointFieldWidget:markerCreate",
+                markerChangeTriggerNameSpace: "leafletPointFieldWidget:markerChange",
+                markerDeleteTriggerNameSpace: "leafletPointFieldWidget:markerDelete",
+                placeChangedTriggerNameSpace: "leafletPointFieldWidget:placeChanged"
             };
             const mapWidget = new DjangoLeafletPointFieldWidget(mapWidgetOptions);
             {% block extra_javascript %}
