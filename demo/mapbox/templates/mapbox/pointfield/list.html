@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div style="margin-bottom: 20px"><a href="{% url "mapbox:add" %}" class="btn btn-default block">Add New Item</a>
+    </div>
+    <h3>Items</h3>
+    <ul class="block">
+        {% for obj in pointfield_objs %}
+            <li><a href="{% url "mapbox:edit" obj.pk %}">{{ obj.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

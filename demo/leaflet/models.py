@@ -1,5 +1,6 @@
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
+from django.urls import reverse
 
 from demo.db import BaseModel
 
@@ -18,3 +19,6 @@ class InteractivePointField(BaseModel):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("leaflet:edit", args=(self.id,))

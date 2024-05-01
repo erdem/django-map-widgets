@@ -7,28 +7,28 @@
 {% block javascript %}
     <script type="text/javascript">
         (function ($) {
-            $(document).on("leafletPointFieldWidget:markerCreate", function (e, lat, lng, locationInputElem, mapWrapID) {
+            $(document).on("mapboxPointFieldWidget:markerCreate", function (e, lat, lng, locationInputElem, mapWrapID) {
                 console.log("EVENT: marker_create"); // django widget textarea widget (hidden)
                 console.log(locationInputElem); // django widget textarea widget (hidden)
                 console.log(lat, lng); // created marker coordinates
                 console.log(mapWrapID); // map widget wrapper element ID
             });
 
-            $(document).on("leafletPointFieldWidget:markerChange", function (e, lat, lng, locationInputElem, mapWrapID) {
+            $(document).on("mapboxPointFieldWidget:markerChange", function (e, lat, lng, locationInputElem, mapWrapID) {
                 console.log("EVENT: marker_change"); // django widget textarea widget (hidden)
                 console.log(locationInputElem); // django widget textarea widget (hidden)
                 console.log(lat, lng);  // changed marker coordinates
                 console.log(mapWrapID); // map widget wrapper element ID
             });
 
-            $(document).on("leafletPointFieldWidget:markerDelete", function (e, lat, lng, locationInputElem, mapWrapID) {
+            $(document).on("mapboxPointFieldWidget:markerDelete", function (e, lat, lng, locationInputElem, mapWrapID) {
                 console.log("EVENT: marker_delete"); // django widget textarea widget (hidden)
                 console.log(locationInputElem); // django widget textarea widget (hidden)
                 console.log(lat, lng);  // deleted marker coordinates
                 console.log(mapWrapID); // map widget wrapper element ID
             })
 
-            $(document).on("leafletPointFieldWidget:placeChanged", function (e, place, lat, lng, locationInputElem, mapWrapID) {
+            $(document).on("mapboxPointFieldWidget:placeChanged", function (e, place, lat, lng, locationInputElem, mapWrapID) {
                 console.log("EVENT: place_changed"); // django widget textarea widget (hidden)
                 console.log(place);
                 console.log(locationInputElem); // django widget textarea widget (hidden)
@@ -44,7 +44,7 @@
 
 {% block content %}
     <h4>{{ obj.name }}</h4>
-    <form action="{% url "leaflet:edit" obj.pk %}" method="post">
+    <form action="{% url "mapbox:edit" obj.pk %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <br>

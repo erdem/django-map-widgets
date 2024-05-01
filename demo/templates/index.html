@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <h3>Map list</h3>
+    <ul>
+        <li><a href="{% url "googlemap:list" %}">Google Map PointField Widget</a></li>
+        <li><a href="{% url "leaflet:list" %}">Leaflet PointField Widget</a></li>
+        <li><a href="{% url "mapbox:list" %}">Mapbox Map PointField Widget</a></li>
+    </ul>
+
+{% endblock content %}
