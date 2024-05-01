@@ -4,6 +4,11 @@
     {{ form.media }}
 {% endblock extrahead %}
 
+{% block breadcrumb_item %}
+    <li><a href="{% url "googlemap:list" %}">Google Maps Point Field</a></li>
+{% endblock %}
+
+
 {% block javascript %}
     <script type="text/javascript">
         (function ($) {

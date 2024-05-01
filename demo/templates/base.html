@@ -17,8 +17,10 @@
     <div>
         <ul class="breadcrumb">
             <li><a href="{% url "index" %}">MapWidgets Demo</a></li>
+            {% block breadcrumb_item %}
+            {% endblock %}
             {% if obj %}
-                <li>{{ obj.name }}</li>
+                <li><a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a></li>
             {% endif %}
         </ul>
     </div>

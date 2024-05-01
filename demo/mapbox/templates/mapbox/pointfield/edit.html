@@ -41,6 +41,9 @@
     </script>
 {% endblock javascript %}
 
+{% block breadcrumb_item %}
+    <li><a href="{% url "mapbox:list" %}">Mapbox Point Field</a></li>
+{% endblock %}
 
 {% block content %}
     <h4>{{ obj.name }}</h4>

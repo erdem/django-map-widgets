@@ -42,6 +42,12 @@
     {{ form.media }}
 {% endblock extrahead %}
 
+{% block breadcrumb_item %}
+    <li><a href="{% url "mapbox:list" %}">Mapbox Point Field</a></li>
+    <li>New Item</li>
+{% endblock %}
+
+
 {% block content %}
     <h4>Add New Item</h4>
     <form action="{% url "mapbox:add" %}" method="post">

@@ -4,6 +4,10 @@
     {{ form.media }}
 {% endblock extrahead %}
 
+{% block breadcrumb_item %}
+    <li><a href="{% url "leaflet:list" %}">Leaflet Point Field</a></li>
+{% endblock %}
+
 {% block javascript %}
     <script type="text/javascript">
         (function ($) {
