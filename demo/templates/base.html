@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block blockbots %}
+        <meta name="robots" content="NONE,NOARCHIVE"/>{% endblock %}
+    <title>Django Map Widgets - Demo</title>
+    <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
+    <script type="text/javascript" src="{% static "js/jquery-3.7.1.slim.min.js" %}"></script>
+    {% block extrahead %}
+    {% endblock extrahead %}
+</head>
+<body>
+<div class="container help-block">
+    <div>
+        <ul class="breadcrumb">
+            <li><a href="{% url "googlemap:list" %}">GoogleMap Location lists</a></li>
+            {% if obj %}
+                <li>{{ obj.name }}</li>
+            {% endif %}
+        </ul>
+    </div>
+    {% block content %}
+    {% endblock content %}
+</div>
+
+{% block javascript %}
+{% endblock javascript %}
+
+</body>
+</html>
