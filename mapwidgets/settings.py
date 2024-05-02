@@ -15,6 +15,22 @@ DEFAULT_SETTINGS = {
         },
         "PointField": {
             "interactive": {
+                "media": {
+                    "css": {
+                        "dev": ["mapwidgets/css/map_widgets.css"],
+                        "minified": ["mapwidgets/css/map_widgets.min.css"],
+                    },
+                    "js": {
+                        "dev": [
+                            "mapwidgets/js/mw_init.js",
+                            "mapwidgets/js/pointfield/interactive/mw_pointfield_base.js",
+                            "mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield.js",
+                        ],
+                        "minified": [
+                            "mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield.min.js"
+                        ],
+                    },
+                },
                 "mapOptions": {
                     "zoom": 12,
                     "scrollwheel": False,
@@ -71,7 +87,7 @@ DEFAULT_SETTINGS = {
         }
     },
     "srid": 4326,
-    "MINIFED": not django_settings.DEBUG,
+    "is_dev_mode": django_settings.DEBUG,
 }
 
 

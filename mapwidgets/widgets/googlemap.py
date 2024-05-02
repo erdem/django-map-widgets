@@ -10,7 +10,7 @@ from mapwidgets.widgets.mixins import PointFieldInlineWidgetMixin
 
 class GoogleMapPointFieldWidget(BasePointFieldWidget):
     template_name = "mapwidgets/pointfield/googlemap/interactive_widget.html"
-    settings = mw_settings.GoogleMap.PointField.interactive
+    _settings = mw_settings.GoogleMap.PointField.interactive
     settings_namespace = "mw_settings.GoogleMap.PointField.interactive"
 
     @property
@@ -28,18 +28,8 @@ class GoogleMapPointFieldWidget(BasePointFieldWidget):
 
     @property
     def media(self):
-        return self.generate_media(
-            js_sources=[AsyncJS(self._google_map_js_url)],
-            css_files=[
-                "mapwidgets/css/map_widgets.css",
-            ],
-            min_js="mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield.min.js",
-            dev_js=[
-                "mapwidgets/js/mw_init.js",
-                "mapwidgets/js/mw_jquery_class.js",
-                "mapwidgets/js/pointfield/interactive/mw_pointfield_base.js",
-                "mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield.js",
-            ],
+        return self._media(
+            extra_js=[AsyncJS(self._google_map_js_url)],
         )
 
 
@@ -47,30 +37,25 @@ class GoogleMapPointFieldInlineWidget(
     PointFieldInlineWidgetMixin, GoogleMapPointFieldWidget
 ):
     template_name = "mapwidgets/pointfield/googlemap/interactive_inline_widget.html"
-    settings = mw_settings.GoogleMap.PointField.interactive
+    _settings = mw_settings.GoogleMap.PointField.interactive
     settings_namespace = "mw_settings.GoogleMap.PointField.interactive"
 
-    @property
-    def media(self):
-        js = [AsyncJS(self._google_map_js_url)]
+    def dev_media(self, extra_css=None, extra_js=None):
+        """
+        Append inline generator js to `GoogleMapPointFieldWidget` dev JS files.
+        """
+        settings = super().dev_media(extra_css, extra_js)
+        inline_generator_js = "mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield_inline_generater.js"
+        settings["js"].append(inline_generator_js)
+        return settings
 
-        css = {
-            "all": [
-                "mapwidgets/css/map_widgets.css",
-            ]
-        }
-
-        if not mw_settings.MINIFED:  # pragma: no cover
-            js = js + [
-                "mapwidgets/js/mw_init.js",
-                "mapwidgets/js/mw_jquery_class.js",
-                "mapwidgets/js/pointfield/interactive/mw_pointfield_base.js",
-                "mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield.js",
-                "mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield_inline_generater.js",
-            ]
-        else:
-            js = js + [
-                "mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield_inline.min.js"
-            ]
-
-        return forms.Media(js=js, css=css)
+    def minified_media(self, extra_css=None, extra_js=None):
+        """
+        Provide different new minified file path for Admin Inline Widget
+        """
+        settings = super().minified_media(extra_css, extra_js)
+        settings["js"] = [
+            AsyncJS(self._google_map_js_url),
+            "mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield_inline.min.js",
+        ]
+        return settings

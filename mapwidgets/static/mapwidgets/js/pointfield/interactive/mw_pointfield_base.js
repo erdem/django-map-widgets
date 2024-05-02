@@ -15,8 +15,8 @@
                 $(document).on('show.fieldset', this.initializeMap.bind(this));
             }
             this.initializeMap.bind(this)();
-            this.djangoInput.data('PointFieldMapObj', this.map);
-            this.djangoInput.data('PointFieldClassObj', this);
+            this.djangoInput.data('mwMapObj', this.map);
+            this.djangoInput.data('mwClassObj', this);
         },
 
         initializeMap: function () {

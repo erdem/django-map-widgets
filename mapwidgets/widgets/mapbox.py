@@ -4,11 +4,11 @@ from mapwidgets.widgets.base import BasePointFieldWidget
 
 class MapboxPointFieldWidget(BasePointFieldWidget):
     template_name = "mapwidgets/pointfield/mapbox/interactive_widget.html"
-    settings = mw_settings.Mapbox.PointField.interactive
+    _settings = mw_settings.Mapbox.PointField.interactive
     settings_namespace = "mw_settings.Mapbox.PointField.interactive"
 
-    def map_settings(self):
-        settings = super().map_settings()
+    def settings(self):
+        settings = super().settings()
         settings["accessToken"] = mw_settings.Mapbox.accessToken
         return settings
 

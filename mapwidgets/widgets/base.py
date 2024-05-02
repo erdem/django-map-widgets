@@ -3,37 +3,41 @@ import json
 from django import forms
 from django.contrib.gis.forms import BaseGeometryWidget
 from django.contrib.gis.geos import GEOSGeometry
-from django.core.exceptions import ImproperlyConfigured
 
-from mapwidgets.settings import MapWidgetSettings, mw_settings
+from mapwidgets.settings import mw_settings
 
 
 class BasePointFieldWidget(BaseGeometryWidget):
-    settings_namespace = None
-    settings = None
+    _settings = None
     map_srid = mw_settings.srid
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.custom_settings = kwargs.pop("settings", None)
 
-    def map_settings(self):
-        if not self.settings or not self.settings_namespace:
-            raise ImproperlyConfigured(
-                f'{self.__class__.__name__} requires "settings" and "settings_namespace" to be defined'
-            )
+    @property
+    def settings(self):
+        return self._settings
 
-        if self.custom_settings:
-            custom_settings = MapWidgetSettings(app_settings=self.custom_settings)
-            self.settings = getattr(custom_settings, self.settings_namespace)
-        return self.settings
+    def dev_media(self, extra_css=None, extra_js=None):
+        extra_js = extra_js or []
+        extra_css = extra_css or []
+        extra_js.extend(self.settings.media.js.dev)
+        extra_css.extend(self.settings.media.css.dev)
+        return dict(css={"all": extra_css}, js=extra_js)
 
-    def generate_media(self, js_sources, css_files, min_js, dev_js):
-        suffix = ".min" if mw_settings.MINIFED else ""
-        css_files = [css_file.format(suffix) for css_file in css_files]
-        js_files = js_sources + ([min_js] if mw_settings.MINIFED else dev_js)
-        css = {"all": css_files}
-        return forms.Media(js=js_files, css=css)
+    def minified_media(self, extra_css=None, extra_js=None):
+        extra_js = extra_js or []
+        extra_css = extra_css or []
+        extra_js.extend(self.settings.media.js.minified)
+        extra_css.extend(self.settings.media.css.minified)
+        return dict(css={"all": extra_css}, js=extra_js)
+
+    def _media(self, extra_css=None, extra_js=None):
+        media_files = self.dev_media(extra_css, extra_js)
+        if not mw_settings.is_dev_mode:
+            media_files = self.minified_media(extra_css, extra_js)
+        return forms.Media(**media_files)
 
     def geos_to_dict(self, geom: GEOSGeometry):
         if geom is None:
@@ -61,7 +65,7 @@ class BasePointFieldWidget(BaseGeometryWidget):
             field_value = None
 
         extra_context = {
-            "options": json.dumps(self.map_settings()),
+            "options": json.dumps(self.settings),
             "field_value": json.dumps(field_value),
         }
         context.update(extra_context)
