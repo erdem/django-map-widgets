@@ -11,18 +11,11 @@ class LeafletPointFieldWidget(BasePointFieldWidget):
 
     @property
     def media(self):
-        css = {
-            "all": [
-                "https://unpkg.com/leaflet@1.7.1/dist/leaflet.css",
-                "mapwidgets/css/map_widgets.css",
-            ]
-        }
-        js = [
-            "https://unpkg.com/leaflet@1.7.1/dist/leaflet.js",
-            "mapwidgets/js/mw_init.js",
-            "mapwidgets/js/mw_jquery_class.js",
-            "mapwidgets/js/pointfield/interactive/mw_pointfield_base.js",
-            "mapwidgets/js/pointfield/interactive/leaflet/mw_pointfield.js",
-        ]
-
-        return Media(js=js, css=css)
+        return self._media(
+            extra_css=[
+                "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
+            ],
+            extra_js=[
+                "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
+            ],
+        )

@@ -83,6 +83,22 @@ DEFAULT_SETTINGS = {
     "Leaflet": {
         "PointField": {
             "interactive": {
+                "media": {
+                    "css": {
+                        "dev": ["mapwidgets/css/map_widgets.css"],
+                        "minified": ["mapwidgets/css/map_widgets.min.css"],
+                    },
+                    "js": {
+                        "dev": [
+                            "mapwidgets/js/mw_init.js",
+                            "mapwidgets/js/pointfield/interactive/mw_pointfield_base.js",
+                            "mapwidgets/js/pointfield/interactive/leaflet/mw_pointfield.js",
+                        ],
+                        "minified": [
+                            "mapwidgets/js/pointfield/interactive/leaflet/mw_pointfield.min.js"
+                        ],
+                    },
+                },
                 "mapOptions": {"zoom": 12, "scrollWheelZoom": False},
                 "tileLayer": {
                     "urlTemplate": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
