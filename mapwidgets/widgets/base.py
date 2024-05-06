@@ -3,6 +3,7 @@ import json
 from django import forms
 from django.contrib.gis.forms import BaseGeometryWidget
 from django.contrib.gis.geos import GEOSGeometry
+from django.conf import settings as django_settings
 
 from mapwidgets.settings import mw_settings
 
@@ -35,7 +36,7 @@ class BasePointFieldWidget(BaseGeometryWidget):
 
     def _media(self, extra_css=None, extra_js=None):
         media_paths = self.dev_media(extra_css, extra_js)
-        if not mw_settings.is_dev_mode:
+        if not django_settings.DEBUG:
             media_paths = self.minified_media(extra_css, extra_js)
         return forms.Media(css={"all": media_paths["css"]}, js=media_paths["js"])
 

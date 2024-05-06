@@ -1,7 +1,17 @@
 from django.conf import settings as django_settings
+from django.core.exceptions import ImproperlyConfigured
 from django.test.signals import setting_changed
 
 from mapwidgets.constants import TIMEZONE_COORDINATES
+
+
+def get_default_center_coordinates():
+    try:
+        django_time_zone = django_settings.TIME_ZONE
+    except ImproperlyConfigured:
+        django_time_zone = "UTC"
+    return TIMEZONE_COORDINATES.get(django_time_zone, None)
+
 
 DEFAULT_SETTINGS = {
     "GoogleMap": {
@@ -35,9 +45,7 @@ DEFAULT_SETTINGS = {
                     "zoom": 12,
                     "scrollwheel": False,
                     "streetViewControl": True,
-                    "center": TIMEZONE_COORDINATES.get(
-                        getattr(django_settings, "TIME_ZONE", "UTC")
-                    ),
+                    "center": get_default_center_coordinates(),
                 },
                 "GooglePlaceAutocompleteOptions": {},
                 "mapCenterLocationName": None,
@@ -72,9 +80,7 @@ DEFAULT_SETTINGS = {
                     "style": "mapbox://styles/mapbox/streets-v11",
                     "scrollZoom": False,
                     "animate": False,
-                    "center": TIMEZONE_COORDINATES.get(
-                        getattr(django_settings, "TIME_ZONE", "UTC")
-                    ),
+                    "center": get_default_center_coordinates(),
                 },
                 "geocoderOptions": {},
             },
@@ -106,14 +112,11 @@ DEFAULT_SETTINGS = {
                 },
                 "markerFitZoom": 14,
                 "showZoomNavigation": True,
-                "mapCenterLocation": TIMEZONE_COORDINATES.get(
-                    getattr(django_settings, "TIME_ZONE", "UTC")
-                ),
+                "mapCenterLocation": get_default_center_coordinates(),
             }
         }
     },
     "srid": 4326,
-    "is_dev_mode": django_settings.DEBUG,
 }
 
 

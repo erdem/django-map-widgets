@@ -1,5 +1,5 @@
 (function ($) {
-    DjangoMapWidgetGenerater = $.Class.extend({
+    DjangoMapWidgetGenerator = $.Class.extend({
 
         init: function (options) {
             $.extend(this, options);

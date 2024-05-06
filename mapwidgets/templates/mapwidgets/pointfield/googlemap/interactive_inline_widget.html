@@ -45,7 +45,7 @@
                 });
             {% else %}
                 const widgetDataTemplate = JSON.parse("{{ js_widget_data|escapejs }}");
-                const widgetGenerater = new DjangoMapWidgetGenerater({
+                const widgetGenerater = new DjangoMapWidgetGenerator({
                     "widgetDataTemplate": widgetDataTemplate,
                     "widgetSettings": widgetSettings,
                     "fieldValue": fieldValue

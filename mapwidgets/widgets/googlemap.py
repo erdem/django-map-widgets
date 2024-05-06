@@ -45,7 +45,7 @@ class GoogleMapPointFieldInlineWidget(
         Append inline generator js to `GoogleMapPointFieldWidget` dev JS files.
         """
         settings = super().dev_media(extra_css, extra_js)
-        inline_generator_js = "mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield_inline_generater.js"
+        inline_generator_js = "mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield_inline_generator.js"
         settings["js"].append(inline_generator_js)
         return settings
 
