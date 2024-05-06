@@ -1,6 +1,6 @@
 from django import forms
-
 from mapbox.models import InteractivePointField
+
 from mapwidgets import MapboxPointFieldWidget
 
 

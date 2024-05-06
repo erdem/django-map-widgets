@@ -1,5 +1,5 @@
-from googlemap.views import PointFieldListView, PointFieldAddView, PointFieldDetailView
 from django.urls import path, re_path
+from googlemap.views import PointFieldAddView, PointFieldDetailView, PointFieldListView
 
 app_name = "googlemap"
 

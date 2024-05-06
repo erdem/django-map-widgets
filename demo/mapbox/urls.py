@@ -1,5 +1,5 @@
-from mapbox.views import PointFieldListView, PointFieldAddView, PointFieldDetailView
 from django.urls import path, re_path
+from mapbox.views import PointFieldAddView, PointFieldDetailView, PointFieldListView
 
 app_name = "mapbox"
 

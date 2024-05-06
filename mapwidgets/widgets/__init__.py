@@ -1,5 +1,4 @@
-from .googlemap import (GoogleMapPointFieldInlineWidget,
-                        GoogleMapPointFieldWidget)
+from .googlemap import GoogleMapPointFieldInlineWidget, GoogleMapPointFieldWidget
 from .leaflet import LeafletPointFieldWidget
 from .mapbox import MapboxPointFieldWidget
 

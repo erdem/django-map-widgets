@@ -1,6 +1,6 @@
 from django import forms
-
 from leaflet.models import InteractivePointField
+
 from mapwidgets import LeafletPointFieldWidget
 
 

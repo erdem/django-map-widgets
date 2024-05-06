@@ -1,6 +1,5 @@
 from django.urls import reverse_lazy
 from django.views.generic import FormView, ListView, UpdateView
-
 from leaflet.forms import InteractivePointFieldViewForm
 from leaflet.models import InteractivePointField
 

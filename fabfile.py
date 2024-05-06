@@ -1,6 +1,6 @@
 import os
-from fabric.api import local
 
+from fabric.api import local
 
 JS_FILE_MAPPING = {
     "GooglePointFieldWidget": {
