@@ -20,27 +20,24 @@ class BasePointFieldWidget(BaseGeometryWidget):
     def settings(self):
         return self._settings
 
-    def dev_media(self, extra_css: list = None, extra_js=None):
-        _js = extra_js or []
-        _css = extra_css or []
-        _js.extend(self.settings.media.js.dev)
-        _css.extend(self.settings.media.css.dev)
-        return dict(css=_css, js=_js)
+    def get_css_paths(self, extra_css=None, minified=False):
+        extra_css = extra_css or []
+        media_settings = self.settings.media
+        return extra_css + (
+            media_settings.css.minified if minified else media_settings.css.dev
+        )
 
-    def minified_media(self, extra_css=None, extra_js=None):
-        _js = extra_js or []
-        _css = extra_css or []
-        _js.extend(self.settings.media.js.minified)
-        _css.extend(self.settings.media.css.minified)
-        return dict(css=_css, js=_js)
+    def get_js_paths(self, extra_js=None, minified=False):
+        extra_js = extra_js or []
+        media_settings = self.settings.media
+        return extra_js + (
+            media_settings.js.minified if minified else media_settings.js.dev
+        )
 
     def _media(self, extra_css=None, extra_js=None):
-        if not mw_settings.is_dev_mode:
-            media_paths = self.minified_media(extra_css, extra_js)
-        else:
-            media_paths = self.dev_media(extra_css, extra_js)
-
-        return forms.Media(css={"all": media_paths["css"]}, js=media_paths["js"])
+        css_paths = self.get_css_paths(extra_css, minified=not mw_settings.is_dev_mode)
+        js_paths = self.get_js_paths(extra_js, minified=not mw_settings.is_dev_mode)
+        return forms.Media(css={"all": css_paths}, js=js_paths)
 
     @property
     def media(self):

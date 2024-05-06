@@ -179,5 +179,5 @@ MAP_WIDGETS = {
             }
         },
     },
-    "is_dev_mode": False,
+    "is_dev_mode": True,
 }

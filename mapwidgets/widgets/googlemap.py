@@ -38,22 +38,16 @@ class GoogleMapPointFieldInlineWidget(
     _settings = mw_settings.GoogleMap.PointField.interactive
     settings_namespace = "mw_settings.GoogleMap.PointField.interactive"
 
-    def dev_media(self, extra_css=None, extra_js=None):
-        """
-        Append inline generator js to `GoogleMapPointFieldWidget` dev JS files.
-        """
-        settings = super().dev_media(extra_css, extra_js)
-        inline_generator_js = "mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield_inline_generator.js"
-        settings["js"].append(inline_generator_js)
-        return settings
+    def get_js_paths(self, extra_js=None, minified=False):
+        js_paths = super().get_js_paths(extra_js, minified)
 
-    def minified_media(self, extra_css=None, extra_js=None):
-        """
-        Provide different new minified file path for Admin Inline Widget
-        """
-        settings = super().minified_media(extra_css, extra_js)
-        settings["js"] = [
-            AsyncJS(self._google_map_js_url),
-            "mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield_inline.min.js",
-        ]
-        return settings
+        if minified:
+            js_paths = [
+                AsyncJS(self._google_map_js_url),
+                "mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield_inline.min.js",
+            ]
+        else:
+            inline_generator_js = "mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield_inline_generator.js"
+            js_paths.append(inline_generator_js)
+
+        return js_paths
