@@ -28,9 +28,7 @@ class GoogleMapPointFieldWidget(BasePointFieldWidget):
 
     @property
     def media(self):
-        return self._media(
-            extra_js=[AsyncJS(self._google_map_js_url)],
-        )
+        return self._media(extra_js=[AsyncJS(self._google_map_js_url)])
 
 
 class GoogleMapPointFieldInlineWidget(

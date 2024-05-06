@@ -1,4 +1,4 @@
-let mapWidgets = {};
+mapWidgets = {};
 
 // Array to store callback functions for Google Maps widget Classes
 // These functions will be executed when the Google Maps API finishes loading

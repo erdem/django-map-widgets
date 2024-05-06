@@ -117,6 +117,7 @@ DEFAULT_SETTINGS = {
         }
     },
     "srid": 4326,
+    "is_dev_mode": django_settings.DEBUG,
 }
 
 

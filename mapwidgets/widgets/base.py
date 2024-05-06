@@ -35,9 +35,11 @@ class BasePointFieldWidget(BaseGeometryWidget):
         return dict(css=_css, js=_js)
 
     def _media(self, extra_css=None, extra_js=None):
-        media_paths = self.dev_media(extra_css, extra_js)
-        if not django_settings.DEBUG:
+        if not mw_settings.is_dev_mode:
             media_paths = self.minified_media(extra_css, extra_js)
+        else:
+            media_paths = self.dev_media(extra_css, extra_js)
+
         return forms.Media(css={"all": media_paths["css"]}, js=media_paths["js"])
 
     @property

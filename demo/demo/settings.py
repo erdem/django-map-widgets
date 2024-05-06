@@ -79,6 +79,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = "demo.wsgi.application"
 
 
@@ -178,4 +179,5 @@ MAP_WIDGETS = {
             }
         },
     },
+    "is_dev_mode": False,
 }
