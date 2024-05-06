@@ -49,6 +49,22 @@ DEFAULT_SETTINGS = {
         "accessToken": "",
         "PointField": {
             "interactive": {
+                "media": {
+                    "css": {
+                        "dev": ["mapwidgets/css/map_widgets.css"],
+                        "minified": ["mapwidgets/css/map_widgets.min.css"],
+                    },
+                    "js": {
+                        "dev": [
+                            "mapwidgets/js/mw_init.js",
+                            "mapwidgets/js/pointfield/interactive/mw_pointfield_base.js",
+                            "mapwidgets/js/pointfield/interactive/mapbox/mw_pointfield.js",
+                        ],
+                        "minified": [
+                            "mapwidgets/js/pointfield/interactive/mapbox/mw_pointfield.min.js"
+                        ],
+                    },
+                },
                 "markerFitZoom": 14,
                 "showZoomNavigation": True,
                 "mapOptions": {
@@ -60,13 +76,7 @@ DEFAULT_SETTINGS = {
                         getattr(django_settings, "TIME_ZONE", "UTC")
                     ),
                 },
-                "geocoderOptions": {
-                    "zoom": 6,
-                    "flyTo": False,
-                    "style": "mapbox://styles/mapbox/streets-v11",
-                    "reverseGeocode": True,
-                    "marker": False,
-                },
+                "geocoderOptions": {},
             },
         },
     },

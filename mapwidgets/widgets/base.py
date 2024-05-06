@@ -19,25 +19,29 @@ class BasePointFieldWidget(BaseGeometryWidget):
     def settings(self):
         return self._settings
 
-    def dev_media(self, extra_css=None, extra_js=None):
-        extra_js = extra_js or []
-        extra_css = extra_css or []
-        extra_js.extend(self.settings.media.js.dev)
-        extra_css.extend(self.settings.media.css.dev)
-        return dict(css={"all": extra_css}, js=extra_js)
+    def dev_media(self, extra_css: list = None, extra_js=None):
+        _js = extra_js or []
+        _css = extra_css or []
+        _js.extend(self.settings.media.js.dev)
+        _css.extend(self.settings.media.css.dev)
+        return dict(css=_css, js=_js)
 
     def minified_media(self, extra_css=None, extra_js=None):
-        extra_js = extra_js or []
-        extra_css = extra_css or []
-        extra_js.extend(self.settings.media.js.minified)
-        extra_css.extend(self.settings.media.css.minified)
-        return dict(css={"all": extra_css}, js=extra_js)
+        _js = extra_js or []
+        _css = extra_css or []
+        _js.extend(self.settings.media.js.minified)
+        _css.extend(self.settings.media.css.minified)
+        return dict(css=_css, js=_js)
 
     def _media(self, extra_css=None, extra_js=None):
-        media_files = self.dev_media(extra_css, extra_js)
+        media_paths = self.dev_media(extra_css, extra_js)
         if not mw_settings.is_dev_mode:
-            media_files = self.minified_media(extra_css, extra_js)
-        return forms.Media(**media_files)
+            media_paths = self.minified_media(extra_css, extra_js)
+        return forms.Media(css={"all": media_paths["css"]}, js=media_paths["js"])
+
+    @property
+    def media(self):
+        return self._media()
 
     def geos_to_dict(self, geom: GEOSGeometry):
         if geom is None:
