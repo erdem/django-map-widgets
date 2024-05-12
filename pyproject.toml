@@ -14,6 +14,7 @@ black = "^24.4.2"
 isort = "^5.13.2"
 psycopg2-binary = "^2.9.9"
 citizenshell = "^2.3.2"
+click = "^8.1.7"
 
 
 [tool.poetry.group.debug.dependencies]
