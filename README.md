@@ -1,5 +1,3 @@
-[![Coverage Status](https://coveralls.io/repos/github/erdem/django-map-widgets/badge.svg?branch=master)](https://coveralls.io/github/erdem/django-map-widgets?branch=master)
-[![Build Status](https://travis-ci.org/erdem/django-map-widgets.png)](https://travis-ci.org/erdem/django-map-widgets)
 [![PyPI version](https://badge.fury.io/py/django-map-widgets.svg)](https://badge.fury.io/py/django-map-widgets)
 
 ## Django Map Widgets
@@ -39,7 +37,7 @@ INSTALLED_APPS = [
 
 ```
 
-Run `collectstatic` django admin command before use the widgets
+Ensure `collectstatic` Django admin command is run before using the widgets in production.
 
 ```shell
 python manage.py collectstatic
@@ -76,18 +74,24 @@ class CityForm(forms.ModelForm):
         }
 ```
 
-...and your template should look something like this
+When the map widgets are used in Django views, `{{ form.media }}` built-in template variable should be included
+in `<head>` or the end of the `<body>` HTML tag in the view templates.
 
 ```html
 
-<form method="POST" action="">
-    {% csrf_token %}
+<html>
+<head>
+    <title>...</title>
     {{form.media}}
-    {{form.as_p}}
-</form>
+    <head>
+        ....
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{form.as_p}}
+        </form>
 ```
 
-The JavaScript map rendering behavior of the widgets can be customized by providing `MAP_WIDGETS` config in your Django
+The JavaScript map rendering behavior of the widgets can be customized by providing `MAP_WIDGETS` config in the
 project's settings file. For detailed guidance on map customization options, check the settings guide.
 
 **Example Settings**
@@ -136,9 +140,11 @@ MAP_WIDGETS = {
 
 ### Javascript Requirements
 
-Django Map Widgets requires jQuery to function in your regular Django views. However, if you are using the widget within
-the Django Admin, you do not need to provide jQuery separately. You can simply configure any map widget class as
+jQuery is required for Django Map Widgets to function in regular Django views. However, if the widgets is being used
+within the Django Admin, jQuery does not need to be provided separately. Any map widget class can be configured as
 described in the documentation, and they will work out of the box.
+
+Preferable jQuery version is `3.7-slim`.
 
 ### Screenshots
 

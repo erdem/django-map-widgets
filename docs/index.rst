@@ -1,20 +1,23 @@
-.. Django Map Widgets documentation master file, created by
-   sphinx-quickstart on Sat Feb 18 20:39:08 2017.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Django Map Widgets Documentation
+================================
 
-Welcome to Django Map Widgets's documentation!
-==============================================
+Django Map Widgets package provides configurable, pluggable, and user-friendly map widgets for GeoDjango form fields, simplifying the integration of interactive maps into Django applications.
 
-Configurable, pluggable and more user friendly map widgets for Django PostGIS fields.
-
-**Project Home Page**: https://github.com/erdem/django-map-widgets
+* `Documentation <http://django-map-widgets.readthedocs.io/>`_
+* `Home Page <https://github.com/erdem/django-map-widgets/>`_
+* `Demo Project <https://github.com/erdem/django-map-widgets/tree/master/demo>`_
 
 Achievements
 ^^^^^^^^^^^^
 
-The aim of the Django map widgets is to make all Geo Django widgets more user friendly and configurable. Map widgets are currently supporting only Google Map services, but we are planning to add other major map services.
+The goal of the Django Map Widgets package is to create user-friendly UI widgets for GeoDjango form fields that are
+highly configurable.
 
+Currently, the package supports Google, Mapbox, and Leaflet map providers. If you would like to see support for
+additional providers and believe you can contribute, feel free to do so. We would be happy to review and merge your
+contributions.
+
+For more info how to contribute, please check out the contribution guideline.
 
 Index
 -----
