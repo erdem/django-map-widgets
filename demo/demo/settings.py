@@ -148,12 +148,11 @@ if platform.system() == "Darwin":
 
 GOOGLE_MAP_API_KEY = os.getenv("GOOGLE_MAP_API_KEY")
 GOOGLE_MAP_API_SIGNATURE = os.getenv("GOOGLE_MAP_API_SIGNATURE")
-MAPBOX_API_KEY = os.getenv("MAPBOX_API_KEY")
+MAPBOX_ACCESS_TOKEN = os.getenv("MAPBOX_API_KEY")
 
 MAP_WIDGETS = {
     "GoogleMap": {
         "apiKey": GOOGLE_MAP_API_KEY,
-        "apiSignature": GOOGLE_MAP_API_KEY,
         "PointField": {
             "interactive": {
                 "mapOptions": {
@@ -171,7 +170,7 @@ MAP_WIDGETS = {
         },
     },
     "Mapbox": {
-        "accessToken": MAPBOX_API_KEY,
+        "accessToken": MAPBOX_ACCESS_TOKEN,
         "PointField": {
             "interactive": {
                 "mapOptions": {"zoom": 12, "center": (51.515618, -0.091998)},
