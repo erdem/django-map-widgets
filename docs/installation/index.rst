@@ -1,11 +1,15 @@
+Django Map Widgets supports Django 4.x-5.x and Python 3.9+.
+
 Installation
-------------
+============
+
+1. Install the package:
 
 .. code-block:: shell
 
     pip install django-map-widgets
 
-Add ‘mapwidgets’ to your `INSTALLED_APPS` in settings.py
+2. Add mapwidgets to your INSTALLED_APPS in settings.py:
 
 .. code-block:: python
 
@@ -17,16 +21,28 @@ Add ‘mapwidgets’ to your `INSTALLED_APPS` in settings.py
         'mapwidgets',
     ]
 
-Ensure `collectstatic` Django admin command is run before using the widgets in production.
+3. Run the `collectstatic` command to ensure static files are correctly collected before using the widgets in production:
 
 .. code-block:: shell
 
     python manage.py collectstatic
 
-Usages
-------
+Getting Started
+===============
 
-**Django Admin Usage**
+All widgets can initialize with GeoDjango form fields like any other Django widgets.
+
+**Javascript Requirements**
+
+
+jQuery is required for Django Map Widgets to function in regular Django views. However, if the widgets are used within the Django Admin, jQuery does not need to be provided separately (it uses django admin jQuery to function). Any map widget class can be configured as described in the documentation, and they will work out of the box.
+
+The preferable jQuery version is 3.x-slim.
+
+Usage
+-----
+
+**Django Admin Usage Example**
 
 .. code-block:: python
 
@@ -39,7 +55,8 @@ Usages
             models.PointField: {"widget": mapwidgets.GoogleMapPointFieldWidget}
         }
 
-**Django Forms Usage**
+** Django Forms Usage Example**
+
 
 .. code-block:: python
 
@@ -55,15 +72,15 @@ Usages
                 'city_hall': MapboxPointFieldWidget,
             }
 
-When the map widgets are used in Django views, `{{ form.media }}` built-in template variable should be included
-in `<head>` or the end of the `<body>` HTML tag in the view templates.
+
+When using map widgets in Django views, include `{{ form.media }}` template variable in the <head> or at the end of the <body> tag in django templates:
 
 .. code-block:: html
 
     <html>
     <head>
         <title>...</title>
-        {{form.media}}
+        {{ form.media }}
     </head>
     <body>
         ....
@@ -71,12 +88,13 @@ in `<head>` or the end of the `<body>` HTML tag in the view templates.
             {% csrf_token %}
             {{form.as_p}}
         </form>
-        {{ form.media }}
     </body>
     </html>
 
-The JavaScript map rendering behavior of the widgets can be customized by providing `MAP_WIDGETS` config in the
-project's settings file. For detailed guidance on map customization options, check the settings guide.
+Configuration
+-------------
+
+The JavaScript map rendering behavior of the widgets can be customized by providing `MAP_WIDGETS` configuration in your project's settings file. For detailed guidance on map customization options, refer to the `settings guide <http://django-map-widgets.readthedocs.io/settings>`_.
 
 **Example Settings**
 
@@ -122,26 +140,18 @@ project's settings file. For detailed guidance on map customization options, che
         }
     }
 
-Javascript Requirements
-~~~~~~~~~~~~~~~~~~~~~~~~
 
-jQuery is required for Django Map Widgets to function in regular Django views. However, if the widgets are being used
-within the Django Admin, jQuery does not need to be provided separately. Any map widget class can be configured as
-described in the documentation, and they will work out of the box.
-
-Preferable jQuery version is `3.7-slim`.
 
 Screenshots
-~~~~~~~~~~~~
+-----------
 
-GoogleMap Interactive Point Field Widget
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**GoogleMap Interactive Point Field Widget**
+
 
 .. image:: https://cloud.githubusercontent.com/assets/1518272/26807500/ad0af4ea-4a4e-11e7-87d6-632f39e438f7.gif
    :alt: GoogleMap Interactive Point Field Widget
 
-MapBox Interactive Point Field Widget
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**MapBox Interactive Point Field Widget**
 
 .. image:: https://user-images.githubusercontent.com/1518272/168497515-f97363f4-6860-410e-9e24-230a2c4233b7.png
    :alt: MapBox Interactive Point Field Widget
