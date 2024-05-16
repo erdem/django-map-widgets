@@ -3,7 +3,6 @@ import json
 from django import forms
 from django.contrib.gis.forms import BaseGeometryWidget
 from django.contrib.gis.geos import GEOSGeometry
-from django.conf import settings as django_settings
 
 from mapwidgets.settings import mw_settings
 
@@ -13,12 +12,19 @@ class BasePointFieldWidget(BaseGeometryWidget):
     map_srid = mw_settings.srid
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
         self.custom_settings = kwargs.pop("settings", None)
+        super().__init__(*args, **kwargs)
 
     @property
     def settings(self):
-        return self._settings
+        _settings = self._settings.copy()
+        if self.custom_settings is not None:
+            assert isinstance(
+                self.custom_settings, dict
+            ), "`settings` argument must be a dict type"
+            _settings.update(self.custom_settings)
+
+        return _settings
 
     def get_css_paths(self, extra_css=None, minified=False):
         extra_css = extra_css or []

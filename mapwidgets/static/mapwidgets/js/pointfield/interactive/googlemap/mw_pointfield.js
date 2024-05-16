@@ -1,48 +1,68 @@
 (function ($) {
     DjangoGooglePointFieldWidget = DjangoMapWidgetBase.extend({
 
-        setMapOptions: async function () {
-            this.mapInitializeOptions = {
-                mapId: this.mapId,
-                zoomControlOptions: {
-                    position: google.maps.ControlPosition.RIGHT
-                },
-            }
-            this.mapInitializeOptions = $.extend({}, this.mapInitializeOptions, this.mapOptions);
-            let mapCenter = this.mapInitializeOptions.center
-            if (!(mapCenter instanceof google.maps.LatLng) && Array.isArray(mapCenter)) {
-                mapCenter = new google.maps.LatLng(mapCenter[0], mapCenter[1]);
-            }
-            if (this.mapCenterLocationName) {
-                try {
-                    const response = await new Promise((resolve, reject) => {
-                        this.geocoder.geocode({'address': this.mapCenterLocationName}, (results, status) => {
-                            if (status === google.maps.GeocoderStatus.OK) {
-                                resolve(results);
-                            } else {
-                                reject(status);
-                            }
-                        });
-                    });
-                    const geo_location = response[0].geometry.location;
-                    mapCenter = new google.maps.LatLng(geo_location.lat(), geo_location.lng());
-                } catch (error) {
-                    console.error('Geocode lookup failed for `mapCenterLocationName` option:', error);
-                }
-            }
-            this.mapInitializeOptions["center"] = mapCenter
-        },
-
         initializeMap: async function () {
+            
+            // Redefine setMapOptions inside initializeMap to create a new closure for each instance
+            const setMapOptions = async () => {
+                let mapInitializeOptions = {
+                    mapId: this.mapId,
+                    zoomControlOptions: {
+                        position: google.maps.ControlPosition.RIGHT
+                    },
+                };
+
+                // Log the initial mapOptions
+                console.log('Initial mapOptions for instance', this.mapId, ':', this.mapOptions);
+
+                mapInitializeOptions = $.extend({}, mapInitializeOptions, this.mapOptions);
+
+                let mapCenter = mapInitializeOptions.center;
+                if (!(mapCenter instanceof google.maps.LatLng) && Array.isArray(mapCenter)) {
+                    mapCenter = new google.maps.LatLng(mapCenter[0], mapCenter[1]);
+                }
+
+                if (this.mapCenterLocationName) {
+                    try {
+                        const response = await new Promise((resolve, reject) => {
+                            this.geocoder.geocode({'address': this.mapCenterLocationName}, (results, status) => {
+                                if (status === google.maps.GeocoderStatus.OK) {
+                                    resolve(results);
+                                } else {
+                                    reject(status);
+                                }
+                            });
+                        });
+                        const geo_location = response[0].geometry.location;
+                        mapCenter = new google.maps.LatLng(geo_location.lat(), geo_location.lng());
+                    } catch (error) {
+                        console.error('Geocode lookup failed for `mapCenterLocationName` option:', error);
+                    }
+                }
+
+                mapInitializeOptions["center"] = mapCenter;
+
+                // Log the final mapInitializeOptions
+                console.log('Final mapInitializeOptions for instance', this.mapId, ':', mapInitializeOptions);
+
+                return mapInitializeOptions;
+            };
+
+            // Rest of the initializeMap function
             this.geocoder = new google.maps.Geocoder();
-            await this.setMapOptions();
-            this.map = new google.maps.Map(this.mapElement, this.mapInitializeOptions);
+            const mapOptions = await setMapOptions();
+
+            // Log the mapOptions returned by setMapOptions
+            console.log('mapOptions returned by setMapOptions for instance', this.mapId, ':', mapOptions);
+
+            this.map = new google.maps.Map(this.mapElement, mapOptions);
+
             if (!$.isEmptyObject(this.djangoGeoJSONValue)) {
-                this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng)
+                this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng);
                 this.updateDjangoInput();
                 this.fitBoundMarker();
             }
-            this.initializePlaceAutocomplete()
+            this.initializePlaceAutocomplete();
         },
 
         initializePlaceAutocomplete: function () {

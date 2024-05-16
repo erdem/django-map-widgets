@@ -151,6 +151,31 @@ class DotDict(dict):
                 value = DotDict(value)
             yield key, value
 
+    def copy(self):
+        return DotDict(super().copy())
+
+    def update(self, other=None, **kwargs):
+        if other is not None:
+            if isinstance(other, dict):
+                for key, value in other.items():
+                    if (
+                        isinstance(value, dict)
+                        and key in self
+                        and isinstance(self[key], dict)
+                    ):
+                        self[key] = DotDict(self[key])
+                        self[key].update(value)
+                    else:
+                        self[key] = value
+            else:
+                raise TypeError(f"'{type(other).__name__}' object is not iterable")
+        for key, value in kwargs.items():
+            if isinstance(value, dict) and key in self and isinstance(self[key], dict):
+                self[key] = DotDict(self[key])
+                self[key].update(value)
+            else:
+                self[key] = value
+
 
 class MapWidgetSettings(DotDict):
     """

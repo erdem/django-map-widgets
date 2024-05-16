@@ -1,8 +1,8 @@
-============
-Installation
-============
+.. _contribution_doc:
 
-Django Map Widgets supports Django 4.x-5.x and Python 3.9+.
+============
+Contribution
+============
 
 1. Install the package:
 
@@ -28,11 +28,9 @@ Django Map Widgets supports Django 4.x-5.x and Python 3.9+.
 
     python manage.py collectstatic
 
-===============
-Getting Started
-===============
 
-All map widgets in Django Map Widgets can be easily initialized with GeoDjango form fields just like any other Django widgets. For a quick overview and examples of widget usage, you can explore our `demo project <https://github.com/erdem/django-map-widgets/tree/master/demo>`_ available in the GitHub repository. Additionally, you can run the demo project locally by following the steps outlined in our :ref:`contribution guide <contribution_doc>`.
+All map widgets can initialize with GeoDjango form fields like any other Django widgets. If you need a quick overview to widget usages, you can check it out our demo project in the github repo. Also, you can run demo project with following contribution guide.
+
 
 Usage
 -----

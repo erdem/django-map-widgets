@@ -158,14 +158,14 @@ MAP_WIDGETS = {
                 "mapOptions": {
                     "zoom": 15,
                     "streetViewControl": False,
-                    "scrollWheel": False,
+                    "scrollwheel": False,
                     "fullscreenControl": False,
                 },
                 "mapCenterLocation": [51.5073509, -0.12775829999998223],
                 "GooglePlaceAutocompleteOptions": {
                     "componentRestrictions": {"country": "uk"}
                 },
-                "mapCenterLocationName": "berlin",
+                "mapCenterLocationName": "london",
             }
         },
     },

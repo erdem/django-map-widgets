@@ -37,11 +37,12 @@ Index
 -----
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 2
 
-   installation/index
-   widgets/index
-   releases/index
+    installation/index
+    widgets/index
+    contribution/index
+    releases/index
 
 
 
