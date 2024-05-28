@@ -2,19 +2,17 @@
 
 ## Django Map Widgets
 
-Django Map Widgets is a Python package that provides configurable, pluggable, and user-friendly map widgets for Django
-PostGIS fields.
+Django Map Widgets is a Python package that provides configurable, pluggable, and user-friendly map widgets for GeoDjango fields.
 
 * [Documentation](http://django-map-widgets.readthedocs.io/)
 * [Home Page](https://github.com/erdem/django-map-widgets/)
 * [Demo Project](https://github.com/erdem/django-map-widgets/tree/master/demo)
 
-### Achievements
+### Overview
 
-The goal of the Django Map Widgets package is to create user-friendly UI widgets for GeoDjango form fields that are
-highly configurable.
+The goal of the Django Map Widgets package is to enhance the GeoDjango development experience by providing robust, user-friendly map widgets that are easy to configure and integrate.
 
-Currently, the package supports Google, Mapbox, and Leaflet map providers. If you would like to see support for
+Currently, the package supports Google, Mapbox, and Leaflet mapping platforms. If you would like to see support for
 additional providers and believe you can contribute, feel free to do so. We would be happy to review and merge your
 contributions.
 
@@ -168,13 +166,5 @@ Preferable jQuery version is `3.7-slim`.
 > - Added scroll wheel zooming functionality switch to Google Point Map Settings. (#134)
 > - Added Chinese(ZH) localisation support. (#133)
 
-#### 0.4.0
 
-> - Supported MapBox Map for Django Geo Point Field.
-> - Fixed undefined place object binding issue in javascript triggers. (#125)
-> - Documented MapBox point field map widget features.
-> - Updated various localize files.
-
-
-[See release notes](https://django-map-widgets.readthedocs.io/en/mapbox_widget_fixes/releases/index.html) for all
-versions.
+[See release notes](https://django-map-widgets.readthedocs.io/en/mapbox_widget_fixes/releases/index.html) for all versions.

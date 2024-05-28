@@ -1,3 +1,4 @@
+================================
 Django Map Widgets Documentation
 ================================
 
@@ -8,22 +9,15 @@ Django Map Widgets package provides highly configurable, pluggable, and user-fri
 * `Demo Project <https://github.com/erdem/django-map-widgets/tree/master/demo>`_
 
 Overview
-^^^^^^^^
+========
 
-The Django Map Widgets package aims to deliver intuitive and customizable UI widgets for GeoDjango form fields, enhancing the user experience for geographic data entry and visualization.
+The goal of the Django Map Widgets package is to enhance the GeoDjango development experience by providing robust, user-friendly map widgets that are easy to configure and integrate.
 
-Key Features
-^^^^^^^^^^^^
+Currently, the package supports Google, Mapbox, and Leaflet mapping platforms. If you would like to see support for
+additional providers and believe you can contribute, feel free to do so. We would be happy to review and merge your
+contributions.
 
-* **Multi-Provider Support:** Seamlessly integrate with multiple map providers, including Google Maps, Mapbox, and Leaflet, allowing flexibility based on your project needs.
-* **Comprehensive GeoField Coverage:** Currently supports PointField with plans to extend support to all GeoDjango form fields, including PolygonField and LineStringField.
-* **User-Friendly:** Designed with usability in mind, offering an interactive and responsive interface for geographic data entry.
-* **Highly Configurable:** Customize map widgets to match your application requirements with ease, including map settings, markers, and more.
-
-Objectives
-^^^^^^^^^^
-
-The primary objectives of Django Map Widgets are to enhance the GeoDjango development experience by providing robust, user-friendly map widgets that are easy to configure and integrate. By supporting major map providers and continuously expanding the functionality to cover all GeoDjango form fields, the package strives to offer flexibility and ease of use for developers.
+For more info how to contribute, please check out the contribution guideline.
 
 
 Contribution
