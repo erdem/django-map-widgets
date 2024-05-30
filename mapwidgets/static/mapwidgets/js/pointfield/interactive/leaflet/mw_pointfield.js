@@ -10,8 +10,8 @@
             this.map = L.map(this.mapElement.id, this.leafletMapOptions);
             L.tileLayer(this.leafletTileLayer.urlTemplate, this.leafletTileLayer.options).addTo(this.map);
 
-            $(this.mapElement).data('leafletMapObj', this.map);
-            $(this.mapElement).data('leafletMapWidgetObj', this);
+            $(this.mapElement).data("mwMapObj", this.map);
+            $(this.mapElement).data("mwClassObj", this);
 
             if (!$.isEmptyObject(this.djangoGeoJSONValue)) {
                 this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng);

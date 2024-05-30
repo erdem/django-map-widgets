@@ -19,7 +19,7 @@ Here is an example of how the settings might be configured:
     MAP_WIDGETS = {
         "GoogleMap": {
             "apiKey": GOOGLE_MAP_API_KEY,  # General setting for all GoogleMap widgets
-            "PointField": {   # All
+            "PointField": {   # GeoField type
                 "interactive": {  # Specific settings for GoogleMap interactive PointField widget
                     "mapOptions": {
                         "zoom": 15,

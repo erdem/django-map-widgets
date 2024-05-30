@@ -6,7 +6,7 @@ authors = ["Erdem Ozkol <github@erdemozkol.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "3.12.1"
+python = "^3.12"
 django = "^5.0.4"
 
 [tool.poetry.group.dev.dependencies]

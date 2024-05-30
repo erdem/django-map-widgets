@@ -48,8 +48,8 @@
                 this.map.addControl(new mapboxgl.NavigationControl());
             }
             this.addressAutoCompleteInput = $("input:first", "#"+this.geocoderWrapID)
-            $(this.mapElement).data('mapboxMapObj', this.map);
-            $(this.mapElement).data('mapboxMapWidgetObj', this);
+            $(this.mapElement).data('mwMapObj', this.map);
+            $(this.mapElement).data('mwClassObj', this);
 
             if (!$.isEmptyObject(this.djangoGeoJSONValue)){
                 this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng);
