@@ -46,7 +46,7 @@ Here is an example of how the settings might be configured:
     }
 
 .. rubric:: Customizing Individual Widget Settings
-
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You can customize specific widget settings by providing a dictionary with the settings you want to override. These custom settings will be merged with the project settings, allowing for fine-grained control without overwriting the entire configuration.
 

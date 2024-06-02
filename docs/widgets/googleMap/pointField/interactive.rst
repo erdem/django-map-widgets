@@ -1,16 +1,14 @@
-.. _google_map_point_field_interactive_widget:
-
 Interactive Point Field Widget
 ==============================
 
 Preview
 ^^^^^^^
 
-.. image:: ../_static/images/google-point-field-map-widget.gif
+.. image:: /_static/images/google-point-field-map-widget.gif
 
 
-Google Map APIs Configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Requirements
+^^^^^^^^^^^^
 To use this widget, you need to enable the following Google APIs in your Google application configuration:
 
 - `Google Maps JavaScript API <https://console.cloud.google.com/apis/library/maps-backend.googleapis.com>`_
@@ -31,17 +29,17 @@ Key Features
 
 **Edit Coordinates Inputs:** The marker coordinates (latitude, longitude) can be updated manually through the `Coordinates` dropdown pop-up inputs.
 
-**Draggable Markers:** Positioned markers can be dragged across the map, and the coordinates and geocoding data will be updated when the marker is dropped.
+**Draggable Markers:** Positioned markers can be dragged across the map, and the coordinates inputs and geocoding data will be updated when the marker is dropped.
 
 **Add Marker by Click:** A marker can be added to the map via mouse click.
 
 
 Settings
 ^^^^^^^^
-
-`Default Settings Values`
+``Default Settings``
 
 .. code-block:: python
+
     MAP_WIDGETS = {
         "GoogleMap": {
             "apiKey": None,
@@ -66,10 +64,8 @@ Settings
                 },
             },
         }
+    }
 
-
-.. Tip::
-    More details about map widget settings usage can be found in the `settings guide <http://django-map-widgets.readthedocs.io/settings>`_.
 
 
 * **apiKey**: `Google JavaScript API <https://developers.google.com/maps/documentation/javascript/get-api-key/>`_ key. (required)
@@ -82,6 +78,17 @@ Settings
 
 * **markerFitZoom**: A custom zoom value is set programmatically after a marker is added with user geolocation or place autocomplete. This setting exists to enhance the user experience. The default value is 14.
 
+.. Note::
+    More details about map widget settings usage can be found in the `settings guide <http://django-map-widgets.readthedocs.io/settings>`_.
+
+.. Note::
+
+    If no settings are provided for the map center (``mapOptions.center`` or ``mapCenterLocationName``), the map will automatically center based on the django project's timezone setting. This feature ensures that the map displays an appropriate and relevant initial view.
+
+    For more details on timezone center coordinates, refer to the following resources:
+
+    * `Timezone Center Locations <https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/constants.py/>`_
+    * `countries.json <https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/constants.py/>`_
 
 Usage
 ^^^^^
@@ -138,11 +145,9 @@ In the Django project settings file, the `MAP_WIDGETS` dictionary should be defi
 Dynamic Django Admin Inline Support
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Preview**
+.. image:: /_static/images/google-point-field-admin-inline-widget.gif
 
-.. image:: ../_static/images/google-point-field-admin-inline-widget.gif
-
-Django Admin includes an inline feature that allows the dynamic addition of inline rows. Normally, the `GoogleMapPointFieldWidget` cannot be initialized when the "add new row" button is clicked. However, this functionality can use with `GoogleMapPointFieldInlineWidget` class, which initializes a new GoogleMap interactive widget for new inline rows.
+Django Admin includes an inline feature that allows the dynamic addition of inline rows. Normally, the `GoogleMapPointFieldWidget` cannot be initialized when add another row action button is clicked. However, this functionality can use with `GoogleMapPointFieldInlineWidget` class, which initializes a new GoogleMap interactive widget for new inline rows.
 
 **Usage**
 

@@ -32,7 +32,6 @@ Here is the all default settings attribute for google static map widget.
             "icon": "",
         },
         "LANGUAGE": "en",
-        "GOOGLE_MAP_API_SIGNATURE": "",
         "GOOGLE_MAP_API_KEY": "",
     }
 
