@@ -1,7 +1,7 @@
-.. _google_point_field_map_widgets:
+.. _google_map_point_field_interactive_widget:
 
-Google Map Point Field Widget
-=============================
+Interactive Point Field Widget
+==============================
 
 Preview
 ^^^^^^^
@@ -9,204 +9,197 @@ Preview
 .. image:: ../_static/images/google-point-field-map-widget.gif
 
 
-Google Map APIs configuration
+Google Map APIs Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-In order to use this widget, you need to enable Google APIs below in your google application configuration;
+To use this widget, you need to enable the following Google APIs in your Google application configuration:
 
 - `Google Maps JavaScript API <https://console.cloud.google.com/apis/library/maps-backend.googleapis.com>`_
 - `Places API <https://console.cloud.google.com/apis/library/places-backend.googleapis.com>`_
 - `Geocoding API <https://console.cloud.google.com/apis/library/geocoding-backend.googleapis.com>`_
 
 
-.. Tip::
+Key Features
+^^^^^^^^^^^^
 
-    The widget has a Google Place Autocomplete component by default. You can find a specific address coordinates with it.
+**Place Autocomplete:** The widget has a built-in `Google Place Autocomplete <https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete>`_ input, allowing users to find and select places, addresses, or points of interest as they type in a search query.
 
-.. Tip::
+**Reverse Geocoding:** The place autocomplete input will be populated with a plain address from positioned marker coordinates using the `Google Geocoding API <https://developers.google.com/maps/documentation/javascript/geocoding/>`_.
 
-    The widget has built-in geocoding support. The autocomplete input will be filled by `google geocoding <https://developers.google.com/maps/documentation/javascript/geocoding/>`_ service when the user adds a marker to map manually.
+**Dynamic Django Admin Inline Support:** A new widget can be initialized when a new row is added in Django Admin inlines dynamically via Django Admin JS events. See the usage below.
+
+**Use My Location Action:** Users can set their current location as a marker using the "Use My Location" action button.
+
+**Edit Coordinates Inputs:** The marker coordinates (latitude, longitude) can be updated manually through the `Coordinates` dropdown pop-up inputs.
+
+**Draggable Markers:** Positioned markers can be dragged across the map, and the coordinates and geocoding data will be updated when the marker is dropped.
+
+**Add Marker by Click:** A marker can be added to the map via mouse click.
 
 
 Settings
 ^^^^^^^^
 
-* **GOOGLE_MAP_API_KEY**: Put your Google API key (required)
+`Default Settings Values`
 
-* **GOOGLE_MAP_API_SIGNATURE**: You can give Google Static Map API signature key (optional). Check out this `page <https://developers.google.com/maps/documentation/static-maps/get-api-key/>`_.
+.. code-block:: python
+    MAP_WIDGETS = {
+        "GoogleMap": {
+            "apiKey": None,
+            # https://maps.googleapis.com/maps/api/js?language={}&libraries={}&key={}&v={}"
+            "CDNURLParams": {
+                "language": "en",
+                "libraries": "places,marker",
+                "loading": "async",
+                "v": "quarterly",
+            },
+            "PointField": {
+                "interactive": {
+                    "mapOptions": {
+                        "zoom": 12,
+                        "scrollwheel": False,
+                        "streetViewControl": True,
+                        "center": get_default_center_coordinates(),
+                    },
+                    "GooglePlaceAutocompleteOptions": {},
+                    "mapCenterLocationName": None,
+                    "markerFitZoom": 14,
+                },
+            },
+        }
 
-* **LANGUAGE**: Google Map language (optional, default value is ``en``).
 
-* **mapCenterLocationName**: You can give a specific location name for center of the map. Map widget will find this location coordinates using `Google Place Autocomplete <https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete/>`_. (Optional)
+.. Tip::
+    More details about map widget settings usage can be found in the `settings guide <http://django-map-widgets.readthedocs.io/settings>`_.
 
-* **mapCenterLocation**: You can give specific coordinates for center of the map. Coordinates must be list type. ([latitude, longitude]) (Optional)
 
-* **zoom** : Default zoom value for maps (optional, default value is 6).
+* **apiKey**: `Google JavaScript API <https://developers.google.com/maps/documentation/javascript/get-api-key/>`_ key. (required)
 
-* **scrollWheel** : Enables or Disables zooming on the map using a mouse scroll wheel. Set as `True` in your django settings to enable it, the scroll wheel zooming is disabled by default.
+* **CDNURLParams**: The Google JavaScript API library JS source URL parameters can be modified using this setting.
 
-* **markerFitZoom** : When the marker is initialized google's default zoom is set to Max. This method sets the zoom level a reasonable distance and center the marker on the map.
+* **mapOptions**: GoogleMap `MapOptions <https://developers.google.com/maps/documentation/javascript/reference/map#MapOptions>`_ settings can be managed using this dictionary. These settings are passed as arguments to the GoogleMap JS initialization function. Default values are provided for `zoom`, `scrollwheel`, `streetViewControl`, and `center`.
 
-* **streetViewControl** : Whether or not to display the Street View "Peg Man" (optional, default is ``True``). Setting this to ``False`` effectively disables Street View for the widget.
+* **mapCenterLocationName**: A specific location name for the center of the map can be provided. The widget will use `Google Place Autocomplete <https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete/>`_ to find the coordinates for this location.
+
+* **markerFitZoom**: A custom zoom value is set programmatically after a marker is added with user geolocation or place autocomplete. This setting exists to enhance the user experience. The default value is 14.
+
 
 Usage
 ^^^^^
 
-**Settings**
-
-
-.. code-block:: python
-
-    MAP_WIDGETS = {
-        "GooglePointFieldWidget": {
-            "zoom": 15,
-            "mapCenterLocationName": "london",
-            "GooglePlaceAutocompleteOptions": {'componentRestrictions': {'country': 'uk'}},
-            "markerFitZoom": 12,
-            "scrollWheel": False,
-            "streetViewControl": True,
-        },
-        "GOOGLE_MAP_API_KEY": "<google-api-key>"
-    }
-
-If you want to give specific location name or coordinates for center of the map, you can update your settings like that.
+In the Django project settings file, the `MAP_WIDGETS` dictionary should be defined to customize the default settings for map widgets.
 
 .. code-block:: python
 
     MAP_WIDGETS = {
-        "GooglePointFieldWidget": {
-            "zoom": 15,
-            "mapCenterLocation": [57.7177013, -16.6300491],
-        },
-        "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
-    }
-
-
-
-.. code-block:: python
-
-    MAP_WIDGETS = {
-        "GooglePointFieldWidget": {
-            "zoom": 15,
-            "mapCenterLocationName": 'Canada',
-        },
-        "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
-    }
-
-
-.. Tip::
-
-    If there is no specific value set for the map center for ``mapCenterLocationName``, ``mapCenterLocation`` the widget will be centred by the timezone setting of the project
-    Check out these links.
-
-    * `Timezone Center Locations <https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/constants.py/>`_
-    * `countries.json <https://github.com/erdem/django-map-widgets/blob/master/mapwidgets/constants.py/>`_
-
-You can also give specific `settings` as a parameter for each widget.
-
-.. Note::
-
-    Google Map is using SRID (Spatial Reference System Identifier) as `4326` as same as Django’s default SRID value for postgis fields. If you are set SRID parameter on a postgis field, the coordinates will store as your SRID format on your database but the widget always converting coordinates to `4326` format when it rendering. Because, the Google Map Javascript API using `4326` format. So, you can see different coordinates values on frontend from your DB but the point will always some location. You can reach more information on this `Wikipedia page <https://en.wikipedia.org/wiki/Spatial_reference_system>`_.
-
-
-.. code-block:: python
-
-    from django.contrib.gis import forms
-    from mapwidgets.widgets import GooglePointFieldWidget
-
-    CUSTOM_MAP_SETTINGS = {
-        "GooglePointFieldWidget": {
-            "zoom": 15,
-            "mapCenterLocation": [60.7177013, -22.6300491],
+        "GoogleMap": {
+            "apiKey": GOOGLE_MAP_API_KEY, # your google API
+            "PointField": {
+                "interactive": {
+                    "mapOptions": {
+                        "zoom": 15  # default map initial zoom,
+                        "scrollwheel": False,
+                        "streetViewControl": True
+                    },
+                    "GooglePlaceAutocompleteOptions": {
+                        "componentRestrictions": {"country": "uk"}
+                    },
+                    "mapCenterLocationName": "London"
+                },
+            },
         },
     }
-
-    class CityAdmin(admin.ModelAdmin):
-        formfield_overrides = {
-            models.PointField: {"widget": GooglePointFieldWidget(settings=CUSTOM_MAP_SETTINGS)}
-        }
-
-.. Note::
-
-    `GOOGLE_MAP_API_KEY` must be set in the project Django settings file for custom settings usage.
-
 
 **Django Admin**
 
 .. code-block:: python
-
-    from mapwidgets.widgets import GooglePointFieldWidget
+    import mapwidgets
 
     class CityAdmin(admin.ModelAdmin):
+        list_display = ("name",)
         formfield_overrides = {
-            models.PointField: {"widget": GooglePointFieldWidget}
+            models.PointField: {"widget": mapwidgets.GoogleMapPointFieldWidget}
         }
 
 **Django Forms**
 
 .. code-block:: python
-
-    from mapwidgets.widgets import GooglePointFieldWidget
+    import mapwidgets
 
     class CityAdminForm(forms.ModelForm):
         class Meta:
             model = City
-            fields = "coordinates": "city_hall"
+            fields = ("coordinates", "city_hall")
             widgets = {
-                'coordinates': GooglePointFieldWidget,
-                'city_hall': GooglePointFieldWidget,
+                'coordinates': mapwidgets.GoogleMapPointFieldWidget,
+                'city_hall': mapwidgets.GoogleMapPointFieldWidget,
             }
 
+
+Dynamic Django Admin Inline Support
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Preview**
+
+.. image:: ../_static/images/google-point-field-admin-inline-widget.gif
+
+Django Admin includes an inline feature that allows the dynamic addition of inline rows. Normally, the `GoogleMapPointFieldWidget` cannot be initialized when the "add new row" button is clicked. However, this functionality can use with `GoogleMapPointFieldInlineWidget` class, which initializes a new GoogleMap interactive widget for new inline rows.
+
+**Usage**
+
+.. code-block:: python
+
+    import mapwidgets
+
+    class DistrictAdminInline(admin.TabularInline):
+        model = District
+        extra = 3
+        formfield_overrides = {
+            models.PointField: {"widget": mapwidgets.GoogleMapPointFieldInlineWidget}
+        }
+
+    class CityAdmin(admin.ModelAdmin):
+        inlines = (DistrictAdminInline,)
 
 Javascript Triggers
 ^^^^^^^^^^^^^^^^^^^
 
+UI customization or event handling on the front-end can be managed using map widget jQuery triggers. Examples of usage can be found in the `demo project <https://github.com/erdem/django-map-widgets/tree/master/demo>`_.
 
-If you need to develop your map UI on front-end side, you can use map widget jQuery triggers.
+* **googleMapPointFieldWidget:markerCreate**: Triggered when a marker is created on the map. (callback params: place, lat, lng, locationInputElem, mapWrapID)
 
+* **googleMapPointFieldWidget:markerChange**: Triggered when a marker's position is changed on the map. (callback params: place, lat, lng, locationInputElem, mapWrapID)
 
-* **google_point_map_widget:marker_create**: Triggered when user create marker on map. (callback params: place, lat, lng, locationInputElem, mapWrapID)
+* **googleMapPointFieldWidget:markerDelete**: Triggered when a marker is deleted from the map. (callback params: lat, lng, locationInputElem, mapWrapID)
 
-* **google_point_map_widget:marker_change**: Triggered when user change marker position on map. (callback params: place, lat, lng, locationInputElem, mapWrapID)
-
-* **google_point_map_widget:marker_delete**: Triggered when user delete marker on map. (callback params: lat, lng, locationInputElem, mapWrapID)
-
+* **googleMapPointFieldWidget:placeChanged**: Triggered when the place in the autocomplete input is changed. (callback params: place, lat, lng, locationInputElem, mapWrapID)
 
 .. code-block:: javascript
 
-      (function ($){
-          $(document).on"google_point_map_widget:marker_create": function (e, lat, lng, locationInputElem, mapWrapID {
-              console.log("EVENT: marker_create"); // django widget textarea widget (hidden)
-              console.log(locationInputElem); // django widget textarea widget (hidden)
-              console.log(lat, lng); // created marker coordinates
-              console.log(mapWrapID); // map widget wrapper element ID
-          });
+    (function ($) {
+        $(document).on("googleMapPointFieldWidget:markerCreate", function (e, lat, lng, locationInputElem, mapWrapID) {
+            console.log(locationInputElem); // Django widget textarea widget (hidden)
+            console.log(lat, lng); // Created marker coordinates
+            console.log(mapWrapID); // Map widget wrapper element ID
+        });
 
-          $(document).on"google_point_map_widget:marker_change": function (e, lat, lng, locationInputElem, mapWrapID {
-              console.log("EVENT: marker_change"); // django widget textarea widget (hidden)
-              console.log(locationInputElem); // django widget textarea widget (hidden)
-              console.log(lat, lng);  // changed marker coordinates
-              console.log(mapWrapID); // map widget wrapper element ID
-          });
+        $(document).on("googleMapPointFieldWidget:markerChange", function (e, lat, lng, locationInputElem, mapWrapID) {
+            console.log(locationInputElem); // Django widget textarea widget (hidden)
+            console.log(lat, lng);  // Changed marker coordinates
+            console.log(mapWrapID); // Map widget wrapper element ID
+        });
 
-          $(document).on"google_point_map_widget:marker_delete": function (e, lat, lng, locationInputElem, mapWrapID {
-              console.log("EVENT: marker_delete"); // django widget textarea widget (hidden)
-              console.log(locationInputElem); // django widget textarea widget (hidden)
-              console.log(lat, lng);  // deleted marker coordinates
-              console.log(mapWrapID); // map widget wrapper element ID
-          })
+        $(document).on("googleMapPointFieldWidget:markerDelete", function (e, lat, lng, locationInputElem, mapWrapID) {
+            console.log(locationInputElem); // Django widget textarea widget (hidden)
+            console.log(lat, lng);  // Deleted marker coordinates
+            console.log(mapWrapID); // Map widget wrapper element ID
+        });
 
-          $(document).on"google_point_map_widget:place_changed": function (e, place, lat, lng, locationInputElem, mapWrapID {
-              console.log("EVENT: place_changed"); // django widget textarea widget (hidden)
-              console.log(place);  // google geocoder place object
-              console.log(locationInputElem); // django widget textarea widget (hidden)
-              console.log(lat, lng); // created marker coordinates
-              console.log(mapWrapID); // map widget wrapper element ID
-          });
-      })(jQuery)
-
-Javascript Objects
-^^^^^^^^^^^^^^^^^^
-
-The widget JS objects ``googleMapObj`` and ``googleMapWidgetObj`` can reach out via the map HTML elements using with jQuery `$.data`.
-Use jquery selector format like  ``$("#{django-form-field-name}-map-elem")`` in order to get jquery object. See examples in the `demo project templates <https://github.com/erdem/django-map-widgets/blob/master/demo/templates/cities/form.html>`_.
-
+        $(document).on("googleMapPointFieldWidget:placeChanged", function (e, place, lat, lng, locationInputElem, mapWrapID) {
+            console.log(place); // Google geocoder place object
+            console.log(locationInputElem); // Django widget textarea widget (hidden)
+            console.log(lat, lng); // Created marker coordinates
+            console.log(mapWrapID); // Map widget wrapper element ID
+        });
+        console.log($("#location-map-elem").data("mwMapObj")); // GoogleMap JS object
+        console.log($("#location-map-elem").data("mwClassObj")); // The widget class instance object
+    })(jQuery)

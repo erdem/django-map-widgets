@@ -1,6 +1,8 @@
-========
 Settings
 ========
+
+.. toctree::
+    :maxdepth: 1
 
 
 In your Django project settings file, define the ``MAP_WIDGETS`` dictionary to customize the default settings for map widgets. The settings are organized using a nested hierarchical structure, which allows for granular control at multiple levels:
@@ -43,9 +45,8 @@ Here is an example of how the settings might be configured:
         "is_dev_mode": False,  # Package global level setting for development mode
     }
 
+.. rubric:: Customizing Individual Widget Settings
 
-Customizing Specific Widget Settings
-------------------------------------
 
 You can customize specific widget settings by providing a dictionary with the settings you want to override. These custom settings will be merged with the project settings, allowing for fine-grained control without overwriting the entire configuration.
 
