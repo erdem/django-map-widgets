@@ -150,11 +150,9 @@ man_pages = [
 texinfo_documents = [
     (
         master_doc,
-        "DjangoMapWidgets",
+        "Django Map Widgets",
         "Django Map Widgets Documentation",
         author,
-        "DjangoMapWidgets",
-        "One line description of project.",
-        "Miscellaneous",
+        "Pluggable map widgets for GeoDjango.",
     ),
 ]

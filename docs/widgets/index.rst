@@ -9,3 +9,4 @@ Map Widgets
     settings
     googleMap/index
     leaflet/index
+    mapbox/index

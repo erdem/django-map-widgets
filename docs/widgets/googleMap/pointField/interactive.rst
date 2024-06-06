@@ -19,7 +19,7 @@ To use this widget, you need to enable the following Google APIs in your Google 
 Key Features
 ^^^^^^^^^^^^
 
-**Place Autocomplete:** The widget has a built-in `Google Place Autocomplete <https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete>`_ input, allowing users to find and select places, addresses, or points of interest as they type in a search query.
+**Place Autocomplete (Geocoding):** The widget has a built-in `Google Place Autocomplete <https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete>`_ input, allowing users to find and select places, addresses, or points of interest as they type in a search query.
 
 **Reverse Geocoding:** The place autocomplete input will be populated with a plain address from positioned marker coordinates using the `Google Geocoding API <https://developers.google.com/maps/documentation/javascript/geocoding/>`_.
 
@@ -72,7 +72,7 @@ Settings
 
 * **CDNURLParams**: The Google JavaScript API library JS source URL parameters can be modified using this setting.
 
-* **mapOptions**: GoogleMap `MapOptions <https://developers.google.com/maps/documentation/javascript/reference/map#MapOptions>`_ settings can be managed using this dictionary. These settings are passed as arguments to the GoogleMap JS initialization function. Default values are provided for `zoom`, `scrollwheel`, `streetViewControl`, and `center`.
+* **mapOptions**: GoogleMap `MapOptions <https://developers.google.com/maps/documentation/javascript/reference/map#MapOptions>`_ parameters can be managed using this dictionary. These settings are passed as arguments to the GoogleMap JS initialization function. Default values are provided for `zoom`, `scrollwheel`, `streetViewControl`, and `center`.
 
 * **mapCenterLocationName**: A specific location name for the center of the map can be provided. The widget will use `Google Place Autocomplete <https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete/>`_ to find the coordinates for this location.
 

@@ -52,7 +52,7 @@ Settings
 
 * **tileLayer**: TileLayer source configuration. (Do not override the default settings if you don't serve the map tiles from different source ``openstreetmap.org``)
 * **markerFitZoom**: A custom zoom value is set programmatically after a marker is added with user geolocation or place autocomplete so on. This setting exists to enhance the user experience. The default value is 14.
-* **showZoomNavigation**: Enable zoom in/out UI buttons on the map. Default is ``True``
+* **showZoomNavigation**: Enable/Disable zoom in/out UI buttons on the map. Default is ``True``
 * **mapCenterLocation**: Enable zoom in/out UI buttons on the map. Default is ``True``
 
 
