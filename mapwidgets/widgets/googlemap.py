@@ -9,7 +9,7 @@ from mapwidgets.widgets.mixins import PointFieldInlineWidgetMixin
 
 
 class GoogleMapPointFieldWidget(BasePointFieldWidget):
-    template_name = "mapwidgets/pointfield/googlemap/interactive_widget.html"
+    template_name = "mapwidgets/pointfield/googlemap/interactive.html"
     _settings = mw_settings.GoogleMap.PointField.interactive
     settings_namespace = "mw_settings.GoogleMap.PointField.interactive"
 
@@ -34,7 +34,7 @@ class GoogleMapPointFieldWidget(BasePointFieldWidget):
 class GoogleMapPointFieldInlineWidget(
     PointFieldInlineWidgetMixin, GoogleMapPointFieldWidget
 ):
-    template_name = "mapwidgets/pointfield/googlemap/interactive_inline_widget.html"
+    template_name = "mapwidgets/pointfield/googlemap/interactive_inline.html"
     _settings = mw_settings.GoogleMap.PointField.interactive
     settings_namespace = "mw_settings.GoogleMap.PointField.interactive"
 
