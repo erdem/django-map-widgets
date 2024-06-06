@@ -1,7 +1,6 @@
 import json
 
-from django import forms
-from django.contrib.gis.forms import BaseGeometryWidget
+from django.contrib.gis import forms
 from django.contrib.gis.geos import GEOSGeometry
 
 from mapwidgets.settings import mw_settings
@@ -26,7 +25,7 @@ class SettingsMixin:
         return _settings
 
 
-class BasePointFieldInteractiveWidget(BaseGeometryWidget, SettingsMixin):
+class BasePointFieldInteractiveWidget(forms.BaseGeometryWidget, SettingsMixin):
     _settings = None
     map_srid = mw_settings.srid
 
@@ -84,3 +83,34 @@ class BasePointFieldInteractiveWidget(BaseGeometryWidget, SettingsMixin):
         }
         context.update(extra_context)
         return context
+
+
+class BaseStaticWidget(forms.Widget, SettingsMixin):
+    template_name = "mapwidgets/static_widget.html"
+    base_url = None
+
+    def __init__(self, image_url_params=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.image_url_params = {} if image_url_params is None else image_url_params.copy()
+
+
+    def get_base_url(self):
+        if not self.base_url:
+            raise ValueError("`base_url` must be set")
+        return self.base_url
+
+    def get_static_image_url_params(self, coordinates, **kwargs):
+        raise NotImplementedError(
+            "subclasses of BaseStaticMapWidget must provide a get_map_image_url method"
+        )
+
+    def get_static_image_url(self, value, **kwargs):  # pragma: no cover
+        raise NotImplementedError(
+            "subclasses of BaseStaticMapWidget must provide a get_map_image_url method"
+        )
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        context["image_url"] = self.get_static_image_url(value)
+        return context
+

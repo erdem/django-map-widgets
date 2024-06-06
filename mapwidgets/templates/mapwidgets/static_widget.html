@@ -1,0 +1,7 @@
+{% extends "django/forms/widgets/input.html" %}
+
+{% if value %}
+    <a href="{{ image_url }}" class="map-widget-overlay-link"><img src="{{ thumbnail_url }}"></a>
+{% else %}
+    <img src="{% static 'images/no-map-image.png' %}" class="no-map-image">
+{% endif %}

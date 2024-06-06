@@ -31,7 +31,9 @@ class GoogleMapPointFieldWidget(BasePointFieldInteractiveWidget):
         return self._media(extra_js=[AsyncJS(self._google_map_js_url)])
 
 
-class GoogleMapPointFieldInlineWidget(GoogleMapPointFieldWidget, PointFieldInlineWidgetMixin):
+class GoogleMapPointFieldInlineWidget(
+    GoogleMapPointFieldWidget, PointFieldInlineWidgetMixin
+):
     template_name = "mapwidgets/pointfield/googlemap/interactive_inline.html"
     _settings = mw_settings.GoogleMap.PointField.interactive
     settings_namespace = "mw_settings.GoogleMap.PointField.interactive"

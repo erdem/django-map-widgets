@@ -50,6 +50,23 @@ DEFAULT_SETTINGS = {
                 "mapCenterLocationName": None,
                 "markerFitZoom": 14,
             },
+            "static": {
+                "zoom": 15,
+                "size": "480x480",
+                "scale": "",
+                "format": "",
+                "maptype": "",
+                "language": "",
+                "region": "",
+                "map_id": "",
+                "visible": "",
+                "style": "",
+                "markers": {
+                    "size": "",
+                    "color": "",
+                    "icon": ""
+                }
+            }
         },
     },
     "Mapbox": {
