@@ -16,6 +16,7 @@ def get_default_center_coordinates():
 DEFAULT_SETTINGS = {
     "GoogleMap": {
         "apiKey": None,
+        "apiSigningSecret": None,
         "CDNURLParams": {
             "language": "en",
             "libraries": "places,marker",
@@ -51,22 +52,21 @@ DEFAULT_SETTINGS = {
                 "markerFitZoom": 14,
             },
             "static": {
-                "zoom": 15,
-                "size": "480x480",
-                "scale": "",
-                "format": "",
-                "maptype": "",
-                "language": "",
-                "region": "",
-                "map_id": "",
-                "visible": "",
-                "style": "",
-                "markers": {
-                    "size": "",
-                    "color": "",
-                    "icon": ""
-                }
-            }
+                "popup": False,
+                "mapParams": {
+                    "zoom": 15,
+                    "size": "480x480",
+                    "scale": "",
+                    "format": "",
+                    "maptype": "",
+                    "language": "",
+                    "region": "",
+                    "map_id": "",
+                    "visible": "",
+                    "style": "",
+                },
+                "markers": {"size": "", "color": "", "icon": ""},
+            },
         },
     },
     "Mapbox": {

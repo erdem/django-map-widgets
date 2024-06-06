@@ -5,7 +5,6 @@ from mapwidgets.widgets.base import BasePointFieldInteractiveWidget
 class MapboxPointFieldWidget(BasePointFieldInteractiveWidget):
     template_name = "mapwidgets/pointfield/mapbox/interactive.html"
     _settings = mw_settings.Mapbox.PointField.interactive
-    settings_namespace = "mw_settings.Mapbox.PointField.interactive"
 
     @property
     def settings(self):

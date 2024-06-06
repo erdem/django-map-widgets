@@ -6,7 +6,6 @@ from mapwidgets.widgets.base import BasePointFieldInteractiveWidget
 
 class LeafletPointFieldWidget(BasePointFieldInteractiveWidget):
     template_name = "mapwidgets/pointfield/leaflet/interactive.html"
-    settings_namespace = "mw_settings.Leaflet.PointField.interactive"
     _settings = mw_settings.Leaflet.PointField.interactive
 
     @property
