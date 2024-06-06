@@ -1,10 +1,10 @@
 from django.forms import Media
 
 from mapwidgets.settings import mw_settings
-from mapwidgets.widgets.base import BasePointFieldWidget
+from mapwidgets.widgets.base import BasePointFieldInteractiveWidget
 
 
-class LeafletPointFieldWidget(BasePointFieldWidget):
+class LeafletPointFieldWidget(BasePointFieldInteractiveWidget):
     template_name = "mapwidgets/pointfield/leaflet/interactive.html"
     settings_namespace = "mw_settings.Leaflet.PointField.interactive"
     _settings = mw_settings.Leaflet.PointField.interactive

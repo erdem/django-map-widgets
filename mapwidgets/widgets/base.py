@@ -7,9 +7,8 @@ from django.contrib.gis.geos import GEOSGeometry
 from mapwidgets.settings import mw_settings
 
 
-class BasePointFieldWidget(BaseGeometryWidget):
+class SettingsMixin:
     _settings = None
-    map_srid = mw_settings.srid
 
     def __init__(self, *args, **kwargs):
         self.custom_settings = kwargs.pop("settings", None)
@@ -25,6 +24,11 @@ class BasePointFieldWidget(BaseGeometryWidget):
             _settings.update(self.custom_settings)
 
         return _settings
+
+
+class BasePointFieldInteractiveWidget(BaseGeometryWidget, SettingsMixin):
+    _settings = None
+    map_srid = mw_settings.srid
 
     def get_css_paths(self, extra_css=None, minified=False):
         extra_css = extra_css or []
