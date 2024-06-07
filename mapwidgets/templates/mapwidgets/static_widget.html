@@ -1,7 +1,16 @@
-{% extends "django/forms/widgets/input.html" %}
+{% load static %}
 
-{% if value %}
-    <a href="{{ image_url }}" class="map-widget-overlay-link"><img src="{{ thumbnail_url }}"></a>
+{# render field value with a hidden input do not inherit "forms.Hidden" class otherwise django admin won't render the widget #}
+{# django/forms/widgets/input.html #}
+<input type="hidden" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
+
+{% if image_url %}
+    <div class="static-mapwidget-wrapper {{ widget.name }}-static-mapwidget-wrapper">
+        <a href="{{ image_url }}" class="map-widget-overlay-link"><img src="{{ image_url }}"></a>
+    </div>
 {% else %}
-    <img src="{% static 'images/no-map-image.png' %}" class="no-map-image">
+    <div class="static-mapwidget-wrapper {{ widget.name }}-static-mapwidget-wrapper">
+        <img src="{% static 'mapwidgets/images/no-map-image.png' %}" class="no-map-image">
+    </div>
 {% endif %}
+

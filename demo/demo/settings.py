@@ -148,11 +148,13 @@ if platform.system() == "Darwin":
     GEOS_LIBRARY_PATH = "/opt/homebrew/opt/geos/lib/libgeos_c.dylib"
 
 GOOGLE_MAP_API_KEY = os.getenv("GOOGLE_MAP_API_KEY")
+GOOGLE_MAP_API_SECRET = os.getenv("GOOGLE_MAP_API_SECRET")
 MAPBOX_ACCESS_TOKEN = os.getenv("MAPBOX_API_KEY")
 
 MAP_WIDGETS = {
     "GoogleMap": {
         "apiKey": GOOGLE_MAP_API_KEY,
+        "apiSecret": GOOGLE_MAP_API_SECRET,
         "PointField": {
             "interactive": {
                 "mapOptions": {

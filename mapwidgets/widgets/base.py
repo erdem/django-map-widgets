@@ -1,10 +1,8 @@
 import json
-import urllib
 
 from django.contrib.gis import forms
 from django.contrib.gis.geos import GEOSGeometry
 from django.utils.http import urlencode
-
 from mapwidgets.settings import mw_settings
 
 
@@ -27,7 +25,7 @@ class SettingsMixin:
         return _settings
 
 
-class BasePointFieldInteractiveWidget(forms.BaseGeometryWidget, SettingsMixin):
+class BasePointFieldInteractiveWidget(SettingsMixin, forms.BaseGeometryWidget):
     _settings = None
     map_srid = mw_settings.srid
 
@@ -87,19 +85,13 @@ class BasePointFieldInteractiveWidget(forms.BaseGeometryWidget, SettingsMixin):
         return context
 
 
-class BaseStaticWidget(forms.Widget, SettingsMixin):
+class BaseStaticWidget(SettingsMixin, forms.TextInput):
     template_name = "mapwidgets/static_widget.html"
     _base_url = None
 
-    def __init__(self, image_url_params=None, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.image_url_params = (
-            {} if image_url_params is None else image_url_params.copy()
-        )
-
-    def sign_url(self, url=None, secret=None):
+    def sign_url(self, url):
         """
-        Sign url with secret.
+        Sign url with a secret.
         """
         return url
 
@@ -119,6 +111,10 @@ class BaseStaticWidget(forms.Widget, SettingsMixin):
 
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
-        context["image_url"] = self.sign_url(self.get_static_image_url(value))
-        context["is_js_popup_enabled"] = settings.popup
+        if value:
+            context["image_url"] = self.sign_url(self.get_static_image_url(value))
+            context["is_js_popup_enabled"] = self.settings.popup
         return context
+
+    def render(self, name, value, attrs=None, renderer=None):
+        return super().render(name, value, attrs, renderer)

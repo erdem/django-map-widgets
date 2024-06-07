@@ -3,6 +3,7 @@ __version__ = ".".join(map(str, VERSION))
 
 from .widgets import (
     GoogleMapPointFieldInlineWidget,
+    GoogleMapPointFieldStaticWidget,
     GoogleMapPointFieldWidget,
     LeafletPointFieldWidget,
     MapboxPointFieldWidget,
@@ -11,6 +12,7 @@ from .widgets import (
 __all__ = [
     "GoogleMapPointFieldWidget",
     "GoogleMapPointFieldInlineWidget",
+    "GoogleMapPointFieldStaticWidget",
     "MapboxPointFieldWidget",
     "LeafletPointFieldWidget",
 ]

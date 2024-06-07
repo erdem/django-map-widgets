@@ -1,8 +1,7 @@
+import mapwidgets
 from django.contrib.gis import admin
 from django.contrib.gis.db import models
 from googlemap import models as googlemap_models
-
-import mapwidgets
 
 
 class InteractiveAdminInline(admin.TabularInline):
@@ -17,7 +16,7 @@ class InteractiveAdminInline(admin.TabularInline):
 class InteractivePointFieldAdmin(admin.ModelAdmin):
     list_display = ("name",)
     formfield_overrides = {
-        models.PointField: {"widget": mapwidgets.GoogleMapPointFieldWidget}
+        models.PointField: {"widget": mapwidgets.GoogleMapPointFieldStaticWidget}
     }
     inlines = [InteractiveAdminInline]
 

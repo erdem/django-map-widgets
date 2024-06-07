@@ -16,7 +16,7 @@ def get_default_center_coordinates():
 DEFAULT_SETTINGS = {
     "GoogleMap": {
         "apiKey": None,
-        "apiSigningSecret": None,
+        "apiSecret": None,
         "CDNURLParams": {
             "language": "en",
             "libraries": "places,marker",

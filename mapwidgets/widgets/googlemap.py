@@ -1,10 +1,13 @@
-from django import forms
+import base64
+import hashlib
+import hmac
+from urllib.parse import urlparse
+
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.http import urlencode
-
 from mapwidgets.settings import mw_settings
 from mapwidgets.utils import AsyncJS
-from mapwidgets.widgets.base import BasePointFieldInteractiveWidget
+from mapwidgets.widgets.base import BasePointFieldInteractiveWidget, BaseStaticWidget
 from mapwidgets.widgets.mixins import PointFieldInlineWidgetMixin
 
 
@@ -31,7 +34,7 @@ class GoogleMapPointFieldWidget(BasePointFieldInteractiveWidget):
 
 
 class GoogleMapPointFieldInlineWidget(
-    GoogleMapPointFieldWidget, PointFieldInlineWidgetMixin
+    PointFieldInlineWidgetMixin, GoogleMapPointFieldWidget
 ):
     template_name = "mapwidgets/pointfield/googlemap/interactive_inline.html"
     _settings = mw_settings.GoogleMap.PointField.interactive
@@ -55,24 +58,16 @@ class GoogleMapPointFieldStaticWidget(BaseStaticWidget):
     _base_url = "https://maps.googleapis.com/maps/api/staticmap"
     _settings = mw_settings.GoogleMap.PointField.static
 
-    # !/usr/bin/python
-    # -*- coding: utf-8 -*-
-    """ Signs a URL using a URL signing secret """
-
-    import hashlib
-    import hmac
-    import base64
-    import urllib.parse as urlparse
-
-    def sign_url(self, url=None, secret=None):
+    def sign_url(self, url):
         """
         Sign a GoogleMap Static API request URL with a URL signing secret.
         https://developers.google.com/maps/documentation/maps-static/digital-signature#sample-code-for-url-signing
         """
-        if not url or not secret:
-            raise ValueError("Both input_url and secret are required")
+        secret = mw_settings.GoogleMap.apiSecret
+        if not secret:
+            return url
 
-        url = urlparse.urlparse(url)
+        url = urlparse(url)
 
         # We only need to sign the path+query part of the string
         url_to_sign = url.path + "?" + url.query
@@ -87,13 +82,20 @@ class GoogleMapPointFieldStaticWidget(BaseStaticWidget):
 
         # Encode the binary signature into base64 for use within a URL
         encoded_signature = base64.urlsafe_b64encode(signature.digest())
-
         original_url = url.scheme + "://" + url.netloc + url.path + "?" + url.query
-
-        # Return signed URL
         return original_url + "&signature=" + encoded_signature.decode()
 
     def get_static_image_url_params(self, coordinates):
         params = {
             "key": mw_settings.GoogleMap.apiKey,
         }
+        params.update(self.settings.mapParams)
+        longitude, latitude = coordinates.x, coordinates.y
+        markers_params = [
+            f"{key}:{value}" for key, value in self.settings.markers.items()
+        ]
+        marker_point = f"{latitude},{longitude}"
+        markers_params.append(marker_point)
+        params["markers"] = "|".join(markers_params)
+        params["center"] = marker_point
+        return params
