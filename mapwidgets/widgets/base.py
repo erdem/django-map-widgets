@@ -4,25 +4,7 @@ from django.contrib.gis import forms
 from django.contrib.gis.geos import GEOSGeometry
 from django.utils.http import urlencode
 from mapwidgets.settings import mw_settings
-
-
-class SettingsMixin:
-    _settings = None
-
-    def __init__(self, *args, **kwargs):
-        self.custom_settings = kwargs.pop("settings", None)
-        super().__init__(*args, **kwargs)
-
-    @property
-    def settings(self):
-        _settings = self._settings.copy()
-        if self.custom_settings is not None:
-            assert isinstance(
-                self.custom_settings, dict
-            ), "`settings` argument must be a dict type"
-            _settings.update(self.custom_settings)
-
-        return _settings
+from mapwidgets.widgets.mixins import SettingsMixin
 
 
 class BasePointFieldInteractiveWidget(SettingsMixin, forms.BaseGeometryWidget):
