@@ -19,6 +19,11 @@ class SettingsMixin:
 
         return _settings
 
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        context["settings"] = self.settings
+        return context
+
 
 class PointFieldInlineWidgetMixin:
 

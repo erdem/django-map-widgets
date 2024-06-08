@@ -85,7 +85,7 @@ class GoogleMapPointFieldStaticWidget(BaseStaticWidget):
         original_url = url.scheme + "://" + url.netloc + url.path + "?" + url.query
         return original_url + "&signature=" + encoded_signature.decode()
 
-    def get_static_image_url_params(self, coordinates):
+    def get_image_url_params(self, coordinates):
         params = {
             "key": mw_settings.GoogleMap.apiKey,
         }

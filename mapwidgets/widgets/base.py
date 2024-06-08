@@ -2,6 +2,7 @@ import json
 
 from django.contrib.gis import forms
 from django.contrib.gis.geos import GEOSGeometry
+from django.forms.widgets import Input
 from django.utils.http import urlencode
 from mapwidgets.settings import mw_settings
 from mapwidgets.widgets.mixins import SettingsMixin
@@ -67,9 +68,18 @@ class BasePointFieldInteractiveWidget(SettingsMixin, forms.BaseGeometryWidget):
         return context
 
 
-class BaseStaticWidget(SettingsMixin, forms.TextInput):
+class BaseStaticWidget(SettingsMixin, Input):
     template_name = "mapwidgets/static_widget.html"
     _base_url = None
+    DEFAULT_IMAGE_SIZE = "240x240"
+
+    @property
+    def media(self):
+        if self.settings.enableMagnificPopup:
+            return forms.Media(
+                css={"all": ["mapwidgets/css/magnific-popup.min.css"]},
+                js=["mapwidgets/js/staticmap/mw_jquery.magnific-popup.min.js"],
+            )
 
     def sign_url(self, url):
         """
@@ -83,20 +93,41 @@ class BaseStaticWidget(SettingsMixin, forms.TextInput):
             raise ValueError("`_base_url` attribute must be set")
         return self._base_url
 
-    def get_static_image_url_params(self, coordinates):
+    def get_image_url_params(self, coordinates):
         raise NotImplementedError(
-            "subclasses of BaseStaticMapWidget must provide a get_map_image_url method"
+            "subclasses of BaseStaticMapWidget must provide a get_image_url_params method"
         )
 
-    def get_static_image_url(self, value):  # pragma: no cover
-        return f"{self.base_url}?{urlencode(self.get_static_image_url_params(value))}"
+    def get_thumbnail_url_params(self, coordinates):
+        params = self.get_image_url_params(coordinates)
+        if self.settings.thumbnailSize:
+            params["size"] = self.settings.thumbnailSize
+        return params
+
+    def get_image_url(self, value):  # pragma: no cover
+        return f"{self.base_url}?{urlencode(self.get_image_url_params(value))}"
+
+    def get_html_image_tag_attrs(self):
+        if self.settings.thumbnailSize:
+            widget, height = self.settings.thumbnailSize.split("x")
+        elif self.settings.mapParams.size:
+            widget, height = self.settings.mapParams.size.split("x")
+        else:
+            widget, height = self.DEFAULT_IMAGE_SIZE.split("x")
+        return {"width": widget, "height": height}
+
+    def get_thumbnail_url(self, value):  # pragma: no cover
+        return f"{self.base_url}?{urlencode(self.get_thumbnail_url_params(value))}"
 
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
         if value:
-            context["image_url"] = self.sign_url(self.get_static_image_url(value))
-            context["is_js_popup_enabled"] = self.settings.popup
-        return context
+            context["image_url"] = self.sign_url(self.get_image_url(value))
+            context["is_magnific_popup_enabled"] = self.settings.enableMagnificPopup
+            context["image_tag_attrs"] = self.get_html_image_tag_attrs()
+            if self.settings.thumbnailSize:
+                context["thumbnail_url"] = self.sign_url(self.get_thumbnail_url(value))
+            else:
+                context["thumbnail_url"] = context["image_url"]
 
-    def render(self, name, value, attrs=None, renderer=None):
-        return super().render(name, value, attrs, renderer)
+        return context

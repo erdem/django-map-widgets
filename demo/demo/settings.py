@@ -168,7 +168,12 @@ MAP_WIDGETS = {
                     "componentRestrictions": {"country": "uk"}
                 },
                 "mapCenterLocationName": "london",
-            }
+            },
+            "static": {
+                "thumbnailSize": "240x240",
+                "enableMagnificPopup": True,
+                "mapParams": {"size": "480x480", "zoom": 13, "scale": "1"},
+            },
         },
     },
     "Mapbox": {

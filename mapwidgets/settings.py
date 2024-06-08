@@ -52,7 +52,8 @@ DEFAULT_SETTINGS = {
                 "markerFitZoom": 14,
             },
             "static": {
-                "popup": False,
+                "enableMagnificPopup": False,
+                "thumbnailSize": None,
                 "mapParams": {
                     "zoom": 15,
                     "size": "480x480",
