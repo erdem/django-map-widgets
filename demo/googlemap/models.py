@@ -1,8 +1,7 @@
+from demo.db import BaseModel
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 from django.urls import reverse
-
-from demo.db import BaseModel
 
 DEFAULT_LOCATION_POINT = Point(-104.9903, 39.7392)
 
@@ -21,7 +20,7 @@ class InteractivePointField(BaseModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("googlemap:edit", args=(self.id,))
+        return reverse("googlemap:pointfield_interactive_edit", args=(self.id,))
 
 
 class InteractiveInlinePointField(BaseModel):
@@ -29,3 +28,11 @@ class InteractiveInlinePointField(BaseModel):
 
     first_point = models.PointField(help_text="Use map widget to point the location")
     second_point = models.PointField(default=DEFAULT_LOCATION_POINT)
+
+
+class StaticPointField(InteractivePointField):
+    class Meta:
+        proxy = True
+
+    def get_absolute_url(self):
+        return reverse("googlemap:edit", args=(self.id,))

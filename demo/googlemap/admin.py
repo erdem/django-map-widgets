@@ -13,12 +13,19 @@ class InteractiveAdminInline(admin.TabularInline):
     }
 
 
+@admin.register(googlemap_models.InteractivePointField)
 class InteractivePointFieldAdmin(admin.ModelAdmin):
     list_display = ("name",)
     formfield_overrides = {
-        models.PointField: {"widget": mapwidgets.GoogleMapPointFieldStaticWidget}
+        models.PointField: {"widget": mapwidgets.GoogleMapPointFieldWidget}
     }
     inlines = [InteractiveAdminInline]
 
 
-admin.site.register(googlemap_models.InteractivePointField, InteractivePointFieldAdmin)
+@admin.register(googlemap_models.StaticPointField)
+class StaticPointFieldAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+    formfield_overrides = {
+        models.PointField: {"widget": mapwidgets.GoogleMapPointFieldWidget}
+    }
+    inlines = [InteractiveAdminInline]

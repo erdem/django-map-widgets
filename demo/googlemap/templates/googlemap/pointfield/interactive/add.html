@@ -1,14 +1,5 @@
 {% extends "base.html" %}
 
-{% block extrahead %}
-    {{ form.media }}
-{% endblock extrahead %}
-
-{% block breadcrumb_item %}
-    <li><a href="{% url "googlemap:list" %}">Google Maps Point Field</a></li>
-{% endblock %}
-
-
 {% block javascript %}
     <script type="text/javascript">
         (function ($) {
@@ -40,15 +31,24 @@
                 console.log(lat, lng); // created marker coordinates
                 console.log(mapWrapID); // map widget wrapper element ID
             });
-            console.log($("#id_location").data("PointFieldMapObj"));
-            console.log($("#id_location").data("PointFieldClassObj"));
-        })(mapWidgets.jQuery)
+            console.log($("#location-map-elem").data("mwMapObj")); // GoogleMap JS object
+            console.log($("#location-map-elem").data("mwClassObj")); // the widget class instance object
+        })(jQuery)
     </script>
 {% endblock javascript %}
 
+{% block extrahead %}
+    {{ form.media }}
+{% endblock extrahead %}
+
+{% block breadcrumb_item %}
+    <li><a href="{% url "googlemap:pointfield_interactive_list" %}">Google Maps Point Field</a></li>
+    <li>New Item</li>
+{% endblock %}
 
 {% block content %}
-    <form action="{% url "googlemap:edit" obj.pk %}" method="post">
+    <h4>Add New Item</h4>
+    <form action="{% url "googlemap:pointfield_interactive_add" %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <br>
