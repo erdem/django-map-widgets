@@ -2,7 +2,6 @@ import json
 
 from django.contrib.gis import forms
 from django.contrib.gis.geos import GEOSGeometry
-from django.forms.widgets import Input
 from django.utils.http import urlencode
 from mapwidgets.settings import mw_settings
 from mapwidgets.widgets.mixins import SettingsMixin
@@ -68,7 +67,7 @@ class BasePointFieldInteractiveWidget(SettingsMixin, forms.BaseGeometryWidget):
         return context
 
 
-class BaseStaticWidget(SettingsMixin, Input):
+class BaseStaticWidget(SettingsMixin, forms.TextInput):
     template_name = "mapwidgets/static_widget.html"
     _base_url = None
     DEFAULT_IMAGE_SIZE = "240x240"
@@ -80,6 +79,7 @@ class BaseStaticWidget(SettingsMixin, Input):
                 css={"all": ["mapwidgets/css/magnific-popup.min.css"]},
                 js=["mapwidgets/js/staticmap/mw_jquery.magnific-popup.min.js"],
             )
+        return forms.Media()
 
     def sign_url(self, url):
         """

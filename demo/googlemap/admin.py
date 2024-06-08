@@ -26,6 +26,6 @@ class InteractivePointFieldAdmin(admin.ModelAdmin):
 class StaticPointFieldAdmin(admin.ModelAdmin):
     list_display = ("name",)
     formfield_overrides = {
-        models.PointField: {"widget": mapwidgets.GoogleMapPointFieldWidget}
+        models.PointField: {"widget": mapwidgets.GoogleMapPointFieldStaticWidget}
     }
     inlines = [InteractiveAdminInline]

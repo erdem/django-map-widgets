@@ -1,8 +1,10 @@
 from django.urls import path
 from googlemap.views import (
-    PointFieldInteractiveAddView,
-    PointFieldInteractiveEditView,
-    PointFieldInteractiveListView,
+    InteractivePointFieldAddView,
+    InteractivePointFieldEditView,
+    InteractivePointFieldListView,
+    StaticPointFieldEditView,
+    StaticPointFieldListView,
 )
 
 app_name = "googlemap"
@@ -10,17 +12,27 @@ app_name = "googlemap"
 urlpatterns = [
     path(
         "pointfield/interactive/",
-        PointFieldInteractiveListView.as_view(),
+        InteractivePointFieldListView.as_view(),
         name="pointfield_interactive_list",
     ),
     path(
         "pointfield/interactive/<int:pk>/",
-        PointFieldInteractiveEditView.as_view(),
+        InteractivePointFieldEditView.as_view(),
         name="pointfield_interactive_edit",
     ),
     path(
         "pointfield/interactive/add/",
-        PointFieldInteractiveAddView.as_view(),
+        InteractivePointFieldAddView.as_view(),
         name="pointfield_interactive_add",
+    ),
+    path(
+        "pointfield/static/",
+        StaticPointFieldListView.as_view(),
+        name="pointfield_static_list",
+    ),
+    path(
+        "pointfield/static/<int:pk>/",
+        StaticPointFieldEditView.as_view(),
+        name="pointfield_static_edit",
     ),
 ]

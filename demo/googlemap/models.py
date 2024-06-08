@@ -35,4 +35,4 @@ class StaticPointField(InteractivePointField):
         proxy = True
 
     def get_absolute_url(self):
-        return reverse("googlemap:edit", args=(self.id,))
+        return reverse("googlemap:pointfield_static_edit", args=(self.id,))

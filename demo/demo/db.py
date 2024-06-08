@@ -1,5 +1,3 @@
-from datetime import timezone
-
 from django.contrib.gis.db import models
 
 
@@ -9,4 +7,4 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ["-created_at"]
+        ordering = ["-updated_at"]
