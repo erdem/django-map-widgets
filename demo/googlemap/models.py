@@ -13,8 +13,8 @@ class InteractivePointField(BaseModel):
     location_optional = models.PointField(blank=True, null=True)
 
     class Meta:
-        verbose_name = "Interactive PointField"
-        verbose_name_plural = "Interactive PointField"
+        verbose_name = "Interactive PointField Widget"
+        verbose_name_plural = "Interactive PointField Widget"
 
     def __str__(self):
         return self.name
@@ -33,6 +33,8 @@ class InteractiveInlinePointField(BaseModel):
 class StaticPointField(InteractivePointField):
     class Meta:
         proxy = True
+        verbose_name = "Static PointField Widget"
+        verbose_name_plural = "Static PointField Widget"
 
     def get_absolute_url(self):
         return reverse("googlemap:pointfield_static_edit", args=(self.id,))

@@ -42,12 +42,14 @@
 {% endblock javascript %}
 
 {% block breadcrumb_item %}
-    <li class="breadcrumb-item"><a href="{% url "mapbox:list" %}">Mapbox Point Field</a></li>
+    <li class="breadcrumb-item"><a href="{% url "mapbox:pointfield_interactive_list" %}">Mapbox Point Field</a></li>
+    <li class="breadcrumb-item">New Item</li>
 {% endblock %}
 
+
 {% block content %}
-    <h4>{{ obj.name }}</h4>
-    <form action="{% url "mapbox:edit" obj.pk %}" method="post">
+    <h4>Add New Item</h4>
+    <form action="{% url "mapbox:pointfield_interactive_add" %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <br>

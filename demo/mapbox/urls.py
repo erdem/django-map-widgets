@@ -1,10 +1,38 @@
-from django.urls import path, re_path
-from mapbox.views import PointFieldAddView, PointFieldDetailView, PointFieldListView
+from django.urls import path
+from mapbox.views import (
+    InteractivePointFieldAddView,
+    InteractivePointFieldEditView,
+    InteractivePointFieldListView,
+    StaticPointFieldEditView,
+    StaticPointFieldListView,
+)
 
 app_name = "mapbox"
 
 urlpatterns = [
-    re_path(r"^pointfield/$", PointFieldListView.as_view(), name="list"),
-    re_path(r"^pointfield/(?P<pk>\d+)/$", PointFieldDetailView.as_view(), name="edit"),
-    re_path(r"^pointfield/add/$", PointFieldAddView.as_view(), name="add"),
+    path(
+        "pointfield/interactive/",
+        InteractivePointFieldListView.as_view(),
+        name="pointfield_interactive_list",
+    ),
+    path(
+        "pointfield/interactive/<int:pk>/",
+        InteractivePointFieldEditView.as_view(),
+        name="pointfield_interactive_edit",
+    ),
+    path(
+        "pointfield/interactive/add/",
+        InteractivePointFieldAddView.as_view(),
+        name="pointfield_interactive_add",
+    ),
+    path(
+        "pointfield/static/",
+        StaticPointFieldListView.as_view(),
+        name="pointfield_static_list",
+    ),
+    path(
+        "pointfield/static/<int:pk>/",
+        StaticPointFieldEditView.as_view(),
+        name="pointfield_static_edit",
+    ),
 ]

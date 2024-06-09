@@ -106,6 +106,7 @@ DEFAULT_SETTINGS = {
                 "enableMagnificPopup": True,
                 "thumbnailSize": None,
                 "mapParams": {
+                    "username": "mapbox",
                     "style_id": "streets-v12",
                     "@2x": "@2x",
                     "width": "480",

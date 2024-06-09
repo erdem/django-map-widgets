@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block extrahead %}
+    {{ form.media }}
+{% endblock extrahead %}
+
 {% block javascript %}
     <script type="text/javascript">
         (function ($) {
@@ -37,20 +41,13 @@
     </script>
 {% endblock javascript %}
 
-
-{% block extrahead %}
-    {{ form.media }}
-{% endblock extrahead %}
-
 {% block breadcrumb_item %}
-    <li class="breadcrumb-item"><a href="{% url "mapbox:list" %}">Mapbox Point Field</a></li>
-    <li class="breadcrumb-item">New Item</li>
+    <li class="breadcrumb-item"><a href="{% url "mapbox:pointfield_interactive_list" %}">Mapbox Point Field</a></li>
 {% endblock %}
 
-
 {% block content %}
-    <h4>Add New Item</h4>
-    <form action="{% url "mapbox:add" %}" method="post">
+    <h4>{{ obj.name }}</h4>
+    <form action="{% url "mapbox:pointfield_interactive_edit" obj.pk %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <br>

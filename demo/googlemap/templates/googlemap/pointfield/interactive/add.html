@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block extrahead %}
+    {{ form.media }}
+{% endblock extrahead %}
+
 {% block javascript %}
     <script type="text/javascript">
         (function ($) {
@@ -36,10 +40,6 @@
         })(jQuery)
     </script>
 {% endblock javascript %}
-
-{% block extrahead %}
-    {{ form.media }}
-{% endblock extrahead %}
 
 {% block breadcrumb_item %}
     <li class="breadcrumb-item"><a href="{% url "googlemap:pointfield_interactive_list" %}">Google Maps Point Field</a></li>

@@ -4,11 +4,6 @@
     {{ form.media }}
 {% endblock extrahead %}
 
-{% block breadcrumb_item %}
-    <li class="breadcrumb-item"><a href="{% url "googlemap:pointfield_interactive_list" %}">GoogleMap PointField Interactive Widget</a></li>
-{% endblock %}
-
-
 {% block javascript %}
     <script type="text/javascript">
         (function ($) {
@@ -45,6 +40,10 @@
         })(mapWidgets.jQuery)
     </script>
 {% endblock javascript %}
+
+{% block breadcrumb_item %}
+    <li class="breadcrumb-item"><a href="{% url "googlemap:pointfield_interactive_list" %}">GoogleMap PointField Interactive Widget</a></li>
+{% endblock %}
 
 
 {% block content %}

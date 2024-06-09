@@ -31,16 +31,16 @@ class MapboxPointFieldWidget(BasePointFieldInteractiveWidget):
 class MapboxPointFieldStaticWidget(BaseStaticWidget):
     _base_url = "https://api.mapbox.com/styles/v1/"
     _settings = mw_settings.Mapbox.PointField.static
-    # https://docs.mapbox.com/api/maps/static-images/#marker
+    # https://docs.mapbox.com/api/maps/static-images/#retrieve-a-static-map-from-a-style
     _url_params_template = (
         "{username}/{style_id}/static/{overlay}/auto/{width}x{height}{@2x}"
     )
     # https://docs.mapbox.com/api/maps/static-images/#marker
-    _overlay_template = "{name}-{label}+{color}({lon},{lat})"
+    _overlay_template = "{name}{label}+{color}({lon},{lat})"
 
     def get_image_url_params(self, coordinates):
         return {
-            "access_token": mw_settings.Mapbox.access_token,
+            "access_token": mw_settings.Mapbox.accessToken,
         }
 
     def get_image_url(self, coordinates, **extraMapParams):
@@ -49,10 +49,9 @@ class MapboxPointFieldStaticWidget(BaseStaticWidget):
         overlay = self._overlay_template.format(
             lon=longitude, lat=latitude, **self.settings.overlayParams
         )
-        username = mw_settings.Mapbox.username
         self.settings.mapParams.update(extraMapParams)
         url_params = self._url_params_template.format(
-            username=username, overlay=overlay, **self.settings.mapParams
+            overlay=overlay, **self.settings.mapParams
         )
         return f"{self._base_url}{url_params}?{query_strings}"
 

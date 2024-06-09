@@ -149,7 +149,8 @@ if platform.system() == "Darwin":
 
 GOOGLE_MAP_API_KEY = os.getenv("GOOGLE_MAP_API_KEY")
 GOOGLE_MAP_API_SECRET = os.getenv("GOOGLE_MAP_API_SECRET")
-MAPBOX_ACCESS_TOKEN = os.getenv("MAPBOX_API_KEY")
+MAPBOX_ACCESS_TOKEN = os.getenv("MAPBOX_ACCESS_TOKEN")
+MAPBOX_ACCESS_USERNAME = os.getenv("MAPBOX_ACCESS_USERNAME")
 
 MAP_WIDGETS = {
     "GoogleMap": {
@@ -182,7 +183,8 @@ MAP_WIDGETS = {
             "interactive": {
                 "mapOptions": {"zoom": 12, "center": (51.515618, -0.091998)},
                 "markerFitZoom": 14,
-            }
+            },
+            "static": {"enableMagnificPopup": True, "thumbnailSize": "200x200"},
         },
     },
     "is_dev_mode": True,
