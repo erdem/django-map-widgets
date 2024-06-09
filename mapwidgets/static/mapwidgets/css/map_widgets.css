@@ -242,6 +242,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    text-decoration: none;
 }
 .mw-btn:focus,
 .mw-btn:active:focus,
