@@ -104,8 +104,8 @@ class BaseStaticWidget(SettingsMixin, forms.TextInput):
             params["size"] = self.settings.thumbnailSize
         return params
 
-    def get_image_url(self, value):  # pragma: no cover
-        return f"{self.base_url}?{urlencode(self.get_image_url_params(value))}"
+    def get_image_url(self, coordinates):
+        return f"{self.base_url}?{urlencode(self.get_image_url_params(coordinates))}"
 
     def get_html_image_tag_attrs(self):
         if self.settings.thumbnailSize:
@@ -116,7 +116,7 @@ class BaseStaticWidget(SettingsMixin, forms.TextInput):
             widget, height = self.DEFAULT_IMAGE_SIZE.split("x")
         return {"width": widget, "height": height}
 
-    def get_thumbnail_url(self, value):  # pragma: no cover
+    def get_thumbnail_url(self, value):
         return f"{self.base_url}?{urlencode(self.get_thumbnail_url_params(value))}"
 
     def get_context(self, name, value, attrs):

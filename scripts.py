@@ -1,13 +1,12 @@
 """Various development related automation scripts to run with Poetry run"""
 
+from logging import INFO
 from pathlib import Path
 
 import click
 from citizenshell import LocalShell
-from logging import INFO
-
-from django.conf import settings
 from demo.demo import settings as demo__project_settings
+from django.conf import settings
 
 # initialise demo project django settings to skip `ImproperlyConfigured` errors
 settings.configure(demo__project_settings)
@@ -63,6 +62,12 @@ def minify_js_files():
         "LeafletPointFieldWidget": {
             "dev_js_paths": mw_settings.Leaflet.PointField.interactive.media.js.dev,
             "minified_js_path": mw_settings.Leaflet.PointField.interactive.media.js.minified,
+        },
+        "MagnificPopup": {
+            "dev_js_paths": ["mapwidgets/js/staticmap/mw_jquery.magnific-popup.js"],
+            "minified_js_path": [
+                "mapwidgets/js/staticmap/mw_jquery.magnific-popup.min.js"
+            ],
         },
     }
 

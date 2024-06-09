@@ -1,5 +1,6 @@
+from django.utils.http import urlencode
 from mapwidgets.settings import mw_settings
-from mapwidgets.widgets.base import BasePointFieldInteractiveWidget
+from mapwidgets.widgets.base import BasePointFieldInteractiveWidget, BaseStaticWidget
 
 
 class MapboxPointFieldWidget(BasePointFieldInteractiveWidget):
@@ -25,3 +26,55 @@ class MapboxPointFieldWidget(BasePointFieldInteractiveWidget):
                 "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css",
             ],
         )
+
+
+class MapboxPointFieldStaticWidget(BaseStaticWidget):
+    _base_url = "https://api.mapbox.com/styles/v1/"
+    _settings = mw_settings.Mapbox.PointField.static
+    # https://docs.mapbox.com/api/maps/static-images/#marker
+    _url_params_template = (
+        "{username}/{style_id}/static/{overlay}/auto/{width}x{height}{@2x}"
+    )
+    # https://docs.mapbox.com/api/maps/static-images/#marker
+    _overlay_template = "{name}-{label}+{color}({lon},{lat})"
+
+    def get_image_url_params(self, coordinates):
+        return {
+            "access_token": mw_settings.Mapbox.access_token,
+        }
+
+    def get_image_url(self, coordinates, **extraMapParams):
+        query_strings = urlencode(self.get_image_url_params(coordinates))
+        longitude, latitude = coordinates.x, coordinates.y
+        overlay = self._overlay_template.format(
+            lon=longitude, lat=latitude, **self.settings.overlayParams
+        )
+        username = mw_settings.Mapbox.username
+        self.settings.mapParams.update(extraMapParams)
+        url_params = self._url_params_template.format(
+            username=username, overlay=overlay, **self.settings.mapParams
+        )
+        return f"{self._base_url}{url_params}?{query_strings}"
+
+    def get_thumbnail_url_params(self, coordinates):
+        return self.get_image_url_params(coordinates)
+
+    def get_thumbnail_url(self, coordinates):
+        if self.settings.thumbnailSize:
+            thumbnail_width, thumbnail_height = self.settings.thumbnailSize.split("x")
+            return self.get_image_url(
+                coordinates, width=thumbnail_width, height=thumbnail_height
+            )
+        return self.get_image_url(coordinates)
+
+    def get_html_image_tag_attrs(self):
+        if self.settings.thumbnailSize:
+            widget, height = self.settings.thumbnailSize.split("x")
+        elif self.settings.mapParams.width and self.settings.mapParams.height:
+            widget, height = (
+                self.settings.mapParams.width,
+                self.settings.mapParams.height,
+            )
+        else:
+            widget, height = self.DEFAULT_IMAGE_SIZE.split("x")
+        return {"width": widget, "height": height}

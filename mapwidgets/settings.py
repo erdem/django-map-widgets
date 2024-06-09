@@ -71,7 +71,8 @@ DEFAULT_SETTINGS = {
         },
     },
     "Mapbox": {
-        "accessToken": "",
+        "accessToken": None,
+        "username": None,
         "PointField": {
             "interactive": {
                 "media": {
@@ -100,6 +101,17 @@ DEFAULT_SETTINGS = {
                     "center": get_default_center_coordinates(),
                 },
                 "geocoderOptions": {},
+            },
+            "static": {
+                "enableMagnificPopup": True,
+                "thumbnailSize": None,
+                "mapParams": {
+                    "style_id": "streets-v12",
+                    "@2x": "@2x",
+                    "width": "480",
+                    "height": "480",
+                },
+                "overlayParams": {"name": "pin-l", "label": "", "color": "ff0a0a"},
             },
         },
     },
