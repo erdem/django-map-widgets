@@ -107,6 +107,9 @@ DEFAULT_SETTINGS = {
                 "thumbnailSize": None,
                 "mapParams": {
                     "username": "mapbox",
+                    "zoom": 15,
+                    "bearing": 0,
+                    "pitch": 0,
                     "style_id": "streets-v12",
                     "@2x": "@2x",
                     "width": "480",

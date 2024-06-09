@@ -32,9 +32,7 @@ class MapboxPointFieldStaticWidget(BaseStaticWidget):
     _base_url = "https://api.mapbox.com/styles/v1/"
     _settings = mw_settings.Mapbox.PointField.static
     # https://docs.mapbox.com/api/maps/static-images/#retrieve-a-static-map-from-a-style
-    _url_params_template = (
-        "{username}/{style_id}/static/{overlay}/auto/{width}x{height}{@2x}"
-    )
+    _url_params_template = "{username}/{style_id}/static/{overlay}/{lon},{lat},{zoom},{bearing},{pitch}/{width}x{height}{@2x}"
     # https://docs.mapbox.com/api/maps/static-images/#marker
     _overlay_template = "{name}{label}+{color}({lon},{lat})"
 
@@ -51,7 +49,7 @@ class MapboxPointFieldStaticWidget(BaseStaticWidget):
         )
         self.settings.mapParams.update(extraMapParams)
         url_params = self._url_params_template.format(
-            overlay=overlay, **self.settings.mapParams
+            overlay=overlay, lon=longitude, lat=latitude, **self.settings.mapParams
         )
         return f"{self._base_url}{url_params}?{query_strings}"
 
