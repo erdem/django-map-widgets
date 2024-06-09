@@ -14,16 +14,16 @@
 </head>
 <body>
 <div class="container help-block">
-    <div>
-        <ul class="breadcrumb">
-            <li><a href="{% url "index" %}">MapWidgets Demo</a></li>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url "index" %}">MapWidgets Demo</a></li>
             {% block breadcrumb_item %}
             {% endblock %}
             {% if obj %}
-                <li><a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a></li>
             {% endif %}
-        </ul>
-    </div>
+        </ol>
+    </nav>
     {% block content %}
     {% endblock content %}
 </div>
