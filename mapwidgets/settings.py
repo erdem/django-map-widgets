@@ -115,7 +115,7 @@ DEFAULT_SETTINGS = {
                     "width": "480",
                     "height": "480",
                 },
-                "overlayParams": {"name": "pin-l", "label": "", "color": "ff0a0a"},
+                "overlayParams": {"name": "pin-l", "label": "", "color": ""},
             },
         },
     },

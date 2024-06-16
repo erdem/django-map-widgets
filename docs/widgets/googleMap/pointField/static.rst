@@ -6,6 +6,11 @@ Preview
 
 .. image:: /_static/images/google-point-static-map-widget.png
 
+
+This widget integrates with Django to provide an interface using the Google
+`Maps Static API <https://developers.google.com/maps/documentation/maps-static>`_.
+It automatically generates static map images based on GeoDjango PointField values.
+
 Requirements
 ^^^^^^^^^^^^
 To use this widget, you need to enable the following Google APIs in your Google application configuration:
@@ -59,6 +64,10 @@ Default Settings
     }
 
 * **apiKey**: `Google JavaScript API <https://developers.google.com/maps/documentation/javascript/get-api-key/>`_ key. (required)
+
+* **enableMagnificPopup**: Enable/Disable `MagnificPopup <https://dimsemenov.com/plugins/magnific-popup/>`_ functionality.
+
+* **thumbnailSize**: Specify thumbnail size for better popup usage.(e.g ``240x240``)
 
 * **mapParams**: Static Map Image API `MapParams <https://developers.google.com/maps/documentation/maps-static/start#location>`_ can be managed using this dictionary globally.
 

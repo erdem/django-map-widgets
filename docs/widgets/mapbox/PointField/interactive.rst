@@ -9,7 +9,7 @@ Preview
 
 Requirements
 ^^^^^^^^^^^^
-**Mapbox Access Token**: To generate an access token, please follow `MapBox Create Access Token <https://docs.mapbox.com/help/getting-started/access-tokens/>`_ page instructions.
+**Access Token**: A Mapbox access token is required to use this widget. Please follow the instructions on the `MapBox Create Access Token <https://docs.mapbox.com/help/getting-started/access-tokens/>`_ page.
 
 
 Key Features
