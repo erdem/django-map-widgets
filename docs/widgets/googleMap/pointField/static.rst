@@ -1,192 +1,130 @@
 Static Point Field Widget
 =========================
 
-**Preview**
+Preview
+^^^^^^^
 
-.. image:: ../_static/images/google-point-static-map-widget.png
+.. image:: /_static/images/google-point-static-map-widget.png
 
-Django map widgets provide all Google Static Map API features. Check out this `link <https://developers.google.com/maps/documentation/static-maps/intro>`_ for the google static map API features.
+Requirements
+^^^^^^^^^^^^
+To use this widget, you need to enable the following Google APIs in your Google application configuration:
 
-Here is the all default settings attribute for google static map widget.
+- `Maps Static API <https://developers.google.com/maps/documentation/maps-static>`_
 
 
-.. code-block:: python
+Key Features
+^^^^^^^^^^^^
 
-    MAP_WIDGETS = {
-        "GoogleStaticMapWidget": {
-            "zoom": 15,
-            "size": "480x480",
-            "scale": "",
-            "format": "",
-            "maptype": "",
-            "path": "",
-            "visible": "",
-            "style": "",
-            "language": "",
-            "region": ""
-        },
+**Generate Static Map Image Automatically:** The widget can generate a static image URL with the provided GeoDjango PointField value.
 
-        "GoogleStaticMapMarkerSettings": {
-            "size": "normal",
-            "color": "",
-            "icon": "",
-        },
-        "LANGUAGE": "en",
-        "GOOGLE_MAP_API_KEY": "",
-    }
+**MagnificPopup Support:** The widget-generated static map image can work with the `MagnificPopup jQuery Plugin <https://dimsemenov.com/plugins/magnific-popup/>`_.
 
-**Usage**
+**Generate Thumbnail for Better Popup Usage:** You can specify a thumbnail size with the `thumbnailSize` setting for better popup usage. Note that this setting will result in an additional API request, which may incur extra costs.
 
-If you are not using specific features on Google Static Map API, you just need to update GOOGLE_MAP_API_KEY value in your Django settings file. If you also need individual size map images, you can pass `size` and `zoom` parameter for each GoogleStaticMapWidget class.
-
-Google Map APIs configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-In order to use this widget, you need to enable Google Map static API in your google application configuration;
-
-- `Google Maps Static API <https://console.cloud.google.com/apis/library/static-maps-backend.googleapis.com>`_
-
-**Settings**
-
-In your ``settings.py`` file, add your ``MAP_WIDGETS`` config:
+Settings
+^^^^^^^^
+Default Settings
+----------------
 
 .. code-block:: python
 
     MAP_WIDGETS = {
-        "GoogleStaticMapWidget": {
-            "zoom": 15,
-            "size": "320x320",
-        },
-        "GoogleStaticMapMarkerSettings": {
-            "color": "green",
-        },
-        "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
+        "GoogleMap": {
+            "apiKey": None,
+            "PointField": {
+                "static": {
+                    "enableMagnificPopup": True,
+                    "thumbnailSize": None,
+                    "mapParams": {
+                        "zoom": 15,
+                        "size": "480x480",
+                        "scale": "",
+                        "format": "",
+                        "maptype": "",
+                        "language": "",
+                        "region": "",
+                        "map_id": "",
+                        "visible": "",
+                        "style": "",
+                    },
+                    "markers": {
+                        "size": "",
+                        "color": "",
+                        "icon": ""
+                    },
+                },
+            },
+        }
     }
 
+* **apiKey**: `Google JavaScript API <https://developers.google.com/maps/documentation/javascript/get-api-key/>`_ key. (required)
 
-**Django Admin**
+* **mapParams**: Static Map Image API `MapParams <https://developers.google.com/maps/documentation/maps-static/start#location>`_ can be managed using this dictionary globally.
+
+* **markers**: The map `marker style <https://developers.google.com/maps/documentation/maps-static/start#MarkerStyles>`_  can be managed using this dictionary globally.
+
+.. Note::
+    More details about map widget settings usage can be found in the `settings guide <http://django-map-widgets.readthedocs.io/settings>`_.
+
+Usage
+^^^^^
+
+In the Django project settings file, the `MAP_WIDGETS` dictionary should be defined to customize the default settings for map widgets.
 
 .. code-block:: python
 
-    from mapwidgets.widgets import GoogleStaticMapWidget
+    MAP_WIDGETS = {
+        "GoogleMap": {
+            "apiKey": GOOGLE_MAP_API_KEY,  # Your Google API key
+            "PointField": {
+                "static": {
+                    "thumbnailSize": "240x240",
+                    "enableMagnificPopup": True,
+                    "mapParams": {
+                        "size": "480x480",
+                        "zoom": 13
+                    },
+                    "markers": {
+                        "color": "red"
+                    }
+                },
+            },
+        },
+    }
+
+Django Admin
+------------
+
+.. code-block:: python
+
+    from mapwidgets import GoogleMapPointFieldStaticWidget
 
     class CityAdmin(admin.ModelAdmin):
         formfield_overrides = {
-            models.PointField: {"widget": GoogleStaticMapWidget}
+            models.PointField: {"widget": GoogleMapPointFieldStaticWidget}
         }
 
+Django Forms
+------------
 
-**Django Forms**
-
+See the `location_has_default` field usage to understand how you can override global settings with the `settings` parameter for a specific widget.
 
 .. code-block:: python
 
-    from mapwidgets.widgets import GoogleStaticMapWidget
+    from mapwidgets import GoogleMapPointFieldStaticWidget
 
     class CityDetailForm(forms.ModelForm):
 
         class Meta:
             model = City
-            fields = "name": "coordinates", "city_hall"
+            fields = ("name", "location", "location_has_default")
             widgets = {
-                'coordinates': GoogleStaticMapWidget,
-                'city_hall': GoogleStaticMapWidget(zoom=12, size="240x240"),
+                "location": GoogleMapPointFieldStaticWidget,
+                "location_has_default": GoogleMapPointFieldStaticWidget(
+                    settings={"enableMagnificPopup": False}
+                ),
             }
 
 
-
-
-
-**Preview**
-
-.. image:: ../_static/images/google-point-static-overlay-map-widget.png
-
-This widget is working with `Magnific Popup <http://dimsemenov.com/plugins/magnific-popup/>`_  jQuery plugin. The plugin javascript file load with the widget static files.
-
-**Usage**
-
-You can also use all static map features in this widget. Besides you can give a ``thumbnail_size`` value.
-
-Here is the all default settings attribute for google static overlay map widget.
-
-.. code-block:: python
-
-    MAP_WIDGETS = {
-        "GoogleStaticMapMarkerSettings": {
-            "size": "normal",
-            "color": "",
-            "icon": ""
-        },
-
-        "GoogleStaticOverlayMapWidget": {
-            "zoom": 15,
-            "size": "480x480",
-            "thumbnail_size": "160x160",
-            "scale": "",
-            "format": "",
-            "maptype": "",
-            "path": "",
-            "visible": "",
-            "style": "",
-            "language": "",
-            "region": ""
-        },
-
-        "GOOGLE_MAP_API_SIGNATURE": "",
-        "GOOGLE_MAP_API_KEY": "",
-    }
-
-Google Map APIs configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-In order to use this widget, you need to enable Google Map static API in your google application configuration;
-
-- `Google Maps Static API <https://console.cloud.google.com/apis/library/static-maps-backend.googleapis.com>`_
-
-
-**Settings**
-
-In your django ``settings.py`` file, add your ``MAP_WIDGETS`` config:
-
-.. code-block:: python
-
-    MAP_WIDGETS = {
-        "GoogleStaticMapWidget": {
-            "zoom": 15,
-            "size": "320x320",
-            "thumbnail_size": "100x100",
-        },
-        "GoogleStaticMapMarkerSettings": {
-            "color": "green",
-        },
-        "GOOGLE_MAP_API_KEY": "<google-map-api-key>"
-    }
-
-
-**Django Admin**
-
-.. code-block:: python
-
-    from mapwidgets.widgets import GoogleStaticOverlayMapWidget
-
-    class CityAdmin(admin.ModelAdmin):
-        formfield_overrides = {
-            models.PointField: {"widget": GoogleStaticOverlayMapWidget}
-        }
-
-
-**Django Forms**
-
-
-.. code-block:: python
-
-    from mapwidgets.widgets import GoogleStaticOverlayMapWidget
-
-    class CityDetailForm(forms.ModelForm):
-
-        class Meta:
-            model = City
-            fields = "name": "coordinates", "city_hall"
-            widgets = {
-                'coordinates': GoogleStaticOverlayMapWidget,
-                'city_hall': GoogleStaticOverlayMapWidget(zoom=12, size="240x240"),
-            }
-
+See more usage of this widget in `demo project <https://github.com/erdem/django-map-widgets/tree/master/demo>`_.
