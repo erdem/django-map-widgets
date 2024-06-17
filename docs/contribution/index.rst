@@ -1,155 +1,135 @@
+
 .. _contribution_doc:
+
 
 ============
 Contribution
 ============
 
-1. Install the package:
+The journey of this project began in 2016 at a local hackathon event. The initial goal was to create a user-friendly interface for GeoDjango PointField inputs. Since its inception, the project has undergone numerous changes, with new widgets added for various providers and it has become a dependency for many global projects.
+
+The current vision of the project is to develop user-friendly and developer-friendly interfaces for all GeoDjango field types using major JavaScript-based map services. If your projects require a widget that is not yet supported by django-map-widgets, you can follow this guide to contribute new widgets to the project.
+
+
+Demo Project
+------------
+
+This is an example Django project that demonstrates the usage of all widgets with various settings in Django admin and views.
+
+.. image:: https://github.com/erdem/django-map-widgets/assets/1518272/adc78ac4-4a09-4423-92a9-5b3c44b996f5
+   :width: 1158
+   :alt: Screenshot 2024-06-16 at 17 00 26
+
+Setup
+^^^^^
+
+To run the project, a PostgreSQL database with the PostGIS plugin is required. Follow the instructions in the `Django Installing PostGIS Documentation <https://docs.djangoproject.com/en/5.0/ref/contrib/gis/install/postgis/#post-installation>`_ to create a database with PostGIS. Update the project's ``DATABASES`` configuration in ``demo/settings.py`` if necessary.
+
+Create and configure the database:
 
 .. code-block:: shell
 
-    pip install django-map-widgets
+    createdb djmap_demo
+    psql djmap_demo
+    CREATE EXTENSION postgis;
 
-2. Add mapwidgets to your INSTALLED_APPS in settings.py:
-
-.. code-block:: python
-
-    INSTALLED_APPS = [
-        ...
-        'django.contrib.sessions',
-        'django.contrib.staticfiles',
-
-        'mapwidgets',
-    ]
-
-3. Run the `collectstatic` command to ensure static files are correctly collected before using the widgets in production:
+Apply database migrations and load sample fixtures:
 
 .. code-block:: shell
 
-    python manage.py collectstatic
+    python manage.py migrate
+    python manage.py loaddata fixtures/*.json
+
+Set environment variables:
+
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Description
+   * - GOOGLE_MAP_API_KEY
+     - Required for GoogleMap interactive widgets.
+   * - GOOGLE_MAP_API_SECRET
+     - Required for GoogleMap static widgets.
+   * - MAPBOX_ACCESS_TOKEN
+     - Required for Mapbox interactive widgets.
+   * - MAPBOX_ACCESS_USERNAME
+     - Set this if Mapbox static map images will use a custom user map style; otherwise, it can be left as is.
+
+Run the development server and start exploring the project at `http://localhost:8000/ <http://localhost:8000/>`_:
+
+.. code-block:: shell
+
+    python manage.py runserver 0:8000
 
 
-All map widgets can initialize with GeoDjango form fields like any other Django widgets. If you need a quick overview to widget usages, you can check it out our demo project in the github repo. Also, you can run demo project with following contribution guide.
 
 
-Usage
------
+1. **Fork the Repository:**
+   Start by forking the Django Map Widgets repository on GitHub to your own account.
 
-**Django Admin Usage Example**
+2. **Clone the Repository:**
+   Clone your forked repository to your local machine.
 
-.. code-block:: python
+   ```shell
+   git clone https://github.com/yourusername/django-map-widgets.git
+   cd django-map-widgets
+   ```
 
-    from django.contrib.gis.db import models
-    import mapwidgets
+3. **Set Up the Demo Project:**
+   To ensure your changes work correctly, set up the demo project. This will help you test the widgets with various settings in Django admin and views.
 
+   **Setting up PostgreSQL with PostGIS:**
 
-    class CityAdmin(admin.ModelAdmin):
-        formfield_overrides = {
-            models.PointField: {"widget": mapwidgets.GoogleMapPointFieldWidget}
-        }
+   Follow the instructions in the [Django documentation](https://docs.djangoproject.com/en/5.0/ref/contrib/gis/install/postgis/#post-installation) to create a PostgreSQL database with PostGIS. Update the `DATABASES` configuration in `demo/settings.py` if necessary.
 
-** Django Forms Usage Example**
+   ```shell
+   createdb djmap_demo
+   psql djmap_demo
+   CREATE EXTENSION postgis;
+   ```
 
+   **Apply Migrations and Load Sample Fixtures:**
 
-.. code-block:: python
+   ```shell
+   python manage.py migrate
+   python manage.py loaddata fixtures/*.json
+   ```
 
-    from mapwidgets.widgets import GoogleMapPointFieldWidget, MapboxPointFieldWidget
+   **Run the Development Server:**
 
+   ```shell
+   python manage.py runserver 0:8000
+   ```
 
-    class CityForm(forms.ModelForm):
-        class Meta:
-            model = City
-            fields = ("coordinates", "city_hall")
-            widgets = {
-                'coordinates': GoogleMapPointFieldWidget,
-                'city_hall': MapboxPointFieldWidget,
-            }
+4. **Make Your Changes:**
+   Create a new branch for your changes and make your modifications.
 
+   ```shell
+   git checkout -b your-feature-branch
+   ```
 
-When using map widgets in Django views, include `{{ form.media }}` template variable in the <head> or at the end of the <body> tag in Django templates (django-admin does this by default).
+5. **Write Tests and Documentation:**
+   Ensure your changes are well-tested. Add or update documentation to explain your changes and how to use new features.
 
-.. code-block:: html
+6. **Commit Your Changes:**
+   Commit your changes with clear and concise commit messages.
 
-    <html>
-    <head>
-        <title>...</title>
-        {{ form.media }}
-    </head>
-    <body>
-        ....
-        <form method="POST" action="">
-            {% csrf_token %}
-            {{form.as_p}}
-        </form>
-    </body>
-    </html>
+   ```shell
+   git add .
+   git commit -m "Description of your changes"
+   ```
 
-Configuration
--------------
+7. **Push to Your Fork:**
+   Push your changes to your forked repository.
 
-The JavaScript map rendering behavior of the widgets can be customized by providing `MAP_WIDGETS` configuration in your project's settings file. For detailed guidance on map customization options, refer to the `settings guide <http://django-map-widgets.readthedocs.io/settings>`_.
+   ```shell
+   git push origin your-feature-branch
+   ```
 
-**Example Settings**
+8. **Create a Pull Request:**
+   Open a pull request to the main repository. Provide a detailed description of your changes and include any relevant information or links to issues you are addressing.
 
-.. code-block:: python
+   **Note:** Ensure your pull request includes sufficient documentation and setup instructions for the demo project.
 
-    GOOGLE_MAP_API_KEY = os.getenv("GOOGLE_MAP_API_KEY")
-    MAPBOX_ACCESS_TOKEN = os.getenv("MAPBOX_ACCESS_TOKEN")
-
-    MAP_WIDGETS = {
-        "GoogleMap": {
-            "apiKey": GOOGLE_MAP_API_KEY,
-            "PointField": {
-                "interactive": {
-                    "mapOptions": {
-                        "zoom": 15,  # set initial zoom
-                        "streetViewControl": False,
-                    },
-                    "GooglePlaceAutocompleteOptions": {
-                        "componentRestrictions": {"country": "uk"}
-                    },
-                }
-            }
-        },
-        "Mapbox": {
-            "accessToken": MAPBOX_ACCESS_TOKEN,
-            "PointField": {
-                "interactive": {
-                    "mapOptions": {"zoom": 12, "center": (51.515618, -0.091998)},
-                    "markerFitZoom": 14,
-                }
-            },
-        },
-        "Leaflet": {
-            "PointField": {
-                "interactive": {
-                    "mapOptions": {
-                        "zoom": 12,
-                        "scrollWheelZoom": False
-                    }
-                }
-            },
-            "markerFitZoom": 14,
-        }
-    }
-
-
-**jQuery Requirements**
-
-jQuery is required for Django Map Widgets to function in regular Django views. However, if the widgets are used within the Django Admin, jQuery does not need to be provided separately (it uses django admin jQuery to function). Any map widget class can be configured as described in the documentation, and they will work out of the box.
-
-The preferable jQuery version is 3.x-slim.
-
-Screenshots
------------
-
-**GoogleMap Interactive Point Field Widget**
-
-
-.. image:: https://cloud.githubusercontent.com/assets/1518272/26807500/ad0af4ea-4a4e-11e7-87d6-632f39e438f7.gif
-   :alt: GoogleMap Interactive Point Field Widget
-
-**MapBox Interactive Point Field Widget**
-
-.. image:: https://user-images.githubusercontent.com/1518272/168497515-f97363f4-6860-410e-9e24-230a2c4233b7.png
-   :alt: MapBox Interactive Point Field Widget
+Thank you for contributing to Django Map Widgets!

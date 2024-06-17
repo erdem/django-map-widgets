@@ -23,6 +23,16 @@ python manage.py migrate
 python manage.py loaddata fixtures/*.json
 ```
 
+Set environment variables.
+
+| Name                   | Description                                                                                             |
+|------------------------|---------------------------------------------------------------------------------------------------------|
+| GOOGLE_MAP_API_KEY     | Required for GoogleMap interactive widgets.                                                             |
+| GOOGLE_MAP_API_SECRET  | Required for GoogleMap static widgets.                                                                  |
+| MAPBOX_ACCESS_TOKEN    | Required for Mapbox interactive widgets.                                                                |
+| MAPBOX_ACCESS_USERNAME | Set this if Mapbox static map images will use a custom user map style; otherwise, it can be left as is. |
+
+
 Run the development server and start exploring the project at [http://localhost:8000/](http://localhost:8000/). 
 
 ```shell
