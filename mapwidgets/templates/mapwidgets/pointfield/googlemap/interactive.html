@@ -4,9 +4,19 @@
     {% block container %}
         <div class="mw-header">
             {% block header %}
+                <a class="mw-btn mw-btn-warning mw-btn-add-marker">
+                    <i class="icon-location"></i>
+                    <span class="button-text">{% trans "Point on Map" %}</span>
+                </a>
+                <a class="mw-btn mw-btn-info mw-btn-my-location">
+                    <i class="icon-direction"></i>
+                    <span class="button-text">{% trans "Current Location" %}</span>
+                </a>
                 <div class="mw-coordinates-wrap">
-                    <a class="mw-btn mw-btn-primary mw-btn-coordinates">{% trans "Edit coordinates" %} <i
-                            class="icon-down-dir"></i></a>
+                    <a class="mw-btn mw-btn-default mw-btn-coordinates">
+                        <i class="icon-down-open"></i>
+                        <span class="button-text">{% trans "Edit Coordinates" %}</span>
+                    </a>
                     <div class="mw-coordinates-overlay hide">
                         <label for="{{ name }}-mw-overlay-latitude">
                             {% trans "Latitude:" %}
@@ -24,9 +34,6 @@
                     </div>
                 </div>
 
-                <a class="mw-btn mw-btn-info mw-btn-my-location">{% trans "Use My Location" %}</a>
-                <a class="mw-btn mw-btn-warning mw-btn-add-marker"><i class="icon-location"></i> <span
-                        class="point-text">{% trans "Choose point on map" %}</span></a>
                 <div class="mw-adress-input-wrap pull-right">
                     <input type="text" class="form-control pull-right" id="{{ name }}-mw-google-address-input"
                            role="presentation" autocomplete="off"
@@ -59,7 +66,7 @@
 
 {% block javascript %}
     <script type="application/javascript">
-        (function($) {
+        (function ($) {
             const widgetSettings = JSON.parse("{{ options|escapejs }}");
             const fieldValue = JSON.parse("{{ field_value|escapejs }}");
 

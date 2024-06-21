@@ -5,7 +5,7 @@ from mapbox.models import InteractivePointField, StaticPointField
 
 
 class InteractivePointFieldListView(ListView):
-    queryset = InteractivePointField.objects.all()
+    queryset = InteractivePointField.objects.all().order_by("-updated_at")
     template_name = "mapbox/pointfield/interactive/list.html"
     context_object_name = "pointfield_objs"
 
@@ -15,7 +15,7 @@ class InteractivePointFieldEditView(UpdateView):
     model = InteractivePointField
     template_name = "mapbox/pointfield/interactive/edit.html"
     context_object_name = "obj"
-    success_url = reverse_lazy("mapbox:list")
+    success_url = reverse_lazy("mapbox:pointfield_interactive_list")
 
 
 class InteractivePointFieldAddView(FormView):

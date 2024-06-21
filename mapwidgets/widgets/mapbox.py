@@ -1,3 +1,4 @@
+from django.core.exceptions import ImproperlyConfigured
 from django.utils.http import urlencode
 from mapwidgets.settings import mw_settings
 from mapwidgets.widgets.base import BasePointFieldInteractiveWidget, BaseStaticWidget
@@ -10,6 +11,10 @@ class MapboxPointFieldWidget(BasePointFieldInteractiveWidget):
     @property
     def settings(self):
         settings = super().settings
+        if not mw_settings.Mapbox.accessToken:
+            raise ImproperlyConfigured(
+                "`Mapbox.accessToken` setting is required to use Mapbox widgets."
+            )
         settings["accessToken"] = mw_settings.Mapbox.accessToken
         return settings
 
@@ -34,17 +39,35 @@ class MapboxPointFieldStaticWidget(BaseStaticWidget):
     # https://docs.mapbox.com/api/maps/static-images/#retrieve-a-static-map-from-a-style
     _url_params_template = "{username}/{style_id}/static/{overlay}/{lon},{lat},{zoom},{bearing},{pitch}/{width}x{height}{@2x}"
     # https://docs.mapbox.com/api/maps/static-images/#marker
-    _overlay_template = "{name}{label}+{color}({lon},{lat})"
+    _overlay_template = "{name}-{label}+{color}({lon},{lat})"
 
     def get_image_url_params(self, coordinates):
+        if not mw_settings.Mapbox.accessToken:
+            raise ImproperlyConfigured(
+                "`Mapbox.accessToken` setting is required to use Mapbox widgets."
+            )
+
         return {
             "access_token": mw_settings.Mapbox.accessToken,
         }
 
+    def get_overlay(self, lon, lat, name=None, label=None, color=None):
+        overlay_template = f"{name}"
+
+        if label:
+            overlay_template += f"-{label}"
+
+        if color:
+            overlay_template += f"+{color}"
+
+        overlay_template += f"({lon},{lat})"
+
+        return "".join(overlay_template)
+
     def get_image_url(self, coordinates, **extraMapParams):
         query_strings = urlencode(self.get_image_url_params(coordinates))
         longitude, latitude = coordinates.x, coordinates.y
-        overlay = self._overlay_template.format(
+        overlay = self.get_overlay(
             lon=longitude, lat=latitude, **self.settings.overlayParams
         )
         self.settings.mapParams.update(extraMapParams)

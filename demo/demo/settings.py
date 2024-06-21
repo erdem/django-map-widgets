@@ -182,9 +182,13 @@ MAP_WIDGETS = {
         "PointField": {
             "interactive": {
                 "mapOptions": {"zoom": 12, "center": (51.515618, -0.091998)},
-                "markerFitZoom": 14,
+                "markerFitZoom": 12,
             },
-            "static": {"enableMagnificPopup": True, "thumbnailSize": "200x200"},
+            "static": {
+                "enableMagnificPopup": True,
+                "thumbnailSize": "200x200",
+                "overlayParams": {"name": "pin-l", "label": "p", "color": "336699"},
+            },
         },
     },
     "is_dev_mode": True,

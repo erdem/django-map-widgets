@@ -5,7 +5,7 @@ from leaflet.models import InteractivePointField
 
 
 class PointFieldListView(ListView):
-    queryset = InteractivePointField.objects.all()
+    queryset = InteractivePointField.objects.all().order_by("-updated_at")
     template_name = "leaflet/pointfield/list.html"
     context_object_name = "pointfield_objs"
 
