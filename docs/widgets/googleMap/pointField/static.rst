@@ -4,7 +4,7 @@ Static Point Field Widget
 Preview
 ^^^^^^^
 
-.. image:: /_static/images/google-point-static-map-widget.png
+.. image:: /_static/images/google_static_overlay.png
 
 
 This widget integrates with Django to provide an interface using the Google

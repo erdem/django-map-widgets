@@ -4,7 +4,7 @@ Static Point Field Widget
 Preview
 ^^^^^^^
 
-.. image:: /_static/images/google-point-static-map-widget.png
+.. image:: /_static/images/mapbox_static_overlay.png
 
 
 This widget integrates with Django to provide an interface using the Mapbox `Static Image API <https://docs.mapbox.com/api/maps/static-images/>`_. It automatically generates static map images based on GeoDjango PointField values.

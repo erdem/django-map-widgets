@@ -14,10 +14,7 @@ Demo Project Setup
 ------------------
 The `demo project <https://github.com/erdem/django-map-widgets/tree/master/demo>`_ is a convenient development environment for creating various types of widgets. You can find many examples of existing widgets being used in the admin interface and views.
 
-.. image:: https://github.com/erdem/django-map-widgets/assets/1518272/adc78ac4-4a09-4423-92a9-5b3c44b996f5
-   :width: 1158
-   :alt: Demo Project Preview
-
+.. image:: /_static/images/demo_project_preview.png
 
 To run the project, a PostgreSQL database with the PostGIS plugin is required. Follow the instructions in the `Django Installing PostGIS Documentation <https://docs.djangoproject.com/en/5.0/ref/contrib/gis/install/postgis/#post-installation>`_ to create a database with PostGIS. Update the project's ``DATABASES`` configuration in ``demo/settings.py`` if necessary.
 
@@ -41,12 +38,11 @@ Create and configure the database:
         }
     }
 
-Apply database migrations and load sample fixtures:
+Apply database migrations:
 
 .. code-block:: shell
 
     python manage.py migrate
-    python manage.py loaddata fixtures/*.json
 
 Set environment variables:
 

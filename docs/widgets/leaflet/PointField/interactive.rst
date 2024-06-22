@@ -4,7 +4,7 @@ Interactive Point Field Widget
 Preview
 ^^^^^^^
 
-.. image:: /_static/images/leaflet-point-field-map-widget.png
+.. image:: /_static/images/leaflet_interactive.png
 
 
 Requirements

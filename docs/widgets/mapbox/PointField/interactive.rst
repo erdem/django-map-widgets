@@ -4,7 +4,7 @@ Interactive Point Field Widget
 Preview
 ^^^^^^^
 
-.. image:: /_static/images/mapbox-point-field-map-widget.png
+.. image:: /_static/images/mapbox_preview.png
 
 
 Requirements
@@ -133,6 +133,9 @@ In the Django project settings file, the `MAP_WIDGETS` dictionary should be defi
                 "location": mapwidgets.MapboxPointFieldWidget,
             }
 
+
+
+.. image:: /_static/images/mapbox_interactive.gif
 
 Javascript Triggers
 ^^^^^^^^^^^^^^^^^^^

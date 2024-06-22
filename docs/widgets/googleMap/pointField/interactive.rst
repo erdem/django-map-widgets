@@ -4,7 +4,7 @@ Interactive Point Field Widget
 Preview
 ^^^^^^^
 
-.. image:: /_static/images/google-point-field-map-widget.gif
+.. image:: /_static/images/google_interactive.png
 
 
 Requirements
@@ -152,9 +152,10 @@ In the Django project settings file, the `MAP_WIDGETS` dictionary should be defi
 Dynamic Django Admin Inline Support
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. image:: /_static/images/google-point-field-admin-inline-widget.gif
 
 Django Admin includes an inline feature that allows the dynamic addition of inline rows. Normally, the `GoogleMapPointFieldWidget` cannot be initialized when add another row action button is clicked. However, this functionality can use with `GoogleMapPointFieldInlineWidget` class, which initializes a new GoogleMap interactive widget for new inline rows.
+
+.. image:: /_static/images/google_interactive_inline.gif
 
 **Usage**
 
