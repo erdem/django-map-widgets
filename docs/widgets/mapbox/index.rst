@@ -7,3 +7,4 @@ Mapbox Widgets
     :maxdepth: 2
 
     PointField/interactive
+    PointField/static

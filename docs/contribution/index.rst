@@ -1,5 +1,4 @@
-
-.. _contribution_doc:
+.. _contribution:
 
 
 ============

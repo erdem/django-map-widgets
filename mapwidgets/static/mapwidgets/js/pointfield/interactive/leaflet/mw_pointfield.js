@@ -9,7 +9,9 @@
             this.leafletTileLayer = this.mapOptions.tileLayer
             this.map = L.map(this.mapElement.id, this.leafletMapOptions);
             L.tileLayer(this.leafletTileLayer.urlTemplate, this.leafletTileLayer.options).addTo(this.map);
-
+            if (this.map.zoomControl) {
+                this.map.zoomControl.setPosition('topright');
+            }
             $(this.mapElement).data("mwMapObj", this.map);
             $(this.mapElement).data("mwClassObj", this);
 

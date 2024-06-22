@@ -74,7 +74,7 @@ Default Settings
 * **markers**: The map `marker style <https://developers.google.com/maps/documentation/maps-static/start#MarkerStyles>`_  can be managed using this dictionary globally.
 
 .. Note::
-    More details about map widget settings usage can be found in the `settings guide <http://django-map-widgets.readthedocs.io/settings>`_.
+    More details about map widget settings usage can be found in the :ref:`settings guide <settings>`.
 
 Usage
 ^^^^^

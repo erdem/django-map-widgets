@@ -138,7 +138,11 @@ DEFAULT_SETTINGS = {
                         ],
                     },
                 },
-                "mapOptions": {"zoom": 12, "scrollWheelZoom": False},
+                "mapOptions": {
+                    "zoom": 12,
+                    "scrollWheelZoom": False,
+                    "zoomControl": True,
+                },
                 "tileLayer": {
                     "urlTemplate": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                     "options": {"maxZoom": 20},

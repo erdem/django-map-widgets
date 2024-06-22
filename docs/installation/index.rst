@@ -1,3 +1,5 @@
+.. _installation:
+
 ============
 Installation
 ============
@@ -28,14 +30,11 @@ Django Map Widgets supports Django 4.x-5.x and Python 3.9+.
 
     python manage.py collectstatic
 
-===============
-Getting Started
-===============
-
-All map widgets in Django Map Widgets can be easily initialized with GeoDjango form fields just like any other Django widgets. For a quick overview and examples of widget usage, you can explore our `demo project <https://github.com/erdem/django-map-widgets/tree/master/demo>`_ available in the GitHub repository. Additionally, you can run the demo project locally by following the steps outlined in our :ref:`contribution guide <contribution_doc>`.
-
 Usage
------
+^^^^^
+
+All map widgets in Django Map Widgets can be easily initialized with GeoDjango form fields just like any other Django widgets. For a quick overview and examples of widget usage, you can explore our demo project available in the GitHub repository. Additionally, you can run the demo project locally by following the steps in the `project readme files <https://github.com/erdem/django-map-widgets/tree/master/demo>`_.
+
 
 **Django Admin Usage Example**
 
@@ -87,7 +86,7 @@ When using map widgets in Django views, include `{{ form.media }}` template vari
     </html>
 
 Configuration
--------------
+^^^^^^^^^^^^^
 
 The JavaScript map rendering behavior of the widgets can be customized by providing `MAP_WIDGETS` configuration in your project's settings file. For detailed guidance on map customization options, refer to the `settings guide <http://django-map-widgets.readthedocs.io/settings>`_.
 
@@ -143,7 +142,7 @@ jQuery is required for Django Map Widgets to function in regular Django views. H
 The preferable jQuery version is 3.x-slim.
 
 Screenshots
------------
+^^^^^^^^^^^
 
 **GoogleMap Interactive Point Field Widget**
 

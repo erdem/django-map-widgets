@@ -69,7 +69,7 @@ Default Settings
 * **overlayParams**: The map `overlay geojson params <https://docs.mapbox.com/api/maps/static-images/#overlay-options>`_  can be managed using this dictionary globally.
 
 .. Note::
-    More details about map widget settings usage can be found in the `settings guide <http://django-map-widgets.readthedocs.io/settings>`_.
+    More details about map widget settings usage can be found in the :ref:`settings guide <settings>`.
 
 Usage
 ^^^^^

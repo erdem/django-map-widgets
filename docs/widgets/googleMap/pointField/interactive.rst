@@ -74,12 +74,13 @@ Settings
 
 * **mapOptions**: GoogleMap `MapOptions <https://developers.google.com/maps/documentation/javascript/reference/map#MapOptions>`_ parameters can be managed using this dictionary. These settings are passed as arguments to the GoogleMap JS initialization function. Default values are provided for `zoom`, `scrollwheel`, `streetViewControl`, and `center`.
 
-* **mapCenterLocationName**: A specific location name for the center of the map can be provided. The widget will use `Google Place Autocomplete <https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete/>`_ to find the coordinates for this location.
+* **mapCenterLocationName**: A specific location name for the center of the map can be provided. The widget will use `Place Autocomplete <https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete/>`_ to find the coordinates for this location.
 
 * **markerFitZoom**: A custom zoom value is set programmatically after a marker is added with user geolocation or place autocomplete. This setting exists to enhance the user experience. The default value is 14.
 
 .. Note::
-    More details about map widget settings usage can be found in the `settings guide <http://django-map-widgets.readthedocs.io/settings>`_.
+    More details about map widget settings usage can be found in the :ref:`settings guide <settings>`.
+
 
 .. Note::
 
@@ -119,6 +120,7 @@ In the Django project settings file, the `MAP_WIDGETS` dictionary should be defi
 **Django Admin**
 
 .. code-block:: python
+
     import mapwidgets
 
     class CityAdmin(admin.ModelAdmin):
@@ -127,9 +129,13 @@ In the Django project settings file, the `MAP_WIDGETS` dictionary should be defi
             models.PointField: {"widget": mapwidgets.GoogleMapPointFieldWidget}
         }
 
+
+
+
 **Django Forms**
 
 .. code-block:: python
+
     import mapwidgets
 
     class CityAdminForm(forms.ModelForm):
@@ -140,6 +146,7 @@ In the Django project settings file, the `MAP_WIDGETS` dictionary should be defi
                 'coordinates': mapwidgets.GoogleMapPointFieldWidget,
                 'city_hall': mapwidgets.GoogleMapPointFieldWidget,
             }
+
 
 
 Dynamic Django Admin Inline Support
