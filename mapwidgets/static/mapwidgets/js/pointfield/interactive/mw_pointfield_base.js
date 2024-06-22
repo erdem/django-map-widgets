@@ -62,31 +62,6 @@
         },
 
         callPlaceTriggerHandler: function (lat, lng, place) {
-            if (place === undefined) {
-                var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)};
-                this.geocoder.geocode({'location': latlng}, function (results, status) {
-                    if (status === google.maps.GeocoderStatus.OK) {
-                        var placeObj = results[0] || {};
-                        $(this.addressAutoCompleteInput).val(placeObj.formatted_address || "");
-                        $(document).trigger(this.placeChangedTriggerNameSpace,
-                            [placeObj, lat, lng, this.wrapElemSelector, this.djangoInput]
-                        );
-                        if ($.isEmptyObject(this.djangoGeoJSONValue)) {
-                            $(document).trigger(this.markerCreateTriggerNameSpace,
-                                [placeObj, lat, lng, this.wrapElemSelector, this.djangoInput]
-                            );
-                        } else {
-                            $(document).trigger(this.markerChangeTriggerNameSpace,
-                                [placeObj, lat, lng, this.wrapElemSelector, this.djangoInput]
-                            );
-                        }
-                    }
-                }.bind(this));
-            } else {  // user entered an address
-                $(document).trigger(this.placeChangedTriggerNameSpace,
-                    [place, lat, lng, this.wrapElemSelector, this.djangoInput]
-                );
-            }
         },
 
         enableClearBtn: function () {

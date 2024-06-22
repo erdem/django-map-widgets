@@ -1,7 +1,7 @@
-(function($) {
+(function ($) {
     DjangoMapboxPointFieldWidget = DjangoMapWidgetBase.extend({
 
-        init: function(options){
+        init: function (options) {
             $.extend(this, options);
             this.coordinatesOverlayToggleBtn.on("click", this.toggleCoordinatesOverlay.bind(this));
             this.coordinatesOverlayDoneBtn.on("click", this.handleCoordinatesOverlayDoneBtnClick.bind(this));
@@ -11,13 +11,13 @@
             this.deleteBtn.on("click", this.resetMap.bind(this));
 
             // if the location field in a collapse on Django admin form, the map need to initialize again when the collapse open by user.
-            if ($(this.wrapElemSelector).closest('.module.collapse').length){
+            if ($(this.wrapElemSelector).closest('.module.collapse').length) {
                 $(document).on('show.fieldset', this.initializeMap.bind(this));
             }
 
             // set mapbox accessToken.
             mapboxgl.accessToken = this.mapOptions.accessToken;
-            this.mapboxSDK = new mapboxSdk({ accessToken: this.mapOptions.accessToken });
+            this.mapboxSDK = new mapboxSdk({accessToken: this.mapOptions.accessToken});
 
             // transform map options
             this.mapboxOptions = this.mapOptions.mapOptions || {}
@@ -27,12 +27,12 @@
             this.geocoderOptions = this.mapOptions.geocoderOptions || {}
             this.geocoderOptions.mapboxgl = mapboxgl
             this.geocoderOptions.accessToken = mapboxgl.accessToken
-            if (!this.geocoderOptions.placeholder){
+            if (!this.geocoderOptions.placeholder) {
                 this.geocoderOptions.placeholder = this.geocoderInputPlaceholderText
             }
             this.geocoder = new MapboxGeocoder(this.geocoderOptions)
 
-            if (this.mapboxOptions.center){
+            if (this.mapboxOptions.center) {
                 this.mapboxOptions.center = [this.mapboxOptions.center[1], this.mapboxOptions.center[0]]
             }
             this.flyToEnabled = this.geocoderOptions.flyTo || false
@@ -40,25 +40,25 @@
             this.initializeMap.bind(this)();
         },
 
-        initializeMap: function(){
+        initializeMap: function () {
             this.map = new mapboxgl.Map(this.mapboxOptions);
             document.getElementById(this.geocoderWrapID).appendChild(this.geocoder.onAdd(this.map));
 
-            if(this.mapOptions.showZoomNavigation){
+            if (this.mapOptions.showZoomNavigation) {
                 this.map.addControl(new mapboxgl.NavigationControl());
             }
-            this.addressAutoCompleteInput = $("input:first", "#"+this.geocoderWrapID)
+            this.addressAutoCompleteInput = $("input:first", "#" + this.geocoderWrapID)
             $(this.mapElement).data('mwMapObj', this.map);
             $(this.mapElement).data('mwClassObj', this);
 
-            if (!$.isEmptyObject(this.djangoGeoJSONValue)){
+            if (!$.isEmptyObject(this.djangoGeoJSONValue)) {
                 this.addMarkerToMap(this.djangoGeoJSONValue.lat, this.djangoGeoJSONValue.lng);
                 this.updateDjangoInput();
                 this.fitBoundMarker();
             }
         },
 
-        addMarkerToMap: function(lat, lng) {
+        addMarkerToMap: function (lat, lng) {
             this.removeMarker();
             this.marker = new mapboxgl.Marker()
                 .setLngLat([parseFloat(lng), parseFloat(lat)])
@@ -67,7 +67,7 @@
             this.marker.on("dragend", this.dragMarker.bind(this));
         },
 
-        serializeMarkerToGeoJSON: function() {
+        serializeMarkerToGeoJSON: function () {
             if (this.marker) {
                 const position = this.marker.getLngLat();
                 return {
@@ -78,14 +78,14 @@
             return null;
         },
 
-        fitBoundMarker: function() {
+        fitBoundMarker: function () {
             if (this.marker) {
-                if (this.flyToEnabled){
+                if (this.flyToEnabled) {
                     this.map.flyTo({
                         center: this.marker.getLngLat(),
                         zoom: this.mapOptions.markerFitZoom || 14
                     });
-                }else{
+                } else {
                     this.map.jumpTo({
                         center: this.marker.getLngLat(),
                         zoom: this.mapOptions.markerFitZoom || 14
@@ -94,30 +94,30 @@
             }
         },
 
-        removeMarker: function() {
+        removeMarker: function () {
             if (this.marker) {
                 this.marker.remove();
             }
             this.marker = null;
         },
 
-        dragMarker: function(e) {
+        dragMarker: function (e) {
             const position = this.marker.getLngLat();
             this.addMarkerToMap(position.lat, position.lng);
             this.updateDjangoInput();
         },
 
-        handleAddMarkerBtnClick: function(e) {
+        handleAddMarkerBtnClick: function (e) {
             $(this.mapElement).toggleClass("click");
             this.addMarkerBtn.toggleClass("active");
-            if ($(this.addMarkerBtn).hasClass("active")){
+            if ($(this.addMarkerBtn).hasClass("active")) {
                 this.map.on("click", this.handleMapClick.bind(this));
             } else {
                 this.map.off("click", this.handleMapClick.bind(this));
             }
         },
 
-        handleMapClick: function(e) {
+        handleMapClick: function (e) {
             this.map.off("click", this.handleMapClick.bind(this));
             $(this.mapElement).removeClass("click");
             this.addMarkerBtn.removeClass("active");
@@ -137,11 +137,11 @@
                     $(document).trigger(this.placeChangedTriggerNameSpace,
                         [address, lat, lng, this.wrapElemSelector, this.locationInput]
                     )
-                    if ($.isEmptyObject(this.locationFieldValue)){
+                    if ($.isEmptyObject(this.locationFieldValue)) {
                         $(document).trigger(this.markerCreateTriggerNameSpace,
                             [address, lat, lng, this.wrapElemSelector, this.locationInput]
                         );
-                    }else{
+                    } else {
                         $(document).trigger(this.markerChangeTriggerNameSpace,
                             [address, lat, lng, this.wrapElemSelector, this.locationInput]
                         );
@@ -165,7 +165,12 @@
             this.addMarkerToMap(lat, lng);
             this.updateDjangoInput(place);
             this.fitBoundMarker()
-        }
+        },
+
+        resetMap: function () {
+            this.Super()
+            this.geocoder.clear();
+        },
     });
 
 })(mapWidgets.jQuery);

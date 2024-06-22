@@ -10,6 +10,10 @@
     font-style: normal;
 }
 
+.mw-wrap input:focus {
+    outline: 0;
+}
+
 .mw-wrap [class^="icon-"]:before, .mw-wrap [class*=" icon-"]:before {
     font-family: "fontello";
     font-style: normal;
@@ -101,6 +105,7 @@
     box-sizing: border-box;
     display: block;
     width: 100%;
+    height: 33px;
     padding: 6px 12px;
     font-size: 14px;
     line-height: 1.42857143;
@@ -153,7 +158,7 @@
 }
 
 .mw-header .mw-adress-input-wrap {
-    width: 40%;
+    width: 35%;
 }
 
 .mw-header .mw-coordinates-wrap {
