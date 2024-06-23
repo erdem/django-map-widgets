@@ -1,4 +1,7 @@
+![CI](https://github.com/erdem/django-map-widgets/workflows/CI/badge.svg)
 [![PyPI version](https://badge.fury.io/py/django-map-widgets.svg)](https://badge.fury.io/py/django-map-widgets)
+![License](https://img.shields.io/github/license/erdem/django-map-widgets.svg)
+![Documentation Status](https://readthedocs.org/projects/django-map-widgets/badge/?version=latest)
 
 ## Django Map Widgets
 
