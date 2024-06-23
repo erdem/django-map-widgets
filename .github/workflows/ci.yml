@@ -47,7 +47,7 @@ jobs:
         run: poetry lock --check
 
       - name: Run isort
-        run: poetry run make isort
+        run: poetry run isort .
 
       - name: Run black
-        run: poetry run make black
+        run: poetry run black .
