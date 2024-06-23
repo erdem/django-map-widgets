@@ -1,6 +1,6 @@
-from setuptools import find_packages, setup
 import os
 
+from setuptools import find_packages, setup
 
 VERSION = (0, 5, 0)
 __version__ = ".".join(map(str, VERSION))
@@ -27,7 +27,7 @@ setup(
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
         "Framework :: Django",
-        "Intended Audience :: Developers/End-users",
+        "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Programming Language :: Python",

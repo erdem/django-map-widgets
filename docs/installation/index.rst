@@ -33,7 +33,7 @@ Django Map Widgets supports Django 4.x-5.x and Python 3.9+.
 Usage
 ^^^^^
 
-All map widgets in Django Map Widgets can be easily initialized with GeoDjango form fields just like any other Django widgets. For a quick overview and examples of widget usage, you can explore our demo project available in the GitHub repository. Additionally, you can run the demo project locally by following the steps in the `project readme files <https://github.com/erdem/django-map-widgets/tree/master/demo>`_.
+All map widgets in Django Map Widgets can be easily initialized with GeoDjango form fields just like any other Django widgets. For a quick overview and examples of widget usage, you can explore our demo project available in the GitHub repository. Additionally, you can run the demo project locally by following the steps in the `project readme files <https://github.com/erdem/django-map-widgets/tree/main/demo>`_.
 
 
 **Django Admin Usage Example**

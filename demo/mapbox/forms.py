@@ -1,10 +1,10 @@
 from django import forms
 from mapbox.models import InteractivePointField, StaticPointField
+
 from mapwidgets import MapboxPointFieldStaticWidget, MapboxPointFieldWidget
 
 
 class InteractivePointFieldViewForm(forms.ModelForm):
-
     class Meta:
         model = InteractivePointField
         fields = ("name", "location")
@@ -14,7 +14,6 @@ class InteractivePointFieldViewForm(forms.ModelForm):
 
 
 class StaticPointFieldViewForm(forms.ModelForm):
-
     class Meta:
         model = StaticPointField
         fields = ("name", "location", "location_has_default")

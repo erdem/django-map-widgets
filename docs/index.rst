@@ -12,7 +12,7 @@ GeoDjango-powered applications.
 
 
 * `Home Page <https://github.com/erdem/django-map-widgets/>`_
-* `Demo Project <https://github.com/erdem/django-map-widgets/tree/master/demo>`_
+* `Demo Project <https://github.com/erdem/django-map-widgets/tree/main/demo>`_
 
 
 Contribution

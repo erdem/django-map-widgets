@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "demo"
-version = "0.1.0"
+version = "1.0.0"
 description = ""
 authors = ["Erdem Ozkol <github@erdemozkol.com>"]
 readme = "README.md"
@@ -17,17 +17,16 @@ citizenshell = "^2.3.2"
 click = "^8.1.7"
 sphinx = "^7.3.7"
 setuptools = "^70.1.0"
-
-
-[tool.poetry.group.debug.dependencies]
+pre-commit = "^3.7.1"
 ipdb = "^0.13.13"
+
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]
-target-version = ["py312"]
+target-version = ["py311"]
 extend-exclude = "(/dist|/.venv|/venv|/env|/build)/"
 
 [tool.isort]

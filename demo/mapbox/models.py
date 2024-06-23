@@ -1,7 +1,8 @@
-from demo.db import BaseModel
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 from django.urls import reverse
+
+from demo.db import BaseModel
 
 DEFAULT_LOCATION_POINT = Point(-104.8803, 39.7392)
 

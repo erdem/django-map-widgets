@@ -3,6 +3,7 @@ import json
 from django.contrib.gis import forms
 from django.contrib.gis.geos import GEOSGeometry
 from django.utils.http import urlencode
+
 from mapwidgets.settings import mw_settings
 from mapwidgets.widgets.mixins import SettingsMixin
 

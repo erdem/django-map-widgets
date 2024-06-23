@@ -140,7 +140,7 @@ In the Django project settings file, the `MAP_WIDGETS` dictionary should be defi
 Javascript Triggers
 ^^^^^^^^^^^^^^^^^^^
 
-UI customization or event handling on the front-end can be managed using map widget jQuery triggers. Examples of usage can be found in the `demo project <https://github.com/erdem/django-map-widgets/tree/master/demo>`_.
+UI customization or event handling on the front-end can be managed using map widget jQuery triggers. Examples of usage can be found in the `demo project <https://github.com/erdem/django-map-widgets/tree/main/demo>`_.
 
 * **mapboxPointFieldWidget:markerCreate**: Triggered when a marker is created on the map. (callback params: place, lat, lng, locationInputElem, mapWrapID)
 

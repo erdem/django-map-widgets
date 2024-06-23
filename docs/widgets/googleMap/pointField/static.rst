@@ -136,4 +136,4 @@ See the `location_has_default` field usage to understand how you can override gl
             }
 
 
-See more usage of this widget in `demo project <https://github.com/erdem/django-map-widgets/tree/master/demo>`_.
+See more usage of this widget in `demo project <https://github.com/erdem/django-map-widgets/tree/main/demo>`_.

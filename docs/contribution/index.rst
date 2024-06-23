@@ -5,46 +5,88 @@
 Contribution
 ============
 
-The journey of this project began in 2016 at a local hackathon event. The initial goal was to create a user-friendly interface for GeoDjango PointField inputs. Since its inception, the project has undergone numerous changes, with new widgets added for various providers and it has become a dependency for many global projects.
+Project History and Vision
+--------------------------
+
+The journey of this project began in 2016 at a local hackathon event. The initial goal was to create a user-friendly interface for GeoDjango PointField inputs. Since then, the project has undergone numerous changes, with new widgets added for various providers and it has become a dependency for many global projects.
 
 The current vision of the project is to develop user-friendly and developer-friendly interfaces for all GeoDjango field types using major JavaScript-based map services. If your projects require a widget that is not yet supported by django-map-widgets, you can follow this guide to contribute new widgets to the project.
 
 
-Demo Project Setup
-------------------
-The `demo project <https://github.com/erdem/django-map-widgets/tree/master/demo>`_ is a convenient development environment for creating various types of widgets. You can find many examples of existing widgets being used in the admin interface and views.
+Map Widget Development Overview
+-------------------------------
+
+Before beginning development, familiarize yourself with the current widget implementation approach. A typical widget consists of five main elements:
+
+1. Django widget class implementation
+2. Settings namespace
+3. jQuery class and CSS implementation (preferably minified)
+4. Widget HTML template
+5. Usage documentation
+
+As a bonus, implementing tests for your widget is highly encouraged. For optimal performance, consider using ``uglifycss`` and ``uglifyjs`` Node.js packages to generate minified versions of your static files. See ``scripts.py`` file to how you can automate static files minification.
+
+
+Setting Up the Development Environment
+--------------------------------------
+
+The project uses a ``pyproject.toml`` file for configuration. Follow these steps to set up your development environment:
+
+1. Install development dependencies and pre-commit hooks:
+
+   .. code-block:: shell
+
+       poetry install
+       pre-commit install
+
+2. Setup the demo project.
+
+
+Demo Project
+^^^^^^^^^^^^
+
+The `demo project <https://github.com/erdem/django-map-widgets/tree/main/demo>`_ can serve as a development environment for creating and testing new widget types. It showcases existing widgets in both the admin interface and views.
 
 .. image:: /_static/images/demo_project_preview.png
 
+
+Setting up the Database
+"""""""""""""""""""""""
+
 To run the project, a PostgreSQL database with the PostGIS plugin is required. Follow the instructions in the `Django Installing PostGIS Documentation <https://docs.djangoproject.com/en/5.0/ref/contrib/gis/install/postgis/#post-installation>`_ to create a database with PostGIS. Update the project's ``DATABASES`` configuration in ``demo/settings.py`` if necessary.
 
-Create and configure the database:
+1. Create a PostgreSQL database with PostGIS:
 
-.. code-block:: psql
+   .. code-block:: sql
 
-    createdb djmap_demo
-    psql djmap_demo
-    CREATE EXTENSION postgis;
+       createdb djmap_demo
+       psql djmap_demo
+       CREATE EXTENSION postgis;
 
-.. code-block:: python
+2. Update the ``DATABASES`` configuration in ``demo/settings.py``:
 
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.contrib.gis.db.backends.postgis",
-            "NAME": "djmap_demo",
-            "USER": "",
-            "PASSWORD": "",
-            "HOST": "localhost",
-        }
-    }
+   .. code-block:: python
 
-Apply database migrations:
+       DATABASES = {
+           "default": {
+               "ENGINE": "django.contrib.gis.db.backends.postgis",
+               "NAME": "djmap_demo",
+               "USER": "",
+               "PASSWORD": "",
+               "HOST": "localhost",
+           }
+       }
 
-.. code-block:: shell
+3. Apply database migrations:
 
-    python manage.py migrate
+   .. code-block:: shell
 
-Set environment variables:
+       python manage.py migrate
+
+Environment Variables
+"""""""""""""""""""""
+
+Set the following environment variables:
 
 .. list-table::
    :header-rows: 1
@@ -52,18 +94,24 @@ Set environment variables:
    * - Name
      - Description
    * - GOOGLE_MAP_API_KEY
-     - Required for GoogleMap interactive widgets.
+     - Required for GoogleMap interactive widgets
    * - GOOGLE_MAP_API_SECRET
-     - Required for GoogleMap static widgets.
+     - Required for GoogleMap static widgets
    * - MAPBOX_ACCESS_TOKEN
-     - Required for Mapbox interactive widgets.
+     - Required for Mapbox interactive widgets
    * - MAPBOX_ACCESS_USERNAME
-     - Set this if Mapbox static map images will use a custom user map style; otherwise, it can be left as is.
+     - Set if using a custom Mapbox user map style for static images
 
-Run the development server and start exploring the project at `http://localhost:8000/ <http://localhost:8000/>`_:
+Running the Demo
+""""""""""""""""
+
+Start the development server:
 
 .. code-block:: shell
 
     python manage.py runserver 0:8000
 
+Access the demo project at `http://localhost:8000/ <http://localhost:8000/>`_.
+
+Thanks for your contribution!
 

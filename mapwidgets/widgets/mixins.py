@@ -26,7 +26,6 @@ class SettingsMixin:
 
 
 class PointFieldInlineWidgetMixin:
-
     def get_js_widget_data(self, name, element_id):
         map_elem_selector = "#%s-mw-wrap" % name
         map_elem_id = "%s-map-elem" % name

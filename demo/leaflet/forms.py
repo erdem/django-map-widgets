@@ -5,7 +5,6 @@ from mapwidgets import LeafletPointFieldWidget
 
 
 class InteractivePointFieldViewForm(forms.ModelForm):
-
     class Meta:
         model = InteractivePointField
         fields = ("name", "location")

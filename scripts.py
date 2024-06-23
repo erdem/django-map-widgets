@@ -5,8 +5,9 @@ from pathlib import Path
 
 import click
 from citizenshell import LocalShell
-from demo.demo import settings as demo__project_settings
 from django.conf import settings
+
+from demo.demo import settings as demo__project_settings
 
 # initialise demo project django settings to skip `ImproperlyConfigured` errors
 settings.configure(demo__project_settings)
