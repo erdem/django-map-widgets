@@ -67,7 +67,8 @@ All map widgets in Django Map Widgets can be easily initialized with GeoDjango f
             }
 
 
-When using map widgets in Django views, include `{{ form.media }}` template variable in the <head> or at the end of the <body> tag in Django templates (django-admin does this by default).
+When the map widgets are used in Django web views with forms, Remember to include `{{ form.media }}` template tag in the
+view templates.
 
 .. code-block:: html
 
@@ -135,22 +136,29 @@ The JavaScript map rendering behavior of the widgets can be customized by provid
     }
 
 
-**jQuery Requirements**
+JQuery Requirement
+^^^^^^^^^^^^^^^^^^
 
-jQuery is required for Django Map Widgets to function in regular Django views. However, if the widgets are used within the Django Admin, jQuery does not need to be provided separately (it uses django admin jQuery to function). Any map widget class can be configured as described in the documentation, and they will work out of the box.
+jQuery is required for Django Map Widgets to function in regular Django views. However, if the widgets is being used
+within the Django Admin, jQuery does not need to be provided separately. Any map widget class can be configured as
+described in the documentation, and they will work out of the box.
 
-The preferable jQuery version is 3.x-slim.
+Preferable jQuery version is ``3.7-slim``.
 
 Screenshots
 ^^^^^^^^^^^
 
-**GoogleMap Interactive Point Field Widget**
-
-
-.. image:: https://cloud.githubusercontent.com/assets/1518272/26807500/ad0af4ea-4a4e-11e7-87d6-632f39e438f7.gif
-   :alt: GoogleMap Interactive Point Field Widget
-
 **MapBox Interactive Point Field Widget**
 
-.. image:: https://user-images.githubusercontent.com/1518272/168497515-f97363f4-6860-410e-9e24-230a2c4233b7.png
+.. image:: /_static/images/mapbox_interactive.gif
    :alt: MapBox Interactive Point Field Widget
+
+**GoogleMap Interactive Point Field Widget**
+
+.. image:: /_static/images/google_interactive.png
+   :alt: GoogleMap Interactive Point Field Widget
+
+**GoogleMap Interactive Point Field Widget**
+
+.. image:: /_static/images/mapbox_static_overlay.png
+   :alt: Mapbox Static Point Field Widget

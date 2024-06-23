@@ -2,9 +2,13 @@
 Django Map Widgets Documentation
 ================================
 
-Django Map Widgets package provides highly configurable, pluggable, and user-friendly map widgets for GeoDjango form fields, simplifying the integration of interactive maps into Django applications.
+Django Map Widgets is a package that provides highly configurable, pluggable, and user-friendly map widgets for
+GeoDjango form fields. It simplifies the integration of interactive maps into GeoDjango applications, enhancing the
+overall development experience.
 
-The goal of the Django Map Widgets package is to enhance the GeoDjango development experience by providing robust, user-friendly map widgets that are easy to configure and integrate.
+The primary goal of Django Map Widgets is to bridge the gap between powerful GeoDjango functionality and user-friendly
+map interactions, creating a more accessible and enjoyable experience for both developers and end-users of
+GeoDjango-powered applications.
 
 
 * `Home Page <https://github.com/erdem/django-map-widgets/>`_
