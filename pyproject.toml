@@ -16,6 +16,7 @@ psycopg2-binary = "^2.9.9"
 citizenshell = "^2.3.2"
 click = "^8.1.7"
 sphinx = "^7.3.7"
+setuptools = "^70.1.0"
 
 
 [tool.poetry.group.debug.dependencies]
