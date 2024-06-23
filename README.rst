@@ -12,7 +12,7 @@ The primary goal of Django Map Widgets is to bridge the gap between powerful Geo
 map interactions, creating a more accessible and enjoyable experience for both developers and end-users of
 GeoDjango-powered applications.
 
-.. image:: https://github.com/erdem/django-map-widgets/assets/1518272/61719dc4-244b-4f70-ba66-23985bb1233a
+.. image:: https://github.com/erdem/django-map-widgets/assets/1518272/f2df8654-b29a-4d64-9159-87a3790ede0b
    :alt: Mapbox Interactive Widget
 
 
@@ -186,25 +186,25 @@ Screenshots
 MapBox Interactive Point Field Widget
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. image:: https://github.com/erdem/django-map-widgets/assets/1518272/78332233-c4eb-4469-a751-69a9f06e0c8b
+.. image:: https://github.com/erdem/django-map-widgets/assets/1518272/e6e454f0-6486-4fe7-a0b3-712b9371030a
    :alt: MapBox Interactive Point Field Widget
 
 MapBox Static Point Field Widget
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. image:: https://github.com/erdem/django-map-widgets/assets/1518272/f53079c0-cd2a-4115-ba11-c74c82bca890
+.. image:: https://github.com/erdem/django-map-widgets/assets/1518272/491f2091-5620-4a50-9ed8-d63ddba3a88b
    :alt: MapBox Static Point Field Widget
 
 GoogleMap Interactive Point Field Widget
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. image:: https://github.com/erdem/django-map-widgets/assets/1518272/6b779cf1-b758-4917-9c4a-82db9605a88f
+.. image:: https://github.com/erdem/django-map-widgets/assets/1518272/4da33221-20f6-4c44-875c-f1d4b0f98e5a
    :alt: GoogleMap Interactive Point Field Widget
 
 Leaflet Interactive Point Field Widget
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. image:: https://github.com/erdem/django-map-widgets/assets/1518272/2da338aa-a280-4fd3-ae33-bc9e8ffe3b2c
+.. image:: https://github.com/erdem/django-map-widgets/assets/1518272/a45158f7-2ec0-4e1a-8dfa-8da0442b832f
    :alt: Leaflet Interactive Point Field Widget
 
 and more...
