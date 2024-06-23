@@ -43,7 +43,7 @@ msgid "Done"
 msgstr "完了"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:22
-msgid "Use My Location"
+msgid "Current Location"
 msgstr "自分の位置を使う"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:25

@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "demo"
+version = "1.0.0"
+description = ""
+authors = ["Erdem Ozkol <github@erdemozkol.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.0.4"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
+isort = "^5.13.2"
+psycopg2-binary = "^2.9.9"
+citizenshell = "^2.3.2"
+click = "^8.1.7"
+sphinx = "^7.3.7"
+setuptools = "^70.1.0"
+pre-commit = "^3.7.1"
+ipdb = "^0.13.13"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+target-version = ["py311"]
+extend-exclude = "(/dist|/.venv|/venv|/env|/build)/"
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+skip_gitignore = true
+append_only = true
+
+[tool.poetry.scripts]
+install-js-dependencies = "scripts:install_js_dependencies"
+minify-media-files = "scripts:minify_media_files"

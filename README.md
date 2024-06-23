@@ -1,144 +1,195 @@
-[![Coverage Status](https://coveralls.io/repos/github/erdem/django-map-widgets/badge.svg?branch=master)](https://coveralls.io/github/erdem/django-map-widgets?branch=master)
-[![Build Status](https://travis-ci.org/erdem/django-map-widgets.png)](https://travis-ci.org/erdem/django-map-widgets)
+![CI](https://github.com/erdem/django-map-widgets/workflows/CI/badge.svg)
 [![PyPI version](https://badge.fury.io/py/django-map-widgets.svg)](https://badge.fury.io/py/django-map-widgets)
+![License](https://img.shields.io/github/license/erdem/django-map-widgets.svg)
+![Documentation Status](https://readthedocs.org/projects/django-map-widgets/badge/?version=latest)
 
-### Django Map Widgets
-Configurable, pluggable and more user friendly map widgets for Django PostGIS fields.
+## Django Map Widgets
 
-* **Documentation**: <a href="http://django-map-widgets.readthedocs.io/" target="_blank">http://django-map-widgets.readthedocs.io/</a>
-* **Project Home Page**: <a href="https://github.com/erdem/django-map-widgets">https://github.com/erdem/django-map-widgets/</a>
+Django Map Widgets is a package that provides highly configurable, pluggable, and user-friendly map widgets for
+GeoDjango form fields. It simplifies the integration of interactive maps into GeoDjango applications, enhancing the
+overall development experience.
 
-### Achievements
-The aim of the Django map widgets is to make all Geo Django widgets more user-friendly and configurable.  
-  
-Django map widgets package has support for Mapbox and Google Map services currently, if you want to see more widgets and think you can help, feel free to contribute to the project.  
-We would be happy to review and merge your contributions. :) 
+The primary goal of Django Map Widgets is to bridge the gap between powerful GeoDjango functionality and user-friendly
+map interactions, creating a more accessible and enjoyable experience for both developers and end-users of
+GeoDjango-powered applications.
+
+
+
+<img width="1064" alt="mapbox_interactive_preview" src="https://github.com/erdem/django-map-widgets/assets/1518272/f2df8654-b29a-4d64-9159-87a3790ede0b">
+
+
+
+---
+
+- [Documentation](http://django-map-widgets.readthedocs.io/)
+- [Demo Project](https://github.com/erdem/django-map-widgets/tree/main/demo)
+- [Home Page](https://github.com/erdem/django-map-widgets/)
 
 ### Installation
 
+```shell
     pip install django-map-widgets
+```
 
-
-Add ‘map_widgets’ to your `INSTALLED_APPS` in settings.py
+Add ‘mapwidgets’ to your `INSTALLED_APPS` in settings.py
 
 ```python
 INSTALLED_APPS = [
-     ...
+    ...
     'django.contrib.sessions',
-    'django.contrib.messages',
     'django.contrib.staticfiles',
 
     'mapwidgets',
 ]
+
 ```
 
-Collects the static files into `STATIC_ROOT`.
+Ensure `collectstatic` Django admin command is run before using the widgets in production.
 
-```bash
+```shell
 python manage.py collectstatic
 ```
 
-**Django Admin**
+### Usage
+
+**Django Admin Usage**
 
 ```python
 from django.contrib.gis.db import models
-from mapwidgets.widgets import GooglePointFieldWidget
+import mapwidgets
 
 
 class CityAdmin(admin.ModelAdmin):
     formfield_overrides = {
-        models.PointField: {"widget": GooglePointFieldWidget}
+        models.PointField: {"widget": mapwidgets.GoogleMapPointFieldWidget}
     }
 ```
 
-**Django Forms**
+**Django Forms Usage**
 
 ```python
-from mapwidgets.widgets import GooglePointFieldWidget, GoogleStaticOverlayMapWidget
+from mapwidgets.widgets import GoogleMapPointFieldWidget, MapboxPointFieldWidget
 
 
 class CityForm(forms.ModelForm):
-
     class Meta:
         model = City
         fields = ("coordinates", "city_hall")
         widgets = {
-            'coordinates': GooglePointFieldWidget,
-            'city_hall': GoogleStaticOverlayMapWidget,
+            'coordinates': GoogleMapPointFieldWidget,
+            'city_hall': MapboxPointFieldWidget,
         }
+
+
 ```
 
-...and your template should look something like this
+When the map widgets are used in Django web views with forms, Remember to include `{{ form.media }}` template tag in the
+view templates.
 
-```html
-<form method="POST" action="">
-    {% csrf_token %}
-    {{form.media}}
-    {{form.as_p}}
-</form>
+**Settings**
+
+The JavaScript map rendering behavior of the widgets can be customized by providing `MAP_WIDGETS` config in the
+project's settings file. For detailed guidance on map customization options, check
+the [settings guide](http://django-map-widgets.readthedocs.io/settings).
+
+```python
+GOOGLE_MAP_API_KEY = os.getenv("GOOGLE_MAP_API_KEY")
+MAPBOX_ACCESS_TOKEN = os.getenv("MAPBOX_ACCESS_TOKEN")
+
+MAP_WIDGETS = {
+    "GoogleMap": {
+        "apiKey": GOOGLE_MAP_API_KEY,
+        "PointField": {
+            "interactive": {
+                "mapOptions": {
+                    "zoom": 15,  # set initial zoom
+                    "streetViewControl": False,
+                },
+                "GooglePlaceAutocompleteOptions": {
+                    "componentRestrictions": {"country": "uk"}
+                },
+            }
+        }
+    },
+    "Mapbox": {
+        "accessToken": MAPBOX_ACCESS_TOKEN,
+        "PointField": {
+            "interactive": {
+                "mapOptions": {"zoom": 12, "center": (51.515618, -0.091998)},
+                "markerFitZoom": 14,
+            }
+        },
+    },
+    "Leaflet": {
+        "PointField": {
+            "interactive": {
+                "mapOptions": {
+                    "zoom": 12,
+                    "scrollWheelZoom": False
+                }
+            }
+        },
+        "markerFitZoom": 14,
+    }
+}
 ```
 
-### Requirements
+### JQuery Requirement
 
-Django Map Widgets needs Jquery dependency to work in your regular views. In Django Admin case, you don't need to provide the jQuery. 
-Just add map widgets to your django admin forms. 
+jQuery is required for Django Map Widgets to function in regular Django views. However, if the widgets is being used
+within the Django Admin, jQuery does not need to be provided separately. Any map widget class can be configured as
+described in the documentation, and they will work out of the box.
+
+Preferable jQuery version is `3.7-slim`.
+
+### Support
+
+Django Map Widgets offers two types of widgets:
+
+1. **Interactive (Dynamic) Widgets**: These widgets allow users to interact with the map, such as clicking to set a
+   location or dragging a marker. They are ideal for data input and editing scenarios.
+
+2. **Static (Read-only) Widgets**: These widgets display map data in a non-interactive format. They are useful for
+   presenting location information without allowing modifications.
+
+**Widget Support Matrix**
+---
+
+| **GeoDjango Field**    | **GoogleMap** |        | **Mapbox**  |        | **Leaflet** |        |
+|------------------------|---------------|--------|-------------|--------|-------------|--------|
+|                        | Interactive   | Static | Interactive | Static | Interactive | Static |
+| *PointField*           | ✅             | ✅      | ✅           | ✅      | ✅           | N/A    |
+| *LineStringField*      | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | N/A    |
+| *PolygonField*         | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | N/A    |
+| *MultiPointField*      | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | N/A    |
+| *MultiLineStringField* | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | N/A    |
+| *MultiPolygonField*    | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | N/A    |
+
+### Contribution
+
+Currently, the package supports Google, Mapbox, and Leaflet mapping platforms. If you have ideas for additional map
+providers or new features, or even if you want to help extend support to other GeoDjango form fields, feel free to do
+so. We would be happy to review and merge your contributions.
+
+For more info how to contribute, please check out
+the [contribution guidelines](http://django-map-widgets.readthedocs.io/contribution).
 
 ### Screenshots
 
-##### Google Map Point Field Widget
+##### MapBox Interactive Point Field Widget
 
-![](https://cloud.githubusercontent.com/assets/1518272/26807500/ad0af4ea-4a4e-11e7-87d6-632f39e438f7.gif)
+![mapbox_interactive demo](https://github.com/erdem/django-map-widgets/assets/1518272/e6e454f0-6486-4fe7-a0b3-712b9371030a)
 
+##### MapBox Static Point Field Widget
 
-##### MapBox Map Point Field Widget
+![](https://github.com/erdem/django-map-widgets/assets/1518272/491f2091-5620-4a50-9ed8-d63ddba3a88b)
 
-![](https://user-images.githubusercontent.com/1518272/168497515-f97363f4-6860-410e-9e24-230a2c4233b7.png)
+##### GoogleMap Interactive Point Field Widget
 
+![](https://github.com/erdem/django-map-widgets/assets/1518272/4da33221-20f6-4c44-875c-f1d4b0f98e5a)
 
-##### Google Map Static Overlay Widget
-This widget is working with <a href="http://dimsemenov.com/plugins/magnific-popup/" target="_blank">Magnific Popup</a> jQuery plugin.
+##### Leaflet Interactive Point Field Widget
 
-![](https://cloud.githubusercontent.com/assets/1518272/18732296/18f1813e-805a-11e6-8801-f1f48ed02a9c.png)
+![](https://github.com/erdem/django-map-widgets/assets/1518272/a45158f7-2ec0-4e1a-8dfa-8da0442b832f)
 
-
-### Release Notes
-
-
-#### 0.4.2
-> -   GooglePointFieldInlineWidget bug fixes for Django 4.2.x (#142), thanks for @isarota.
-> -   Added `.readthedocs.yaml` to cover new **Read the Docs** updates. 
-
-
-#### 0.4.1
-> -   Added scroll wheel zooming functionality switch to Google Point Map Settings. (#134)
-> -   Added Chinese(ZH) localisation support. (#133)
-
-#### 0.4.0
-> -   Supported MapBox Map for Django Geo Point Field.
-> -   Fixed undefined place object binding issue in javascript triggers. (#125)
-> -   Documented MapBox point field map widget features.
-> -   Updated various localize files.
-
-#### 0.3.3
-
-> -   Replaced [ugettext_lazy](https://github.com/erdem/django-map-widgets/pull/127) usages with [gettext_lazy](https://docs.djangoproject.com/en/4.0/releases/4.0/#features-removed-in-4-0) for Django 4.0. (#127)
-> -   Updated [Travis CI file](https://github.com/erdem/django-map-widgets/pull/129). (#129)
-
-#### 0.3.2
-
-> -   Added [streetViewControl](https://developers.google.com/maps/documentation/javascript/streetview#StreetViewMapUsage) switch to GooglePointFieldWidget settings. (#124)
-
-#### 0.3.1
-
-> -   Removed `six` package usages. (#117)
-> -   Added a new general widget setting in order to specify Google JS libraries. (#119)
-> -   Implemented some improvements for the demo project.
-
-#### 0.3.0
-
-> -   Implemented a new demo project with Django 2.x.
-> -   Fixed Django Admin jQuery conflicts. (#100)
-> -   Fixed a new widget JS instance initialising issue for Django Admin Inlines. (#84)
-> -   Added Python 3.8 env settings to TravisCI configuration.
-
-[See release notes](https://django-map-widgets.readthedocs.io/en/mapbox_widget_fixes/releases/index.html) for all versions.
+and more...

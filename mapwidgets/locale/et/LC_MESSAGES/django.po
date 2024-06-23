@@ -42,7 +42,7 @@ msgid "Done"
 msgstr "Valmis"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:22
-msgid "Use My Location"
+msgid "Current Location"
 msgstr "Kasuta minu asukohta"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:25

@@ -78,3 +78,4 @@ tests/testapp/settings_local.py
 node_modules/
 /env3/
 docker-compose.override.yml
+/docs/docs/_build/*

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+    {{ form.media }}
+{% endblock extrahead %}
+
+{% block breadcrumb_item %}
+    <li class="breadcrumb-item"><a href="{% url "mapbox:pointfield_static_list" %}">Mapbox Point Field</a></li>
+{% endblock %}
+
+{% block content %}
+    <h4>{{ obj.name }}</h4>
+    <form action="{% url "mapbox:pointfield_static_edit" obj.pk %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <br>
+        <button type="submit" class="btn btn-primary btn-lg">Save</button>
+    </form>
+{% endblock content %}

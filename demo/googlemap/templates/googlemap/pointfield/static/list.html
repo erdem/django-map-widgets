@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block breadcrumb_item %}
+    <li class="breadcrumb-item"><a href="{% url "googlemap:pointfield_static_list" %}">GoogleMap PointField Static Widget</a></li>
+{% endblock %}
+
+
+{% block content %}
+    <h3>Items</h3>
+    <ul class="block">
+        {% for obj in pointfield_objs %}
+            <li><a href="{% url "googlemap:pointfield_static_edit" obj.pk %}">{{ obj.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

@@ -2,24 +2,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
-  <title>Map Widgets - Example Project</title>
-  <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
-  <link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
-  {% block extrahead %}
-  {% endblock extrahead %}
+    <meta charset="UTF-8">
+    {% block blockbots %}
+        <meta name="robots" content="NONE,NOARCHIVE"/>{% endblock %}
+    <title>Django Map Widgets - Demo</title>
+    <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
+    <script type="text/javascript" src="{% static "js/jquery-3.7.1.slim.min.js" %}"></script>
+    {% block extrahead %}
+    {% endblock extrahead %}
 </head>
 <body>
-  <div class="container help-block" >
+<div class="container help-block pb-5 pt-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url "index" %}">MapWidgets Demo</a></li>
+            {% block breadcrumb_item %}
+            {% endblock %}
+            {% if obj %}
+                <li class="breadcrumb-item"><a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a></li>
+            {% endif %}
+        </ol>
+    </nav>
     {% block content %}
     {% endblock content %}
-  </div>
+</div>
 
-  {% block javascript %}
-  {% endblock javascript %}
+{% block javascript %}
+{% endblock javascript %}
 
 </body>
 </html>

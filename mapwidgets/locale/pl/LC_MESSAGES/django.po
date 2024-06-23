@@ -33,7 +33,7 @@ msgstr ""
 
 #: .\templates\mapwidgets\google-point-field-widget.html:8
 #: .\templates\mapwidgets\mapbox-point-field-widget.html:8
-msgid "Edit coordinates"
+msgid "Coordinates"
 msgstr "Edytuj współrzędne"
 
 #: .\templates\mapwidgets\google-point-field-widget.html:11
@@ -63,12 +63,12 @@ msgstr "Gotowe"
 
 #: .\templates\mapwidgets\google-point-field-widget.html:22
 #: .\templates\mapwidgets\mapbox-point-field-widget.html:22
-msgid "Use My Location"
+msgid "Current Location"
 msgstr "Użyj mojej lokalizacji"
 
 #: .\templates\mapwidgets\google-point-field-widget.html:23
 #: .\templates\mapwidgets\mapbox-point-field-widget.html:23
-msgid "Choose point on map"
+msgid "Point on Map"
 msgstr "Wybierz punkt na mapie"
 
 #: .\templates\mapwidgets\google-point-field-widget.html:25

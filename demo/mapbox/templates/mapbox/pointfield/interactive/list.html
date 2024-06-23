@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block breadcrumb_item %}
+    <li class="breadcrumb-item"><a href="{% url "mapbox:pointfield_interactive_list" %}">Mapbox Point Field</a></li>
+{% endblock %}
+
+{% block content %}
+    <div style="margin-bottom: 20px"><a href="{% url "mapbox:pointfield_interactive_add" %}" class="btn btn-default block">Add New Item</a>
+    </div>
+    <h3>Items</h3>
+    <ul class="block">
+        {% for obj in pointfield_objs %}
+            <li><a href="{% url "mapbox:pointfield_interactive_edit" obj.pk %}">{{ obj.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

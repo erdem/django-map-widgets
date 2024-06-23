@@ -45,7 +45,7 @@ msgid "Done"
 msgstr "Готово"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:22
-msgid "Use My Location"
+msgid "Current Location"
 msgstr "Использовать мое местоположение"
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:25

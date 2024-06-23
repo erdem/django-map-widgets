@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <div class="row container">
+        <h3 class="text-black" style="margin-bottom: 40px; padding: 0">Map Widgets</h3>
+        <div class="col-md-6">
+            <h4>Interactive Widgets</h4>
+            <ul>
+                <li><a href="{% url "googlemap:pointfield_interactive_list" %}">GoogleMap PointField Interactive
+                    Widget</a></li>
+                <li><a href="{% url "leaflet:list" %}">Leaflet PointField Interactive Widget</a></li>
+                <li><a href="{% url "mapbox:pointfield_interactive_list" %}">Mapbox Map PointField Interactive
+                    Widget</a></li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h4>Static Widgets</h4>
+            <ul>
+                <li><a href="{% url "googlemap:pointfield_static_list" %}">GoogleMap PointField Static Widget</a></li>
+                <li><a href="{% url "mapbox:pointfield_static_list" %}">Mapbox PointField Static Widget</a></li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock content %}

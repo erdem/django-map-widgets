@@ -57,7 +57,7 @@ msgid "Done"
 msgstr "Hotovo"
 
 #: templates/mapwidgets/google-point-field-widget.html:22
-msgid "Use My Location"
+msgid "Current Location"
 msgstr "Moja poloha"
 
 #: templates/mapwidgets/google-point-field-widget.html:25

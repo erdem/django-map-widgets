@@ -31,7 +31,7 @@ msgstr ""
 
 #: templates/mapwidgets/google-point-field-widget.html:8
 #: templates/mapwidgets/mapbox-point-field-widget.html:8
-msgid "Edit coordinates"
+msgid "Coordinates"
 msgstr "修改坐标"
 
 #: templates/mapwidgets/google-point-field-widget.html:11
@@ -61,12 +61,12 @@ msgstr "完成"
 
 #: templates/mapwidgets/google-point-field-widget.html:22
 #: templates/mapwidgets/mapbox-point-field-widget.html:22
-msgid "Use My Location"
+msgid "Current Location"
 msgstr "使用当前位置"
 
 #: templates/mapwidgets/google-point-field-widget.html:23
 #: templates/mapwidgets/mapbox-point-field-widget.html:23
-msgid "Choose point on map"
+msgid "Point on Map"
 msgstr "在地图上标注"
 
 #: templates/mapwidgets/google-point-field-widget.html:25

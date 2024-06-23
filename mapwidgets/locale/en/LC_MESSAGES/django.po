@@ -42,7 +42,7 @@ msgid "Done"
 msgstr ""
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:22
-msgid "Use My Location"
+msgid "Current Location"
 msgstr ""
 
 #: mapwidgets/templates/mapwidgets/google-point-field-widget.html:25
