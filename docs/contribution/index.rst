@@ -19,13 +19,14 @@ Map Widget Development Overview
 Before beginning development, familiarize yourself with the current widget implementation approach. A typical widget consists of five main elements:
 
 1. Django widget class implementation
-2. Settings namespace
+2. Settings namespace Key
 3. jQuery class and CSS implementation (preferably minified)
 4. Widget HTML template
 5. Usage documentation
 
-As a bonus, implementing tests for your widget is highly encouraged. For optimal performance, consider using ``uglifycss`` and ``uglifyjs`` Node.js packages to generate minified versions of your static files. See ``scripts.py`` file to how you can automate static files minification.
+As a bonus, implementing tests for your widget is highly encouraged. For optimal performance, consider using ``uglifycss`` and ``uglifyjs`` Node.js packages to generate minified versions of your static files. See `scripts.py <https://github.com/erdem/django-map-widgets/blob/main/scripts.py>`_ file to how you can automate static files minification.
 
+if you need hand with your contribution, feel free to open a thread on `GitHub Discussions <https://github.com/erdem/django-map-widgets/discussions>`_.
 
 Setting Up the Development Environment
 --------------------------------------

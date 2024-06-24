@@ -8,7 +8,7 @@ overall development experience.
 
 The primary goal of Django Map Widgets is to bridge the gap between powerful GeoDjango functionality and user-friendly
 map interactions, creating a more accessible and enjoyable experience for both developers and end-users of
-GeoDjango-powered applications.
+GeoDjango-powered applications. Currently, the package supports Google, Mapbox, and Leaflet mapping platforms.
 
 
 * `Home Page <https://github.com/erdem/django-map-widgets/>`_
