@@ -79,3 +79,4 @@ node_modules/
 /env3/
 docker-compose.override.yml
 /docs/docs/_build/*
+/demo/staticfiles/
