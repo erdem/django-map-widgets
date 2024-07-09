@@ -20,6 +20,9 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: "3.12"
+          
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y gdal-bin libgdal-dev
 
       - name: Install Poetry
         run: |
@@ -54,3 +57,4 @@ jobs:
 
       - name: Collect static files
         run: poetry run python manage.py collectstatic --noinput
+        working-directory: demo/
