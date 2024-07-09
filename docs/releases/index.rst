@@ -2,6 +2,13 @@
 Release Notes
 =============
 
+0.5.1
+^^^^^
+
+    - Fix `collectstatic` command error when using ManifestStaticFilesStorage. (#148).
+    - Run `collectstatic` in demo project in a CI step.
+
+
 0.5.0
 ^^^^^
 
