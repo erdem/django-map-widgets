@@ -159,6 +159,12 @@ If you need to develop your map UI on front-end side, you can use map widget jQu
 
 .. code-block:: javascript
 
+```
+$(document).on('googleMapPointFieldWidget:placeChanged', function(e, placeObj, lat, lng, wrapElemSelector, djangoInput){
+	console.log(placeObj) // google geocoding response object
+})
+```
+
 $(document).on("google_point_map_widget:marker_create", function (e, place, lat, lng, locationInputElem, mapWrapID) {
     console.log(place); // Google geocoding response object
     console.log(locationInputElem); // django widget textarea widget (hidden)
