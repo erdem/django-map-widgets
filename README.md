@@ -13,9 +13,9 @@ The primary goal of Django Map Widgets is to bridge the gap between powerful Geo
 map interactions, creating a more accessible and enjoyable experience for both developers and end-users of
 GeoDjango-powered applications. Currently, the package supports Google, Mapbox, and Leaflet mapping platforms.
 
+![mapbox_interactive demo](https://github.com/erdem/django-map-widgets/assets/1518272/e6e454f0-6486-4fe7-a0b3-712b9371030a)
 
 
-<img width="1064" alt="mapbox_interactive_preview" src="https://github.com/erdem/django-map-widgets/assets/1518272/f2df8654-b29a-4d64-9159-87a3790ede0b">
 
 
 
@@ -177,8 +177,7 @@ the [contribution guidelines](http://django-map-widgets.readthedocs.io/contribut
 ### Screenshots
 
 ##### MapBox Interactive Point Field Widget
-
-![mapbox_interactive demo](https://github.com/erdem/django-map-widgets/assets/1518272/e6e454f0-6486-4fe7-a0b3-712b9371030a)
+<img width="1064" alt="mapbox_interactive_preview" src="https://github.com/erdem/django-map-widgets/assets/1518272/f2df8654-b29a-4d64-9159-87a3790ede0b">
 
 ##### MapBox Static Point Field Widget
 
