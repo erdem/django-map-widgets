@@ -21,6 +21,7 @@ Django Map Widgets es un paquete que proporciona widgets de mapas altamente conf
 
 El objetivo principal de Django Map Widgets es conectar la potente funcionalidad de GeoDjango con interacciones de mapas intuitivas, creando una experiencia más accesible y agradable tanto para desarrolladores como para usuarios finales de aplicaciones basadas en GeoDjango. Actualmente, el paquete es compatible con las plataformas de mapas Google, Mapbox y Leaflet.
 
+He tenido algunos detalles en el push
 
 ---
 
