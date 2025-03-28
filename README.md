@@ -3,7 +3,7 @@
 ![License](https://img.shields.io/github/license/erdem/django-map-widgets.svg)
 ![Documentation Status](https://readthedocs.org/projects/django-map-widgets/badge/?version=latest)
 
-## Django Map Widgets
+## Django Map Widgets English Version
 
 Django Map Widgets is a package that provides highly configurable, pluggable, and user-friendly map widgets for
 GeoDjango form fields. It simplifies the integration of interactive maps into GeoDjango applications, enhancing the
@@ -16,7 +16,10 @@ GeoDjango-powered applications. Currently, the package supports Google, Mapbox, 
 ![mapbox_interactive demo](https://github.com/erdem/django-map-widgets/assets/1518272/e6e454f0-6486-4fe7-a0b3-712b9371030a)
 
 
+## Django Map Widgets Versión en Español
+Django Map Widgets es un paquete que proporciona widgets de mapas altamente configurables, adaptables e intuitivos para los formularios de GeoDjango. Simplifica la integración de mapas interactivos en aplicaciones GeoDjango, mejorando la experiencia de desarrollo.
 
+El objetivo principal de Django Map Widgets es conectar la potente funcionalidad de GeoDjango con interacciones de mapas intuitivas, creando una experiencia más accesible y agradable tanto para desarrolladores como para usuarios finales de aplicaciones basadas en GeoDjango. Actualmente, el paquete es compatible con las plataformas de mapas Google, Mapbox y Leaflet.
 
 
 ---
