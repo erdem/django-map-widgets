@@ -71,24 +71,11 @@
                    google.maps && 
                    google.maps.places && 
                    google.maps.places.PlaceAutocompleteElement &&
-                   this.useNewPlacesAPI !== "legacy"; // Allow explicit opt-out
-        },
-
-        shouldUseNewAutocomplete: function() {
-            const apiSetting = this.useNewPlacesAPI || "auto";
-            
-            if (apiSetting === "new") {
-                return true;
-            }
-            if (apiSetting === "legacy") {
-                return false;
-            }
-            // apiSetting === "auto"
-            return this.isNewAutocompleteSupported();
+                   this.useNewAutocomplete !== false; // Allow explicit opt-out
         },
 
         initializePlaceAutocomplete: function () {
-            if (this.shouldUseNewAutocomplete()) {
+            if (this.isNewAutocompleteSupported()) {
                 this.initializeNewPlaceAutocomplete();
             } else {
                 this.initializeLegacyPlaceAutocomplete();
@@ -117,22 +104,14 @@
                 this.placeAutocompleteElement = new google.maps.places.PlaceAutocompleteElement(autocompleteOptions);
                 
                 // Set placeholder if specified
-                const placeholder = this.addressAutoCompleteInput.placeholder || 
-                                  this.addressAutoCompleteInput.getAttribute('placeholder');
+                const placeholder = this.addressAutoCompleteInput.placeholder || this.addressAutoCompleteInput.getAttribute('placeholder');
                 if (placeholder) {
                     this.placeAutocompleteElement.placeholder = placeholder;
                 }
 
-                // Apply CSS styling to match the original input
-                this.placeAutocompleteElement.style.width = '100%';
-                this.placeAutocompleteElement.className = this.addressAutoCompleteInput.className;
-
                 // Replace the input with the new element
                 this.addressAutoCompleteInput.style.display = 'none';
-                this.addressAutoCompleteInput.parentNode.insertBefore(
-                    this.placeAutocompleteElement, 
-                    this.addressAutoCompleteInput.nextSibling
-                );
+                this.addressAutoCompleteInput.parentNode.insertBefore(this.placeAutocompleteElement, this.addressAutoCompleteInput.nextSibling);
 
                 // Set bounds if map is available
                 if (this.map) {
@@ -149,9 +128,7 @@
 
             } catch (error) {
                 console.warn('Failed to initialize new PlaceAutocompleteElement, falling back to legacy:', error);
-                if (this.autoFallbackToLegacy !== false) {
-                    this.initializeLegacyPlaceAutocomplete();
-                }
+                this.initializeLegacyPlaceAutocomplete();
             }
         },
 
@@ -197,6 +174,30 @@
 
             } catch (error) {
                 console.error('Error handling new autocomplete place selection:', error);
+            }
+        },
+
+        // Clear autocomplete - supports both APIs
+        clearAutocomplete: function() {
+            if (this.placeAutocompleteElement) {
+                // For new API, we need to clear the element
+                this.placeAutocompleteElement.value = '';
+            }
+            if (this.addressAutoCompleteInput) {
+                this.addressAutoCompleteInput.value = '';
+            }
+        },
+
+        // Update bounds for autocomplete - supports both APIs
+        updateAutocompleteBounds: function() {
+            if (this.map) {
+                const bounds = this.map.getBounds();
+                if (this.placeAutocompleteElement && bounds) {
+                    this.placeAutocompleteElement.locationBias = bounds;
+                }
+                if (this.autocomplete && bounds) {
+                    this.autocomplete.setBounds(bounds);
+                }
             }
         },
 

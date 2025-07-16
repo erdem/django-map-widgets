@@ -11,36 +11,19 @@
 {% block javascript %}
     <script type="text/javascript">
         (function ($) {
-            $(document).on("leafletPointFieldWidget:markerCreate", function (e, lat, lng, locationInputElem, mapWrapID) {
-                console.log("EVENT: marker_create"); // django widget textarea widget (hidden)
-                console.log(locationInputElem); // django widget textarea widget (hidden)
-                console.log(lat, lng); // created marker coordinates
-                console.log(mapWrapID); // map widget wrapper element ID
-            });
+            const widgetClassObj = $("#location-map-elem").data("mwClassObj")
+            setTimeout(function () {
+                // widgetClass.addMarkerToMap(lat, lng)
+                widgetClassObj.addMarkerToMap(51.6575243834443, -0.1548867463910279)  // add marker
+                widgetClassObj.updateDjangoInput() // update django input
+                widgetClassObj.fitBoundMarker() // fix center position for the marker
 
-            $(document).on("leafletPointFieldWidget:markerChange", function (e, lat, lng, locationInputElem, mapWrapID) {
-                console.log("EVENT: marker_change"); // django widget textarea widget (hidden)
-                console.log(locationInputElem); // django widget textarea widget (hidden)
-                console.log(lat, lng);  // changed marker coordinates
-                console.log(mapWrapID); // map widget wrapper element ID
-            });
+                setTimeout(function () {
+                    // you can reset the map with `widgetClassObj.resetMap()`
+                    widgetClassObj.resetMap()
+                }, 5000)
 
-            $(document).on("leafletPointFieldWidget:markerDelete", function (e, lat, lng, locationInputElem, mapWrapID) {
-                console.log("EVENT: marker_delete"); // django widget textarea widget (hidden)
-                console.log(locationInputElem); // django widget textarea widget (hidden)
-                console.log(lat, lng);  // deleted marker coordinates
-                console.log(mapWrapID); // map widget wrapper element ID
-            })
-
-            $(document).on("leafletPointFieldWidget:placeChanged", function (e, place, lat, lng, locationInputElem, mapWrapID) {
-                console.log("EVENT: place_changed"); // django widget textarea widget (hidden)
-                console.log(place);
-                console.log(locationInputElem); // django widget textarea widget (hidden)
-                console.log(lat, lng); // created marker coordinates
-                console.log(mapWrapID); // map widget wrapper element ID
-            });
-            console.log($("#id_location").data("PointFieldMapObj"));
-            console.log($("#id_location").data("PointFieldClassObj"));
+            }, 3000)
         })(jQuery)
     </script>
 {% endblock javascript %}

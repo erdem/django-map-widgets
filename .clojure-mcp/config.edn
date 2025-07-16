@@ -1,0 +1,9 @@
+{:allowed-directories ["."
+                       "src"]
+ :emacs-notify        false
+ :write-file-guard    :full-read
+ :cljfmt              true
+ :bash-over-nrepl     true
+ :scratch-pad-load    false
+ ; Default: false
+ :scratch-pad-file    "scratch_pad.edn"}

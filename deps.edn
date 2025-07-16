@@ -1,0 +1,8 @@
+{;; ... your project dependencies ...
+  :aliases {;; nREPL server for AI to connect to
+           ;; Include all paths you want available for development
+             :nrepl {:extra-paths []
+                     :extra-deps  {nrepl/nrepl {:mvn/version "1.3.1"}}
+                     ;; this allows nrepl to interrupt runaway repl evals
+                     :jvm-opts    ["-Djdk.attach.allowAttachSelf"]
+                     :main-opts   ["-m" "nrepl.cmdline" "--port" "7888"]}}}

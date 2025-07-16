@@ -50,6 +50,10 @@ DEFAULT_SETTINGS = {
                 "GooglePlaceAutocompleteOptions": {},
                 "mapCenterLocationName": None,
                 "markerFitZoom": 14,
+                # New option to control which Places API to use
+                "useNewPlacesAPI": "auto",  # "auto", "legacy", "new"
+                # Fallback behavior when new API is not available
+                "autoFallbackToLegacy": True,
             },
             "static": {
                 "enableMagnificPopup": True,
