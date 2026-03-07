@@ -2,6 +2,15 @@
 Release Notes
 =============
 
+0.5.2
+^^^^^
+
+    - Add Django 6.0 compatibility. Django 6.0 removed `id` and `name` from template context in `BaseGeometryWidget.get_context()`. Fixed by re-injecting these in `BasePointFieldInteractiveWidget.get_context()` for all interactive widgets.
+    - Fixed inline formset widgets by lifting `js_widget_data` and `is_formset_empty_form_template` attrs to top-level context in `PointFieldInlineWidgetMixin.get_context()`.
+    - Updated CI workflow to use latest GitHub Actions versions (checkout@v4, setup-python@v5, cache@v4).
+    - Updated Django version constraint to support Django 4.0-6.x.
+
+
 0.5.1
 ^^^^^
 
