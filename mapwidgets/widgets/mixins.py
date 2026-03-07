@@ -39,6 +39,18 @@ class PointFieldInlineWidgetMixin:
         }
         return js_widget_params
 
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        # Django 6.0 buries attrs in context["widget"]["attrs"]; lift to top-level
+        widget_attrs = context.get("widget", {}).get("attrs", {})
+        if "js_widget_data" in widget_attrs:
+            context["js_widget_data"] = widget_attrs["js_widget_data"]
+        if "is_formset_empty_form_template" in widget_attrs:
+            context["is_formset_empty_form_template"] = widget_attrs[
+                "is_formset_empty_form_template"
+            ]
+        return context
+
     def render(self, name, value, attrs=None, renderer=None):
         if not attrs:
             attrs = dict()
