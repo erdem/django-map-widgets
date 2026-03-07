@@ -21,6 +21,7 @@ setup(
     author_email="mapwidgets@erdemozkol.com",
     url="https://github.com/erdem/django-map-widgets",
     license="MIT",
+    python_requires=">=3.10",
     packages=find_packages(exclude=("demo", "tests", "docs")),
     include_package_data=True,
     classifiers=[
