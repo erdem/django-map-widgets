@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   checks:
@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           
@@ -34,7 +34,7 @@ jobs:
           poetry config virtualenvs.in-project true
 
       - name: Cache Poetry virtualenv
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         id: cache
         with:
           path: .venv
