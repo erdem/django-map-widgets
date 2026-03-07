@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           
@@ -27,14 +27,14 @@ jobs:
       - name: Install Poetry
         run: |
           python -m pip install --upgrade pip
-          pip install poetry
+          pip install --upgrade poetry
 
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
 
       - name: Cache Poetry virtualenv
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         id: cache
         with:
           path: .venv
@@ -47,7 +47,7 @@ jobs:
         run: poetry install
 
       - name: Validate Poetry lock file
-        run: poetry lock --check
+        run: poetry check --lock
 
       - name: Run isort
         run: poetry run isort .

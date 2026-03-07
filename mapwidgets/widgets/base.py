@@ -54,6 +54,11 @@ class BasePointFieldInteractiveWidget(SettingsMixin, forms.BaseGeometryWidget):
 
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
+        # Django 6.0 removed id and name from context; re-inject them
+        context["name"] = name
+        widget_attrs = context.get("widget", {}).get("attrs", {})
+        context["id"] = widget_attrs.get("id", name)
+
         field_value = context["serialized"]
         if field_value:
             field_value = self.geos_to_dict(self.deserialize(field_value))
