@@ -10,7 +10,7 @@ readme = "README.md"
 authors = [{ name = "Erdem Ozkol", email = "github@erdemozkol.com" }]
 
 [tool.poetry.dependencies]
-python = "^3.14"
+python = "^3.10"
 django = ">=4.0,<7.0"
 
 [tool.poetry.group.dev.dependencies]
