@@ -98,7 +98,7 @@
     width: 100%;
 }
 
-.mw-wrap .form-control, .mw-wrap .mapboxgl-ctrl-geocoder--input {
+.mw-wrap .form-control, .mw-wrap .mapboxgl-ctrl-geocoder--input, .mw-adress-input-wrap input {
     border: 1px solid #ccc;
     font-family: inherit;
     margin: 0;
@@ -825,3 +825,12 @@ fieldset[disabled] .mw-btn-link:focus {
 .show {
     display: block;
 }
+
+.padding-0 {
+    padding: 0 !important;
+}
+
+.light-dark-color {
+    color: light-dark(#1f1f1f, #e3e3e3) !important;
+}
+
