@@ -2,7 +2,7 @@
     DjangoGooglePointFieldWidget = DjangoMapWidgetBase.extend({
 
         initializeMap: async function () {
-            
+
             // Redefine setMapOptions inside initializeMap to create a new closure for each instance
             const setMapOptions = async () => {
                 let mapInitializeOptions = {
@@ -11,9 +11,6 @@
                         position: google.maps.ControlPosition.RIGHT
                     },
                 };
-
-                // Log the initial mapOptions
-                console.log('Initial mapOptions for instance', this.mapId, ':', this.mapOptions);
 
                 mapInitializeOptions = $.extend({}, mapInitializeOptions, this.mapOptions);
 
@@ -41,20 +38,11 @@
                 }
 
                 mapInitializeOptions["center"] = mapCenter;
-
-                // Log the final mapInitializeOptions
-                console.log('Final mapInitializeOptions for instance', this.mapId, ':', mapInitializeOptions);
-
                 return mapInitializeOptions;
             };
 
-            // Rest of the initializeMap function
             this.geocoder = new google.maps.Geocoder();
             const mapOptions = await setMapOptions();
-
-            // Log the mapOptions returned by setMapOptions
-            console.log('mapOptions returned by setMapOptions for instance', this.mapId, ':', mapOptions);
-
             this.map = new google.maps.Map(this.mapElement, mapOptions);
 
             if (!$.isEmptyObject(this.djangoGeoJSONValue)) {
@@ -66,10 +54,30 @@
         },
 
         initializePlaceAutocomplete: function () {
-            this.autocomplete = new google.maps.places.Autocomplete(this.addressAutoCompleteInput, this.GooglePlaceAutocompleteOptions);
-            this.autocomplete.bindTo("bounds", this.map);
-            this.autocomplete.addListener("place_changed", this.handleAutoCompletePlaceChange.bind(this, this.autocomplete));
-            this.addressAutoCompleteInput.addEventListener('keydown', this.handleAutoCompleteInputKeyDown.bind(this));
+            const originalInput = this.addressAutoCompleteInput;
+            const placeAutocomplete = new google.maps.places.PlaceAutocompleteElement(
+                this.GooglePlaceAutocompleteOptions || {}
+            );
+            placeAutocomplete.className = originalInput.className;
+            placeAutocomplete.setAttribute('placeholder', originalInput.placeholder || '');
+            originalInput.parentNode.replaceChild(placeAutocomplete, originalInput);
+            this.addressAutoCompleteInput = placeAutocomplete;
+
+            this.map.addListener('bounds_changed', () => {
+                placeAutocomplete.locationBias = this.map.getBounds();
+            });
+
+            placeAutocomplete.addEventListener('gmp-placeselect', async ({ place }) => {
+                await place.fetchFields({ fields: ['location', 'formattedAddress', 'displayName'] });
+                if (!place.location) {
+                    return;
+                }
+                const lat = place.location.lat();
+                const lng = place.location.lng();
+                this.addMarkerToMap(lat, lng);
+                this.updateDjangoInput(place);
+                this.fitBoundMarker();
+            });
         },
 
         addMarkerToMap: function (lat, lng) {
@@ -120,28 +128,6 @@
             this.updateDjangoInput()
         },
 
-        handleAutoCompletePlaceChange: function (autocomplete) {
-            const place = autocomplete.getPlace();
-            if (!place.geometry) {
-                // User entered the name of a Place that was not suggested and
-                // pressed the Enter key, or the Place Details request failed.
-                return;
-            }
-            const lat = place.geometry.location.lat();
-            const lng = place.geometry.location.lng();
-            this.addMarkerToMap(lat, lng);
-            this.updateDjangoInput(place);
-            this.fitBoundMarker()
-        },
-
-        handleAutoCompleteInputKeyDown: function (e) {
-            const keyCode = e.keyCode || e.which;
-            if (keyCode === 13) {  // pressed enter key
-                e.preventDefault();
-                return false;
-            }
-        },
-
         handleAddMarkerBtnClick: function (e) {
             $(this.mapElement).toggleClass("click");
             this.addMarkerBtn.toggleClass("active");
@@ -166,7 +152,7 @@
                 this.geocoder.geocode({'location': latlng}, function (results, status) {
                     if (status === google.maps.GeocoderStatus.OK) {
                         var placeObj = results[0] || {};
-                        $(this.addressAutoCompleteInput).val(placeObj.formatted_address || "");
+                        this.addressAutoCompleteInput.value = placeObj.formatted_address || "";
                         $(document).trigger(this.placeChangedTriggerNameSpace,
                             [placeObj, lat, lng, this.wrapElemSelector, this.djangoInput]
                         );

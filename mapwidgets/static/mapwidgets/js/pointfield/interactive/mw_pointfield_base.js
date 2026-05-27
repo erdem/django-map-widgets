@@ -91,7 +91,7 @@
                 this.hideOverlay();
                 this.djangoInput.val("");
                 this.coordinatesOverlayInputs.val("");
-                $(this.addressAutoCompleteInput).val("");
+                this.addressAutoCompleteInput.value = "";
                 this.addMarkerBtn.removeClass("active");
                 this.removeMarker();
                 this.disableClearBtn();
