@@ -1,10 +1,9 @@
 """Various development related automation scripts to run with Poetry run"""
 
-from logging import INFO
+import subprocess
 from pathlib import Path
 
 import click
-from citizenshell import LocalShell
 from django.conf import settings
 
 from demo.demo import settings as demo__project_settings
@@ -14,7 +13,9 @@ settings.configure(demo__project_settings)
 
 from mapwidgets.settings import mw_settings
 
-shell = LocalShell(log_level=INFO)
+
+def shell(command):
+    subprocess.run(command, shell=True, check=True)
 
 
 @click.group()

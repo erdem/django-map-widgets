@@ -1,0 +1,46 @@
+version: '3'
+
+vars:
+  STATIC: mapwidgets/static/mapwidgets
+
+tasks:
+  install-js-deps:
+    desc: Install uglify-js and uglifycss CLI tools globally
+    cmds:
+      - npm install uglify-js -g
+      - npm install uglifycss -g
+
+  minify:css:
+    desc: Minify CSS
+    cmds:
+      - uglifycss {{.STATIC}}/css/map_widgets.css > {{.STATIC}}/css/map_widgets.min.css
+
+  minify:js:
+    desc: Minify all JS files
+    cmds:
+      - uglifyjs {{.STATIC}}/js/mw_init.js {{.STATIC}}/js/pointfield/interactive/mw_pointfield_base.js {{.STATIC}}/js/pointfield/interactive/googlemap/mw_pointfield.js -o {{.STATIC}}/js/pointfield/interactive/googlemap/mw_pointfield.min.js
+      - uglifyjs {{.STATIC}}/js/mw_init.js {{.STATIC}}/js/pointfield/interactive/mw_pointfield_base.js {{.STATIC}}/js/pointfield/interactive/googlemap/mw_pointfield.js {{.STATIC}}/js/pointfield/interactive/googlemap/mw_pointfield_inline_generator.js -o {{.STATIC}}/js/pointfield/interactive/googlemap/mw_pointfield_inline.min.js
+      - uglifyjs {{.STATIC}}/js/mw_init.js {{.STATIC}}/js/pointfield/interactive/mw_pointfield_base.js {{.STATIC}}/js/pointfield/interactive/mapbox/mw_pointfield.js -o {{.STATIC}}/js/pointfield/interactive/mapbox/mw_pointfield.min.js
+      - uglifyjs {{.STATIC}}/js/mw_init.js {{.STATIC}}/js/pointfield/interactive/mw_pointfield_base.js {{.STATIC}}/js/pointfield/interactive/leaflet/mw_pointfield.js -o {{.STATIC}}/js/pointfield/interactive/leaflet/mw_pointfield.min.js
+      - uglifyjs {{.STATIC}}/js/staticmap/mw_jquery.magnific-popup.js -o {{.STATIC}}/js/staticmap/mw_jquery.magnific-popup.min.js
+
+  minify:
+    desc: Minify all JS and CSS
+    deps: [minify:js, minify:css]
+
+  fmt:
+    desc: Run black and isort
+    cmds:
+      - black .
+      - isort .
+
+  build:
+    desc: Build PyPI package
+    cmds:
+      - python setup.py sdist bdist_wheel
+      - twine check dist/*
+
+  publish:test:
+    desc: Publish to test PyPI
+    cmds:
+      - twine upload --repository-url https://test.pypi.org/legacy/ dist/*
