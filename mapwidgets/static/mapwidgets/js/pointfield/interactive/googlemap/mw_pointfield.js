@@ -67,13 +67,21 @@
                 placeAutocomplete.locationBias = this.map.getBounds();
             });
 
-            placeAutocomplete.addEventListener('gmp-placeselect', async ({ place }) => {
-                await place.fetchFields({ fields: ['location', 'formattedAddress', 'displayName'] });
+            placeAutocomplete.addEventListener('gmp-placeselect', async (event) => {
+                const place = event.place || (event.detail && event.detail.place);
+                if (!place) return;
+                try {
+                    await place.fetchFields({ fields: ['location', 'formattedAddress', 'displayName'] });
+                } catch (error) {
+                    console.error('PlaceAutocomplete: fetchFields failed:', error);
+                    return;
+                }
                 if (!place.location) {
                     return;
                 }
-                const lat = place.location.lat();
-                const lng = place.location.lng();
+                const loc = place.location;
+                const lat = typeof loc.lat === 'function' ? loc.lat() : loc.lat;
+                const lng = typeof loc.lng === 'function' ? loc.lng() : loc.lng;
                 this.addMarkerToMap(lat, lng);
                 this.updateDjangoInput(place);
                 this.fitBoundMarker();
