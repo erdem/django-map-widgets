@@ -21,7 +21,7 @@ DEFAULT_SETTINGS = {
             "language": "en",
             "libraries": "places,marker",
             "loading": "async",
-            "v": "quarterly",
+            "v": "beta",
         },
         "PointField": {
             "interactive": {
