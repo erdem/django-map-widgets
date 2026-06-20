@@ -2,6 +2,16 @@
 Release Notes
 =============
 
+0.5.3
+^^^^^
+
+    - Fix race condition where Google Maps API could call ``googleMapWidgetsCallback`` before ``mw_init.js`` had executed, causing random ``InvalidValueError`` in Chrome/Firefox.
+    - Fix: migrate Google Places Autocomplete to ``PlaceAutocompleteElement`` API (#161).
+    - Fix: add ``referrerPolicy: origin`` to OSM tile layer options (#168).
+    - Fix: ``map_widgets.min.css`` was empty in production (#167).
+    - Fix broken links in documentation, migrate http to https.
+
+
 0.5.2
 ^^^^^
 
