@@ -21,7 +21,7 @@ GeoDjango-powered applications. Currently, the package supports Google, Mapbox, 
 
 ---
 
-- [Documentation](http://django-map-widgets.readthedocs.io/)
+- [Documentation](https://django-map-widgets.readthedocs.io/)
 - [Demo Project](https://github.com/erdem/django-map-widgets/tree/main/demo)
 - [Home Page](https://github.com/erdem/django-map-widgets/)
 
@@ -90,7 +90,7 @@ view templates.
 
 The JavaScript map rendering behavior of the widgets can be customized by providing `MAP_WIDGETS` config in the
 project's settings file. For detailed guidance on map customization options, check
-the [settings guide](http://django-map-widgets.readthedocs.io/settings).
+the [settings guide](https://django-map-widgets.readthedocs.io/en/latest/widgets/settings.html).
 
 ```python
 GOOGLE_MAP_API_KEY = os.getenv("GOOGLE_MAP_API_KEY")
@@ -172,7 +172,7 @@ providers or new features, or even if you want to help extend support to other G
 so. We would be happy to review and merge your contributions.
 
 For more info how to contribute, please check out
-the [contribution guidelines](http://django-map-widgets.readthedocs.io/contribution).
+the [contribution guidelines](https://django-map-widgets.readthedocs.io/en/latest/contribution/index.html).
 
 ### Screenshots
 
