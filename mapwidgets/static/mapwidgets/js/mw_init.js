@@ -15,12 +15,18 @@ if (typeof django !== "undefined" && django.jQuery) {
 
 // This callback function execute by GoogleMap JS.
 function googleMapWidgetsCallback() {
-    window.addEventListener("load", (event) => {
+    function initWidgets() {
         for (let index = 0; index < mapWidgets.googleMapCallbacks.length; index++) {
-            const widgetCallback = mapWidgets.googleMapCallbacks[index]
-            new widgetCallback.class(widgetCallback.options)
+            const widgetCallback = mapWidgets.googleMapCallbacks[index];
+            new widgetCallback.class(widgetCallback.options);
         }
-    });
+    }
+
+    if (document.readyState === "complete") {
+        initWidgets();
+    } else {
+        window.addEventListener("load", initWidgets);
+    }
 }
 
 

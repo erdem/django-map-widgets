@@ -29,6 +29,12 @@ class GoogleMapPointFieldWidget(BasePointFieldInteractiveWidget):
         cdn_url_params.update(mw_settings.GoogleMap["CDNURLParams"])
         return f"https://maps.googleapis.com/maps/api/js?{urlencode(cdn_url_params)}"
 
+    def get_js_paths(self, extra_js=None, minified=False):
+        # Load mw_init.js (which defines googleMapWidgetsCallback) before the async
+        # Google Maps script — otherwise Maps can call the callback before it's defined.
+        base_paths = super().get_js_paths(minified=minified)
+        return base_paths + (extra_js or [])
+
     @property
     def media(self):
         return self._media(extra_js=[AsyncJS(self._google_map_js_url)])
@@ -45,8 +51,8 @@ class GoogleMapPointFieldInlineWidget(
 
         if minified:
             js_paths = [
-                AsyncJS(self._google_map_js_url),
                 "mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield_inline.min.js",
+                AsyncJS(self._google_map_js_url),
             ]
         else:
             inline_generator_js = "mapwidgets/js/pointfield/interactive/googlemap/mw_pointfield_inline_generator.js"

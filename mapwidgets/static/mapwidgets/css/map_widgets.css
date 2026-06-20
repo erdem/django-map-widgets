@@ -109,7 +109,7 @@
     padding: 6px 12px;
     font-size: 14px;
     line-height: 1.42857143;
-    color: #555;
+    color: #555 !important;
     background-color: #fff;
     background-image: none;
     border-radius: 4px;
@@ -118,6 +118,24 @@
     -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
     -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.mw-wrap .form-control::selection,
+.mw-wrap .mapboxgl-ctrl-geocoder--input::selection,
+.mw-adress-input-wrap input::selection,
+gmp-placeautocomplete::part(input)::selection {
+    background-color: rgba(181, 214, 255, 0.7) !important;
+    color: #333 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    .mw-wrap .form-control::selection,
+    .mw-wrap .mapboxgl-ctrl-geocoder--input::selection,
+    .mw-adress-input-wrap input::selection,
+    gmp-placeautocomplete::part(input)::selection {
+        background-color: rgba(100, 160, 255, 0.4) !important;
+        color: #fff !important;
+    }
 }
 
 @media screen and (min-width: 640px) {

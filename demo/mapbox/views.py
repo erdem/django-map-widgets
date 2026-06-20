@@ -21,7 +21,7 @@ class InteractivePointFieldEditView(UpdateView):
 class InteractivePointFieldAddView(FormView):
     template_name = "mapbox/pointfield/interactive/add.html"
     form_class = InteractivePointFieldViewForm
-    success_url = reverse_lazy("mapbox:list")
+    success_url = reverse_lazy("mapbox:pointfield_interactive_list")
 
     def form_valid(self, form):
         form.save()
