@@ -34,10 +34,14 @@
                     </div>
                 </div>
 
-{# Leaflet widget has no place lookup functionality yet #}
-{#                <div class="mw-adress-input-wrap pull-right">#}
-{#                    <input type="text" class="form-control pull-right" id="{{ name }}-mw-google-address-input" role="presentation" autocomplete="off" placeholder="{% trans 'Find a Location by Address' %}" />#}
-{#                </div>#}
+                {% if settings.geoSearch.enabled %}
+                <div class="mw-leaflet-geosearch-wrap pull-right">
+                    <input type="text" class="form-control mw-geosearch-input"
+                           role="presentation" autocomplete="off"
+                           placeholder="{% trans 'Search location' %}"/>
+                    <ul class="mw-geosearch-results hide"></ul>
+                </div>
+                {% endif %}
             {% endblock header %}
         </div>
 
@@ -85,7 +89,8 @@
                 coordinatesOverlayInputs: $(".mw-overlay-input", wrapElemSelector),
                 coordinatesOverlay: $(".mw-coordinates-overlay", wrapElemSelector),
                 myLocationBtn: $(".mw-btn-my-location", wrapElemSelector),
-                addressAutoCompleteInput: document.getElementById(googleAutoInputID),
+                // the search input doubles as the address field that resetMap clears on delete
+                addressAutoCompleteInput: $(".mw-geosearch-input", wrapElemSelector).get(0) || document.createElement("input"),
                 deleteBtn: $(".mw-btn-delete", wrapElemSelector),
                 addMarkerBtn: $(".mw-btn-add-marker", wrapElemSelector),
                 loaderOverlayElem: $(".mw-loader-overlay", wrapElemSelector),
@@ -101,6 +106,48 @@
                 placeChangedTriggerNameSpace: "leafletPointFieldWidget:placeChanged"
             };
             const mapWidget = new DjangoLeafletPointFieldWidget(mapWidgetOptions);
+
+            if (mapOptions.geoSearch && mapOptions.geoSearch.enabled && window.GeoSearch) {
+                const geoSearch = new DjangoMapWidgetGeoSearch({
+                    input: $(".mw-geosearch-input", wrapElemSelector),
+                    resultsContainer: $(".mw-geosearch-results", wrapElemSelector),
+                    providerName: mapOptions.geoSearch.provider,
+                    providerOptions: mapOptions.geoSearch.providerOptions,
+                    onSelect: function (result) {
+                        // keep the chosen label; don't overwrite it with the reverse name
+                        mapWidget._suppressMarkerSet = true;
+                        mapWidget.addMarkerToMap(result.y, result.x);
+                        mapWidget.updateDjangoInput();
+                        mapWidget.fitBoundMarker();
+                    }
+                });
+
+                // Reverse geocode the marker location and populate the search bar,
+                // mirroring the Google widget. Runs on load (saved point) and whenever
+                // a point is placed/moved/geolocated.
+                if (mapOptions.geoSearch.reverseGeocode && window.L && L.Control && L.Control.Geocoder) {
+                    const geocoder = L.Control.Geocoder.nominatim();
+                    mapWidget.onMarkerSet = function (lat, lng) {
+                        const scale = mapWidget.map.options.crs.scale(mapWidget.map.getZoom());
+                        const handle = function (results) {
+                            const result = results && results[0];
+                            if (result) {
+                                geoSearch.input.val(result.name);
+                            }
+                        };
+                        const ret = geocoder.reverse(L.latLng(lat, lng), scale, handle);
+                        // leaflet-control-geocoder v3 returns a Promise; older returns via callback
+                        if (ret && typeof ret.then === "function") {
+                            ret.then(handle).catch(function () {});
+                        }
+                    };
+                    // initial load: the marker was placed during construction, before
+                    // onMarkerSet existed, so populate the bar now if a value is set.
+                    if (field_value && field_value.lat != null) {
+                        mapWidget.onMarkerSet(field_value.lat, field_value.lng);
+                    }
+                }
+            }
             {% block extra_javascript %}
 
             {% endblock %}

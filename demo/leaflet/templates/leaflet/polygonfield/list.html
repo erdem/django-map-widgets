@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block breadcrumb_item %}
+    <li class="breadcrumb-item"><a href="{% url "leaflet:polygon-list" %}">Leaflet Polygon Field</a></li>
+{% endblock %}
+
+{% block content %}
+    <div style="margin-bottom: 20px"><a href="{% url "leaflet:polygon-add" %}" class="btn btn-default block">Add New Item</a>
+    </div>
+    <h3>Items</h3>
+    <ul class="block">
+        {% for obj in polygonfield_objs %}
+            <li><a href="{% url "leaflet:polygon-edit" obj.pk %}">{{ obj.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

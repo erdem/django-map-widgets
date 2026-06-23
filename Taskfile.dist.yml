@@ -21,7 +21,8 @@ tasks:
       - uglifyjs {{.STATIC}}/js/mw_init.js {{.STATIC}}/js/pointfield/interactive/mw_pointfield_base.js {{.STATIC}}/js/pointfield/interactive/googlemap/mw_pointfield.js -o {{.STATIC}}/js/pointfield/interactive/googlemap/mw_pointfield.min.js
       - uglifyjs {{.STATIC}}/js/mw_init.js {{.STATIC}}/js/pointfield/interactive/mw_pointfield_base.js {{.STATIC}}/js/pointfield/interactive/googlemap/mw_pointfield.js {{.STATIC}}/js/pointfield/interactive/googlemap/mw_pointfield_inline_generator.js -o {{.STATIC}}/js/pointfield/interactive/googlemap/mw_pointfield_inline.min.js
       - uglifyjs {{.STATIC}}/js/mw_init.js {{.STATIC}}/js/pointfield/interactive/mw_pointfield_base.js {{.STATIC}}/js/pointfield/interactive/mapbox/mw_pointfield.js -o {{.STATIC}}/js/pointfield/interactive/mapbox/mw_pointfield.min.js
-      - uglifyjs {{.STATIC}}/js/mw_init.js {{.STATIC}}/js/pointfield/interactive/mw_pointfield_base.js {{.STATIC}}/js/pointfield/interactive/leaflet/mw_pointfield.js -o {{.STATIC}}/js/pointfield/interactive/leaflet/mw_pointfield.min.js
+      - uglifyjs {{.STATIC}}/js/mw_init.js {{.STATIC}}/js/pointfield/interactive/mw_pointfield_base.js {{.STATIC}}/js/pointfield/interactive/leaflet/mw_pointfield.js {{.STATIC}}/js/leaflet/mw_geosearch.js -o {{.STATIC}}/js/pointfield/interactive/leaflet/mw_pointfield.min.js
+      - uglifyjs {{.STATIC}}/js/mw_init.js {{.STATIC}}/js/polygonfield/interactive/mw_polygonfield_base.js {{.STATIC}}/js/polygonfield/interactive/leaflet/mw_polygonfield.js {{.STATIC}}/js/leaflet/mw_geosearch.js -o {{.STATIC}}/js/polygonfield/interactive/leaflet/mw_polygonfield.min.js
       - uglifyjs {{.STATIC}}/js/staticmap/mw_jquery.magnific-popup.js -o {{.STATIC}}/js/staticmap/mw_jquery.magnific-popup.min.js
 
   minify:

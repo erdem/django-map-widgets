@@ -6,6 +6,7 @@ from .widgets import (
     GoogleMapPointFieldStaticWidget,
     GoogleMapPointFieldWidget,
     LeafletPointFieldWidget,
+    LeafletPolygonFieldWidget,
     MapboxPointFieldStaticWidget,
     MapboxPointFieldWidget,
 )
@@ -17,4 +18,5 @@ __all__ = [
     "MapboxPointFieldWidget",
     "MapboxPointFieldStaticWidget",
     "LeafletPointFieldWidget",
+    "LeafletPolygonFieldWidget",
 ]

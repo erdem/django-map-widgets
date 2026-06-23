@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+    {{ form.media }}
+{% endblock extrahead %}
+
+{% block breadcrumb_item %}
+    <li class="breadcrumb-item"><a href="{% url "leaflet:polygon-list" %}">Leaflet Polygon Field</a></li>
+    <li class="breadcrumb-item">New Item</li>
+{% endblock %}
+
+{% block content %}
+    <h4>Add New Item</h4>
+    <form action="{% url "leaflet:polygon-add" %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <br>
+        <button type="submit" class="btn btn-primary btn-lg">Save</button>
+    </form>
+{% endblock content %}

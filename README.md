@@ -160,7 +160,7 @@ Django Map Widgets offers two types of widgets:
 |                        | Interactive   | Static | Interactive | Static | Interactive | Static |
 | *PointField*           | ✅             | ✅      | ✅           | ✅      | ✅           | N/A    |
 | *LineStringField*      | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | N/A    |
-| *PolygonField*         | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | N/A    |
+| *PolygonField*         | ✖️            | ✖️     | ✖️          | ✖️     | ✅           | N/A    |
 | *MultiPointField*      | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | N/A    |
 | *MultiLineStringField* | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | N/A    |
 | *MultiPolygonField*    | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | N/A    |
@@ -177,6 +177,7 @@ the [contribution guidelines](https://django-map-widgets.readthedocs.io/en/lates
 ### Screenshots
 
 ##### MapBox Interactive Point Field Widget
+
 <img width="1064" alt="mapbox_interactive_preview" src="https://github.com/erdem/django-map-widgets/assets/1518272/f2df8654-b29a-4d64-9159-87a3790ede0b">
 
 ##### MapBox Static Point Field Widget

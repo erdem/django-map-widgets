@@ -140,6 +140,10 @@ gmp-placeautocomplete::part(input)::selection {
     .mw-wrap .button-text {
         display: none;
     }
+
+    .mw-leaflet-geosearch-wrap {
+        width: 50%;
+    }
 }
 
 .mw-wrap .mapboxgl-ctrl-geocoder--icon {
@@ -210,6 +214,93 @@ gmp-placeautocomplete::part(input)::selection {
 
 .mw-header .mw-coordinates-container label {
     cursor: pointer;
+}
+
+/* Polygon widget: wider overlay holding a WKT/GeoJSON textarea */
+.mw-coordinates-overlay-wide {
+    width: 360px;
+}
+
+.mw-coordinates-overlay-wide label {
+    height: auto;
+}
+
+.mw-coordinates-overlay-wide .mw-overlay-wkt {
+    width: 100%;
+    min-height: 96px;
+    resize: vertical;
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.mw-coordinates-overlay-actions {
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+/* Leaflet geosearch: header search input + results dropdown */
+.mw-leaflet-geosearch-wrap {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    width: 35%;
+}
+
+.mw-geosearch-input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.mw-geosearch-results {
+    box-sizing: border-box;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 10000;
+    margin: 2px 0 0 !important;
+    padding: 0;
+    list-style: none;
+    background: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .2);
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.mw-geosearch-result-item {
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #333;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mw-geosearch-result-item:last-child {
+    border-bottom: none;
+}
+
+.mw-geosearch-result-item:hover,
+.mw-geosearch-result-item.active {
+    background: #f2f7ff;
+    color: #333;
+}
+
+/* Polygon widget: draggable vertex handle */
+.mw-vertex-handle {
+    background: #fff;
+    border: 2px solid #3388ff;
+    border-radius: 50%;
+    box-sizing: border-box;
+    cursor: move;
 }
 
 .mw-map {

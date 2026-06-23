@@ -132,6 +132,7 @@ DEFAULT_SETTINGS = {
                             "mapwidgets/js/mw_init.js",
                             "mapwidgets/js/pointfield/interactive/mw_pointfield_base.js",
                             "mapwidgets/js/pointfield/interactive/leaflet/mw_pointfield.js",
+                            "mapwidgets/js/leaflet/mw_geosearch.js",
                         ],
                         "minified": [
                             "mapwidgets/js/pointfield/interactive/leaflet/mw_pointfield.min.js"
@@ -147,11 +148,61 @@ DEFAULT_SETTINGS = {
                     "urlTemplate": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                     "options": {"maxZoom": 20, "referrerPolicy": "origin"},
                 },
+                "geoSearch": {
+                    "enabled": True,
+                    "provider": "OpenStreetMapProvider",
+                    "providerOptions": {},
+                    "reverseGeocode": True,
+                },
                 "markerFitZoom": 14,
                 "showZoomNavigation": True,
                 "mapCenterLocation": get_default_center_coordinates(),
             }
-        }
+        },
+        "PolygonField": {
+            "interactive": {
+                "media": {
+                    "css": {
+                        "dev": ["mapwidgets/css/map_widgets.css"],
+                        "minified": ["mapwidgets/css/map_widgets.min.css"],
+                    },
+                    "js": {
+                        "dev": [
+                            "mapwidgets/js/mw_init.js",
+                            "mapwidgets/js/polygonfield/interactive/mw_polygonfield_base.js",
+                            "mapwidgets/js/polygonfield/interactive/leaflet/mw_polygonfield.js",
+                            "mapwidgets/js/leaflet/mw_geosearch.js",
+                        ],
+                        "minified": [
+                            "mapwidgets/js/polygonfield/interactive/leaflet/mw_polygonfield.min.js"
+                        ],
+                    },
+                },
+                "mapOptions": {
+                    "zoom": 12,
+                    "scrollWheelZoom": False,
+                    "zoomControl": True,
+                },
+                "tileLayer": {
+                    "urlTemplate": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    "options": {"maxZoom": 20, "referrerPolicy": "origin"},
+                },
+                "geoSearch": {
+                    "enabled": True,
+                    "provider": "OpenStreetMapProvider",
+                    "providerOptions": {},
+                },
+                "polygonOptions": {
+                    "color": "#3388ff",
+                    "weight": 3,
+                    "fillOpacity": 0.2,
+                },
+                "polygonFitZoom": 14,
+                "fitBoundsOnLoad": True,
+                "showZoomNavigation": True,
+                "mapCenterLocation": get_default_center_coordinates(),
+            }
+        },
     },
     "srid": 4326,
     "is_dev_mode": django_settings.DEBUG,

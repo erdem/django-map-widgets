@@ -1,0 +1,121 @@
+{% load i18n %}
+
+<div class="mw-wrap" id="{{ name }}-mw-wrap">
+    {% block container %}
+        <div class="mw-header">
+            {% block header %}
+                <a class="mw-btn mw-btn-warning mw-btn-draw-polygon">
+                    <i class="icon-location"></i>
+                    <span class="button-text">{% trans "Draw Polygon" %}</span>
+                </a>
+                <a class="mw-btn mw-btn-info mw-btn-my-location">
+                    <i class="icon-direction"></i>
+                    <span class="button-text">{% trans "Current Location" %}</span>
+                </a>
+                <div class="mw-coordinates-wrap">
+                    <a class="mw-btn mw-btn-default mw-btn-coordinates">
+                        <i class="icon-down-open"></i>
+                        <span class="button-text">{% trans "Edit Coordinates" %}</span>
+                    </a>
+                    <div class="mw-coordinates-overlay mw-coordinates-overlay-wide hide">
+                        <label for="{{ name }}-mw-overlay-wkt">
+                            {% trans "Polygon (WKT):" %}
+                            <textarea id="{{ name }}-mw-overlay-wkt"
+                                      class="form-control mw-overlay-input mw-overlay-wkt"
+                                      rows="6"
+                                      placeholder="{% trans 'Ex: POLYGON((28.97 41.01, 29.01 41.01, 29.01 41.04, 28.97 41.01))' %}"></textarea>
+                        </label>
+                        <div class="mw-coordinates-overlay-actions">
+                            <a class="mw-btn mw-btn-default mw-btn-coordinates-copy">
+                                <span class="button-text">{% trans "Copy" %}</span>
+                            </a>
+                            <a class="mw-btn mw-btn-success mw-btn-coordinates-done pull-right">{% trans "Done" %}</a>
+                        </div>
+                    </div>
+                </div>
+
+                {% if settings.geoSearch.enabled %}
+                <div class="mw-leaflet-geosearch-wrap pull-right">
+                    <input type="text" class="form-control mw-geosearch-input"
+                           role="presentation" autocomplete="off"
+                           placeholder="{% trans 'Search location' %}"/>
+                    <ul class="mw-geosearch-results hide"></ul>
+                </div>
+                {% endif %}
+            {% endblock header %}
+        </div>
+
+        <div class="mw-map-wrapper">
+            <div class="mw-loader-overlay hide" >
+                <div class="mw-loader"></div>
+            </div>
+            <div id="{{ name }}-map-elem" class="mw-map"></div>
+            <div style="display: none" class="hide">
+                <textarea id="{{ id }}" name="{{ name }}">{{ serialized }}</textarea>
+                {% block extra_input %}
+                {% endblock extra_input %}
+
+            </div>
+        </div>
+
+        <div class="mw-footer">
+            <span class="mw-help-text help-text">{% trans "Draw a polygon on the map. Click to add points, click the first point or double-click to finish." %}</span>
+            <a class="mw-btn mw-btn-delete pull-right {{ serialized|yesno:"mw-btn-danger, mw-btn-default disabled" }}" ><i class="icon-trash-empty"></i></a>
+        </div>
+        <div class="animated-loader"></div>
+    {% endblock container %}
+</div>
+
+{% block javascript %}
+    <script type="application/javascript">
+        (function($) {
+            var mapOptions = JSON.parse("{{ options|escapejs }}");
+            var field_value = JSON.parse("{{ field_value|escapejs }}");
+
+            var wrapElemSelector = "#{{ name }}-mw-wrap";
+            var mapElemID = "{{ name }}-map-elem";
+            var locationInputID = "#{{ id }}";
+
+            const mapWidgetOptions = {
+                djangoInput: $(locationInputID),
+                wrapElemSelector: wrapElemSelector,
+                djangoGeoJSONValue: field_value,
+                mapElement: document.getElementById(mapElemID),
+                mapCenterLocationName: mapOptions.mapCenterLocationName,
+                mapCenterLocation: mapOptions.mapCenterLocation,
+                coordinatesOverlayToggleBtn: $(".mw-btn-coordinates", wrapElemSelector),
+                coordinatesOverlayDoneBtn: $(".mw-btn-coordinates-done", wrapElemSelector),
+                coordinatesOverlayCopyBtn: $(".mw-btn-coordinates-copy", wrapElemSelector),
+                wktOverlayInput: $(".mw-overlay-wkt", wrapElemSelector),
+                myLocationBtn: $(".mw-btn-my-location", wrapElemSelector),
+                deleteBtn: $(".mw-btn-delete", wrapElemSelector),
+                drawPolygonBtn: $(".mw-btn-draw-polygon", wrapElemSelector),
+                loaderOverlayElem: $(".mw-loader-overlay", wrapElemSelector),
+                mapOptions: mapOptions,
+                polygonCreateTriggerNameSpace: "leafletPolygonFieldWidget:polygonCreate",
+                polygonChangeTriggerNameSpace: "leafletPolygonFieldWidget:polygonChange",
+                polygonDeleteTriggerNameSpace: "leafletPolygonFieldWidget:polygonDelete"
+            };
+            const mapWidget = new DjangoLeafletPolygonFieldWidget(mapWidgetOptions);
+
+            if (mapOptions.geoSearch && mapOptions.geoSearch.enabled && window.GeoSearch) {
+                new DjangoMapWidgetGeoSearch({
+                    input: $(".mw-geosearch-input", wrapElemSelector),
+                    resultsContainer: $(".mw-geosearch-results", wrapElemSelector),
+                    providerName: mapOptions.geoSearch.provider,
+                    providerOptions: mapOptions.geoSearch.providerOptions,
+                    onSelect: function (result) {
+                        if (result.bounds) {
+                            mapWidget.map.fitBounds(result.bounds);
+                        } else {
+                            mapWidget.map.setView([result.y, result.x], mapOptions.polygonFitZoom || 14);
+                        }
+                    }
+                });
+            }
+            {% block extra_javascript %}
+
+            {% endblock %}
+        })(mapWidgets.jQuery);
+    </script>
+{% endblock javascript %}
