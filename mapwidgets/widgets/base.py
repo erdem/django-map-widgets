@@ -8,7 +8,7 @@ from mapwidgets.settings import mw_settings
 from mapwidgets.widgets.mixins import SettingsMixin
 
 
-class BasePointFieldInteractiveWidget(SettingsMixin, forms.BaseGeometryWidget):
+class BaseInteractiveGeometryWidget(SettingsMixin, forms.BaseGeometryWidget):
     _settings = None
     map_srid = mw_settings.srid
 
@@ -36,21 +36,9 @@ class BasePointFieldInteractiveWidget(SettingsMixin, forms.BaseGeometryWidget):
         return self._media()
 
     def geos_to_dict(self, geom: GEOSGeometry):
-        if geom is None:
-            return None
-
-        geom_dict = {
-            "srid": geom.srid,
-            "wkt": str(geom),
-            "coords": geom.coords,
-            "geom_type": geom.geom_type,
-        }
-        longitude, latitude = geom.coords
-
-        # Transform the coordinates for backwards compatibility
-        geom_dict["lng"] = longitude
-        geom_dict["lat"] = latitude
-        return geom_dict
+        raise NotImplementedError(
+            "subclasses of BaseInteractiveGeometryWidget must provide a geos_to_dict method"
+        )
 
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
@@ -71,6 +59,41 @@ class BasePointFieldInteractiveWidget(SettingsMixin, forms.BaseGeometryWidget):
         }
         context.update(extra_context)
         return context
+
+
+class BasePointFieldInteractiveWidget(BaseInteractiveGeometryWidget):
+    def geos_to_dict(self, geom: GEOSGeometry):
+        if geom is None:
+            return None
+
+        geom_dict = {
+            "srid": geom.srid,
+            "wkt": str(geom),
+            "coords": geom.coords,
+            "geom_type": geom.geom_type,
+        }
+        longitude, latitude = geom.coords
+
+        # Transform the coordinates for backwards compatibility
+        geom_dict["lng"] = longitude
+        geom_dict["lat"] = latitude
+        return geom_dict
+
+
+class BasePolygonFieldInteractiveWidget(BaseInteractiveGeometryWidget):
+    geom_type = "POLYGON"
+
+    def geos_to_dict(self, geom: GEOSGeometry):
+        if geom is None:
+            return None
+
+        return {
+            "srid": geom.srid,
+            "wkt": str(geom),
+            "geom_type": geom.geom_type,
+            # GeoJSON gives the JS widget the ring coordinates to draw/edit
+            "geojson": json.loads(geom.geojson),
+        }
 
 
 class BaseStaticWidget(SettingsMixin, forms.TextInput):

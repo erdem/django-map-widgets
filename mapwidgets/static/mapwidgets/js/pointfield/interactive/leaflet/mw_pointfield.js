@@ -56,6 +56,12 @@
                 "lat": lat
             };
             this.enableClearBtn();
+            // optional hook (e.g. reverse geocoding to populate the search bar).
+            // skipped once when a search selection already set the input value.
+            if (typeof this.onMarkerSet === "function" && !this._suppressMarkerSet) {
+                this.onMarkerSet(lat, lng);
+            }
+            this._suppressMarkerSet = false;
         },
 
         removeMarker: function () {

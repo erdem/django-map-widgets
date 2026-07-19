@@ -4,7 +4,7 @@ Interactive Point Field Widget
 Preview
 ^^^^^^^
 
-.. image:: /_static/images/leaflet_interactive.png
+.. image:: /_static/images/leaflet_point_interactive.png
 
 
 Requirements
@@ -22,6 +22,10 @@ Key Features
 **Draggable Markers:** Positioned markers can be dragged across the map, and the coordinates inputs will be updated when the marker is dropped.
 
 **Add Marker by Click:** A marker can be added to the map via mouse click.
+
+**Location Search:** A search bar (powered by `leaflet-geosearch <https://github.com/smeijer/leaflet-geosearch>`_) lets users find a place by name/address; selecting a result drops the marker there. Configurable via the ``geoSearch`` setting (default provider: OpenStreetMap / Nominatim, no API key required).
+
+**Reverse Geocoding:** When a point is set on the map (including a saved value loaded from the database, or after click/drag/geolocation), the marker location is reverse geocoded (via `leaflet-control-geocoder <https://github.com/perliedman/leaflet-control-geocoder>`_) and the resolved place name is shown in the search bar. Toggle with ``geoSearch.reverseGeocode`` (default ``True``).
 
 
 Settings
@@ -52,6 +56,7 @@ Settings
 
 * **tileLayer**: TileLayer source configuration. (Do not override the default settings if you don't serve the map tiles from different source ``openstreetmap.org``)
 * **markerFitZoom**: A custom zoom value is set programmatically after a marker is added with user geolocation or place autocomplete so on. This setting exists to enhance the user experience. The default value is 14.
+* **geoSearch**: Location search bar configuration. ``enabled`` (default ``True``) toggles the search input; ``provider`` is the `leaflet-geosearch <https://github.com/smeijer/leaflet-geosearch>`_ provider class name (default ``"OpenStreetMapProvider"``; others include ``"GoogleProvider"``, ``"MapBoxProvider"``, ``"EsriProvider"``, ...); ``providerOptions`` is passed to the provider constructor (e.g. ``{"params": {"key": "YOUR_API_KEY"}}`` for keyed providers); ``reverseGeocode`` (default ``True``) reverse geocodes the marker location to populate the search bar with the place name.
 * **showZoomNavigation**: Enable/Disable zoom in/out UI buttons on the map. Default is ``True``
 * **mapCenterLocation**: Enable zoom in/out UI buttons on the map. Default is ``True``
 

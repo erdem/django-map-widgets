@@ -7,4 +7,5 @@ Leaflet Map Widgets
     :maxdepth: 2
 
     PointField/interactive
+    PolygonField/interactive
 

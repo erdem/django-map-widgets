@@ -22,3 +22,19 @@ class InteractivePointField(BaseModel):
 
     def get_absolute_url(self):
         return reverse("leaflet:edit", args=(self.id,))
+
+
+class InteractivePolygonField(BaseModel):
+    name = models.CharField(max_length=255)
+    area = models.PolygonField(help_text="Use map widget to draw the area")
+    area_optional = models.PolygonField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Interactive PolygonField Widget"
+        verbose_name_plural = "Interactive PolygonField Widgets"
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("leaflet:polygon-edit", args=(self.id,))

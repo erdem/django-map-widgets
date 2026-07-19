@@ -65,6 +65,10 @@ def minify_js_files():
             "dev_js_paths": mw_settings.Leaflet.PointField.interactive.media.js.dev,
             "minified_js_path": mw_settings.Leaflet.PointField.interactive.media.js.minified,
         },
+        "LeafletPolygonFieldWidget": {
+            "dev_js_paths": mw_settings.Leaflet.PolygonField.interactive.media.js.dev,
+            "minified_js_path": mw_settings.Leaflet.PolygonField.interactive.media.js.minified,
+        },
         "MagnificPopup": {
             "dev_js_paths": ["mapwidgets/js/staticmap/mw_jquery.magnific-popup.js"],
             "minified_js_path": [

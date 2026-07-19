@@ -12,4 +12,14 @@ class InteractivePointFieldAdmin(admin.ModelAdmin):
     }
 
 
+class InteractivePolygonFieldAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+    formfield_overrides = {
+        models.PolygonField: {"widget": mapwidgets.LeafletPolygonFieldWidget}
+    }
+
+
 admin.site.register(leaflet_models.InteractivePointField, InteractivePointFieldAdmin)
+admin.site.register(
+    leaflet_models.InteractivePolygonField, InteractivePolygonFieldAdmin
+)
