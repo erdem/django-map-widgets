@@ -184,12 +184,12 @@ the [contribution guidelines](https://django-map-widgets.readthedocs.io/en/lates
 
 ![](https://github.com/erdem/django-map-widgets/assets/1518272/491f2091-5620-4a50-9ed8-d63ddba3a88b)
 
+##### Leaflet Interactive Polygon Field Widget
+
+![](https://github.com/user-attachments/assets/f9750272-de89-45c3-92bd-ab8b0590e8fa)
+
 ##### GoogleMap Interactive Point Field Widget
 
 ![](https://github.com/erdem/django-map-widgets/assets/1518272/4da33221-20f6-4c44-875c-f1d4b0f98e5a)
-
-##### Leaflet Interactive Point Field Widget
-
-![](https://github.com/erdem/django-map-widgets/assets/1518272/a45158f7-2ec0-4e1a-8dfa-8da0442b832f)
 
 and more...
