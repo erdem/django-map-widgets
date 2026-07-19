@@ -1,12 +1,23 @@
 import os
+import re
 
 from setuptools import find_packages, setup
 
-VERSION = (0, 6, 0)
-__version__ = ".".join(map(str, VERSION))
-
-
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+
+
+def get_version():
+    # Parsed as text, not imported: mapwidgets/__init__.py pulls in Django-dependent
+    # widget imports that aren't safely importable during a package build.
+    init_path = os.path.join(BASE_DIR, "mapwidgets", "__init__.py")
+    with open(init_path, encoding="utf-8") as f:
+        content = f.read()
+    match = re.search(r"^VERSION = \(([^)]+)\)", content, re.MULTILINE)
+    return ".".join(part.strip() for part in match.group(1).split(","))
+
+
+__version__ = get_version()
+
 with open(os.path.join(BASE_DIR, "README.rst"), encoding="utf-8") as f:
     long_description = f.read()
 

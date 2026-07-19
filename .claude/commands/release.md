@@ -3,7 +3,7 @@
 Automate the release process for PyPI and GitHub.
 
 ## What it does
-1. **Bump version** in `setup.py` (prompts for semver: patch/minor/major)
+1. **Bump version** in `mapwidgets/__init__.py` (`VERSION` tuple; prompts for semver: patch/minor/major) — `setup.py` reads it from there, no need to edit both
 2. **Create changeset** in `.changeset/` directory
    - Auto-generates filename `0000-<type>-release.md` with semver and changelog
 3. **Update docs** in `docs/releases/` with release notes
@@ -26,7 +26,7 @@ Prompts you for:
 - **Release notes**: changes, fixes, new features
 
 ## Reference
-- Current version in `setup.py`
+- Current version in `mapwidgets/__init__.py` (`VERSION` tuple) — single source of truth, `setup.py` parses it
 - Changelog format follows `.changeset/` convention
 - Requires `gh` CLI for GitHub operations
 - Public repo: `erdem/django-map-widgets`
@@ -34,4 +34,3 @@ Prompts you for:
 ## Notes
 - Will not push if CI checks haven't passed
 - Always creates a new commit (never amends)
-- Version string synced with `pyproject.toml` if needed
