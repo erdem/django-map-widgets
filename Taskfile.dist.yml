@@ -32,14 +32,14 @@ tasks:
   fmt:
     desc: Run black and isort
     cmds:
-      - black .
-      - isort .
+      - poetry run black .
+      - poetry run isort .
 
   build:
     desc: Build PyPI package
     cmds:
       - poetry run python setup.py sdist bdist_wheel
-      - poetry run twine check dist/*
+      - twine check dist/*
 
   publish:test:
     desc: Publish to test PyPI
