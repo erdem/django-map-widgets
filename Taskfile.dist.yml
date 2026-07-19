@@ -38,8 +38,8 @@ tasks:
   build:
     desc: Build PyPI package
     cmds:
-      - python setup.py sdist bdist_wheel
-      - twine check dist/*
+      - poetry run python setup.py sdist bdist_wheel
+      - poetry run twine check dist/*
 
   publish:test:
     desc: Publish to test PyPI

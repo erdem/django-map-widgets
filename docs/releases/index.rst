@@ -2,6 +2,14 @@
 Release Notes
 =============
 
+0.6.0
+^^^^^
+
+    - Add ``LeafletPolygonFieldWidget``, an interactive widget for GeoDjango ``PolygonField`` built on pure Leaflet (no extra JS dependency). Draw a polygon by clicking vertices, drag vertices to edit, an "Edit Coordinates" overlay accepting WKT or GeoJSON, "Current Location", and delete. Fires ``leafletPolygonFieldWidget:polygonCreate/polygonChange/polygonDelete`` jQuery triggers.
+    - Add a location search bar to the Leaflet widgets (``LeafletPointFieldWidget`` and ``LeafletPolygonFieldWidget``), powered by `leaflet-geosearch <https://github.com/smeijer/leaflet-geosearch>`_. Configurable via the new ``geoSearch`` setting (``enabled``, ``provider``, ``providerOptions``); defaults to OpenStreetMap/Nominatim (no API key required).
+    - Add reverse geocoding to ``LeafletPointFieldWidget``: marker location is reverse geocoded via `leaflet-control-geocoder <https://github.com/perliedman/leaflet-control-geocoder>`_ and shown in the search bar. Toggle with ``geoSearch.reverseGeocode`` (default ``True``).
+
+
 0.5.4
 ^^^^^
 

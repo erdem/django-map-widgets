@@ -1,13 +1,9 @@
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
-[project]
+[tool.poetry]
 name = "demo"
 version = "1.0.0"
 description = ""
+authors = ["Erdem Ozkol <github@erdemozkol.com>"]
 readme = "README.md"
-authors = [{ name = "Erdem Ozkol", email = "github@erdemozkol.com" }]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -21,6 +17,10 @@ sphinx = "^7.3.7"
 setuptools = "^70.1.0"
 pre-commit = "^3.7.1"
 ipdb = "^0.13.13"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 target-version = ["py312"]
