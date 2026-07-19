@@ -158,12 +158,12 @@ Django Map Widgets offers two types of widgets:
 | **GeoDjango Field**    | **GoogleMap** |        | **Mapbox**  |        | **Leaflet** |        |
 |------------------------|---------------|--------|-------------|--------|-------------|--------|
 |                        | Interactive   | Static | Interactive | Static | Interactive | Static |
-| *PointField*           | ✅             | ✅      | ✅           | ✅      | ✅           | N/A    |
-| *LineStringField*      | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | N/A    |
-| *PolygonField*         | ✖️            | ✖️     | ✖️          | ✖️     | ✅           | N/A    |
-| *MultiPointField*      | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | N/A    |
-| *MultiLineStringField* | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | N/A    |
-| *MultiPolygonField*    | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | N/A    |
+| *PointField*           | ✅             | ✅      | ✅           | ✅      | ✅           | ✖️     |
+| *LineStringField*      | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | ✖️     |
+| *PolygonField*         | ✖️            | ✖️     | ✖️          | ✖️     | ✅           | ✖️     |
+| *MultiPointField*      | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | ✖️     |
+| *MultiLineStringField* | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | ✖️     |
+| *MultiPolygonField*    | ✖️            | ✖️     | ✖️          | ✖️     | ✖️          | ✖️     |
 
 ### Contribution
 
