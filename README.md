@@ -2,6 +2,7 @@
 [![PyPI version](https://badge.fury.io/py/django-map-widgets.svg?c=1)](https://badge.fury.io/py/django-map-widgets)
 ![License](https://img.shields.io/github/license/erdem/django-map-widgets.svg)
 ![Documentation Status](https://readthedocs.org/projects/django-map-widgets/badge/?version=latest)
+[![PyPI Downloads](https://static.pepy.tech/personalized-badge/django-map-widgets?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/django-map-widgets)
 
 ## Django Map Widgets
 
